@@ -1,0 +1,26 @@
+AllCops:
+  DisplayCopNames: true
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'vendor/**/*'
+
+Bundler/OrderedGems:
+  Exclude:
+    - 'Gemfile'
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
