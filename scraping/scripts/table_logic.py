@@ -1,5 +1,4 @@
 from typing import List
-from pandas.core.frame import DataFrame
 from utility.bs4 import get_soup_by_url
 from logging import getLogger
 
@@ -14,7 +13,7 @@ class TableLogic:
       if len(tables) > 0:
         logger.info('table要素あり')
       else:
-        logger.info('table要素なし')
+        logger.error('table要素なし')
 
       results = []
 
