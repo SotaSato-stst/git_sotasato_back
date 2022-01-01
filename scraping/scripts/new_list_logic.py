@@ -5,7 +5,7 @@ from logging import getLogger
 logger = getLogger(__name__)
 
 # https://www.town.xxx.jp/new_list.php という形式のサイト
-class TownLogic:
+class NewListLogic:
   def execute(target_url: str, keywords: List) -> List:
       soup = get_soup_by_url(target_url)
       new_lists = soup.select('div.new_lst')

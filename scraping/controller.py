@@ -1,7 +1,7 @@
 from datetime import datetime
 from logging import getLogger
 from scripts.table_logic import TableLogic
-from scripts.town_logic import TownLogic
+from scripts.new_list_logic import NewListLogic, NewListLogic
 import pandas as pd
 
 logger = getLogger(__name__)
@@ -32,7 +32,7 @@ class Controller:
                 ]
             },
             {
-                'class_name': TownLogic,
+                'class_name': NewListLogic,
                 'urls': [
                     'https://www.town.toin.lg.jp/new_list.php',
                     'https://www.city.aisai.lg.jp/new_list.php',
