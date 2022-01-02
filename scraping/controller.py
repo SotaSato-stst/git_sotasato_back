@@ -1,7 +1,7 @@
 from datetime import datetime
 from logging import getLogger
 from scripts.table_logic import TableLogic
-from scripts.new_list_logic import NewListLogic, NewListLogic
+from scripts.new_list_logic import NewListLogic
 import pandas as pd
 
 logger = getLogger(__name__)
