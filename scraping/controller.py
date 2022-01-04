@@ -2,6 +2,7 @@ from datetime import datetime
 from logging import getLogger
 from scripts.table_logic import TableLogic
 from scripts.new_list_logic import NewListLogic
+from scripts.news_html_logic import NewHtmlLogic
 import pandas as pd
 
 logger = getLogger(__name__)
@@ -52,9 +53,38 @@ class Controller:
                     'http://www.town.koryo.nara.jp/new_list.php',
                     'http://www.town.oyodo.lg.jp/new_list.php',
                     'http://www.town.wakayama-inami.lg.jp/new_list.php',
+                    'http://www.vill.ookuwa.nagano.jp/news_list.html',
+                ]
+            },
+            {
+                'class_name': NewHtmlLogic,
+                'urls': [
+                    'https://www.city.kitakami.iwate.jp/news.html',
+                    'https://www.city.rikuzentakata.iwate.jp/news.html',
+                    'https://www.town.shiwa.iwate.jp/news.html',
+                    'https://www.town.nishiwaga.lg.jp/news.html',
+                    'https://www.town.ichinohe.iwate.jp/news.html',
+                    'https://www.kesennuma.miyagi.jp/news.html',
+                    'https://www.kuriharacity.jp/news.html',
+                    'https://www.town.shikama.miyagi.jp/news.html',
+                    'https://www.town.kami.miyagi.jp/news.html',
+                    'https://www.city.akita.lg.jp/news.html',
+                    'https://www.city.oga.akita.jp/news.html',
+                    'https://www.city.kazuno.akita.jp/news.html',
+                    'https://www.city.katagami.lg.jp/news.html',
+                    'https://www.town.hachirogata.akita.jp/news.html',
+                    'https://www.city.nagai.yamagata.jp/news.html',
+                    'https://www.town.asahi.yamagata.jp/news.html',
+                    'https://www.town.kaneyama.yamagata.jp/news.html',
+                    'https://www.town.funagata.yamagata.jp/news.html',
+                    'https://www.town.takahata.yamagata.jp/news.html',
+                    'https://www.city.soma.fukushima.jp/news.html',
+                    'https://www.city.minamisoma.lg.jp/news.html',
+                    'https://www.town.shimogo.fukushima.jp/news.html',
+                    'https://www.town.shiranuka.lg.jp/news.html',
                 ]
             }
-        ]
+        ]   
 
         for mapping in mappings:
             klass = mapping['class_name']
