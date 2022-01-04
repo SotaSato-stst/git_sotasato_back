@@ -15,8 +15,20 @@ ActiveRecord::Schema.define(version: 2022_01_04_071526) do
   create_table "subsidies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.text "url", null: false
+    t.bigint "supplier_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["supplier_id"], name: "index_subsidies_on_supplier_id"
+    t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
+  end
+
+  create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "organization_type", null: false
+    t.string "logo_url", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_suppliers_on_name", unique: true
   end
 
 end
