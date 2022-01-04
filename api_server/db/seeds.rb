@@ -1,7 +1,20 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# 開発用のテストデータ
+if Rails.env.development?
+  subsidy_hashes = [
+    {
+      title: '雇用調整助成金',
+      url: 'https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/koyou/kyufukin/pageL07.html'
+    },
+    {
+      title: 'ものづくり補助金',
+      url: 'https://portal.monodukuri-hojo.jp/'
+    },
+    {
+      title: 'IT導入補助金',
+      url: 'https://www.it-hojo.jp/applicant/'
+    }
+  ]
+  subsidy_hashes.each do |hash|
+    Subsidy.create(title: hash[:title], url: hash[:url])
+  end
+end
