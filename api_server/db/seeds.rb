@@ -1,4 +1,8 @@
+ActiveRecord::Base.logger = Logger.new($stdout)
+Rails.logger.level = Logger::DEBUG
+
 # 開発用のテストデータ
+
 if Rails.env.development?
   supplier_hashes = [
     {

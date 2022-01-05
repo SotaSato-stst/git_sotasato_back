@@ -15,5 +15,5 @@
 #
 class Supplier < ApplicationRecord
   has_many :subsidies
-  enum organization_type: %i[ministry local other] # 省庁、地方自治体、その他
+  enum organization_type: %w[ministry local other].inject({}) { |hash, val| hash.merge({ val => val }) } # 省庁、地方自治体、その他
 end
