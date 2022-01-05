@@ -1,23 +1,23 @@
 # == Schema Information
 #
-# Table name: subsidies
+# Table name: ministries
 #
 #  id         :bigint           not null, primary key
-#  title      :string(255)      not null
-#  url        :text(65535)      not null
+#  logo_url   :string(255)      default(""), not null
+#  name       :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_subsidies_on_url  (url) UNIQUE
+#  index_ministries_on_name  (name) UNIQUE
 #
 require 'rails_helper'
 
-RSpec.describe Subsidy, type: :model do
+RSpec.describe Ministry, type: :model do
   describe '#crate' do
     it do
-      expect(create(:subsidy)).to be_present
+      expect(create(:ministry)).to be_present
     end
   end
 end

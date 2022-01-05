@@ -12,23 +12,67 @@
 
 ActiveRecord::Schema.define(version: 2022_01_04_071526) do
 
-  create_table "subsidies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "title", null: false
-    t.text "url", null: false
-    t.bigint "supplier_id", null: false
+  create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "logo_url", default: "", null: false
+    t.bigint "prefecture_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["supplier_id"], name: "index_subsidies_on_supplier_id"
-    t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
+    t.index ["prefecture_id"], name: "index_cities_on_prefecture_id"
   end
 
-  create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ministries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
-    t.string "organization_type", null: false
     t.string "logo_url", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_suppliers_on_name", unique: true
+    t.index ["name"], name: "index_ministries_on_name", unique: true
+  end
+
+  create_table "prefectures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "logo_url", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_prefectures_on_name", unique: true
+  end
+
+  create_table "subsidies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
+  end
+
+  create_table "subsidy_cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "subsidy_id", null: false
+    t.bigint "city_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_subsidy_cities_on_city_id"
+    t.index ["subsidy_id", "city_id"], name: "index_subsidy_cities_on_subsidy_id_and_city_id", unique: true
+    t.index ["subsidy_id"], name: "index_subsidy_cities_on_subsidy_id"
+  end
+
+  create_table "subsidy_ministries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "subsidy_id", null: false
+    t.bigint "ministry_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ministry_id"], name: "index_subsidy_ministries_on_ministry_id"
+    t.index ["subsidy_id", "ministry_id"], name: "index_subsidy_ministries_on_subsidy_id_and_ministry_id", unique: true
+    t.index ["subsidy_id"], name: "index_subsidy_ministries_on_subsidy_id"
+  end
+
+  create_table "subsidy_prefectures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "subsidy_id", null: false
+    t.bigint "prefecture_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["prefecture_id"], name: "index_subsidy_prefectures_on_prefecture_id"
+    t.index ["subsidy_id", "prefecture_id"], name: "index_subsidy_prefectures_on_subsidy_id_and_prefecture_id", unique: true
+    t.index ["subsidy_id"], name: "index_subsidy_prefectures_on_subsidy_id"
   end
 
 end

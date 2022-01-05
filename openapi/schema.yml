@@ -8,8 +8,12 @@ servers:
 tags:
   - name: subsidy
     description: 補助金情報
-  - name: supplier
-    description: 発行機関
+  - name: ministry
+    description: 省庁
+  - name: prefecture
+    description: 都道府県
+  - name: city
+    description: 市長区村
 paths:
   "/subsidies":
     get:
@@ -49,11 +53,11 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/subsidy"
-  "/suppliers":
+  "/ministries":
     get:
       tags:
-      - supplier
-      summary: 発行機関一覧
+      - ministry
+      summary: 省庁一覧
       responses:
         '200':
           description: 成功
@@ -62,12 +66,50 @@ paths:
               schema:
                 type: object
                 required:
-                - suppliers
+                - ministries
                 properties:
-                  suppliers:
+                  ministries:
                     type: array
                     items:
-                      "$ref": "#/components/schemas/supplier"
+                      "$ref": "#/components/schemas/ministry"
+  "/prefectures":
+    get:
+      tags:
+      - prefecture
+      summary: 都道府県一覧
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - prefectures
+                properties:
+                  prefectures:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/prefecture"
+  "/cities":
+    get:
+      tags:
+      - city
+      summary: 市長区村一覧
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - cities
+                properties:
+                  cities:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/city"
 components:
   schemas:
     subsidy:
@@ -76,7 +118,9 @@ components:
         - id
         - title
         - url
-        - supplier
+        - ministry
+        - prefecture
+        - city
       properties:
         id:
           type: integer
@@ -90,14 +134,18 @@ components:
           type: string
           description: URL
           example: https://www.it-hojo.jp/applicant/
-        supplier:
-          "$ref": "#/components/schemas/supplier"
-    supplier:
+        ministry:
+          "$ref": "#/components/schemas/ministry"
+        prefecture:
+          "$ref": "#/components/schemas/prefecture"
+        city:
+          "$ref": "#/components/schemas/city"
+    ministry:
       type: object
+      nullable: true
       required:
         - id
         - name
-        - organization_type
         - logo_url
       properties:
         id:
@@ -106,15 +154,48 @@ components:
           example: 1
         name:
           type: string
-          description: 発行機関名
+          description: 省庁名
           example: 経済産業省
-        organization_type:
+        logo_url:
           type: string
-          description: 発行機関種類
-          enum:
-            - ministry
-            - local
-            - other
+          description: URL
+          example: https://example.com/logo.png
+    prefecture:
+      type: object
+      nullable: true
+      required:
+        - id
+        - name
+        - logo_url
+      properties:
+        id:
+          type: integer
+          description: id
+          example: 1
+        name:
+          type: string
+          description: 都道府県名
+          example: 東京都
+        logo_url:
+          type: string
+          description: URL
+          example: https://example.com/logo.png
+    city:
+      type: object
+      nullable: true
+      required:
+        - id
+        - name
+        - logo_url
+      properties:
+        id:
+          type: integer
+          description: id
+          example: 1
+        name:
+          type: string
+          description: 市町区村名
+          example: 千代田区
         logo_url:
           type: string
           description: URL

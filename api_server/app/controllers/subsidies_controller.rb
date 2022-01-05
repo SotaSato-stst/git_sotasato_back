@@ -1,6 +1,6 @@
 class SubsidiesController < ApplicationController
   def index
-    @subsidies = Subsidy.all.includes(:supplier)
+    @subsidies = Subsidy.all.includes(:ministry, :prefecture, :city)
   end
 
   def show
