@@ -84,7 +84,7 @@ class Controller:
                     'https://www.town.shiranuka.lg.jp/news.html',
                 ]
             }
-        ]   
+        ]
 
         for mapping in mappings:
             klass = mapping['class_name']
