@@ -8,9 +8,9 @@ RSpec.describe 'Suppliers API', type: :request do
   describe 'GET /suppliers' do
     subject { get '/suppliers' }
 
-    it 'successes' do
+    it 'returns correct response' do
       subject
-      expect(response.status).to eq 200
+      assert_response_schema_confirm(200)
     end
 
     it 'returns object' do

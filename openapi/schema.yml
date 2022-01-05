@@ -8,6 +8,8 @@ servers:
 tags:
   - name: subsidy
     description: 補助金情報
+  - name: supplier
+    description: 発行機関
 paths:
   "/subsidies":
     get:
@@ -28,7 +30,7 @@ paths:
                     type: array
                     items:
                       "$ref": "#/components/schemas/subsidy"
-  "/supervisor_subsidies/{id}":
+  "/subsidies/{id}":
     parameters:
     - name: id
       in: path
@@ -47,6 +49,25 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/subsidy"
+  "/suppliers":
+    get:
+      tags:
+      - supplier
+      summary: 発行機関一覧
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - suppliers
+                properties:
+                  suppliers:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/supplier"
 components:
   schemas:
     subsidy:

@@ -7,9 +7,9 @@ RSpec.describe 'Subsidies API', type: :request do
   describe 'GET /subsidies' do
     subject { get '/subsidies' }
 
-    it 'successes' do
+    it 'returns correct response' do
       subject
-      expect(response.status).to eq 200
+      assert_response_schema_confirm(200)
     end
 
     it 'returns object' do
@@ -23,9 +23,9 @@ RSpec.describe 'Subsidies API', type: :request do
   describe 'GET /subsidies/:id' do
     subject { get "/subsidies/#{subsidy.id}" }
 
-    it 'successes' do
+    it 'returns correct response' do
       subject
-      expect(response.status).to eq 200
+      assert_response_schema_confirm(200)
     end
 
     it 'returns object' do
