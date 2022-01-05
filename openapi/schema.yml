@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Hojokin Dock API
+  description: '補助金ドックのAPIドキュメント'
+servers:
+  - url: 'http://localhost:3000'
+tags:
+  - name: subsidy
+    description: 補助金情報
+paths:
+  "/subsidies":
+    get:
+      tags:
+      - subsidy
+      summary: 補助金情報一覧
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subsidies
+                properties:
+                  subsidies:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/subsidy"
+  "/supervisor_subsidies/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: subsidyのid
+      schema:
+        type: integer
+    get:
+      tags:
+      - subsidy
+      summary: 補助金情報詳細
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/subsidy"
+components:
+  schemas:
+    subsidy:
+      type: object
+      required:
+        - id
+        - title
+        - url
+        - supplier
+      properties:
+        id:
+          type: integer
+          description: id
+          example: 1
+        title:
+          type: string
+          description: 補助金名
+          example: IT導入補助金
+        url:
+          type: string
+          description: URL
+          example: https://www.it-hojo.jp/applicant/
+        supplier:
+          "$ref": "#/components/schemas/supplier"
+    supplier:
+      type: object
+      required:
+        - id
+        - name
+        - organization_type
+        - logo_url
+      properties:
+        id:
+          type: integer
+          description: id
+          example: 1
+        name:
+          type: string
+          description: 発行機関名
+          example: 経済産業省
+        organization_type:
+          type: string
+          description: 発行機関種類
+          enum:
+            - ministry
+            - local
+            - other
+        logo_url:
+          type: string
+          description: URL
+          example: https://example.com/logo.png
