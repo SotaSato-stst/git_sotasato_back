@@ -1,6 +1,7 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+  ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -9,16 +10,19 @@ export default {
       lang: 'en',
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: ''},
+      {name: 'format-detection', content: 'telephone=no'},
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['element-ui/lib/theme-chalk/index.css'],
+  css: [
+    'element-ui/lib/theme-chalk/index.css',
+    '@/assets/styles/_variables.css',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['@/plugins/element-ui'],
@@ -32,6 +36,7 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
+    '@nuxt/postcss8',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -49,5 +54,11 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+    postcss: {},
+  },
+
+  storybook: {
+    stories: [],
+    port: 5555,
   },
 }

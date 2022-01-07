@@ -1,15 +1,30 @@
 module.exports = {
-  root: true,
   env: {
     browser: true,
     node: true,
   },
+  root: true,
+  plugins: ['@typescript-eslint'],
   extends: [
     '@nuxtjs/eslint-config-typescript',
-    'plugin:nuxt/recommended',
     'prettier',
+    'plugin:prettier/recommended',
+    'plugin:nuxt/recommended',
   ],
-  plugins: [],
-  // add your custom rules here
-  rules: {},
+  rules: {
+    indent: ['error', 2, {SwitchCase: 1}],
+    'comma-dangle': ['error', 'always-multiline'],
+    quotes: ['error', 'single', {avoidEscape: true}],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', {argsIgnorePattern: '^_'}],
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    'prettier/prettier': 'error',
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignores: ['default'],
+      },
+    ],
+  },
 }

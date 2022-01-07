@@ -1,5 +1,5 @@
 <template>
-  <Tutorial />
+  <SubsidyCard>Card</SubsidyCard>
 </template>
 
 <script lang="ts">
