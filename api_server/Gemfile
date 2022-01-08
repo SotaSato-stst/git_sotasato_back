@@ -19,6 +19,7 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem 'annotate'
   gem 'committee-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do

@@ -4,8 +4,6 @@
 補助金ドックのバックエンドアプリケーションであるAPI Serverです。
 
 ## 環境構築
-
-### ライブラリのインストール
 ```
 $ rbenv install 3.0.3
 $ gem install bundler -v 2.2.33
@@ -26,8 +24,9 @@ $ bundle exec rails db:seed
 
 rails consoleで、 `Supplier.last` などのレコードが存在していれば成功です。  
 
-### Credentialsの設置
-※追記
+### 環境変数の設置
+`.env` という名前のファイルを `api_server` 以下に配置し、環境変数を与えます。  
+`.env.sample` に環境変数の一覧があります。
 
 ## APIドキュメントについて
 1つ上のディレクトリ `openapi/schema.yml` にて定義されています。  
