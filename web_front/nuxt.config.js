@@ -58,7 +58,7 @@ export default {
   },
 
   storybook: {
-    stories: [],
+    stories: ['@/stories/*.stories.ts'],
     port: 5555,
   },
 }
