@@ -172,6 +172,10 @@ components:
           "$ref": "#/components/schemas/prefecture"
         city:
           "$ref": "#/components/schemas/city"
+        business_categories:
+          type: array
+          items:
+            "$ref": "#/components/schemas/business_category"
     ministry:
       type: object
       nullable: true
@@ -232,3 +236,18 @@ components:
           type: string
           description: URL
           example: https://example.com/logo.png
+    business_category:
+      type: object
+      nullable: true
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: id
+          example: 1
+        name:
+          type: string
+          description: 業種名
+          example: 製造業
