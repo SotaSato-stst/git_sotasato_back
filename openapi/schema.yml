@@ -91,7 +91,14 @@ paths:
                     type: array
                     items:
                       "$ref": "#/components/schemas/prefecture"
-  "/cities":
+  "/prefectures/{id}/cities":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: prefectureのid
+      schema:
+        type: integer
     get:
       tags:
       - city

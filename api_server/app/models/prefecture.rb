@@ -13,4 +13,5 @@
 #  index_prefectures_on_name  (name) UNIQUE
 #
 class Prefecture < ApplicationRecord
+  has_many :cities
 end

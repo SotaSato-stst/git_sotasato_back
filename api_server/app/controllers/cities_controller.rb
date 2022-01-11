@@ -1,5 +1,5 @@
 class CitiesController < ApplicationController
   def index
-    @cities = City.all
+    @cities = Prefecture.find(params[:prefecture_id]).cities
   end
 end
