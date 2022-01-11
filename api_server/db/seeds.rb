@@ -40,7 +40,7 @@ if Rails.env.development?
     }
   ]
   subsidy_hashes.each do |hash|
-    subsidy = Subsidy.find_or_initialize_by(title: hash[:title], url: hash[:url])
-    subsidy.update(ministry: ministries[hash[:ministry_name]])
+    subsidy = Subsidy.find_or_initialize_by(url: hash[:url])
+    subsidy.update(title: hash[:title], ministry: ministries[hash[:ministry_name]])
   end
 end
