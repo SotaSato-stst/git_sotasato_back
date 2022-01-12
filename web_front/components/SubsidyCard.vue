@@ -19,7 +19,10 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .card {
+  padding: var(--spacing-4);
   background-color: var(--white);
-  border-radius: 8px;
+  border: solid 1px var(--border-grey-color);
+  border-radius: var(--spacing-1);
+  box-shadow: var(--shadow-elevation-1);
 }
 </style>

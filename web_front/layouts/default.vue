@@ -7,7 +7,7 @@
       <el-aside class="side-menu-container" width="240px">
         <global-side-menu />
       </el-aside>
-      <el-main>
+      <el-main class="main">
         <nuxt />
       </el-main>
     </el-container>
@@ -57,5 +57,9 @@ body {
 .side-menu-container {
   height: 100vh;
   border-right: solid 1px var(--border-grey-color);
+}
+
+.main {
+  background-color: var(--background-color);
 }
 </style>
