@@ -1,14 +1,12 @@
 <template>
-  <div class="card">
-    <slot />
-  </div>
+  <div class="container">Side Menu</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'SubsidyCard',
+  name: 'GlobalSideMenu',
   props: {},
   data() {
     return {}
@@ -18,8 +16,7 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.card {
-  background-color: var(--white);
-  border-radius: 8px;
+.container {
+  padding: var(--spacing-4);
 }
 </style>
