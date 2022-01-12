@@ -3,6 +3,8 @@
 # Table name: subsidies
 #
 #  id         :bigint           not null, primary key
+#  end_to     :date
+#  start_from :date             not null
 #  title      :string(255)      not null
 #  url        :text(65535)      not null
 #  created_at :datetime         not null
