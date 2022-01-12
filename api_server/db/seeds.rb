@@ -1,12 +1,25 @@
+require 'csv'
+
 ActiveRecord::Base.logger = Logger.new($stdout)
 Rails.logger.level = Logger::DEBUG
 
-# 開発用のテストデータ
+CSV.open('db/seeds/ministries.csv', headers: true).to_a.each do |row|
+  ministry = Ministry.find_or_initialize_by(name: row['name'])
+  ministry.update(logo_url: row['logo_url'])
+end
 
+CSV.open('db/seeds/prefectures.csv', headers: true).to_a.each do |row|
+  prefecture = Prefecture.find_or_initialize_by(id: row['id'])
+  prefecture.update(name: row['name'], logo_url: row['logo_url'] || '')
+end
+
+CSV.open('db/seeds/cities.csv', headers: true).to_a.each do |row|
+  city = City.find_or_initialize_by(name: row['name'])
+  city.update(prefecture_id: row['prefecture_id'], logo_url: row['logo_url'] || '')
+end
+
+# 開発用のテストデータ
 if Rails.env.development?
-  %w[厚生労働省 経済産業省].each do |name|
-    Ministry.create_or_find_by!(name: name)
-  end
   ministries = Ministry.all.index_by(&:name)
 
   subsidy_hashes = [

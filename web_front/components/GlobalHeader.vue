@@ -1,14 +1,12 @@
 <template>
-  <div class="card">
-    <slot />
-  </div>
+  <div class="container">Header</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'SubsidyCard',
+  name: 'GlobalHeader',
   props: {},
   data() {
     return {}
@@ -18,8 +16,8 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.card {
-  background-color: var(--white);
-  border-radius: 8px;
+.container {
+  height: var(--spacing-12);
+  padding: var(--spacing-2) var(--spacing-1);
 }
 </style>
