@@ -10,6 +10,9 @@
       <el-main class="main">
         <nuxt />
       </el-main>
+      <el-aside class="side-right-menu-container" width="332px">
+        <side-right-menu />
+      </el-aside>
     </el-container>
   </el-container>
 </template>
@@ -19,6 +22,7 @@ import Vue from 'vue'
 import {Container, Header, Aside, Main} from 'element-ui'
 import GlobalHeader from './../components/GlobalHeader.vue'
 import GlobalSideMenu from './../components/GlobalSideMenu.vue'
+import SideRightMenu from './../components/SideRightMenu.vue'
 
 export default Vue.extend({
   name: 'DefaultLayout',
@@ -29,6 +33,7 @@ export default Vue.extend({
     [`${Main.name}`]: Main,
     GlobalHeader,
     GlobalSideMenu,
+    SideRightMenu,
   },
   props: {},
   data() {
@@ -37,12 +42,6 @@ export default Vue.extend({
   computed: {},
 })
 </script>
-
-<style>
-body {
-  margin: 0;
-}
-</style>
 
 <style lang="postcss" scoped>
 .default-layout {
@@ -60,6 +59,11 @@ body {
 }
 
 .main {
-  background-color: var(--background-color);
+  background-color: var(--main-background-color);
+}
+
+.side-right-menu-container {
+  height: 100vh;
+  border-left: solid 1px var(--border-grey-color);
 }
 </style>
