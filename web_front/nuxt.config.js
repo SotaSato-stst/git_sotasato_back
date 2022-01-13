@@ -22,6 +22,7 @@ export default {
   css: [
     'element-ui/lib/theme-chalk/index.css',
     '@/assets/styles/_variables.css',
+    'normalize.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
