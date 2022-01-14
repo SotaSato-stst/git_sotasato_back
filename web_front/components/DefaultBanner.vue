@@ -1,5 +1,5 @@
 <template>
-  <el-card class="card" shadow="never">Banner</el-card>
+  <el-card class="card" shadow="never">バナー</el-card>
 </template>
 
 <script lang="ts">

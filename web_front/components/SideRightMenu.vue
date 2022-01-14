@@ -25,7 +25,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .container {
-  padding: 0 var(--spacing-4);
+  padding-right: var(--spacing-4);
 }
 
 .list > * {

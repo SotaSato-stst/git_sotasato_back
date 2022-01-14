@@ -1,18 +1,21 @@
 <template>
   <el-container class="default-layout">
-    <el-header class="header-container">
-      <global-header />
-    </el-header>
+    <el-aside class="side-menu-container" width="240px">
+      <div class="title-container">補助金ドック</div>
+      <global-side-menu />
+    </el-aside>
     <el-container>
-      <el-aside class="side-menu-container" width="240px">
-        <global-side-menu />
-      </el-aside>
-      <el-main class="main">
-        <nuxt />
-      </el-main>
-      <el-aside class="side-right-menu-container" width="332px">
-        <side-right-menu />
-      </el-aside>
+      <el-header class="header-container">
+        <global-header />
+      </el-header>
+      <el-container class="center-container">
+        <el-main>
+          <nuxt />
+        </el-main>
+        <el-aside class="side-right-menu-container" width="316px">
+          <side-right-menu />
+        </el-aside>
+      </el-container>
     </el-container>
   </el-container>
 </template>
@@ -48,22 +51,32 @@ export default Vue.extend({
   height: 100vh;
 }
 
-.header-container {
-  background-color: white;
+.title-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: var(--spacing-15);
+  padding-left: var(--spacing-4);
+  font-size: 27px;
+  font-family: 'Open Sans', sans-serif;
+  color: #fff;
+  background-color: #2a6f97;
   border-bottom: solid 1px var(--border-grey-color);
 }
 
 .side-menu-container {
   height: 100vh;
-  border-right: solid 1px var(--border-grey-color);
 }
 
-.main {
+.header-container {
+  padding: 0;
+}
+
+.center-container {
   background-color: var(--main-background-color);
 }
 
 .side-right-menu-container {
   height: 100vh;
-  border-left: solid 1px var(--border-grey-color);
 }
 </style>

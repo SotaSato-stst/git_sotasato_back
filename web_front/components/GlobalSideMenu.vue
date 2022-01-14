@@ -1,5 +1,5 @@
 <template>
-  <div class="container">Side Menu</div>
+  <div class="container"></div>
 </template>
 
 <script lang="ts">
