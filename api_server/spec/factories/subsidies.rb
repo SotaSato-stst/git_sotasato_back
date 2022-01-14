@@ -18,5 +18,7 @@ FactoryBot.define do
   factory :subsidy do
     title { 'title' }
     url { 'https://example.com/page1' }
+    start_from { '2021-4-24'}
+    end_to { '2021-4-29'}
   end
 end
