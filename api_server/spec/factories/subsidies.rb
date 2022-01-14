@@ -3,6 +3,8 @@
 # Table name: subsidies
 #
 #  id         :bigint           not null, primary key
+#  end_to     :date
+#  start_from :date             not null
 #  title      :string(255)      not null
 #  url        :text(65535)      not null
 #  created_at :datetime         not null
@@ -16,5 +18,7 @@ FactoryBot.define do
   factory :subsidy do
     title { 'title' }
     url { 'https://example.com/page1' }
+    start_from { '2021-4-24'}
+    end_to { '2021-4-29'}
   end
 end
