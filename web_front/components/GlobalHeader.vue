@@ -5,7 +5,7 @@
     mode="horizontal"
     background-color="#2a6f97"
     text-color="#fff"
-    active-text-color="#ffd60a"
+    active-text-color="var(--hilight-yellow)"
     @select="handleSelect"
   >
     <el-menu-item index="new">
@@ -57,6 +57,6 @@ export default Vue.extend({
 }
 
 .header-menu > li.is-active > i {
-  color: #ffd60a;
+  color: var(--hilight-yellow);
 }
 </style>
