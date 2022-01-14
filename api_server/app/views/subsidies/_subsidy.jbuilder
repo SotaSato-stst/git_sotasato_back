@@ -1,4 +1,4 @@
-json.call(subsidy, :id, :title, :url)
+json.call(subsidy, :id, :title, :url, :start_from, :end_to)
 json.ministry do
   json.partial! 'ministries/ministry', ministry: subsidy.ministry
 end
