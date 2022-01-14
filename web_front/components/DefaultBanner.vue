@@ -21,5 +21,6 @@ export default Vue.extend({
 .card {
   width: var(--default-banner-width);
   height: var(--default-banner-height);
+  cursor: pointer;
 }
 </style>

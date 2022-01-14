@@ -85,6 +85,7 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .card {
   overflow: auto;
+  cursor: pointer;
 }
 
 .clearfix::before,
