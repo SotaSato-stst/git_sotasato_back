@@ -2,14 +2,14 @@
   <el-card class="card clearfix">
     <el-container>
       <el-aside width="60px" class="card-aside">
-        <el-avatar :size="54" :src="circleUrl"></el-avatar>
+        <el-avatar :size="54"></el-avatar>
         <div class="supplier label">発行機関</div>
         <div class="supplier">茨城県</div>
         <div class="supplier">つくば市</div>
       </el-aside>
       <el-container class="card-container">
         <el-header height="32px" class="card-header">
-          <el-tag type="info" effect="plain" class="subsidy-type" hit="true">
+          <el-tag type="info" effect="plain" class="subsidy-type">
             補助金
           </el-tag>
           <span class="header-info">

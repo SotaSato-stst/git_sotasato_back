@@ -1,5 +1,7 @@
 <template>
-  <div class="container">Header</div>
+  <div class="container">
+    <span>補助金ドック</span>
+  </div>
 </template>
 
 <script lang="ts">

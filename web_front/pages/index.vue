@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <subsidy-card>Card</subsidy-card>
+    <subsidy-card />
+    <subsidy-card />
+    <subsidy-card />
   </div>
 </template>
 
@@ -15,7 +17,7 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.container {
-  padding: var(--spacing-2);
+.container > * {
+  margin-bottom: var(--spacing-4);
 }
 </style>
