@@ -73,6 +73,7 @@ export default Vue.extend({
 }
 
 .center-container {
+  height: 100vh;
   background-color: var(--main-background-color);
 }
 
