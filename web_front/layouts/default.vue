@@ -59,8 +59,7 @@ export default Vue.extend({
   padding-left: var(--spacing-4);
   font-size: 27px;
   font-family: 'Open Sans', sans-serif;
-  color: #fff;
-  background-color: #2a6f97;
+  color: var(--primary-color);
   border-bottom: solid 1px var(--border-grey-color);
 }
 
