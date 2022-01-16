@@ -33,7 +33,7 @@
         </el-header>
         <el-main class="card-content">
           <div class="title">
-            ものづくり・商業・サービス生産性向上促進補助金
+            {{ subsidy.title }}
           </div>
           <div class="target-container">
             <span class="label target">対象</span>
@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {defineComponent, PropType} from '@vue/composition-api'
 import {
   Container,
   Header,
@@ -61,9 +61,9 @@ import {
   Avatar,
   Tag,
 } from 'element-ui'
+import {Subsidy} from '@/types/Subsidy'
 
-export default Vue.extend({
-  name: 'DefaultBanner',
+export default defineComponent({
   components: {
     [`${Container.name}`]: Container,
     [`${Header.name}`]: Header,
@@ -74,17 +74,22 @@ export default Vue.extend({
     [`${Avatar.name}`]: Avatar,
     [`${Tag.name}`]: Tag,
   },
-  props: {},
-  data() {
+  props: {
+    subsidy: {
+      type: Object as PropType<Subsidy>,
+      required: true,
+    },
+  },
+  setup(_props) {
     return {}
   },
-  computed: {},
 })
 </script>
 
 <style lang="postcss" scoped>
 .card {
   overflow: auto;
+  cursor: pointer;
 }
 
 .clearfix::before,

@@ -1,3 +1,6 @@
+const environment = process.env.NODE_ENV || 'development'
+const envSet = require(`./environments/${environment}.ts`)
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -28,7 +31,11 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/element-ui'],
+  plugins: [
+    '@/plugins/composition-api',
+    '@/plugins/axios-accessor',
+    '@/plugins/element-ui',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -37,6 +44,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    '@nuxtjs/composition-api/module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     '@nuxt/postcss8',
@@ -50,8 +58,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    prefix: envSet.apiBaseUrl,
+    proxy: true,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
