@@ -117,6 +117,76 @@ paths:
                     type: array
                     items:
                       "$ref": "#/components/schemas/city"
+  "/companies":
+    get:
+      tags:
+      - company
+      summary: 会社一覧
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - companies
+                properties:
+                  companies:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/company"
+    post:
+      tags:
+      - company
+      summary: 会社作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/company_update"
+      responses:
+        '201':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/company"
+  "/companies/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: companyのid
+        schema:
+          type: integer
+    get:
+      summary: 会社詳細
+      tags:
+        - company
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/company"
+    put:
+      summary: 会社更新
+      tags:
+        - company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/company_update"
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/company"
 components:
   schemas:
     subsidy:
@@ -258,3 +328,90 @@ components:
           type: string
           description: 業種名
           example: 製造業
+    company:
+      type: object
+      required:
+        - id
+        - name
+        - capital
+        - total_employee
+        - business_scale
+        - prefecture
+        - city
+        - business_categories
+      properties:
+        id:
+          type: integer
+          description: id
+          example: 1
+        name:
+          type: string
+          description: 会社名
+          example: つくば株式会社
+        capital:
+          type: integer
+          description: 資本金
+          example: 10000000
+        total_employee:
+          type: integer
+          description: 従業員数
+          example: 100
+        business_scale:
+          type: string
+          description: 事業規模
+          enum:
+            - small_business
+            - small_and_medium
+            - large
+        prefecture:
+          "$ref": "#/components/schemas/prefecture"
+        city:
+          "$ref": "#/components/schemas/city"
+        business_categories:
+          type: array
+          items:
+            "$ref": "#/components/schemas/business_category"
+    company_update:
+      type: object
+      required:
+        - name
+        - capital
+        - total_employee
+        - business_scale
+        - prefecture_id
+        - city_id
+        - business_categories
+      properties:
+        name:
+          type: string
+          description: 会社名
+          example: つくば株式会社
+        capital:
+          type: integer
+          description: 資本金
+          example: 10000000
+        total_employee:
+          type: integer
+          description: 従業員数
+          example: 100
+        business_scale:
+          type: string
+          description: 事業規模
+          enum:
+            - small_business
+            - small_and_medium
+            - large
+        prefecture_id:
+          type: integer
+          description: 都道府県ID
+          example: 1
+        city:
+          type: integer
+          description: 市長区村ID
+          example: 1
+        business_category_ids:
+          type: array
+          items:
+            type: integer
+            description: 業種ID
+            example: 1
