@@ -1,18 +1,34 @@
 <template>
   <div class="container">
-    <subsidy-card />
-    <subsidy-card />
-    <subsidy-card />
+    <div v-for="subsidy in subsidies" :key="subsidy.id">
+      <subsidy-card :subsidy="subsidy" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {computed, defineComponent, onMounted} from '@vue/composition-api'
 import SubsidyCard from './../components/SubsidyCard.vue'
+import {subsidiesModule} from '~/store'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'IndexPage',
   components: {SubsidyCard},
+  setup(_props) {
+    const subsidies = computed(() => subsidiesModule.subsidies)
+    const currentPage = computed(() => subsidiesModule.currentPage)
+    const totalPages = computed(() => subsidiesModule.totalPages)
+
+    onMounted(() => {
+      subsidiesModule.getSubsidies()
+    })
+
+    return {
+      subsidies,
+      currentPage,
+      totalPages,
+    }
+  },
 })
 </script>
 
