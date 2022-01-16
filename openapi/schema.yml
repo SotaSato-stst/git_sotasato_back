@@ -253,6 +253,10 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/business_category"
+        business_scales:
+          type: array
+          items:
+            "$ref": "#/components/schemas/business_scale"
     ministry:
       type: object
       nullable: true
@@ -328,6 +332,13 @@ components:
           type: string
           description: 業種名
           example: 製造業
+    business_scale:
+      type: string
+      description: 事業規模
+      enum:
+        - small_business
+        - small_and_medium
+        - large
     company:
       type: object
       required:
@@ -357,12 +368,7 @@ components:
           description: 従業員数
           example: 100
         business_scale:
-          type: string
-          description: 事業規模
-          enum:
-            - small_business
-            - small_and_medium
-            - large
+          "$ref": "#/components/schemas/business_scale"
         prefecture:
           "$ref": "#/components/schemas/prefecture"
         city:
@@ -395,12 +401,7 @@ components:
           description: 従業員数
           example: 100
         business_scale:
-          type: string
-          description: 事業規模
-          enum:
-            - small_business
-            - small_and_medium
-            - large
+          "$ref": "#/components/schemas/business_scale"
         prefecture_id:
           type: integer
           description: 都道府県ID
