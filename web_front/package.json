@@ -21,7 +21,6 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/composition-api": "^0.31.0",
-    "cookie-universal": "^2.1.5",
     "core-js": "^3.19.3",
     "element-ui": "^2.15.6",
     "normalize.css": "^8.0.1",

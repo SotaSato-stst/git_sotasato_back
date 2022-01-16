@@ -1,5 +1,4 @@
 import {Plugin} from '@nuxt/types'
-// import webStorage from '@/utils/webStorage'
 import {initializeAxios} from '@/utils/api'
 import notify from '@/plugins/notify'
 import isEmptyObject from '~/utils/isEmptyObject'
@@ -22,8 +21,7 @@ const accessor: Plugin = ({$axios}) => {
 
   $axios.onRequest(request => {
     if (request.url !== '/sign_in') {
-      // request.headers['access-token'] = webStorage.getAccessToken()
-      // request.headers['Content-Type'] = 'application/json'
+      // 認証状態の確認
     }
   })
 
