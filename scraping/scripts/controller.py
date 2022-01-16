@@ -17,7 +17,7 @@ def debug(func):
 
 
 class Controller:
-    def __init__(self, retry_max=3):
+    def __init__(self, retry_max=1):
         self.exec_date = datetime.now().strftime("%Y/%m/%d")
         self.retry_max = retry_max
 

@@ -1,6 +1,6 @@
 from logging import DEBUG, INFO, NOTSET, basicConfig, getLogger, StreamHandler
 
-from controller import Controller
+from scripts.controller import Controller
 
 # ログ設定
 stream_handler = StreamHandler()
