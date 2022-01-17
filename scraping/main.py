@@ -19,7 +19,11 @@ def main():
     controller.execute()
 
 
-if __name__ == "__main__":
+def cloud_function(data, context):
+    controller = Controller()
+    controller.execute()
+
+if __name__ == "main":
     logger.info("[Notification] Scraping started")
     try:
         main()
