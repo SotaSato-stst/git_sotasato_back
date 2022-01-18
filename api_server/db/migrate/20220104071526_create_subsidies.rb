@@ -6,29 +6,5 @@ class CreateSubsidies < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-
-    create_table :subsidy_ministries do |t|
-      t.references :subsidy, null: false
-      t.references :ministry, null: false
-
-      t.timestamps
-      t.index [:subsidy_id, :ministry_id], unique: true
-    end
-
-    create_table :subsidy_prefectures do |t|
-      t.references :subsidy, null: false
-      t.references :prefecture, null: false
-
-      t.timestamps
-      t.index [:subsidy_id, :prefecture_id], unique: true
-    end
-
-    create_table :subsidy_cities do |t|
-      t.references :subsidy, null: false
-      t.references :city, null: false
-
-      t.timestamps
-      t.index [:subsidy_id, :city_id], unique: true
-    end
   end
 end
