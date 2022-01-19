@@ -8,6 +8,7 @@ logger = getLogger(__name__)
 class SelectorNameException(Exception):
     pass
 
+
 class ShinchakuLogic :
     def execute(target_url: str, keywords: List, selector_name: str) -> List:
         soup = get_soup_by_url(target_url)

@@ -9,6 +9,7 @@ class Slack:
     def __init__(self):
         self.client = WebClient(token=os.environ.get('SLACK_TOKEN'))
 
+
     def notify_start(self, filename: str, context_id: str):
         blocks = self.info_blocks(
             'スクレイピングが開始されました',
@@ -16,6 +17,7 @@ class Slack:
             context_id
         )
         self.post('scraping-logs', blocks, '#0b5cad', 'clock1')
+
 
     def notify_finish(self, filename: str, context_id: str):
         blocks = self.info_blocks(
@@ -25,6 +27,7 @@ class Slack:
         )
         self.post('scraping-logs', blocks, '#108548', 'white_check_mark')
 
+
     def notify_error(self, filename: str, context_id: str, error):
         blocks = self.error_blocks(
             filename,
@@ -33,13 +36,16 @@ class Slack:
         )
         self.post('scraping-error-logs', blocks, '#dd2b0e', 'bug')
 
+
     def notify_warning(self, message: str):
         blocks = self.warning_blocks(message)
         self.post('scraping-warnings', blocks, '#dd2b0e', 'bug')
 
+
     def notify_new_content(self, title: str, url: str):
         blocks = self.new_blocks(title, url)
         self.post('scraping-new-post', blocks, '#3a86ff', 'white_check_mark')
+
 
     def post(self, channel: str, blocks: list, color: str, emoji: str):
         if os.getenv('RUNNING_ENV') == 'production':
@@ -55,6 +61,7 @@ class Slack:
                 logger.error(f"Error posting message: {e}")
         else:
             logger.info(f'Skipped notification in channel {channel}')
+
 
     def info_blocks(self, title: str, filename: str, context_id: str):
         return [
@@ -82,6 +89,7 @@ class Slack:
             },
         ]
 
+
     def new_blocks(self, title: str, url: str):
         return [
             {
@@ -107,6 +115,7 @@ class Slack:
                 ]
             },
         ]
+
 
     def error_blocks(self, filename: str, context_id: str, error: str):
         return [
@@ -144,6 +153,7 @@ class Slack:
             }
         ]
 
+
     def warning_blocks(self, message: str):
         return [
             {
@@ -151,7 +161,7 @@ class Slack:
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": '*ページが正しく取得できませんでした*',
+                        "text": '*ページを正しく取得できませんでした*',
                     },
                 ]
             },

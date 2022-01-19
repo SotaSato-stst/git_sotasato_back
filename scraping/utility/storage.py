@@ -13,16 +13,19 @@ class Storage:
             self.bucket = client.bucket('scraping-subsidy-new')
         else:
             client = storage.Client.from_service_account_json('gcloud-account.json')
-            self.bucket = client.bucket('scraping-subsidy-new')
+            self.bucket = client.bucket('scraping-subsidy-new-test')
+
 
     def upload_after_delete(self, file_name_with_path: str, data: str):
         blob = self.bucket.blob(file_name_with_path)
         logger.info(f'Uploading {file_name_with_path}')
+
         try:
             blob.delete()
         except NotFound:
             pass
         blob.upload_from_string(data)
+
 
     def download(self, file_name_with_path: str) -> StringIO:
         blob = self.bucket.blob(file_name_with_path)

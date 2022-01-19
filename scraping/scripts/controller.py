@@ -19,6 +19,7 @@ class Controller:
         self.storage = Storage()
         self.slack = Slack()
 
+
     def execute(self):
         logger.info(f'Scraping Started with URLs in {self.csv_filename}')
 
@@ -47,6 +48,7 @@ class Controller:
         else:
             logger.info(f'No results {self.csv_filename}')
 
+
     def upload_diff(self, uploaded_df: DataFrame, current_df: DataFrame):
         uploaded_urls = uploaded_df['url'].to_numpy()
         current_urls = current_df['url'].to_numpy()
@@ -57,16 +59,20 @@ class Controller:
         for _, row in new_df.iterrows():
             self.slack.notify_new_content(row['text'], row['url'])
 
+
     def upload_all(self, uploaded_df: DataFrame, current_df: DataFrame):
         uploaded_df = uploaded_df.append(current_df, ignore_index=True, sort=False)
         uploaded_df.drop_duplicates(subset='url', inplace=True)
         self.storage.upload_after_delete(self.all_csv, uploaded_df.to_csv(index=False))
 
+
     def notify_start(self):
         self.slack.notify_start(self.csv_filename, self.event_id)
 
+
     def notify_finish(self):
         self.slack.notify_finish(self.csv_filename, self.event_id)
+
 
     def notify_error(self, error):
         self.slack.notify_error(self.csv_filename, self.event_id, f'{error}')
