@@ -6,7 +6,6 @@ from scripts.shinchaku_logic import ShinchakuLogic, SelectorNameException
 from utility.bs4 import NotFoundException, RequestException
 import pandas as pd
 from utility.storage import Storage
-import os
 
 logger = getLogger(__name__)
 
@@ -54,15 +53,14 @@ class Controller:
         new_urls = [url for url in current_urls if url not in uploaded_urls]
         new_df = current_df[current_df['url'].isin(new_urls)]
         today = datetime.date.today()
-        self.storage.upload(f'daily/{today.year}/{today.month}/{today.day}/{self.csv_filename}', new_df.to_csv(index=False))
-        if os.getenv('RUNNING_ENV') == 'production':
-            for _, row in new_df.iterrows():
-                self.slack.notify_new_content(row['text'], row['url'])
+        self.storage.upload_after_delete(f'daily/{today.year}/{today.month}/{today.day}/{self.csv_filename}', new_df.to_csv(index=False))
+        for _, row in new_df.iterrows():
+            self.slack.notify_new_content(row['text'], row['url'])
 
     def upload_all(self, uploaded_df: DataFrame, current_df: DataFrame):
-        uploaded_df.append(current_df, ignore_index=True, sort=False)
+        uploaded_df = uploaded_df.append(current_df, ignore_index=True, sort=False)
         uploaded_df.drop_duplicates(subset='url', inplace=True)
-        self.storage.upload(self.all_csv, uploaded_df.to_csv(index=False))
+        self.storage.upload_after_delete(self.all_csv, uploaded_df.to_csv(index=False))
 
     def notify_start(self):
         self.slack.notify_start(self.csv_filename, self.event_id)

@@ -2,6 +2,7 @@ from logging import getLogger
 from io import StringIO
 import os
 from google.cloud import storage
+from google.api_core.exceptions import NotFound
 
 logger = getLogger(__name__)
 
@@ -12,11 +13,15 @@ class Storage:
             self.bucket = client.bucket('scraping-subsidy-new')
         else:
             client = storage.Client.from_service_account_json('gcloud-account.json')
-            self.bucket = client.bucket('scraping-subsidy-new-test')
+            self.bucket = client.bucket('scraping-subsidy-new')
 
-    def upload(self, file_name_with_path: str, data: str):
+    def upload_after_delete(self, file_name_with_path: str, data: str):
         blob = self.bucket.blob(file_name_with_path)
         logger.info(f'Uploading {file_name_with_path}')
+        try:
+            blob.delete()
+        except NotFound:
+            pass
         blob.upload_from_string(data)
 
     def download(self, file_name_with_path: str) -> StringIO:

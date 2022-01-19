@@ -24,7 +24,7 @@ def get_soup_by_url(target_url: str) -> BeautifulSoup:
     if data.status_code == 200:
         logger.info(f'{data.status_code} {target_url}')
     else:
-        logger.error(f'{data.status_code} {target_url}')
+        logger.warn(f'{data.status_code} {target_url}')
         raise NotFoundException(f'URL was not found {data.status_code} {target_url}')
 
     soup = BeautifulSoup(data.content, 'html.parser')

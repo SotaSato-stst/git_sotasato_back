@@ -42,19 +42,19 @@ class Slack:
         self.post('scraping-new-post', blocks, '#3a86ff', 'white_check_mark')
 
     def post(self, channel: str, blocks: list, color: str, emoji: str):
-        try:
-            self.client.chat_postMessage(
-                channel=channel,
-                icon_emoji=f':{emoji}:',
-                text='',
-                attachments=json.dumps([{
-                    'color': color,
-                    'blocks': blocks
-                }])
-            )
-            logger.info('Notified to slack')
-        except errors.SlackApiError as e:
-            logger.error(f"Error posting message: {e}")
+        if os.getenv('RUNNING_ENV') == 'production':
+            try:
+                self.client.chat_postMessage(
+                    channel=channel,
+                    icon_emoji=f':{emoji}:',
+                    text='',
+                    attachments=json.dumps([{'color': color, 'blocks': blocks}])
+                )
+                logger.info('Notified to slack')
+            except errors.SlackApiError as e:
+                logger.error(f"Error posting message: {e}")
+        else:
+            logger.info(f'Skipped notification in channel {channel}')
 
     def info_blocks(self, title: str, filename: str, context_id: str):
         return [

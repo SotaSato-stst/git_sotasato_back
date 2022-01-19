@@ -15,7 +15,7 @@ class ShinchakuLogic :
 
         if len(new_htmls) < 0:
             error_message = f'Not Found selector_name {selector_name} in url {target_url}'
-            logger.error(error_message)
+            logger.warn(error_message)
             raise SelectorNameException(error_message)
 
         results = []
