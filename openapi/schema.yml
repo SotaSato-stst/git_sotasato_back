@@ -213,6 +213,12 @@ components:
           type: string
           description: URL
           example: https://www.it-hojo.jp/applicant/
+        subsidy_category:
+          type: string
+          description: 種類
+          enum:
+            - hojo
+            - josei
         start_from:
           type: string
           format: date
@@ -249,6 +255,13 @@ components:
           "$ref": "#/components/schemas/prefecture"
         city:
           "$ref": "#/components/schemas/city"
+        supplier_type:
+          type: string
+          description: 発行機関
+          enum:
+            - ministry
+            - prefecture
+            - city
         business_categories:
           type: array
           items:
