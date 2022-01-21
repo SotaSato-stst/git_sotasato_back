@@ -24,8 +24,8 @@ class CsvUploader:
         new_df = current_df[current_df['url'].isin(new_urls)]
         date_path = f'{self.execute_date.year}/{self.execute_date.month}/{self.execute_date.day}'
         self.storage.upload_after_delete(f'daily/{date_path}/{self.filename}', new_df.to_csv(index=False))
-        # for _, row in new_df.iterrows():
-        #     self.slack.notify_new_content(row['text'], row['url'])
+        for _, row in new_df.iterrows():
+            self.slack.notify_new_content(row['text'], row['url'])
 
 
     def upload_all(self, current_df: DataFrame):
