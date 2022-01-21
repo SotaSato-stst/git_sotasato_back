@@ -30,15 +30,19 @@ class Controller:
             selector_name = row['selector_name']
             url = row['url']
 
-            try:
-                results = ShinchakuLogic.execute(url, self.keywords, selector_name)
-                data.extend(results)
-            except RequestException as e:
-                self.slack.notify_warning(f'{e}')
-            except SelectorNameException as e:
-                self.slack.notify_warning(f'{e}')
-            except NotFoundException as e:
-                self.slack.notify_warning(f'{e}')
+            results = ShinchakuLogic.execute(url, self.keywords, selector_name)
+            data.extend(results)
+
+            # TODO: URLのselector_nameの修正を完了してからエラー通知を復活させる
+            # try:
+            #     results = ShinchakuLogic.execute(url, self.keywords, selector_name)
+            #     data.extend(results)
+            # except RequestException as e:
+            #     self.slack.notify_warning(f'{e}')
+            # except SelectorNameException as e:
+            #     self.slack.notify_warning(f'{e}')
+            # except NotFoundException as e:
+            #     self.slack.notify_warning(f'{e}')
 
         if len(data) > 0:
             current_df = pd.DataFrame(data)
