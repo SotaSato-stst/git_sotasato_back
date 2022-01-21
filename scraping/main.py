@@ -47,6 +47,7 @@ def debug_for_curation():
 
 
 def cloud_function_for_selector(event, context):
+    # Cloud Sheduler → Cloud Pub/Subでcsvファイルの名前をメッセージとして送信しおり、event['data']で受け取ることができる
     if 'data' in event:
         csv_filename = base64.b64decode(event['data']).decode('utf-8')
         controller = SelectorController(

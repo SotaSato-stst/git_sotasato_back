@@ -16,6 +16,7 @@ class JNet21Logic :
         self.page_numbers = [1]
 
     def execute(self) -> List:
+        # URLのパラメータ（perPageやpageなど）を指定可能
         url = 'https://j-net21.smrj.go.jp/snavi/support?genre1=&genre2=&freeWord=&order=DESC&perPage=100&page=1'
         results = []
 
@@ -24,9 +25,13 @@ class JNet21Logic :
         detail_links = list.find_all('a')
 
         for detail_link in detail_links:
-            time.sleep(1)
+            time.sleep(1) # 一応間を開けて、瞬間大量アクセスを避けている
             source_url = urljoin('https://j-net21.smrj.go.jp', detail_link.get('href'))
+
+            # 詳細ページへ遷移
             detail_soup = get_soup_by_url(source_url)
+
+            # 載っている外部リンクが情報元なのでそちらを取得syutoku
             target_links = detail_soup.find('ul', class_='listLink').find_all('a')
 
             for target_link in target_links:
