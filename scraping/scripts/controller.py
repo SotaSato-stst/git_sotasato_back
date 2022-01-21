@@ -18,6 +18,9 @@ class Controller:
         self.event_id = event_id
         self.storage = Storage()
         self.slack = Slack()
+        t_delta = datetime.timedelta(hours=9)
+        JST = datetime.timezone(t_delta, 'JST')
+        self.execute_date = datetime.datetime.now(JST)
 
 
     def execute(self):
@@ -58,8 +61,8 @@ class Controller:
         current_urls = current_df['url'].to_numpy()
         new_urls = [url for url in current_urls if url not in uploaded_urls]
         new_df = current_df[current_df['url'].isin(new_urls)]
-        today = datetime.date.today()
-        self.storage.upload_after_delete(f'daily/{today.year}/{today.month}/{today.day}/{self.csv_filename}', new_df.to_csv(index=False))
+        date_path = f'{self.execute_date.year}/{self.execute_date.month}/{self.execute_date.day}'
+        self.storage.upload_after_delete(f'daily/{date_path}/{self.csv_filename}', new_df.to_csv(index=False))
         for _, row in new_df.iterrows():
             self.slack.notify_new_content(row['text'], row['url'])
 
