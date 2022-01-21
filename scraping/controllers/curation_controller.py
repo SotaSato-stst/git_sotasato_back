@@ -14,8 +14,7 @@ class CurationController:
 
 
     def execute(self):
-        data = []
-        data.append(JNet21Logic().execute())
+        data = JNet21Logic().execute()
         df = pd.DataFrame(data)
         self.csv_uploader.upload_diff(df)
         self.csv_uploader.upload_all(df)
