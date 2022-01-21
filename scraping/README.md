@@ -28,4 +28,12 @@ Google Cloud Storageへのアップロードテストを行うには、アクセ
 サイト毎の構造に最適化されたデータ取得処理を実行します。
 
 ## デプロイ
-※追記
+gcloudの権限をもらい、ローカルにgcloud cliをインストールします  
+
+gcloudのインストール  
+https://cloud.google.com/sdk/gcloud
+
+デプロイコマンド  
+```
+$ scraping/bin/deploy
+```
