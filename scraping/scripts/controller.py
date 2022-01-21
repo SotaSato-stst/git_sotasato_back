@@ -1,11 +1,11 @@
 from logging import getLogger
 import datetime
-from pandas.core.frame import DataFrame
-from utility.slack import Slack
-from scripts.shinchaku_logic import ShinchakuLogic, SelectorNameException
-from utility.bs4 import NotFoundException, RequestException
 import pandas as pd
+from pandas.core.frame import DataFrame
+from scripts.shinchaku_logic import ShinchakuLogic
+from scripts.j_net21_logic import JNet21Logic
 from utility.storage import Storage
+from utility.slack import Slack
 
 logger = getLogger(__name__)
 
@@ -25,10 +25,14 @@ class Controller:
 
     def execute(self):
         logger.info(f'Scraping Started with URLs in {self.csv_filename}')
-
-        csv = pd.read_csv(f'master_data/{self.csv_filename}')
         data = []
 
+        # J-Net 21サイト
+        results = JNet21Logic().execute()
+        data.extend(results)
+
+        # 地方自治体サイト
+        csv = pd.read_csv(f'master_data/{self.csv_filename}')
         for _, row in csv.iterrows():
             selector_name = row['selector_name']
             url = row['url']
@@ -40,11 +44,7 @@ class Controller:
             # try:
             #     results = ShinchakuLogic.execute(url, self.keywords, selector_name)
             #     data.extend(results)
-            # except RequestException as e:
-            #     self.slack.notify_warning(f'{e}')
-            # except SelectorNameException as e:
-            #     self.slack.notify_warning(f'{e}')
-            # except NotFoundException as e:
+            # except Exception as e:
             #     self.slack.notify_warning(f'{e}')
 
         if len(data) > 0:
