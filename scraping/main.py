@@ -1,7 +1,8 @@
 import base64
 import os
 from logging import INFO, NOTSET, basicConfig, getLogger, StreamHandler
-from scripts.controller import Controller
+from controllers.selector_controller import SelectorController
+from controllers.curation_controller import CurationController
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,10 +24,10 @@ basicConfig(
 logger = getLogger(__name__)
 
 
-def main():
+def debug_for_selector():
     logger.info('[DEBUG] Scraping Started')
     try:
-        controller = Controller()
+        controller = SelectorController()
         controller.execute()
         logger.info('[DEBUG] Scraping Finished')
     except BaseException as e:
@@ -34,10 +35,21 @@ def main():
         logger.error('[DEBUG] Scraping Failed')
 
 
-def cloud_function(event, context):
+def debug_for_curation():
+    logger.info('[DEBUG] Scraping Started')
+    try:
+        controller = CurationController()
+        controller.execute()
+        logger.info('[DEBUG] Scraping Finished')
+    except BaseException as e:
+        logger.exception(e)
+        logger.error('[DEBUG] Scraping Failed')
+
+
+def cloud_function_for_selector(event, context):
     if 'data' in event:
         csv_filename = base64.b64decode(event['data']).decode('utf-8')
-        controller = Controller(
+        controller = SelectorController(
             csv_filename,
             context.event_id
         )
@@ -45,6 +57,7 @@ def cloud_function(event, context):
         try:
             controller.notify_start()
             controller.execute()
+            controller.notify_finish()
         except BaseException as e:
             logger.exception(e)
             controller.notify_error(e)
@@ -52,7 +65,20 @@ def cloud_function(event, context):
     else:
         logger.error('Message Not Found')
 
-    controller.notify_finish()
+
+def cloud_function_for_curation(event, context):
+    controller = CurationController(context.event_id)
+
+    try:
+        controller.notify_start()
+        controller.execute()
+        controller.notify_finish()
+    except BaseException as e:
+        logger.exception(e)
+        controller.notify_error(e)
+
 
 if __name__ == "__main__":
-    main()
+    logger.info('実行したい関数を選択してください')
+    # debug_for_selector()
+    # debug_for_curation()

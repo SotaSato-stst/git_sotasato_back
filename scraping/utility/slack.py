@@ -10,27 +10,27 @@ class Slack:
         self.client = WebClient(token=os.environ.get('SLACK_TOKEN'))
 
 
-    def notify_start(self, filename: str, context_id: str):
+    def notify_start(self, target_name: str, context_id: str):
         blocks = self.info_blocks(
             'スクレイピングが開始されました',
-            filename,
+            target_name,
             context_id
         )
         self.post('scraping-logs', blocks, '#0b5cad', 'clock1')
 
 
-    def notify_finish(self, filename: str, context_id: str):
+    def notify_finish(self, target_name: str, context_id: str):
         blocks = self.info_blocks(
             'スクレイピングが正常終了しました',
-            filename,
+            target_name,
             context_id
         )
         self.post('scraping-logs', blocks, '#108548', 'white_check_mark')
 
 
-    def notify_error(self, filename: str, context_id: str, error):
+    def notify_error(self, target_name: str, context_id: str, error):
         blocks = self.error_blocks(
-            filename,
+            target_name,
             context_id,
             error
         )
@@ -63,7 +63,7 @@ class Slack:
             logger.info(f'Skipped notification in channel {channel}')
 
 
-    def info_blocks(self, title: str, filename: str, context_id: str):
+    def info_blocks(self, title: str, target_name: str, context_id: str):
         return [
             {
                 "type": "section",
@@ -79,7 +79,7 @@ class Slack:
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": f'*File*\n{filename}'
+                        "text": f'*Target*\n{target_name}'
                     },
                     {
                         "type": "mrkdwn",
@@ -117,7 +117,7 @@ class Slack:
         ]
 
 
-    def error_blocks(self, filename: str, context_id: str, error: str):
+    def error_blocks(self, target_name: str, context_id: str, error: str):
         return [
             {
                 "type": "section",
@@ -133,7 +133,7 @@ class Slack:
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": f'*File*\n{filename}'
+                        "text": f'*Target*\n{target_name}'
                     },
                     {
                         "type": "mrkdwn",

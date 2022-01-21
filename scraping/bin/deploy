@@ -1,3 +1,5 @@
 #!/bin/sh
 
-gcloud functions deploy scraping-subsidy-new --entry-point cloud_function --trigger-topic scraping-subsidy-new --runtime python38
+gcloud functions deploy scraping-subsidy-selector --entry-point cloud_function_for_selector --trigger-topic scraping-subsidy-selector --runtime python38
+
+gcloud functions deploy scraping-subsidy-curation --entry-point cloud_function_for_curation --trigger-topic scraping-subsidy-curation --runtime python38
