@@ -3,6 +3,7 @@ import os
 from logging import INFO, NOTSET, basicConfig, getLogger, StreamHandler
 from controllers.selector_controller import SelectorController
 from controllers.curation_controller import CurationController
+from utility.slack import Slack
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -50,18 +51,19 @@ def cloud_function_for_selector(event, context):
     # Cloud Sheduler → Cloud Pub/Subでcsvファイルの名前をメッセージとして送信しおり、event['data']で受け取ることができる
     if 'data' in event:
         csv_filename = base64.b64decode(event['data']).decode('utf-8')
-        controller = SelectorController(
-            csv_filename,
-            context.event_id
-        )
+        controller = SelectorController(csv_filename)
+        slack = Slack()
 
         try:
-            controller.notify_start()
-            controller.execute()
-            controller.notify_finish()
+            slack.notify_start(csv_filename, context.event_id)
+            warnings = controller.execute()
+            if len(warnings) > 0:
+                slack.notify_warning('\n'.join(warnings))
         except BaseException as e:
             logger.exception(e)
-            controller.notify_error(e)
+            slack.notify_error(csv_filename, context.event_id, f'{e}')
+        else:
+            slack.notify_finish(csv_filename, context.event_id)
 
     else:
         logger.error('Message Not Found')
@@ -70,13 +72,19 @@ def cloud_function_for_selector(event, context):
 def cloud_function_for_curation(event, context):
     controller = CurationController(context.event_id)
 
+    slack = Slack()
+    notification_description = 'キュレーションサイト'
+
     try:
-        controller.notify_start()
-        controller.execute()
-        controller.notify_finish()
+        slack.notify_start(notification_description, context.event_id)
+        warnings = controller.execute()
+        if len(warnings) > 0:
+            slack.notify_warning('\n'.join(warnings))
     except BaseException as e:
         logger.exception(e)
-        controller.notify_error(e)
+        slack.notify_error(notification_description, context.event_id, f'{e}')
+    else:
+        slack.notify_finish(notification_description, context.event_id)
 
 
 if __name__ == "__main__":

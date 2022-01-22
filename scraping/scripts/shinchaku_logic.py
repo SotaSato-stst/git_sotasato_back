@@ -1,6 +1,6 @@
 from typing import List
 from urllib.parse import urljoin
-from utility.bs4 import get_soup_by_url
+from utility.request import get_soup
 from logging import getLogger
 
 logger = getLogger(__name__)
@@ -11,7 +11,7 @@ class SelectorNameException(Exception):
 
 class ShinchakuLogic :
     def execute(target_url: str, keywords: List, selector_name: str) -> List:
-        soup = get_soup_by_url(target_url)
+        soup = get_soup(target_url)
         new_htmls = soup.select(selector_name)
 
         if len(new_htmls) < 0:
