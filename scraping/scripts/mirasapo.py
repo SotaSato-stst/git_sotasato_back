@@ -6,7 +6,7 @@ from utility.request import request_response
 
 logger = getLogger(__name__)
 
-class MirasapoLogic :
+class Mirasapo:
     base_url = 'https://seido-navi.mirasapo-plus.go.jp/supports'
     # URLのパラメータ（limitやoffsetなど）を指定可能
     # service_category=3 補助金に絞る
@@ -36,7 +36,7 @@ class MirasapoLogic :
                 for url in urls:
                     dic = {
                         'target_url': self.base_url,
-                        'text': text,
+                        'text': ''.join(text.split()),
                         'url': url
                     }
                     results.append(dic)
@@ -46,7 +46,7 @@ class MirasapoLogic :
                 url = f'{self.base_url}/{item["id"]}'
                 dic = {
                     'target_url': self.base_url,
-                    'text': text,
+                    'text': ''.join(text.split()),
                     'url': url
                 }
                 results.append(dic)

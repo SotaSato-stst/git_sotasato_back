@@ -1,7 +1,7 @@
 from typing import List
 from logging import getLogger
 import pandas as pd
-from scripts.shinchaku_logic import ShinchakuLogic
+from scripts.shinchaku import Shinchaku
 from utility.data_operater import DataOperater
 from utility.csv_uploader import CsvUploader
 
@@ -33,7 +33,7 @@ class SelectorController:
             url = row['url']
 
             try:
-                results = ShinchakuLogic.execute(url, self.keywords, selector_name)
+                results = Shinchaku.execute(url, self.keywords, selector_name)
                 data.extend(results)
             except Exception as e:
                 logger.warn(e)
@@ -45,7 +45,8 @@ class SelectorController:
             new_df = self.data_operater.filter_new_records(df)
             all_df = self.data_operater.merge_to_all(df)
 
-            self.csv_uploader.upload_daily(new_df)
+            if len(new_df) > 0:
+                self.csv_uploader.upload_daily(new_df)
             self.csv_uploader.upload_all(all_df)
         else:
             message = f'No results {self.csv_filename}'

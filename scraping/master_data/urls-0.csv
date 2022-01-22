@@ -1,4 +1,7 @@
 selector_name,url
+#contentsMainInner,https://www.mlit.go.jp/kankocho/page01_000604.html
+.m-grid__col1,https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/koyou/kyufukin/index_00007.html
+#contentsColumnWrapL,https://www.mlit.go.jp/jidosha/jidosha_tk1_000015.html
 #main,https://www.town.iwanai.hokkaido.jp/?page_id=38296
 #main,https://www.city.asahikawa.hokkaido.jp/10013/10014/news.html
 #main,https://www.town.kahoku.yamagata.jp/13.html

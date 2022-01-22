@@ -6,7 +6,7 @@ from utility.request import get_soup
 
 logger = getLogger(__name__)
 
-class JNet21Logic :
+class JNet21:
     base_url = 'https://j-net21.smrj.go.jp'
     url = 'https://j-net21.smrj.go.jp/snavi/support?genre1=&genre2=&freeWord=&order=DESC&perPage=100&page=1'
 

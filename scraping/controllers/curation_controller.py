@@ -1,8 +1,8 @@
 from typing import List
 from logging import getLogger
 import pandas as pd
-from scripts.j_net21_logic import JNet21Logic
-from scripts.mirasapo_logic import MirasapoLogic
+from scripts.j_net21 import JNet21
+from scripts.mirasapo import Mirasapo
 from utility.data_operater import DataOperater
 from utility.csv_uploader import CsvUploader
 
@@ -21,13 +21,13 @@ class CurationController:
         warnings = []
 
         try:
-            data.extend(JNet21Logic().execute())
+            data.extend(JNet21().execute())
         except Exception as e:
             logger.warn(e)
             warnings.append(e)
 
         try:
-            data.extend(MirasapoLogic().execute())
+            data.extend(Mirasapo().execute())
         except Exception as e:
             logger.warn(e)
             warnings.append(f'{e}')
@@ -37,7 +37,8 @@ class CurationController:
         new_df = self.data_operater.filter_new_records(df)
         all_df = self.data_operater.merge_to_all(df)
 
-        self.csv_uploader.upload_daily(new_df)
+        if len(new_df) > 0:
+            self.csv_uploader.upload_daily(new_df)
         self.csv_uploader.upload_all(all_df)
 
         return warnings
