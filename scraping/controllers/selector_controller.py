@@ -43,10 +43,10 @@ class SelectorController:
             df = pd.DataFrame(data)
 
             new_df = self.data_operater.filter_new_records(df)
-            all_f = self.data_operater.merge_to_all(df)
+            all_df = self.data_operater.merge_to_all(df)
 
             self.csv_uploader.upload_daily(new_df)
-            self.csv_uploader.upload_all(all_f)
+            self.csv_uploader.upload_all(all_df)
         else:
             message = f'No results {self.csv_filename}'
             logger.warn(message)
