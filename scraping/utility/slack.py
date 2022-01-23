@@ -25,7 +25,7 @@ class Slack:
             target_name,
             context_id
         )
-        self.post('scraping-logs', blocks, '#108548', 'white_check_mark')
+        self.post('scraping-history', blocks, '#108548', 'white_check_mark')
 
 
     def notify_error(self, target_name: str, context_id: str, error):
@@ -34,7 +34,7 @@ class Slack:
             context_id,
             error
         )
-        self.post('scraping-error-logs', blocks, '#dd2b0e', 'bug')
+        self.post('scraping-errors', blocks, '#dd2b0e', 'bug')
 
 
     def notify_warning(self, message: str):
@@ -44,7 +44,7 @@ class Slack:
 
     def notify_new_content(self, title: str, url: str):
         blocks = self.new_blocks(title, url)
-        self.post('scraping-new-post', blocks, '#3a86ff', 'white_check_mark')
+        self.post('新着支援情報', blocks, '#3a86ff', 'white_check_mark')
 
 
     def post(self, channel: str, blocks: list, color: str, emoji: str):
