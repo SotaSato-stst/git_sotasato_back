@@ -9,12 +9,18 @@ import {Subsidy, SubsidiesResponse} from '~/types/Subsidy'
 })
 export default class SubsidiesModule extends VuexModule {
   subsidies: Subsidy[] = []
+  subsidy: Subsidy | null = null
   currentPage: number = 0
   totalPages: number = 0
 
   @Mutation
   setSubsidies(subsidies: Subsidy[]) {
     this.subsidies = subsidies
+  }
+
+  @Mutation
+  setSubsidy(subsidy: Subsidy) {
+    this.subsidy = subsidy
   }
 
   @Mutation
@@ -39,5 +45,16 @@ export default class SubsidiesModule extends VuexModule {
   updateCurrentPage(page: number) {
     this.setCurrentPage(page)
     this.getSubsidies()
+  }
+
+  // TODO:ikegaki APIでサーバーからsubsidyを取得するように変更
+  @Action({rawError: true})
+  getSubsidy(id: number) {
+    const subsidy: Subsidy = {
+      id,
+      title: 'Test',
+      url: 'https://test.com',
+    }
+    this.setSubsidy(subsidy)
   }
 }

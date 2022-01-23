@@ -30,6 +30,11 @@ vscodeのsettings.jsonにて以下の箇所を追加すると、ファイル保�
 }
 ```
 
+### UIライブラリの使用
+Element UIを使用しています。  
+https://element.eleme.io/#/en-US/component/quickstart  
+一通りコンポーネントの種類を把握してみてください。
+
 ### Credentialsの設置
 ※追記
 
