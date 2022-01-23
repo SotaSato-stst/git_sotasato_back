@@ -17,7 +17,7 @@
 require 'rails_helper'
 
 RSpec.describe SubsidyMinistry, type: :model do
-  describe '#crate' do
+  describe '#create' do
     it do
       expect(create(:subsidy_ministry)).to be_present
     end
