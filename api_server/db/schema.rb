@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_15_123826) do
+ActiveRecord::Schema.define(version: 2022_01_18_141002) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -19,6 +19,20 @@ ActiveRecord::Schema.define(version: 2022_01_15_123826) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["prefecture_id"], name: "index_cities_on_prefecture_id"
+  end
+
+  create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "prefecture_id", null: false
+    t.bigint "city_id", null: false
+    t.string "adress"
+    t.integer "capital"
+    t.integer "total_employee"
+    t.string "business_scale"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_companies_on_city_id"
+    t.index ["prefecture_id"], name: "index_companies_on_prefecture_id"
   end
 
   create_table "ministries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

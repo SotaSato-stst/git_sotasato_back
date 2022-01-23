@@ -2,9 +2,9 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Hojokin Dock API
-  description: '補助金ドックのAPIドキュメント'
+  description: "補助金ドックのAPIドキュメント"
 servers:
-  - url: 'http://localhost:3000'
+  - url: "http://localhost:3000"
 tags:
   - name: subsidy
     description: 補助金情報
@@ -18,17 +18,17 @@ paths:
   "/subsidies":
     get:
       tags:
-      - subsidy
+        - subsidy
       summary: 補助金情報一覧
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
                 type: object
                 required:
-                - subsidies
+                  - subsidies
                 properties:
                   subsidies:
                     type: array
@@ -36,18 +36,18 @@ paths:
                       "$ref": "#/components/schemas/subsidy"
   "/subsidies/{id}":
     parameters:
-    - name: id
-      in: path
-      required: true
-      description: subsidyのid
-      schema:
-        type: integer
+      - name: id
+        in: path
+        required: true
+        description: subsidyのid
+        schema:
+          type: integer
     get:
       tags:
-      - subsidy
+        - subsidy
       summary: 補助金情報詳細
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
@@ -56,17 +56,17 @@ paths:
   "/ministries":
     get:
       tags:
-      - ministry
+        - ministry
       summary: 省庁一覧
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
                 type: object
                 required:
-                - ministries
+                  - ministries
                 properties:
                   ministries:
                     type: array
@@ -75,17 +75,17 @@ paths:
   "/prefectures":
     get:
       tags:
-      - prefecture
+        - prefecture
       summary: 都道府県一覧
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
                 type: object
                 required:
-                - prefectures
+                  - prefectures
                 properties:
                   prefectures:
                     type: array
@@ -93,25 +93,25 @@ paths:
                       "$ref": "#/components/schemas/prefecture"
   "/prefectures/{id}/cities":
     parameters:
-    - name: id
-      in: path
-      required: true
-      description: prefectureのid
-      schema:
-        type: integer
+      - name: id
+        in: path
+        required: true
+        description: prefectureのid
+        schema:
+          type: integer
     get:
       tags:
-      - city
+        - city
       summary: 市長区村一覧
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
                 type: object
                 required:
-                - cities
+                  - cities
                 properties:
                   cities:
                     type: array
@@ -120,17 +120,17 @@ paths:
   "/companies":
     get:
       tags:
-      - company
+        - company
       summary: 会社一覧
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
               schema:
                 type: object
                 required:
-                - companies
+                  - companies
                 properties:
                   companies:
                     type: array
@@ -138,7 +138,7 @@ paths:
                       "$ref": "#/components/schemas/company"
     post:
       tags:
-      - company
+        - company
       summary: 会社作成
       requestBody:
         content:
@@ -146,7 +146,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/company_update"
       responses:
-        '201':
+        "201":
           description: 成功
           content:
             application/json:
@@ -165,7 +165,7 @@ paths:
       tags:
         - company
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
@@ -181,7 +181,7 @@ paths:
             schema:
               "$ref": "#/components/schemas/company_update"
       responses:
-        '200':
+        "200":
           description: 成功
           content:
             application/json:
@@ -223,12 +223,12 @@ components:
           type: string
           format: date
           description: 募集期間（開始日）
-          example: '2022-01-01'
+          example: "2022-01-01"
         end_to:
           type: string
           format: date
           description: 募集期間（終了日）
-          example: '2022-02-01'
+          example: "2022-02-01"
         price_max:
           type: integer
           description: 最大支援金額
@@ -362,7 +362,6 @@ components:
         - business_scale
         - prefecture
         - city
-        - business_categories
       properties:
         id:
           type: integer

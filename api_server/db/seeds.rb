@@ -82,4 +82,45 @@ if Rails.env.development?
       target_detail: hash[:target_detail]
     )
   end
+  company_hashes = [
+    {
+      name: '池垣株式会社',
+      prefecture_name: '大阪府',
+      city_id: '1',
+      adress: 'つくば市天久保3丁目12-34',
+      capital: '200000',
+      total_employee: '200',
+      business_scale: 'large'
+    },
+    {
+      name: '池垣物産',
+      prefecture_name: '神奈川県',
+      city_id: '2',
+      adress: '河内長野市南希望が丘30-203',
+      capital: '20010',
+      total_employee: '3',
+      business_scale: 'small_business'
+    },
+    {
+      name: 'IGnet',
+      prefecture_name: '香川県',
+      city_id: '3',
+      adress: '千歳市30-2',
+      capital: '5040404',
+      total_employee: '30',
+      business_scale: 'small_business'
+    }
+  ]
+  prefectures = Prefecture.all.index_by(&:name)
+  company_hashes.each do |hash|
+    company = Company.find_or_initialize_by(name: hash[:name])
+    company.update!(
+      prefecture: prefectures[hash[:prefecture_name]],
+      capital: hash[:capital],
+      city_id: hash[:city_id],
+      adress: hash[:adress],
+      total_employee: hash[:total_employee],
+      business_scale: hash[:business_scale]
+    )
+  end
 end
