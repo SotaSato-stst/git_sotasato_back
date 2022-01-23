@@ -1,22 +1,24 @@
 from logging import getLogger
-from io import StringIO
 import os
 from google.cloud import storage
 from google.api_core.exceptions import NotFound
 
 logger = getLogger(__name__)
 
-class Storage:
+# !!!!!!! 公開ストレージ !!!!!!!!
+# !!!!!!! ! 使用注意 !  !!!!!!!!
+class PublicStorage:
+    public_url = 'https://storage.googleapis.com/hojokin-dock-public'
+
     def __init__(self):
         if os.getenv('RUNNING_ENV') == 'production':
             client = storage.Client()
-            self.bucket = client.bucket('scraping-subsidy-new')
         else:
             client = storage.Client.from_service_account_json('gcloud-account.json')
-            self.bucket = client.bucket('scraping-subsidy-new-test')
+        self.bucket = client.bucket('hojokin-dock-public')
 
 
-    def upload_after_delete(self, file_name_with_path: str, data: str):
+    def upload_after_delete(self, file_name_with_path: str, data: str) -> str:
         blob = self.bucket.blob(file_name_with_path)
         logger.info(f'Uploading {file_name_with_path}')
 
@@ -25,9 +27,4 @@ class Storage:
         except NotFound:
             pass
         blob.upload_from_string(data)
-
-
-    def download(self, file_name_with_path: str) -> StringIO:
-        blob = self.bucket.blob(file_name_with_path)
-        logger.info(f'Downloading {file_name_with_path}')
-        return StringIO(blob.download_as_text())
+        return self.public_url + file_name_with_path
