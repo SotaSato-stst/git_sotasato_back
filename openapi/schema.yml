@@ -10,10 +10,14 @@ tags:
     description: 補助金情報
   - name: ministry
     description: 省庁
+  - name: company
+    description: 会社
   - name: prefecture
     description: 都道府県
   - name: city
     description: 市長区村
+  - name: business_category
+    description: 業種
 paths:
   "/subsidies":
     get:
@@ -187,6 +191,25 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/company"
+  "/business_categories":
+    get:
+      tags:
+        - business_category
+      summary: 業種一覧
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - business_categories
+                properties:
+                  business_categories:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/business_category"
 components:
   schemas:
     subsidy:
@@ -334,13 +357,13 @@ components:
       type: object
       nullable: true
       required:
-        - id
+        - key
         - name
       properties:
-        id:
-          type: integer
-          description: id
-          example: 1
+        key:
+          type: string
+          description: enumのkey
+          example: seizo
         name:
           type: string
           description: 業種名
@@ -422,9 +445,9 @@ components:
           type: integer
           description: 市長区村ID
           example: 1
-        business_category_ids:
+        business_categories:
           type: array
           items:
-            type: integer
-            description: 業種ID
-            example: 1
+            type: string
+            description: 業種enum
+            example: seizo
