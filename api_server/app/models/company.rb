@@ -21,5 +21,12 @@
 class Company < ApplicationRecord
   belongs_to :prefecture
   belongs_to :city
+  has_many :company_business_categories
   enum business_scale: { small_business: 'small_business', small_and_medium: 'small_and_medium', large: 'large' }
+
+  def business_categories
+    company_business_categories.map do |company_business_category|
+      BusinessCategory.to_option(company_business_category.business_category)
+    end
+  end
 end

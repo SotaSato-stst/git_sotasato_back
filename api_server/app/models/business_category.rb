@@ -32,5 +32,9 @@ class BusinessCategory
     def to_options
       all.map { |key, name| { key: key, name: name } }
     end
+
+    def to_option(key)
+      { key: key.to_s, name: all[key.to_sym] }
+    end
   end
 end

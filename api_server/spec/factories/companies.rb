@@ -21,8 +21,8 @@
 FactoryBot.define do
   factory :company do
     name { '池垣物産'  }
-    prefecture_id { '3' }
-    city_id { '3' }
+    city { association(:city) }
+    prefecture { city.prefecture }
     adress { '千歳市30-2' }
     capital { '5040404' }
     total_employee { '30' }

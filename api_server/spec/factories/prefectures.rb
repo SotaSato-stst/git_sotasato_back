@@ -14,7 +14,7 @@
 #
 FactoryBot.define do
   factory :prefecture do
-    name { 'name' }
+    sequence(:name, 'name_1')
     logo_url { 'https://example.com/logo.png' }
   end
 end

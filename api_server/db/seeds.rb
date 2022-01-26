@@ -94,7 +94,8 @@ if Rails.env.development?
       adress: 'つくば市天久保3丁目12-34',
       capital: '200000',
       total_employee: '200',
-      business_scale: 'large'
+      business_scale: 'large',
+      business_categories: ['seizo']
     },
     {
       name: '池垣物産',
@@ -103,7 +104,8 @@ if Rails.env.development?
       adress: '河内長野市南希望が丘30-203',
       capital: '20010',
       total_employee: '3',
-      business_scale: 'small_business'
+      business_scale: 'small_business',
+      business_categories: ['gyogyo']
     },
     {
       name: 'IGnet',
@@ -112,12 +114,16 @@ if Rails.env.development?
       adress: '千歳市30-2',
       capital: '5040404',
       total_employee: '30',
-      business_scale: 'small_business'
+      business_scale: 'small_business',
+      business_categories: ['seizo', 'hotel_insyoku']
     }
   ]
   prefectures = Prefecture.all.index_by(&:name)
   company_hashes.each do |hash|
     company = Company.find_or_initialize_by(name: hash[:name])
+    company.business_categories = hash[:business_categories].map do |category|
+      company.business_categories.build(business_category: category)
+    end
     company.update!(
       prefecture: prefectures[hash[:prefecture_name]],
       capital: hash[:capital],

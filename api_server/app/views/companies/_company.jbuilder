@@ -6,3 +6,6 @@ end
 json.city do
   json.partial! 'cities/city', city: company.city
 end
+json.business_categories company.business_categories.map do |business_category|
+  json.merge! business_category
+end
