@@ -28,5 +28,9 @@ class BusinessCategory
     def enum_hash
       all.keys.map(&:to_s).map { |k| { k => k } }.inject(&:merge)
     end
+
+    def to_options
+      all.map { |key, name| { key: key, name: name } }
+    end
   end
 end

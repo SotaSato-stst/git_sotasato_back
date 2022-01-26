@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_141002) do
+ActiveRecord::Schema.define(version: 2022_01_26_110651) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2022_01_18_141002) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["city_id"], name: "index_companies_on_city_id"
     t.index ["prefecture_id"], name: "index_companies_on_prefecture_id"
+  end
+
+  create_table "company_business_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "business_category", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id", "business_category"], name: "index_unique_company_business_categories", unique: true
+    t.index ["company_id"], name: "index_company_business_categories_on_company_id"
   end
 
   create_table "ministries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
