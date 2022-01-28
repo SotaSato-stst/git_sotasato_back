@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id           :bigint           not null, primary key
+#  account_type :string(255)      default("user"), not null
 #  display_name :string(255)      default(""), not null
 #  email        :string(255)      default(""), not null
 #  firebase_uid :string(255)      not null
@@ -20,6 +21,15 @@ FactoryBot.define do
     display_name { '田中太郎' }
     email { 'tanaka@test.com' }
     firebase_uid { 'firebase_uid' }
+    account_type { 'user' }
     company { association(:company) }
+
+    trait :editor do
+      account_type { 'editor' }
+    end
+
+    trait :admin do
+      account_type { 'admin' }
+    end
   end
 end

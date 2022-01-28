@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Users', type: :request do
-  let(:admin_user) { create(:user) }
+  let(:sign_in_user) { create(:user, :admin) }
   let(:user) { create(:user, display_name: 'テスト太郎', email: 'taro@test.com', firebase_uid: 'test') }
 
   before do
-    sign_in_with(admin_user)
+    sign_in_with(sign_in_user)
   end
 
   describe 'GET /admin/users' do
@@ -23,6 +23,15 @@ RSpec.describe 'Admin::Users', type: :request do
       expect(json['users'][1]['email']).to eq 'taro@test.com'
       expect(json['users'][1]['firebase_uid']).to eq 'test'
     end
+
+    context 'sign_in_user is not admin' do
+      let(:sign_in_user) { create(:user) }
+
+      it 'returns 403' do
+        subject
+        expect(response.status).to eq 403
+      end
+    end
   end
 
   describe 'GET /admin/users/:id' do
@@ -38,6 +47,15 @@ RSpec.describe 'Admin::Users', type: :request do
       expect(json['display_name']).to eq 'テスト太郎'
       expect(json['email']).to eq 'taro@test.com'
       expect(json['firebase_uid']).to eq 'test'
+    end
+
+    context 'sign_in_user is not admin' do
+      let(:sign_in_user) { create(:user) }
+
+      it 'returns 403' do
+        subject
+        expect(response.status).to eq 403
+      end
     end
   end
 
@@ -63,6 +81,15 @@ RSpec.describe 'Admin::Users', type: :request do
       expect(json['email']).to eq 'jiro@test.com'
       expect(json['firebase_uid']).to eq 'jiro_id'
     end
+
+    context 'sign_in_user is not admin' do
+      let(:sign_in_user) { create(:user) }
+
+      it 'returns 403' do
+        subject
+        expect(response.status).to eq 403
+      end
+    end
   end
 
   describe 'PUT /admin/users/:id' do
@@ -86,6 +113,15 @@ RSpec.describe 'Admin::Users', type: :request do
       expect(json['display_name']).to eq 'さぶろう'
       expect(json['email']).to eq 'saburo@test.com'
       expect(json['firebase_uid']).to eq 'saburo_id'
+    end
+
+    context 'sign_in_user is not admin' do
+      let(:sign_in_user) { create(:user) }
+
+      it 'returns 403' do
+        subject
+        expect(response.status).to eq 403
+      end
     end
   end
 end

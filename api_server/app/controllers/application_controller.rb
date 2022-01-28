@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :verify_token
+  before_action :verify_token, :check_permission
 
   def verify_token
     uid = TokenVerifier.new(params['token']).execute
@@ -10,5 +10,16 @@ class ApplicationController < ActionController::API
 
   def current_user # rubocop:disable Style/TrivialAccessors
     @current_user
+  end
+
+  def check_permission
+    permission =
+      if params[:controller].start_with?('admin')
+        current_user.admin?
+      else
+        true
+      end
+
+    render json: { message: '権限がありません' }, status: 403 unless permission
   end
 end
