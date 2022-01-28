@@ -6,12 +6,14 @@ info:
 servers:
   - url: "http://localhost:3000"
 tags:
+  - name: admin/user
+    description: ユーザー管理
+  - name: company
+    description: 会社
   - name: subsidy
     description: 補助金情報
   - name: ministry
     description: 省庁
-  - name: company
-    description: 会社
   - name: prefecture
     description: 都道府県
   - name: city
@@ -210,6 +212,104 @@ paths:
                     type: array
                     items:
                       "$ref": "#/components/schemas/business_category"
+  "/admin/users":
+    get:
+      tags:
+        - admin/user
+      summary: ユーザー一覧
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - users
+                properties:
+                  users:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/user"
+    post:
+      tags:
+        - admin/user
+      summary: ユーザー作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - display_name
+                - email
+              properties:
+                display_name:
+                  type: string
+                  description: ユーザー名
+                  example: 田中太郎
+                email:
+                  type: string
+                  description: email
+                  example: taro.tanaka@example.com
+                firebase_uid:
+                  type: string
+                  description: firebaseのuid
+                  example: xxxxxxxxxxxxxxxxxxxx
+      responses:
+        "201":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/user"
+  "/admin/users/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: userのid
+        schema:
+          type: integer
+    get:
+      summary: ユーザー詳細
+      tags:
+        - admin/user
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/user"
+    put:
+      summary: ユーザー更新
+      tags:
+        - admin/user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - display_name
+                - email
+              properties:
+                display_name:
+                  type: string
+                  description: ユーザー名
+                  example: 田中太郎
+                email:
+                  type: string
+                  description: email
+                  example: taro.tanaka@example.com
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/user"
 components:
   schemas:
     subsidy:
@@ -451,3 +551,27 @@ components:
             type: string
             description: 業種enum
             example: seizo
+    user:
+      type: object
+      required:
+        - id
+        - display_name
+        - email
+        - firebase_uid
+      properties:
+        id:
+          type: integer
+          description: ユーザーID
+          example: 1
+        display_name:
+          type: string
+          description: ユーザー名
+          example: 田中太郎
+        email:
+          type: string
+          description: email
+          example: taro.tanaka@example.com
+        firebase_uid:
+          type: string
+          description: firebaseのuid
+          example: xxxxxxxxxxxxxxxxxxxx

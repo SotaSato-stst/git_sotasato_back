@@ -7,4 +7,8 @@ Rails.application.routes.draw do
     resources :cities, only: %i[index]
   end
   resources :business_categories, only: :index
+
+  namespace :admin do
+    resources :users, only: %i[index show create update]
+  end
 end
