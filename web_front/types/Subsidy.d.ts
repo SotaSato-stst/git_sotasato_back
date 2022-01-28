@@ -1,3 +1,10 @@
+import {Ministry} from './Ministry'
+import {Prefecture} from './Prefecture'
+import {City} from './City'
+
+export type SubsidyCategory = 'hojo' | 'josei'
+export type SupplierType = 'ministry' | 'prefecture' | 'city'
+
 export type Subsidy = {
   id: number
   title: string
@@ -11,59 +18,12 @@ export type Subsidy = {
   level: number
   detail: string
   targetDetail: string
-  subsidyCategory: string
-  supplierType: string
-  ministry: {
-    id: number
-    name: string
-    logoUrl: string
-  }
-  prefecture: {
-    id: number
-    name: string
-    logoUrl: string
-  }
-  city: {
-    id: number
-    name: string
-    logoUrl: string
-    prefectureId: number
-  }
+  subsidyCategory: SubsidyCategory
+  supplierType: SupplierType
+  ministry: Ministry
+  prefecture: Prefecture
+  city: City
 }
-
-// export type Prefecture = {
-//   id: number
-//   name: string
-//   logoUrl: string
-// }
-
-// export type PrefecturesResponse = {
-//   prefectures: Prefecture[]
-//   currentPage: number
-//   totalPages: number
-// }
-// export type Ministry = {
-//   id: number
-//   name: string
-//   logoUrl: string
-// }
-
-// export type MinistriesResponse = {
-//   ministries: Ministry[]
-//   currentPage: number
-//   totalPages: number
-// }
-// export type City = {
-//   id: number
-//   name: string
-//   logoUrl: string
-// }
-
-// export type CitiesResponse = {
-//   cities: City[]
-//   currentPage: number
-//   totalPages: number
-// }
 
 export type SubsidiesResponse = {
   subsidies: Subsidy[]

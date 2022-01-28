@@ -4,59 +4,37 @@
       <el-aside width="60px" class="card-aside">
         <el-avatar
           :size="54"
-          :src="logoUrl(subsidy)"
-          class="background-white"
+          :src="logoUrl(subsidy.supplierType)"
+          class="logo"
         ></el-avatar>
-        <div v-if="subsidy.supplierType !== city" class="supplier label">
-          <div class="supplier">
-            {{ supplierName(subsidy) }}
-          </div>
-          <div class="supplier">
-            <!-- {{ supplierPrefectureName(subsidy) }} -->
-          </div>
+        <div class="supplier label">発行機関</div>
+        <div v-if="subsidy.supplierType == 'city'" class="supplier">
+          {{ subsidy.prefecture && subsidy.prefecture.name }}
+        </div>
+        <div class="supplier">
+          {{ supplierName(subsidy.supplierType) }}
         </div>
       </el-aside>
       <el-container class="card-container">
         <el-header height="32px" class="card-header">
-          <el-tag
-            v-if="subsidy.subsidyCategory == 'hojo'"
-            type="info"
-            effect="plain"
-            class="subsidy-type"
-          >
-            補助金
+          <el-tag type="info" effect="plain" class="subsidy-type">
+            {{ subsidyCategoryLabel[subsidy.subsidyCategory] }}
           </el-tag>
-          <el-tag
-            v-if="subsidy.subsidyCategory == 'josei'"
-            type="info"
-            effect="plain"
-            class="subsidy-type"
-          >
-            助成金
-          </el-tag>
-          <span class="header-info">
-            <span v-if="subsidy.priceMax" class="label">
+          <span v-if="subsidy.priceMax" class="header-info">
+            <span class="label">
               上限金額:
               {{ convertToJPY(subsidy.priceMax) }}円
             </span>
-            <span v-else class="label"></span>
           </span>
-          <span class="header-info">
-            <span v-if="subsidy.level" class="label"
-              >申請難易度:{{ starView(subsidy.level) }}</span
-            >
-            <span v-else class="label"></span>
+          <span v-if="subsidy.level" class="header-info">
+            <span class="label">申請難易度:{{ starView(subsidy.level) }}</span>
           </span>
           <span class="header-info">
             募集期間:
-            <span v-if="subsidy.endTo" class="label">
-              {{ dateFormatter(subsidy.startFrom) }}
+            <span class="label">
+              {{ convertToJpDate(subsidy.startFrom) }}
               ~
-              {{ dateFormatter(subsidy.endTo) }}
-            </span>
-            <span v-else class="label">
-              {{ dateFormatter(subsidy.startFrom) }}
-              ~
+              {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
             </span>
           </span>
           <el-button
@@ -96,7 +74,7 @@ import {
   Avatar,
   Tag,
 } from 'element-ui'
-import {Subsidy} from '@/types/Subsidy'
+import {Subsidy, SupplierType} from '@/types/Subsidy'
 export default defineComponent({
   components: {
     [`${Container.name}`]: Container,
@@ -114,7 +92,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(_props) {
+  setup(props) {
     const convertToJPY = (price: number) => {
       const format = Intl.NumberFormat('ja-JP', {
         notation: 'compact',
@@ -132,40 +110,34 @@ export default defineComponent({
         return format.format(price)
       }
     }
-    const supplierName = (subsidy: Subsidy) => {
-      if (subsidy.supplierType === 'ministry') {
-        return subsidy.ministry.name
-      } else if (subsidy.supplierType === 'prefecture') {
-        return subsidy.prefecture.name
-      } else if (subsidy.supplierType === 'city') {
-        return subsidy.city.name
-      } else {
-        return ''
+    const subsidyCategoryLabel = {
+      hojo: '補助金',
+      josei: '助成金',
+    }
+    const supplierName = (supplierType: SupplierType) => {
+      switch (supplierType) {
+        case 'ministry':
+          return props.subsidy.ministry.name
+        case 'prefecture':
+          return props.subsidy.prefecture.name
+        case 'city':
+          return props.subsidy.city.name
       }
     }
-    // const supplierPrefectureName = (subsidy: Subsidy) => {
-    //   if (subsidy.supplierType === 'city') {
-    //     // const id = subsidy.city.prefectureId
-    //     return subsidy.prefecture.name
-    //   } else {
-    //     return 'なし'
-    //   }
-    // }
-    const logoUrl = (subsidy: Subsidy) => {
-      if (subsidy.supplierType === 'ministry') {
-        return subsidy.ministry.logoUrl
-      } else if (subsidy.supplierType === 'prefecture') {
-        return subsidy.prefecture.logoUrl
-      } else if (subsidy.supplierType === 'city') {
-        return subsidy.city.logoUrl
-      } else {
-        return ''
+    const logoUrl = (supplierType: SupplierType) => {
+      switch (supplierType) {
+        case 'ministry':
+          return props.subsidy.ministry.logoUrl
+        case 'prefecture':
+          return props.subsidy.prefecture.logoUrl
+        case 'city':
+          return props.subsidy.city.logoUrl
       }
     }
     const starView = (num: number) => {
       return '★'.repeat(num) + '☆'.repeat(5 - num)
     }
-    const dateFormatter = (date: Date) => {
+    const convertToJpDate = (date: Date) => {
       const dateformat = new Intl.DateTimeFormat('ja-JP', {
         year: 'numeric',
         month: 'narrow',
@@ -174,12 +146,12 @@ export default defineComponent({
       return dateformat.format(new Date(date))
     }
     return {
+      subsidyCategoryLabel,
       convertToJPY,
-      dateFormatter,
+      convertToJpDate,
       starView,
       supplierName,
       logoUrl,
-      // supplierPrefectureName,
     }
   },
 })
@@ -205,8 +177,9 @@ export default defineComponent({
   text-align: center;
 }
 
-.background-white {
+.logo {
   background-color: white;
+  border: solid 1px var(--border-grey-color);
 }
 
 .supplier {
