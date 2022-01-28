@@ -22,7 +22,6 @@ export default defineComponent({
     onMounted(() => {
       subsidiesModule.getSubsidies()
     })
-
     return {
       subsidies,
       currentPage,

@@ -9,6 +9,8 @@
 #  price_max         :integer
 #  publishing_code   :string(255)      not null
 #  start_from        :date             not null
+#  subsidy_category  :string(255)
+#  supplier_type     :string(255)
 #  support_ratio_max :string(255)
 #  support_ratio_min :string(255)
 #  target_detail     :text(65535)      not null
@@ -37,4 +39,6 @@ class Subsidy < ApplicationRecord
     errors.add(:start_from, 'を上回ることはできません')
   end
   enum publishing_code: { published: 'published', editing: 'editing' }
+  enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
+  enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 end

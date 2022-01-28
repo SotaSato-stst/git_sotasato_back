@@ -2,24 +2,62 @@
   <el-card class="card clearfix">
     <el-container>
       <el-aside width="60px" class="card-aside">
-        <el-avatar :size="54"></el-avatar>
-        <div class="supplier label">発行機関</div>
-        <div class="supplier">茨城県</div>
-        <div class="supplier">つくば市</div>
+        <el-avatar
+          :size="54"
+          :src="logoUrl(subsidy)"
+          class="background-white"
+        ></el-avatar>
+        <div v-if="subsidy.supplierType !== city" class="supplier label">
+          <div class="supplier">
+            {{ supplierName(subsidy) }}
+          </div>
+          <div class="supplier">
+            <!-- {{ supplierPrefectureName(subsidy) }} -->
+          </div>
+        </div>
       </el-aside>
       <el-container class="card-container">
         <el-header height="32px" class="card-header">
-          <el-tag type="info" effect="plain" class="subsidy-type">
+          <el-tag
+            v-if="subsidy.subsidyCategory == 'hojo'"
+            type="info"
+            effect="plain"
+            class="subsidy-type"
+          >
             補助金
           </el-tag>
+          <el-tag
+            v-if="subsidy.subsidyCategory == 'josei'"
+            type="info"
+            effect="plain"
+            class="subsidy-type"
+          >
+            助成金
+          </el-tag>
           <span class="header-info">
-            上限金額: <span class="label">1億円</span>
+            <span v-if="subsidy.priceMax" class="label">
+              上限金額:
+              {{ convertToJPY(subsidy.priceMax) }}円
+            </span>
+            <span v-else class="label"></span>
           </span>
           <span class="header-info">
-            申請難易度: <span class="label">★★★★☆</span>
+            <span v-if="subsidy.level" class="label"
+              >申請難易度:{{ starView(subsidy.level) }}</span
+            >
+            <span v-else class="label"></span>
           </span>
           <span class="header-info">
-            募集期間: <span class="label">2022年4月1日~5月1日</span>
+            募集期間:
+            <span v-if="subsidy.endTo" class="label">
+              {{ dateFormatter(subsidy.startFrom) }}
+              ~
+              {{ dateFormatter(subsidy.endTo) }}
+            </span>
+            <span v-else class="label">
+              {{ dateFormatter(subsidy.startFrom) }}
+              ~
+            </span>
           </span>
           <el-button
             type="warning"
@@ -38,9 +76,7 @@
           <div class="target-container">
             <span class="label target">対象</span>
             <span class="target">
-              以下の要件を満たす事業計画（3～5年）を策定し実施する中小企業・小規模事業者等であること。
-              ①付加価値額の年率3％以上向上 ②給与支給総額の年率1.5％以上向上
-              ③事業場内最低賃金を地域別最低賃金30円以上向上
+              {{ subsidy.targetDetail }}
             </span>
           </div>
         </el-main>
@@ -48,7 +84,6 @@
     </el-container>
   </el-card>
 </template>
-
 <script lang="ts">
 import {defineComponent, PropType} from '@vue/composition-api'
 import {
@@ -62,7 +97,6 @@ import {
   Tag,
 } from 'element-ui'
 import {Subsidy} from '@/types/Subsidy'
-
 export default defineComponent({
   components: {
     [`${Container.name}`]: Container,
@@ -81,11 +115,75 @@ export default defineComponent({
     },
   },
   setup(_props) {
-    return {}
+    const convertToJPY = (price: number) => {
+      const format = Intl.NumberFormat('ja-JP', {
+        notation: 'compact',
+        currency: 'JPY',
+      })
+      const oku = 100000000
+      if (price > oku) {
+        const underOKuDigitsNumber = 8
+        const overDigits = price.toString().length - underOKuDigitsNumber
+        const jpMan = Number(price.toString().substr(overDigits))
+        const underOku = format.format(jpMan)
+        const overOku = format.format(price)
+        return overOku + underOku
+      } else {
+        return format.format(price)
+      }
+    }
+    const supplierName = (subsidy: Subsidy) => {
+      if (subsidy.supplierType === 'ministry') {
+        return subsidy.ministry.name
+      } else if (subsidy.supplierType === 'prefecture') {
+        return subsidy.prefecture.name
+      } else if (subsidy.supplierType === 'city') {
+        return subsidy.city.name
+      } else {
+        return ''
+      }
+    }
+    // const supplierPrefectureName = (subsidy: Subsidy) => {
+    //   if (subsidy.supplierType === 'city') {
+    //     // const id = subsidy.city.prefectureId
+    //     return subsidy.prefecture.name
+    //   } else {
+    //     return 'なし'
+    //   }
+    // }
+    const logoUrl = (subsidy: Subsidy) => {
+      if (subsidy.supplierType === 'ministry') {
+        return subsidy.ministry.logoUrl
+      } else if (subsidy.supplierType === 'prefecture') {
+        return subsidy.prefecture.logoUrl
+      } else if (subsidy.supplierType === 'city') {
+        return subsidy.city.logoUrl
+      } else {
+        return ''
+      }
+    }
+    const starView = (num: number) => {
+      return '★'.repeat(num) + '☆'.repeat(5 - num)
+    }
+    const dateFormatter = (date: Date) => {
+      const dateformat = new Intl.DateTimeFormat('ja-JP', {
+        year: 'numeric',
+        month: 'narrow',
+        day: 'numeric',
+      })
+      return dateformat.format(new Date(date))
+    }
+    return {
+      convertToJPY,
+      dateFormatter,
+      starView,
+      supplierName,
+      logoUrl,
+      // supplierPrefectureName,
+    }
   },
 })
 </script>
-
 <style lang="postcss" scoped>
 .card {
   overflow: auto;
@@ -105,6 +203,10 @@ export default defineComponent({
 .card-aside {
   height: 100%;
   text-align: center;
+}
+
+.background-white {
+  background-color: white;
 }
 
 .supplier {

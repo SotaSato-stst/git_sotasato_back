@@ -48,13 +48,24 @@ export default class SubsidiesModule extends VuexModule {
   }
 
   // TODO:ikegaki APIでサーバーからsubsidyを取得するように変更
-  @Action({rawError: true})
-  getSubsidy(id: number) {
-    const subsidy: Subsidy = {
-      id,
-      title: 'Test',
-      url: 'https://test.com',
-    }
-    this.setSubsidy(subsidy)
-  }
+  // @Action({rawError: true})
+  // getSubsidy(id: number) {
+  //   const subsidy: Subsidy = {
+  //     id,
+  //     title: 'Test',
+  //     url: 'https://test.com',
+  //     startFrom: new Date(2021, 4, 24),
+  //     endTo: new Date(2021, 4, 27),
+  //     publishingCode: 'published',
+  //     priceMax: 1203330000,
+  //     supportRatioMin: '20',
+  //     supportRatioMax: '80',
+  //     level: 3,
+  //     detail: 'ものづくりする補助金です。',
+  //     targetDetail: '製造業',
+  //     subsidyCategory: 'hojo',
+  //     supplierType: 'city',
+  //   }
+  //   this.setSubsidy(subsidy)
+  // }
 }
