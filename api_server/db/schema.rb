@@ -63,8 +63,6 @@ ActiveRecord::Schema.define(version: 2022_01_26_110651) do
   create_table "subsidies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.text "url", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.date "start_from", null: false
     t.date "end_to"
     t.string "publishing_code", null: false
@@ -74,6 +72,10 @@ ActiveRecord::Schema.define(version: 2022_01_26_110651) do
     t.integer "level"
     t.text "detail", null: false
     t.text "target_detail", null: false
+    t.string "subsidy_category"
+    t.string "supplier_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
   end
 

@@ -5,7 +5,7 @@ RSpec.describe 'Subsidies API', type: :request do
   let!(:subsidy) do
     create(:subsidy, title: 'ものづくり補助金', url: 'https://portal.monodukuri-hojo.jp/', ministry: ministry,
                      start_from: '2022-01-12', end_to: '2023-01-15', publishing_code: 'published', price_max: 30, support_ratio_min: '20', 
-                     support_ratio_max: '40', level: 4, detail: '詳細文章', target_detail: '対象の説明文')
+                     support_ratio_max: '40', level: 4, detail: '詳細文章', target_detail: '対象の説明文', subsidy_category: 'hojo', supplier_type: 'ministry')
   end
 
   describe 'GET /subsidies' do
@@ -30,6 +30,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['subsidies'][0]['level']).to eq 4
       expect(json['subsidies'][0]['detail']).to eq '詳細文章'
       expect(json['subsidies'][0]['target_detail']).to eq '対象の説明文'
+      expect(json['subsidies'][0]['subsidy_category']).to eq 'hojo'
+      expect(json['subsidies'][0]['supplier_type']).to eq 'ministry'
     end
   end
 
@@ -55,6 +57,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['level']).to eq 4
       expect(json['detail']).to eq '詳細文章'
       expect(json['target_detail']).to eq '対象の説明文'
+      expect(json['subsidy_category']).to eq 'hojo'
+      expect(json['supplier_type']).to eq 'ministry'
     end
   end
 end
