@@ -34,7 +34,7 @@ module Admin
     private
 
     def user_params
-      params.permit(:display_name, :email, :firebase_uid)
+      params.permit(:display_name, :email, :firebase_uid, :account_type)
     end
 
     def set_association

@@ -67,6 +67,7 @@ RSpec.describe 'Admin::Users', type: :request do
         display_name: 'じろう',
         email: 'jiro@test.com',
         firebase_uid: 'jiro_id',
+        account_type: 'editor'
       }
     end
 
@@ -80,6 +81,7 @@ RSpec.describe 'Admin::Users', type: :request do
       expect(json['display_name']).to eq 'じろう'
       expect(json['email']).to eq 'jiro@test.com'
       expect(json['firebase_uid']).to eq 'jiro_id'
+      expect(json['account_type']).to eq 'editor'
     end
 
     context 'sign_in_user is not admin' do
@@ -100,6 +102,7 @@ RSpec.describe 'Admin::Users', type: :request do
         display_name: 'さぶろう',
         email: 'saburo@test.com',
         firebase_uid: 'saburo_id',
+        account_type: 'admin'
       }
     end
 
@@ -113,6 +116,7 @@ RSpec.describe 'Admin::Users', type: :request do
       expect(json['display_name']).to eq 'さぶろう'
       expect(json['email']).to eq 'saburo@test.com'
       expect(json['firebase_uid']).to eq 'saburo_id'
+      expect(json['account_type']).to eq 'admin'
     end
 
     context 'sign_in_user is not admin' do

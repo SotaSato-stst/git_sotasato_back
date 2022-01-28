@@ -243,6 +243,8 @@ paths:
               required:
                 - display_name
                 - email
+                - firebase_uid
+                - account_type
               properties:
                 display_name:
                   type: string
@@ -256,6 +258,8 @@ paths:
                   type: string
                   description: firebaseのuid
                   example: xxxxxxxxxxxxxxxxxxxx
+                account_type:
+                  "$ref": "#/components/schemas/account_type"
       responses:
         "201":
           description: 成功
@@ -294,6 +298,8 @@ paths:
               required:
                 - display_name
                 - email
+                - firebase_uid
+                - account_type
               properties:
                 display_name:
                   type: string
@@ -303,6 +309,12 @@ paths:
                   type: string
                   description: email
                   example: taro.tanaka@example.com
+                firebase_uid:
+                  type: string
+                  description: firebaseのuid
+                  example: xxxxxxxxxxxxxxxxxxxx
+                account_type:
+                  "$ref": "#/components/schemas/account_type"
       responses:
         "200":
           description: 成功
@@ -575,3 +587,12 @@ components:
           type: string
           description: firebaseのuid
           example: xxxxxxxxxxxxxxxxxxxx
+        account_type:
+          "$ref": "#/components/schemas/account_type"
+    account_type:
+      type: string
+      description: アカウント種類
+      enum:
+        - user
+        - editor
+        - admin
