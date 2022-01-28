@@ -23,7 +23,7 @@
           <span v-if="subsidy.priceMax" class="header-info">
             <span class="label">
               上限金額:
-              {{ convertToJPY(subsidy.priceMax) }}円
+              {{ convertToShortJPY(subsidy.priceMax) }}円
             </span>
           </span>
           <span v-if="subsidy.level" class="header-info">
@@ -75,6 +75,9 @@ import {
   Tag,
 } from 'element-ui'
 import {Subsidy, SupplierType} from '@/types/Subsidy'
+import {convertToJpDate} from '@/utils/dateFormatter'
+import {convertToShortJPY} from '@/utils/numberFormatter'
+
 export default defineComponent({
   components: {
     [`${Container.name}`]: Container,
@@ -93,23 +96,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const convertToJPY = (price: number) => {
-      const format = Intl.NumberFormat('ja-JP', {
-        notation: 'compact',
-        currency: 'JPY',
-      })
-      const oku = 100000000
-      if (price > oku) {
-        const underOKuDigitsNumber = 8
-        const overDigits = price.toString().length - underOKuDigitsNumber
-        const jpMan = Number(price.toString().substr(overDigits))
-        const underOku = format.format(jpMan)
-        const overOku = format.format(price)
-        return overOku + underOku
-      } else {
-        return format.format(price)
-      }
-    }
     const subsidyCategoryLabel = {
       hojo: '補助金',
       josei: '助成金',
@@ -137,17 +123,9 @@ export default defineComponent({
     const starView = (num: number) => {
       return '★'.repeat(num) + '☆'.repeat(5 - num)
     }
-    const convertToJpDate = (date: Date) => {
-      const dateformat = new Intl.DateTimeFormat('ja-JP', {
-        year: 'numeric',
-        month: 'narrow',
-        day: 'numeric',
-      })
-      return dateformat.format(new Date(date))
-    }
     return {
       subsidyCategoryLabel,
-      convertToJPY,
+      convertToShortJPY,
       convertToJpDate,
       starView,
       supplierName,
