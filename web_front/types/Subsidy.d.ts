@@ -4,25 +4,26 @@ import {City} from './City'
 
 export type SubsidyCategory = 'hojo' | 'josei'
 export type SupplierType = 'ministry' | 'prefecture' | 'city'
+export type PublishingCode = 'eiditing' | 'published'
 
 export type Subsidy = {
   id: number
   title: string
   url: string
   startFrom: Date
-  endTo: Date
-  publishingCode: string
-  priceMax: number
-  supportRatioMin: string
-  supportRatioMax: string
-  level: number
+  endTo: Date | null
+  publishingCode: PublishingCode
+  priceMax: number | null
+  supportRatioMin: string | null
+  supportRatioMax: string | null
+  level: number | null
   detail: string
   targetDetail: string
   subsidyCategory: SubsidyCategory
   supplierType: SupplierType
-  ministry: Ministry
-  prefecture: Prefecture
-  city: City
+  ministry: Ministry | null
+  prefecture: Prefecture | null
+  city: City | null
 }
 
 export type SubsidiesResponse = {

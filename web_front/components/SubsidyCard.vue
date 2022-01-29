@@ -103,21 +103,21 @@ export default defineComponent({
     const supplierName = (supplierType: SupplierType) => {
       switch (supplierType) {
         case 'ministry':
-          return props.subsidy.ministry.name
+          return props.subsidy.ministry?.name
         case 'prefecture':
-          return props.subsidy.prefecture.name
+          return props.subsidy.prefecture?.name
         case 'city':
-          return props.subsidy.city.name
+          return props.subsidy.city?.name
       }
     }
     const logoUrl = (supplierType: SupplierType) => {
       switch (supplierType) {
         case 'ministry':
-          return props.subsidy.ministry.logoUrl
+          return props.subsidy.ministry?.logoUrl
         case 'prefecture':
-          return props.subsidy.prefecture.logoUrl
+          return props.subsidy.prefecture?.logoUrl
         case 'city':
-          return props.subsidy.city.logoUrl
+          return props.subsidy.city?.logoUrl
       }
     }
     const starView = (num: number) => {
