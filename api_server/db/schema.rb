@@ -109,4 +109,15 @@ ActiveRecord::Schema.define(version: 2022_01_26_110651) do
     t.index ["subsidy_id"], name: "index_subsidy_prefectures_on_subsidy_id"
   end
 
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "firebase_uid", null: false
+    t.bigint "company_id", null: false
+    t.string "email", default: "", null: false
+    t.string "display_name", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_users_on_company_id"
+    t.index ["firebase_uid"], name: "index_users_on_firebase_uid", unique: true
+  end
+
 end

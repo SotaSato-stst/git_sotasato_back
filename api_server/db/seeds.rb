@@ -194,4 +194,16 @@ if Rails.env.development?
       business_scale: hash[:business_scale]
     )
   end
+
+  # README要参照!
+  firebase_uid = ENV['FIREBASE_UID_FOR_DEBUG']
+  firebase_user_email = ENV['FIREBASE_USER_EMAIL_FOR_DEBUG']
+  if firebase_uid.present?
+    user = User.find_or_initialize_by(firebase_uid: firebase_uid)
+    user.update(
+      company: Company.first,
+      email: firebase_user_email,
+      display_name: '田中太郎'
+    )
+  end
 end

@@ -35,6 +35,7 @@ export default {
     '@/plugins/composition-api',
     '@/plugins/axios-accessor',
     '@/plugins/element-ui',
+    '@/plugins/firebase',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -54,6 +55,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -62,10 +64,17 @@ export default {
     proxy: true,
   },
 
+  router: {
+    middleware: ['session'],
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
     postcss: {},
+    extend(config) {
+      config.node = {fs: 'empty'}
+    },
   },
 
   storybook: {

@@ -1,10 +1,33 @@
 import {Plugin} from '@nuxt/types'
+import {getAuth, signOut} from 'firebase/auth'
 import {initializeAxios} from '@/utils/api'
-import notify from '@/plugins/notify'
-import isEmptyObject from '~/utils/isEmptyObject'
-import keysToCamel from '~/utils/keysToCamel'
+import {notifyError} from '@/utils/notify'
+import isEmptyObject from '@/utils/isEmptyObject'
+import keysToCamel from '@/utils/keysToCamel'
+import CookieStore from '@/utils/cookie-store'
+import {tokenExpired, refreshUserToken} from '@/services/authService'
 
 const accessor: Plugin = ({$axios}) => {
+  $axios.onRequest(async request => {
+    if (tokenExpired()) {
+      const user = await refreshUserToken()
+      if (!user) {
+        // セッションが切れているため、サインアウトさせる必要がある
+        signOut(getAuth())
+        return {
+          ...request,
+          cancelToken: new $axios.CancelToken(cancel =>
+            cancel('No authrization'),
+          ),
+        }
+      }
+    }
+    request.params = {
+      token: CookieStore.getIdToken(),
+    }
+    return request
+  })
+
   // レスポンスJSONのキーをスネークケースからキャメルケースに変換
   $axios.onResponse(response => {
     if (
@@ -19,45 +42,32 @@ const accessor: Plugin = ({$axios}) => {
     return response
   })
 
-  $axios.onRequest(request => {
-    if (request.url !== '/sign_in') {
-      // 認証状態の確認
-    }
-  })
-
   $axios.onError(error => {
-    if (error.response !== undefined) {
-      switch (error.response.status) {
-        case 401:
-          notify({
-            title: 'セッションエラー',
-            type: 'error',
-            message:
-              error.response.data.message || 'ログインをし直してください。',
-            duration: 20000,
-          })
-          break
-        case 403:
-          notify({
-            title: '操作エラー',
-            type: 'error',
-            message: error.response.data.message || '閲覧権限がありません。',
-            duration: 20000,
-          })
-          break
-        case 404:
-          break
-        default:
-          notify({
-            title: error.response.status.toString(),
-            type: 'error',
-            message:
-              error.response.data.message ||
-              'サーバーエラーが発生しました。問題がある場合はお問い合わせください。',
-            duration: 20000,
-          })
-          break
-      }
+    if (!error.response) {
+      notifyError('エラー', '通信に失敗しました')
+      return
+    }
+    const auth = getAuth()
+    switch (error.response.status) {
+      case 401:
+        notifyError('セッションエラー', 'ログインが必要です')
+        signOut(auth)
+        break
+      case 403:
+        notifyError(
+          '操作エラー',
+          error.response.data.message || '閲覧権限がありません。',
+        )
+        break
+      case 404:
+        break
+      default:
+        notifyError(
+          error.response.status.toString(),
+          error.response.data.message ||
+            'サーバーエラーが発生しました。問題がある場合はお問い合わせください。',
+        )
+        break
     }
   })
 
