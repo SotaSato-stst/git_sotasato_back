@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 2022_01_26_110651) do
     t.bigint "company_id", null: false
     t.string "email", default: "", null: false
     t.string "display_name", default: "", null: false
-    t.string "account_type", default: "user", null: false
+    t.string "account_role", default: "user", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id"], name: "index_users_on_company_id"

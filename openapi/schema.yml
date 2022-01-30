@@ -244,7 +244,7 @@ paths:
                 - display_name
                 - email
                 - firebase_uid
-                - account_type
+                - account_role
               properties:
                 display_name:
                   type: string
@@ -258,8 +258,8 @@ paths:
                   type: string
                   description: firebaseのuid
                   example: xxxxxxxxxxxxxxxxxxxx
-                account_type:
-                  "$ref": "#/components/schemas/account_type"
+                account_role:
+                  "$ref": "#/components/schemas/account_role"
       responses:
         "201":
           description: 成功
@@ -299,7 +299,7 @@ paths:
                 - display_name
                 - email
                 - firebase_uid
-                - account_type
+                - account_role
               properties:
                 display_name:
                   type: string
@@ -313,8 +313,8 @@ paths:
                   type: string
                   description: firebaseのuid
                   example: xxxxxxxxxxxxxxxxxxxx
-                account_type:
-                  "$ref": "#/components/schemas/account_type"
+                account_role:
+                  "$ref": "#/components/schemas/account_role"
       responses:
         "200":
           description: 成功
@@ -587,9 +587,9 @@ components:
           type: string
           description: firebaseのuid
           example: xxxxxxxxxxxxxxxxxxxx
-        account_type:
-          "$ref": "#/components/schemas/account_type"
-    account_type:
+        account_role:
+          "$ref": "#/components/schemas/account_role"
+    account_role:
       type: string
       description: アカウント種類
       enum:

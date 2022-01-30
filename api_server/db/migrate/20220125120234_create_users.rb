@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.references :company, null: false
       t.string :email, null: false, default: ''
       t.string :display_name, null: false, default: ''
-      t.string :account_type, null: false, default: 'user'
+      t.string :account_role, null: false, default: 'user'
       t.timestamps
     end
   end
