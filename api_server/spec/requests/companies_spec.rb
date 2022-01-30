@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Companies', type: :request do
+  let(:user) { create(:user) }
   let(:prefecture) { create(:prefecture, name: '大阪府') }
   let(:city) { create(:city, id: 1) }
   let!(:company) do
@@ -16,9 +17,9 @@ RSpec.describe 'Companies', type: :request do
     )
   end
 
-  # describe 'GET /index' do
-  #   pending "add some examples (or delete) #{__FILE__}"
-  # end
+  before do
+    sign_in_with(user)
+  end
 
   describe 'GET /companies' do
     subject { get '/companies' }

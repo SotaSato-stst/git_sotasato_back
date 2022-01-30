@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Prefectures API', type: :request do
+  let(:user) { create(:user) }
   let(:prefecture) { create(:prefecture) }
+
+  before do
+    sign_in_with(user)
+  end
 
   describe 'GET /prefectures' do
     subject { get '/prefectures' }

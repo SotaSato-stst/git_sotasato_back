@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Subsidies API', type: :request do
+  let(:user) { create(:user) }
   let(:ministry) { create(:ministry, name: '経済産業省') }
   let!(:subsidy) do
     create(:subsidy, title: 'ものづくり補助金', url: 'https://portal.monodukuri-hojo.jp/', ministry: ministry,
                      start_from: '2022-01-12', end_to: '2023-01-15', publishing_code: 'published', price_max: 30, support_ratio_min: '20', 
                      support_ratio_max: '40', level: 4, detail: '詳細文章', target_detail: '対象の説明文', subsidy_category: 'hojo', supplier_type: 'ministry')
+  end
+
+  before do
+    sign_in_with(user)
   end
 
   describe 'GET /subsidies' do
