@@ -55,16 +55,16 @@ export default defineComponent({
     const handleSelect = (value: menuType) => {
       switch (value) {
         case 'new':
-          router.replace('/').catch(() => {})
+          router.push('/')
           break
         case 'ranking':
-          router.replace('/').catch(() => {}) // TODO
+          router.push('/')
           break
         case 'favorite':
-          router.replace('/').catch(() => {}) // TODO
+          router.push('/')
           break
         case 'user_setting':
-          router.replace('/').catch(() => {}) // TODO
+          router.push('/')
           break
         case 'sign_out':
           signOut(getAuth())

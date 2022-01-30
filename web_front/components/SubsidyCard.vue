@@ -48,9 +48,9 @@
           </el-button>
         </el-header>
         <el-main class="card-content">
-          <div class="title">
+          <a class="title" @click="clickSubsidy(subsidy.id)">
             {{ subsidy.title }}
-          </div>
+          </a>
           <div class="target-container">
             <span class="label target">対象</span>
             <span class="target">
@@ -63,7 +63,7 @@
   </el-card>
 </template>
 <script lang="ts">
-import {defineComponent, PropType} from '@vue/composition-api'
+import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
 import {
   Container,
   Header,
@@ -96,6 +96,10 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const router = useRouter()
+    const clickSubsidy = (subsidyId: number) => {
+      router.push('/subsidies/' + subsidyId)
+    }
     const subsidyCategoryLabel = {
       hojo: '補助金',
       josei: '助成金',
@@ -124,6 +128,7 @@ export default defineComponent({
       return '★'.repeat(num) + '☆'.repeat(5 - num)
     }
     return {
+      clickSubsidy,
       subsidyCategoryLabel,
       convertToShortJPY,
       convertToJpDate,
@@ -137,7 +142,6 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .card {
   overflow: auto;
-  cursor: pointer;
 }
 
 .clearfix::before,
@@ -198,6 +202,7 @@ export default defineComponent({
   font-size: 18px;
   font-weight: bold;
   text-decoration-line: underline;
+  cursor: pointer;
 }
 
 .favorite {

@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted} from '@vue/composition-api'
+import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
 import SubsidyCard from './../components/SubsidyCard.vue'
 import {subsidiesModule} from '~/store'
 
