@@ -1,6 +1,6 @@
 <template>
   <el-container class="default-layout">
-    <el-aside class="side-menu-container" width="240px">
+    <el-aside width="240px">
       <div class="title-container">補助金ドック</div>
       <global-side-menu />
     </el-aside>
@@ -12,7 +12,7 @@
         <el-main>
           <nuxt />
         </el-main>
-        <el-aside class="side-right-menu-container" width="316px">
+        <el-aside width="316px">
           <side-right-menu />
         </el-aside>
       </el-container>
@@ -63,20 +63,11 @@ export default Vue.extend({
   border-bottom: solid 1px var(--border-grey-color);
 }
 
-.side-menu-container {
-  height: 100vh;
-}
-
 .header-container {
   padding: 0;
 }
 
 .center-container {
-  height: 100vh;
   background-color: var(--main-background-color);
-}
-
-.side-right-menu-container {
-  height: 100vh;
 }
 </style>
