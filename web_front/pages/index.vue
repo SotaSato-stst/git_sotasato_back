@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <card-loading :loading="loading" />
     <div v-for="subsidy in subsidies" :key="subsidy.id">
       <subsidy-card :subsidy="subsidy" />
     </div>
@@ -8,21 +9,28 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
-import SubsidyCard from './../components/SubsidyCard.vue'
+import SubsidyCard from '@/components/SubsidyCard.vue'
+import CardLoading from '~/components/CardLoading.vue'
 import {subsidiesModule} from '~/store'
+import {useLoader} from '@/services/useLoader'
 
 export default defineComponent({
   name: 'IndexPage',
-  components: {SubsidyCard},
+  components: {SubsidyCard, CardLoading},
   setup(_props) {
+    const {loading, load} = useLoader()
     const subsidies = computed(() => subsidiesModule.subsidies)
     const currentPage = computed(() => subsidiesModule.currentPage)
     const totalPages = computed(() => subsidiesModule.totalPages)
 
     onMounted(() => {
-      subsidiesModule.getSubsidies()
+      load(loading, () => {
+        subsidiesModule.getSubsidies()
+      })
     })
+
     return {
+      loading,
       subsidies,
       currentPage,
       totalPages,
