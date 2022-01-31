@@ -44,6 +44,7 @@ https://console.firebase.google.com
 
 次に、 :gear: の設定画面から、「マイアプリ」にてWebアプリを追加します。  
 アプリのニックネームの例: `web_front_local` など  
+※firebase hostingの設定はしなくてよい  
 作成したマイアプリのfirebaseConfigを確認します。（ `apiKey` や `projectId` など）  
 
 次に、以下のコマンドで `.env` というファイルを作成します。  
