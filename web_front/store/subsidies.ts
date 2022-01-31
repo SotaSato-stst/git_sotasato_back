@@ -1,6 +1,6 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
-import {$axios} from '~/utils/api'
-import {Subsidy, SubsidiesResponse} from '~/types/Subsidy'
+import {$axios} from '@/store/api'
+import {Subsidy, SubsidiesResponse} from '@/types/Subsidy'
 
 @Module({
   name: 'subsidies',

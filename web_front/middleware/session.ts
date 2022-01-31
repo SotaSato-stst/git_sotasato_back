@@ -1,6 +1,6 @@
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import {Middleware} from '@nuxt/types'
-import CookieStore from '@/utils/cookie-store'
+import CookieStore from '@/services/cookieStore'
 
 const signInPath = '/sign-in'
 

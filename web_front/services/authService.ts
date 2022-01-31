@@ -1,5 +1,5 @@
 import {User, getAuth, onAuthStateChanged} from 'firebase/auth'
-import CookieStore from '@/utils/cookie-store'
+import CookieStore from '@/services/cookieStore'
 
 export const getUser = (): Promise<User | null> => {
   return new Promise(resolve => {

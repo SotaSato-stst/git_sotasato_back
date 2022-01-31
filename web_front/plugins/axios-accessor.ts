@@ -1,10 +1,10 @@
 import {Plugin} from '@nuxt/types'
 import {getAuth, signOut} from 'firebase/auth'
-import {initializeAxios} from '@/utils/api'
-import {notifyError} from '@/utils/notify'
+import {initializeAxios} from '~/store/api'
+import {notifyError} from '~/services/notify'
 import isEmptyObject from '@/utils/isEmptyObject'
 import keysToCamel from '@/utils/keysToCamel'
-import CookieStore from '@/utils/cookie-store'
+import CookieStore from '@/services/cookieStore'
 import {tokenExpired, refreshUserToken} from '@/services/authService'
 
 const accessor: Plugin = ({$axios}) => {

@@ -20,8 +20,8 @@
 import {defineComponent, reactive, useRouter} from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button} from 'element-ui'
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
-import {notifyError} from '@/utils/notify'
-import CookieStore from '@/utils/cookie-store'
+import {notifyError} from '@/services/notify'
+import CookieStore from '@/services/cookieStore'
 
 export default defineComponent({
   name: 'SignInPage',
