@@ -30,14 +30,28 @@ class Subsidy < ApplicationRecord
   has_one :prefecture, through: :subsidy_prefecture
   has_one :subsidy_city
   has_one :city, through: :subsidy_city
-
+  validate :supplier_type_must_have_association
   validate :start_from_cannot_be_greater_than_end_to
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }
+
   def start_from_cannot_be_greater_than_end_to
     return if start_from.blank? || end_to.blank? || start_from < end_to
 
     errors.add(:start_from, 'を上回ることはできません')
   end
+
+  def supplier_type_must_have_association
+    if supplier_type == 'ministry' && subsidy_ministry.blank?
+      errors.add(:supplier_type, 'ministryが存在しません')
+    end
+    if supplier_type == 'prefecture' && subsidy_prefecture.blank?
+      errors.add(:supplier_type, 'prefectureが存在しません')
+    end
+    if supplier_type == 'city' && (subsidy_city.blank? || subsidy_prefecture.blank?)
+      errors.add(:supplier_type, 'cityが存在しません')
+    end
+  end
+
   enum publishing_code: { published: 'published', editing: 'editing' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
