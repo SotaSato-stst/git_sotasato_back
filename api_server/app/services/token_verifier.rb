@@ -7,7 +7,6 @@ require 'net/http'
 class TokenVerifier
   class InvalidTokenError < StandardError; end
   GOOGLE_TOKEN_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'.freeze
-  KID = '3aa148cd0728e303d326de560a35fb1ba32a5149'.freeze # firebaseクライアントSDKでは、この公開鍵限定で認証されている
   FIREBASE_PROJECT_ID = ENV['FIREBASE_PROJECT_ID']
 
   def initialize(token)
@@ -17,14 +16,15 @@ class TokenVerifier
   end
 
   def execute
-    public_key = response_json[KID]
-    cert = OpenSSL::X509::Certificate.new(public_key)
-    jwt = JWT.decode(@token, cert.public_key, true, option)
-    raise InvalidTokenError if jwt[1]['kid'] != KID
+    response_json.each do |kid, public_key|
+      cert = OpenSSL::X509::Certificate.new(public_key)
+      jwt = JWT.decode(@token, cert.public_key, true, option)
 
-    jwt[0]['user_id'] # firebaseのuid
-  rescue OpenSSL::X509::CertificateError, JWT::DecodeError => e
-    Rails.logger.warn e
+      return jwt[0]['user_id'] # firebaseのuid
+    rescue OpenSSL::X509::CertificateError, JWT::DecodeError => e
+      next
+    end
+
     raise InvalidTokenError
   end
 
