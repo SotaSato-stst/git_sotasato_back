@@ -2,14 +2,14 @@ AllCops:
   DisplayCopNames: true
   NewCops: enable
   Exclude:
-    - 'db/schema.rb'
-    - 'db/migrate/*'
-    - 'vendor/**/*'
-    - 'lib/tasks/auto_annotate_models.rake'
+    - "db/schema.rb"
+    - "db/migrate/*"
+    - "vendor/**/*"
+    - "lib/tasks/auto_annotate_models.rake"
 
 Bundler/OrderedGems:
   Exclude:
-    - 'Gemfile'
+    - "Gemfile"
 
 Style/AsciiComments:
   Enabled: false
@@ -28,10 +28,19 @@ Style/FrozenStringLiteralComment:
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*'
+    - "spec/**/*"
 
 Metrics/MethodLength:
   Max: 20
 
 Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 12
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/GuardClause:
   Enabled: false
