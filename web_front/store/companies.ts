@@ -91,10 +91,11 @@ export default class CompaniesModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async postCompany(params: CompanyParams) {
-    const company = await $axios.$post<Company>('/admin/companies', {
-      data: params,
-    })
+  async postCompany() {
+    const company = await $axios.$post<Company>(
+      '/admin/companies',
+      this.companyParams,
+    )
     this.setCompany(company)
   }
 
