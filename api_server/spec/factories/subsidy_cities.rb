@@ -16,7 +16,7 @@
 #
 FactoryBot.define do
   factory :subsidy_city do
-    association(:city)
     association(:subsidy)
+    association(:city)
   end
 end

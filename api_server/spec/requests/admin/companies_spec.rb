@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'Companies', type: :request do
-  let(:user) { create(:user) }
+RSpec.describe 'Admin Companies', type: :request do
+  let(:sign_in_user) { create(:user, :admin) }
   let(:prefecture) { create(:prefecture, name: '大阪府') }
   let(:city) { create(:city, id: 1) }
   let!(:company) do
@@ -18,11 +18,11 @@ RSpec.describe 'Companies', type: :request do
   end
 
   before do
-    sign_in_with(user)
+    sign_in_with(sign_in_user)
   end
 
   describe 'GET /companies' do
-    subject { get '/companies' }
+    subject { get '/admin/companies' }
 
     it 'returns correct response' do
       subject
@@ -42,7 +42,7 @@ RSpec.describe 'Companies', type: :request do
   end
 
   describe 'GET /companies/:id' do
-    subject { get "/companies/#{company.id}" }
+    subject { get "/admin/companies/#{company.id}" }
 
     it 'returns correct response' do
       subject
@@ -62,7 +62,7 @@ RSpec.describe 'Companies', type: :request do
   end
 
   describe 'POST /companies' do
-    subject { post '/companies', params: params }
+    subject { post '/admin/companies', params: params }
 
     let(:params) do
       {
@@ -84,7 +84,7 @@ RSpec.describe 'Companies', type: :request do
   end
 
   describe 'PUT /companies/:id' do
-    subject { put "/companies/#{company.id}", params: params }
+    subject { put "/admin/companies/#{company.id}", params: params }
 
     let(:company) { create(:company) }
     let(:params) do

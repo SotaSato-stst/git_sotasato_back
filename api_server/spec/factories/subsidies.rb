@@ -34,6 +34,6 @@ FactoryBot.define do
     detail { 'アイウエオ' }
     target_detail { '対象の説明文' }
     subsidy_category { 'hojo' }
-    supplier_type { 'city' }
+    supplier_type { nil }
   end
 end
