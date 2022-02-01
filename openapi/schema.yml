@@ -22,6 +22,73 @@ tags:
     description: 業種
 paths:
   "/subsidies":
+    parameters:
+      - name: keyword
+        in: query
+        description: キーワード検索
+        schema:
+          type: string
+      - name: start_from
+        in: query
+        description: 募集開始日
+        schema:
+          type: string
+          format: date
+      - name: end_to
+        in: query
+        description: 募集終了日
+        schema:
+          type: string
+          format: date
+      - name: business_scales
+        in: query
+        description: 事業規模enum配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            "$ref": "#/components/schemas/business_scale"
+      - name: business_categories
+        in: query
+        description: 業種ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: seizo
+      - name: prefecture_ids
+        in: query
+        description: 都道府県ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: 1
+      - name: city_ids
+        in: query
+        description: 市長区村ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: 1
+      - name: ministry_ids
+        in: query
+        description: 省庁ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: 1
     get:
       tags:
         - subsidy
