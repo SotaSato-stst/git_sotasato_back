@@ -1,10 +1,11 @@
 :root {
   --white: #fff;
-  --main-background-color: #F3F4F7;
-  --border-grey-color: #EEEEEE;
+  --main-background-color: #f3f4f7;
+  --border-grey-color: #eeeeee;
   --primary-color: #2a6f97;
   --hilight-yellow: #ffd60a;
   --text-color: #495057;
+  --primary-fonr-color: #303133;
   --default-banner-width: 300px;
   --default-banner-height: 250px;
   --base-space-px: 4px;

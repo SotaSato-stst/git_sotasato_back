@@ -1,24 +1,11 @@
 <template>
   <el-card class="card clearfix">
     <el-container>
-      <el-aside width="60px" class="card-aside">
-        <el-avatar
-          :size="54"
-          :src="logoUrl(subsidy.supplierType)"
-          class="logo"
-        ></el-avatar>
-        <div class="supplier label">発行機関</div>
-        <div v-if="subsidy.supplierType == 'city'" class="supplier">
-          {{ subsidy.prefecture && subsidy.prefecture.name }}
-        </div>
-        <div class="supplier">
-          {{ supplierName(subsidy.supplierType) }}
-        </div>
-      </el-aside>
+      <supplier-information :subsidy="subsidy" />
       <el-container class="card-container">
         <el-header height="32px" class="card-header">
           <el-tag type="info" effect="plain" class="subsidy-type">
-            {{ subsidyCategoryLabel[subsidy.subsidyCategory] }}
+            {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
           </el-tag>
           <span v-if="subsidy.priceMax" class="header-info">
             <span class="label">
@@ -37,15 +24,7 @@
               {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
             </span>
           </span>
-          <el-button
-            type="warning"
-            icon="el-icon-star-off"
-            size="mini"
-            class="favorite"
-            plain
-          >
-            保存
-          </el-button>
+          <favorite-button :subsidy="subsidy" />
         </el-header>
         <el-main class="card-content">
           <a class="title" @click="clickSubsidy(subsidy.id)">
@@ -74,9 +53,13 @@ import {
   Avatar,
   Tag,
 } from 'element-ui'
-import {Subsidy, SupplierType} from '@/types/Subsidy'
+import {Subsidy} from '@/types/Subsidy'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
+import {starView} from '@/utils/starView'
+import SupplierInformation from '@/components/SupplierInformation.vue'
+import FavoriteButton from '@/components/FavoriteButton.vue'
+import {subsidyCategoryLabel} from '@/utils/subsidyCategoryLabel'
 
 export default defineComponent({
   components: {
@@ -88,6 +71,8 @@ export default defineComponent({
     [`${Button.name}`]: Button,
     [`${Avatar.name}`]: Avatar,
     [`${Tag.name}`]: Tag,
+    SupplierInformation,
+    FavoriteButton,
   },
   props: {
     subsidy: {
@@ -95,46 +80,18 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(_props) {
     const router = useRouter()
     const clickSubsidy = (subsidyId: number) => {
       router.push('/subsidies/' + subsidyId)
     }
-    const subsidyCategoryLabel = {
-      hojo: '補助金',
-      josei: '助成金',
-    }
-    const supplierName = (supplierType: SupplierType) => {
-      switch (supplierType) {
-        case 'ministry':
-          return props.subsidy.ministry?.name
-        case 'prefecture':
-          return props.subsidy.prefecture?.name
-        case 'city':
-          return props.subsidy.city?.name
-      }
-    }
-    const logoUrl = (supplierType: SupplierType) => {
-      switch (supplierType) {
-        case 'ministry':
-          return props.subsidy.ministry?.logoUrl
-        case 'prefecture':
-          return props.subsidy.prefecture?.logoUrl
-        case 'city':
-          return props.subsidy.city?.logoUrl
-      }
-    }
-    const starView = (num: number) => {
-      return '★'.repeat(num) + '☆'.repeat(5 - num)
-    }
+
     return {
       clickSubsidy,
-      subsidyCategoryLabel,
       convertToShortJPY,
       convertToJpDate,
       starView,
-      supplierName,
-      logoUrl,
+      subsidyCategoryLabel,
     }
   },
 })
@@ -152,21 +109,6 @@ export default defineComponent({
 
 .clearfix::after {
   clear: both;
-}
-
-.card-aside {
-  height: 100%;
-  text-align: center;
-}
-
-.logo {
-  background-color: white;
-  border: solid 1px var(--border-grey-color);
-}
-
-.supplier {
-  font-size: 12px;
-  margin-top: var(--spacing-2);
 }
 
 .label {
@@ -203,10 +145,6 @@ export default defineComponent({
   font-weight: bold;
   text-decoration-line: underline;
   cursor: pointer;
-}
-
-.favorite {
-  float: right;
 }
 
 .target-container {
