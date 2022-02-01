@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :subsidies, only: %i[index show]
   resources :companies, only: %i[index show create update]
   resources :ministries, only: %i[index]
+  resources :user_favorite_subsidies, only: %i[create]
   resources :prefectures, only: %i[index] do
     resources :cities, only: %i[index]
   end

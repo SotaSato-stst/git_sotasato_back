@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_110651) do
+ActiveRecord::Schema.define(version: 2022_02_01_074831) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -107,6 +107,15 @@ ActiveRecord::Schema.define(version: 2022_01_26_110651) do
     t.index ["prefecture_id"], name: "index_subsidy_prefectures_on_prefecture_id"
     t.index ["subsidy_id", "prefecture_id"], name: "index_subsidy_prefectures_on_subsidy_id_and_prefecture_id", unique: true
     t.index ["subsidy_id"], name: "index_subsidy_prefectures_on_subsidy_id"
+  end
+
+  create_table "user_favorite_subsidies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "subsidy_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subsidy_id"], name: "index_user_favorite_subsidies_on_subsidy_id"
+    t.index ["user_id"], name: "index_user_favorite_subsidies_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
