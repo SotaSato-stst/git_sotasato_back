@@ -34,6 +34,8 @@ class Subsidy < ApplicationRecord
   validate :start_from_cannot_be_greater_than_end_to
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }
 
+  scope :published, -> { where(publishing_code: 'published') }
+
   def start_from_cannot_be_greater_than_end_to
     return if start_from.blank? || end_to.blank? || start_from < end_to
 
