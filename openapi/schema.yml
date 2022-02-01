@@ -42,15 +42,6 @@ paths:
         schema:
           type: string
           format: date
-      - name: business_scales
-        in: query
-        description: 事業規模enum配列
-        style: pipeDelimited
-        explode: false
-        schema:
-          type: array
-          items:
-            "$ref": "#/components/schemas/business_scale"
       - name: business_categories
         in: query
         description: 業種ID配列
@@ -506,7 +497,6 @@ components:
         - prefecture
         - city
         - business_categories
-        - business_scales
       properties:
         id:
           type: integer
@@ -573,10 +563,6 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/business_category"
-        business_scales:
-          type: array
-          items:
-            "$ref": "#/components/schemas/business_scale"
     subsidy_update:
       type: object
       required:
@@ -652,11 +638,6 @@ components:
           items:
             type: string
             example: seizo
-        business_scales:
-          type: array
-          items:
-            type: string
-            example: small_business
     ministry:
       type: object
       nullable: true
@@ -732,13 +713,6 @@ components:
           type: string
           description: 業種名
           example: 製造業
-    business_scale:
-      type: string
-      description: 事業規模
-      enum:
-        - small_business
-        - small_and_medium
-        - large
     company:
       type: object
       required:
@@ -746,7 +720,6 @@ components:
         - name
         - capital
         - total_employee
-        - business_scale
         - prefecture
         - city
       properties:
@@ -766,8 +739,6 @@ components:
           type: integer
           description: 従業員数
           example: 100
-        business_scale:
-          "$ref": "#/components/schemas/business_scale"
         prefecture:
           "$ref": "#/components/schemas/prefecture"
         city:
@@ -782,7 +753,6 @@ components:
         - name
         - capital
         - total_employee
-        - business_scale
         - prefecture_id
         - city_id
         - business_categories
@@ -799,8 +769,6 @@ components:
           type: integer
           description: 従業員数
           example: 100
-        business_scale:
-          "$ref": "#/components/schemas/business_scale"
         prefecture_id:
           type: integer
           description: 都道府県ID

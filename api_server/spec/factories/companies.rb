@@ -26,6 +26,5 @@ FactoryBot.define do
     adress { '千歳市30-2' }
     capital { '5040404' }
     total_employee { '30' }
-    business_scale { 'small_business' }
   end
 end

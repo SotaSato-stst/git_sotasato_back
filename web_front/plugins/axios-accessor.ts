@@ -3,7 +3,7 @@ import {getAuth, signOut} from 'firebase/auth'
 import {initializeAxios} from '~/store/api'
 import {notifyError} from '~/services/notify'
 import isEmptyObject from '@/utils/isEmptyObject'
-import keysToCamel from '@/utils/keysToCamel'
+import {keysToCamel, keysToSnake} from '~/utils/keyConverter'
 import CookieStore from '@/services/cookieStore'
 import {tokenExpired, refreshUserToken} from '@/services/authService'
 
@@ -24,6 +24,12 @@ const accessor: Plugin = ({$axios}) => {
     }
     request.params = {
       token: CookieStore.getIdToken(),
+    }
+    request.params = {
+      ...keysToSnake(request.params),
+    }
+    request.data = {
+      ...keysToSnake(request.data),
     }
     return request
   })
