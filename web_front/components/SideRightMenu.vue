@@ -29,6 +29,6 @@ export default Vue.extend({
 }
 
 .list > * {
-  margin: var(--spacing-4) 0;
+  margin: var(--spacing-5) 0;
 }
 </style>

@@ -63,30 +63,8 @@ export default class SubsidiesModule extends VuexModule {
 
   // TODO:ikegaki APIでサーバーからsubsidyを取得するように変更
   @Action({rawError: true})
-  getSubsidy(id: number) {
-    const subsidy: Subsidy = {
-      id,
-      title: 'タイトル',
-      url: 'https://google.com',
-      startFrom: new Date(2022, 4, 1),
-      endTo: new Date(2022, 5, 1),
-      publishingCode: 'published',
-      priceMax: 1000000,
-      supportRatioMin: '1/2',
-      supportRatioMax: '2/3',
-      level: 4,
-      detail: '詳細',
-      targetDetail: '対象',
-      subsidyCategory: 'hojo',
-      supplierType: 'ministry',
-      ministry: {
-        id: 1,
-        name: '経済産業省',
-        logoUrl: '',
-      },
-      prefecture: null,
-      city: null,
-    }
+  async getSubsidy(id: number) {
+    const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}`)
     this.setSubsidy(subsidy)
   }
 }
