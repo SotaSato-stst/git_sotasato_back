@@ -1,7 +1,9 @@
 module Admin
   class CompaniesController < ApplicationController
     def index
-      @companies = Company.all.includes(:prefecture, :city)
+      scope = Company.all.includes(:prefecture, :city)
+      @items_total = scope.count
+      @companies = scope.page(params[:page]).per(20)
     end
 
     def show
@@ -23,7 +25,6 @@ module Admin
       @company = Company.find(params[:id])
       @company.assign_attributes(company_params)
       set_association
-
       if @company.save
         render :show, status: 200
       else
@@ -34,12 +35,12 @@ module Admin
     private
 
     def company_params
-      params.permit(:name, :adress, :total_employee, :capital, :business_scale)
+      params.permit(:name, :adress, :total_employee, :capital)
     end
 
     def set_association
-      @company.prefecture = Prefecture.where(params[:prefecture_id]).first
-      @company.city = City.where(params[:city_id]).first
+      @company.prefecture = Prefecture.where(id: params[:prefecture_id]).first
+      @company.city = City.where(id: params[:city_id]).first
       @company.company_business_categories = params[:business_categories].to_a.map do |business_category|
         @company.company_business_categories.build(business_category: business_category)
       end

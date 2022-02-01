@@ -44,10 +44,6 @@ class Subsidy < ApplicationRecord
     [] # TODO
   end
 
-  def business_scales
-    [] # TODO
-  end
-
   def start_from_cannot_be_greater_than_end_to
     return if start_from.blank? || end_to.blank? || start_from < end_to
 

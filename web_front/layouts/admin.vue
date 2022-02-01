@@ -1,20 +1,17 @@
 <template>
   <el-container class="default-layout">
-    <el-aside width="240px">
-      <div class="title-container">補助金ドック</div>
-      <global-side-menu />
+    <el-aside width="240px" class="side-menu-container">
+      <div class="title-container">Admin</div>
+      <admin-side-menu />
     </el-aside>
     <el-container>
       <el-header class="header-container">
-        <global-header />
+        <admin-header />
       </el-header>
       <el-container class="center-container">
         <el-main>
           <nuxt />
         </el-main>
-        <el-aside width="316px">
-          <side-right-menu />
-        </el-aside>
       </el-container>
     </el-container>
   </el-container>
@@ -23,20 +20,18 @@
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
 import {Container, Header, Aside, Main} from 'element-ui'
-import GlobalHeader from '@/components/GlobalHeader.vue'
-import GlobalSideMenu from '@/components/GlobalSideMenu.vue'
-import SideRightMenu from '@/components/SideRightMenu.vue'
+import AdminHeader from '@/components/AdminHeader.vue'
+import AdminSideMenu from '@/components/AdminSideMenu.vue'
 
 export default defineComponent({
-  name: 'DefaultLayout',
+  name: 'AdminLayout',
   components: {
     [`${Container.name}`]: Container,
     [`${Header.name}`]: Header,
     [`${Aside.name}`]: Aside,
     [`${Main.name}`]: Main,
-    GlobalHeader,
-    GlobalSideMenu,
-    SideRightMenu,
+    AdminHeader,
+    AdminSideMenu,
   },
 })
 </script>

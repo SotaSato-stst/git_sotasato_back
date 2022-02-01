@@ -3,3 +3,7 @@ export type Prefecture = {
   name: string
   logoUrl: string
 }
+
+export type PrefectureResponse = {
+  prefectures: Prefecture[]
+}

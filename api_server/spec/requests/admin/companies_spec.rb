@@ -12,8 +12,7 @@ RSpec.describe 'Admin Companies', type: :request do
       city: city,
       adress: 'つくば市天久保3丁目12-34',
       capital: 200_000,
-      total_employee: 200,
-      business_scale: 'large'
+      total_employee: 200
     )
   end
 
@@ -37,7 +36,6 @@ RSpec.describe 'Admin Companies', type: :request do
       expect(json['companies'][0]['adress']).to eq 'つくば市天久保3丁目12-34'
       expect(json['companies'][0]['capital']).to eq 200_000
       expect(json['companies'][0]['total_employee']).to eq 200
-      expect(json['companies'][0]['business_scale']).to eq 'large'
     end
   end
 
@@ -57,7 +55,6 @@ RSpec.describe 'Admin Companies', type: :request do
       expect(json['adress']).to eq 'つくば市天久保3丁目12-34'
       expect(json['capital']).to eq 200_000
       expect(json['total_employee']).to eq 200
-      expect(json['business_scale']).to eq 'large'
     end
   end
 
@@ -70,7 +67,6 @@ RSpec.describe 'Admin Companies', type: :request do
         adress: '住所',
         capital: 100_000,
         total_employee: 1000,
-        business_scale: 'large',
         prefecture_id: prefecture.id,
         city_id: city.id,
         business_categories: ['it']
@@ -93,7 +89,6 @@ RSpec.describe 'Admin Companies', type: :request do
         adress: '住所',
         capital: 100_000,
         total_employee: 1000,
-        business_scale: 'large',
         prefecture_id: prefecture.id,
         city_id: city.id,
         business_categories: ['it']
