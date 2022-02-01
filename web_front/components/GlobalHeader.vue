@@ -11,7 +11,7 @@
         <i class="el-icon-s-order new"></i>新着 (12件)
       </el-menu-item>
       <el-menu-item index="ranking">
-        <i class="el-icon-s-flag flag"></i>人気
+        <i class="el-icon-s-flag flag"></i>ランキング
       </el-menu-item>
       <el-menu-item index="favorite">
         <i class="el-icon-star-on star"></i>保存済み
