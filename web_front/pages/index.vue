@@ -4,7 +4,12 @@
     <div v-for="subsidy in subsidies" :key="subsidy.id">
       <subsidy-card :subsidy="subsidy" />
     </div>
+    <el-empty
+      v-if="!loading && subsidies.length == 0"
+      description="データがありません"
+    />
     <el-pagination
+      v-if="subsidies.length > 0"
       background
       layout="prev, pager, next"
       :page-count="totalPages"
@@ -17,7 +22,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
-import {Pagination} from 'element-ui'
+import {Pagination, Empty} from 'element-ui'
 import SubsidyCard from '@/components/SubsidyCard.vue'
 import CardLoading from '~/components/CardLoading.vue'
 import {subsidiesModule} from '@/store'
@@ -27,6 +32,7 @@ export default defineComponent({
   name: 'IndexPage',
   components: {
     [`${Pagination.name}`]: Pagination,
+    [`${Empty.name}`]: Empty,
     SubsidyCard,
     CardLoading,
   },

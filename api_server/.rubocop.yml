@@ -44,3 +44,6 @@ Style/IfUnlessModifier:
 
 Style/GuardClause:
   Enabled: false
+
+Style/Lambda:
+  Enabled: false

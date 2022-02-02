@@ -1,6 +1,6 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {Subsidy, SubsidiesResponse} from '@/types/Subsidy'
+import {Subsidy, SubsidiesResponse, SubsidySearchParams} from '@/types/Subsidy'
 
 @Module({
   name: 'subsidies',
@@ -15,6 +15,11 @@ export default class SubsidiesModule extends VuexModule {
   itemsTotal: number = 0
   itemsPerPage: number = 0
 
+  searchParams: SubsidySearchParams = {
+    prefectureIds: '',
+    cityIds: '',
+  }
+
   @Mutation
   setSubsidies(subsidies: Subsidy[]) {
     this.subsidies = subsidies
@@ -23,6 +28,11 @@ export default class SubsidiesModule extends VuexModule {
   @Mutation
   setSubsidy(subsidy: Subsidy) {
     this.subsidy = subsidy
+  }
+
+  @Mutation
+  setSearchParams(searchParams: SubsidySearchParams) {
+    this.searchParams = searchParams
   }
 
   @Mutation
@@ -47,7 +57,9 @@ export default class SubsidiesModule extends VuexModule {
 
   @Action({rawError: true})
   async getSubsidies() {
-    const res = await $axios.$get<SubsidiesResponse>('/subsidies')
+    const res = await $axios.$get<SubsidiesResponse>('/subsidies', {
+      params: this.searchParams,
+    })
     this.setSubsidies(res.subsidies)
     this.setCurrentPage(res.currentPage)
     this.setTotalPages(res.totalPages)

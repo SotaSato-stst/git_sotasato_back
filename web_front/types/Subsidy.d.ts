@@ -35,3 +35,8 @@ export type SubsidiesResponse = {
   prevPage: number
   nextPage: number
 }
+
+export type SubsidySearchParams = {
+  prefectureIds: string // 1|2|3のような形
+  cityIds: string // 1|2|3のような形
+}

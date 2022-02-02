@@ -24,8 +24,6 @@ const accessor: Plugin = ({$axios}) => {
     }
     request.params = {
       token: CookieStore.getIdToken(),
-    }
-    request.params = {
       ...keysToSnake(request.params),
     }
     request.data = {
