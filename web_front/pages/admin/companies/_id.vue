@@ -93,7 +93,6 @@ import {
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {companiesModule, optionsModule} from '@/store'
 import {useLoader} from '@/services/useLoader'
-import {CompanyParams} from '@/types/Company'
 import {notifySuccess} from '@/services/notify'
 
 export default defineComponent({
@@ -117,7 +116,7 @@ export default defineComponent({
       optionsModule.getCities(prefectureId)
     }
     const cities = computed(() => optionsModule.cities)
-    const state: CompanyParams = reactive(companiesModule.companyParams)
+    const state = reactive(companiesModule.companyParams)
 
     const submit = async () => {
       companiesModule.setCompanyParams(state)
