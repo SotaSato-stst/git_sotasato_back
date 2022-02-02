@@ -1,5 +1,5 @@
 json.call(subsidy, :id, :title, :url, :start_from, :end_to, :publishing_code, :price_max, :support_ratio_min,
-          :support_ratio_max, :level, :detail, :target_detail, :subsidy_category, :supplier_type)
+          :support_ratio_max, :level, :detail, :target_detail, :subsidy_category, :supplier_type, :business_categories)
 
 json.ministry do
   json.partial! 'ministries/ministry', ministry: subsidy.ministry

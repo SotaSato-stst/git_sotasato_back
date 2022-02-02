@@ -12,6 +12,8 @@ export default class SubsidiesModule extends VuexModule {
   subsidy: Subsidy | null = null
   currentPage: number = 0
   totalPages: number = 0
+  itemsTotal: number = 0
+  itemsPerPage: number = 0
 
   @Mutation
   setSubsidies(subsidies: Subsidy[]) {
@@ -33,12 +35,24 @@ export default class SubsidiesModule extends VuexModule {
     this.totalPages = totalPages
   }
 
+  @Mutation
+  setItemsTotal(itemsTotal: number) {
+    this.itemsTotal = itemsTotal
+  }
+
+  @Mutation
+  setItemsPerPage(itemsPerPage: number) {
+    this.itemsPerPage = itemsPerPage
+  }
+
   @Action({rawError: true})
   async getSubsidies() {
     const res = await $axios.$get<SubsidiesResponse>('/subsidies')
     this.setSubsidies(res.subsidies)
     this.setCurrentPage(res.currentPage)
     this.setTotalPages(res.totalPages)
+    this.setItemsTotal(res.itemsTotal)
+    this.setItemsPerPage(res.itemsPerPage)
   }
 
   @Action({rawError: true})

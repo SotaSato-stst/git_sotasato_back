@@ -151,32 +151,29 @@ if Rails.env.development?
   company_hashes = [
     {
       name: '池垣株式会社',
-      prefecture_name: '大阪府',
-      city_id: '1',
+      prefecture_name: '茨城県',
+      city_name: 'つくば市',
       adress: 'つくば市天久保3丁目12-34',
       capital: '200000',
       total_employee: '200',
-      business_scale: 'large',
       business_categories: ['seizo']
     },
     {
       name: '池垣物産',
-      prefecture_name: '神奈川県',
-      city_id: '2',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
       adress: '河内長野市南希望が丘30-203',
       capital: '20010',
       total_employee: '3',
-      business_scale: 'small_business',
       business_categories: ['gyogyo']
     },
     {
       name: 'IGnet',
-      prefecture_name: '香川県',
-      city_id: '3',
+      prefecture_name: '北海道',
+      city_name: '千歳市',
       adress: '千歳市30-2',
       capital: '5040404',
       total_employee: '30',
-      business_scale: 'small_business',
       business_categories: ['seizo', 'hotel_insyoku']
     }
   ]
@@ -188,10 +185,9 @@ if Rails.env.development?
     company.update!(
       prefecture: prefectures[hash[:prefecture_name]],
       capital: hash[:capital],
-      city_id: hash[:city_id],
+      city: cities[hash[:city_name]],
       adress: hash[:adress],
       total_employee: hash[:total_employee],
-      business_scale: hash[:business_scale]
     )
   end
 
@@ -204,7 +200,7 @@ if Rails.env.development?
       company: Company.first,
       email: firebase_user_email,
       display_name: '田中太郎',
-      account_role: 'user'
+      account_role: 'admin'
     )
   end
 end

@@ -6,10 +6,6 @@ info:
 servers:
   - url: "http://localhost:3000"
 tags:
-  - name: admin/user
-    description: ユーザー管理
-  - name: company
-    description: 会社
   - name: subsidy
     description: 補助金情報
   - name: ministry
@@ -20,8 +16,72 @@ tags:
     description: 市長区村
   - name: business_category
     description: 業種
+  - name: admin/company
+    description: 会社管理
+  - name: admin/user
+    description: ユーザー管理
+  - name: admin/subsidy
+    description: 補助金情報管理
 paths:
   "/subsidies":
+    parameters:
+      - name: keyword
+        in: query
+        description: キーワード検索
+        schema:
+          type: string
+      - name: start_from
+        in: query
+        description: 募集開始日
+        schema:
+          type: string
+          format: date
+      - name: end_to
+        in: query
+        description: 募集終了日
+        schema:
+          type: string
+          format: date
+      - name: business_categories
+        in: query
+        description: 業種ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: seizo
+      - name: prefecture_ids
+        in: query
+        description: 都道府県ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: 1
+      - name: city_ids
+        in: query
+        description: 市長区村ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: 1
+      - name: ministry_ids
+        in: query
+        description: 省庁ID配列
+        style: pipeDelimited
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: 1
     get:
       tags:
         - subsidy
@@ -123,76 +183,6 @@ paths:
                     type: array
                     items:
                       "$ref": "#/components/schemas/city"
-  "/companies":
-    get:
-      tags:
-        - company
-      summary: 会社一覧
-      responses:
-        "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - companies
-                properties:
-                  companies:
-                    type: array
-                    items:
-                      "$ref": "#/components/schemas/company"
-    post:
-      tags:
-        - company
-      summary: 会社作成
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/company_update"
-      responses:
-        "201":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/company"
-  "/companies/{id}":
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: companyのid
-        schema:
-          type: integer
-    get:
-      summary: 会社詳細
-      tags:
-        - company
-      responses:
-        "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/company"
-    put:
-      summary: 会社更新
-      tags:
-        - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/company_update"
-      responses:
-        "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/company"
   "/business_categories":
     get:
       tags:
@@ -212,6 +202,76 @@ paths:
                     type: array
                     items:
                       "$ref": "#/components/schemas/business_category"
+  "/admin/companies":
+    get:
+      tags:
+        - admin/company
+      summary: 会社一覧
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - companies
+                properties:
+                  companies:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/company"
+    post:
+      tags:
+        - admin/company
+      summary: 会社作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/company_update"
+      responses:
+        "201":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/company"
+  "/admin/companies/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: companyのid
+        schema:
+          type: integer
+    get:
+      summary: 会社詳細
+      tags:
+        - admin/company
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/company"
+    put:
+      summary: 会社更新
+      tags:
+        - admin/company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/company_update"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/company"
   "/admin/users":
     get:
       tags:
@@ -322,6 +382,100 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/user"
+  "/admin/scraping_urls":
+    get:
+      tags:
+        - admin/subsidy
+      summary: スクレイピングURL一覧
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - scraping_urls
+                properties:
+                  scraping_urls:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          description: 取得URLタイトル
+                        url:
+                          type: string
+                          description: URL
+  "/admin/subsidies":
+    get:
+      summary: 補助金情報一覧
+      tags:
+        - admin/subsidy
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subsidies:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/subsidy"
+    post:
+      tags:
+        - admin/subsidy
+      summary: 補助金情報作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/subsidy_update"
+      responses:
+        "201":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/subsidy"
+  "/admin/subsidies/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: userのid
+        schema:
+          type: integer
+    get:
+      summary: ユーザー詳細
+      tags:
+        - admin/user
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/subsidy"
+    put:
+      summary: ユーザー更新
+      tags:
+        - admin/user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/subsidy_update"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/subsidy"
 components:
   schemas:
     subsidy:
@@ -332,9 +486,17 @@ components:
         - url
         - start_from
         - end_to
+        - price_max
+        - support_ratio_min
+        - support_ratio_max
+        - level
+        - detail
+        - target_detail
+        - supplier_type
         - ministry
         - prefecture
         - city
+        - business_categories
       properties:
         id:
           type: integer
@@ -380,7 +542,7 @@ components:
           type: integer
           description: 申請難易度
           example: 4
-        deatil:
+        detail:
           type: string
           description: 詳細文章
           example: 新型コロナウイルス感染症の影響が長期化し、当面の需要や売上の回復が期待し難い中、ウィズコロナ・ポストコロナの時代の経済社会の変化に対応するために新分野展開、業態転換、事業・業種転換、事業再編又はこれらの取組を通じた規模の拡大等、思い切った事業再構築に意欲を有する中小企業等の挑戦を支援することで、日本経済の構造転換を促すことを目的とします。※申請の受付は11月17日より開始となりました。
@@ -401,10 +563,81 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/business_category"
-        business_scales:
+    subsidy_update:
+      type: object
+      required:
+        - title
+        - url
+        - start_from
+      properties:
+        title:
+          type: string
+          description: 補助金名
+          example: IT導入補助金
+        url:
+          type: string
+          description: URL
+          example: https://www.it-hojo.jp/applicant/
+        subsidy_category:
+          type: string
+          description: 種類
+          enum:
+            - hojo
+            - josei
+        start_from:
+          type: string
+          format: date
+          description: 募集期間（開始日）
+          example: "2022-01-01"
+        end_to:
+          type: string
+          format: date
+          description: 募集期間（終了日）
+          example: "2022-02-01"
+        price_max:
+          type: integer
+          description: 最大支援金額
+          example: 60000000
+        support_ratio_min:
+          type: string
+          description: 支援割合（最小）
+          example: 1/2
+        support_ratio_max:
+          type: string
+          description: 支援割合（最大）
+          example: 3/4
+        level:
+          type: integer
+          description: 申請難易度
+          example: 4
+        detail:
+          type: string
+          description: 詳細文章
+          example: 新型コロナウイルス感染症の影響が長期化し、当面の需要や売上の回復が期待し難い中、ウィズコロナ・ポストコロナの時代の経済社会の変化に対応するために新分野展開、業態転換、事業・業種転換、事業再編又はこれらの取組を通じた規模の拡大等、思い切った事業再構築に意欲を有する中小企業等の挑戦を支援することで、日本経済の構造転換を促すことを目的とします。※申請の受付は11月17日より開始となりました。
+        ministry_id:
+          type: integer
+          description: 省庁ID
+          example: 4
+        prefecture_id:
+          type: integer
+          description: 省庁ID
+          example: 4
+        city_id:
+          type: integer
+          description: 省庁ID
+          example: 4
+        supplier_type:
+          type: string
+          description: 発行機関
+          enum:
+            - ministry
+            - prefecture
+            - city
+        business_categories:
           type: array
           items:
-            "$ref": "#/components/schemas/business_scale"
+            type: string
+            example: seizo
     ministry:
       type: object
       nullable: true
@@ -480,13 +713,6 @@ components:
           type: string
           description: 業種名
           example: 製造業
-    business_scale:
-      type: string
-      description: 事業規模
-      enum:
-        - small_business
-        - small_and_medium
-        - large
     company:
       type: object
       required:
@@ -494,7 +720,6 @@ components:
         - name
         - capital
         - total_employee
-        - business_scale
         - prefecture
         - city
       properties:
@@ -514,8 +739,6 @@ components:
           type: integer
           description: 従業員数
           example: 100
-        business_scale:
-          "$ref": "#/components/schemas/business_scale"
         prefecture:
           "$ref": "#/components/schemas/prefecture"
         city:
@@ -530,7 +753,6 @@ components:
         - name
         - capital
         - total_employee
-        - business_scale
         - prefecture_id
         - city_id
         - business_categories
@@ -547,13 +769,11 @@ components:
           type: integer
           description: 従業員数
           example: 100
-        business_scale:
-          "$ref": "#/components/schemas/business_scale"
         prefecture_id:
           type: integer
           description: 都道府県ID
           example: 1
-        city:
+        city_id:
           type: integer
           description: 市長区村ID
           example: 1

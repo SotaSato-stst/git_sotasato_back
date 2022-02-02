@@ -3,3 +3,7 @@ export type City = {
   name: string
   logoUrl: string
 }
+
+export type CityResponse = {
+  cities: City[]
+}

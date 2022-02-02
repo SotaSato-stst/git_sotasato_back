@@ -77,4 +77,6 @@ Rails.application.configure do
   config.action_dispatch.default_headers = {
     'Access-Control-Allow-Origin' => '*'
   }
+
+  config.hosts << 'http://localhost:8080'
 end

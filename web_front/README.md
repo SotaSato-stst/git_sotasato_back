@@ -35,14 +35,17 @@ firebaseでアカウントのログイン機構を実現しています。
 
 まずはfirebaseでローカル環境専用のプロジェクトを作成します。  
 https://console.firebase.google.com  
-プロジェクト名の例: `hojokin-dock-local` など
+プロジェクト名の例: `hojokin-dock-local` など  
+※アナリティクスなどの設定はしなくてよい  
 
 次に、 `Authentication` から「メール / パスワード」のプロバイダを追加します。  
+※メールリンクの設定はしなくてよい  
 ここでテストユーザーを1つ作成しておきます。メールアドレスは存在しなくても構いません。  
 ※ここで作成したテストユーザーをapi_serverの環境変数(.envファイル)に設定しておくと、フロントとサーバーの疎通をテストできます。  
 
 次に、 :gear: の設定画面から、「マイアプリ」にてWebアプリを追加します。  
 アプリのニックネームの例: `web_front_local` など  
+※firebase hostingの設定はしなくてよい  
 作成したマイアプリのfirebaseConfigを確認します。（ `apiKey` や `projectId` など）  
 
 次に、以下のコマンドで `.env` というファイルを作成します。  

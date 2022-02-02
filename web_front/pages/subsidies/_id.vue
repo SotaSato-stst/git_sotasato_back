@@ -70,7 +70,7 @@ import {subsidiesModule} from '~/store'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
-import {subsidyCategoryLabel} from '@/utils/subsidyCategoryLabel'
+import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 export default defineComponent({
   name: 'SubsidyDetailPage',
   setup(_props) {

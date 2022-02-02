@@ -16,7 +16,7 @@
 #
 FactoryBot.define do
   factory :subsidy_ministry do
-    association(:ministry)
     association(:subsidy)
+    association(:ministry)
   end
 end

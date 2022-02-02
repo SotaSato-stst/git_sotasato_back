@@ -1,20 +1,17 @@
 <template>
   <div class="header-container">
     <el-menu
-      :default-active="selectedPage"
+      default-active="admin"
       class="header-menu"
       mode="horizontal"
       active-text-color="var(--primary-color)"
       @select="handleSelect"
     >
-      <el-menu-item index="new">
-        <i class="el-icon-s-order new"></i>新着 (12件)
+      <el-menu-item index="admin">
+        <i class="el-icon-setting"></i>管理画面トップ
       </el-menu-item>
-      <el-menu-item index="ranking">
-        <i class="el-icon-s-flag flag"></i>ランキング
-      </el-menu-item>
-      <el-menu-item index="favorite">
-        <i class="el-icon-star-on star"></i>保存済み
+      <el-menu-item index="user">
+        <i class="el-icon-s-order"></i>ユーザー画面トップ
       </el-menu-item>
     </el-menu>
     <global-dropdown-menu />
@@ -25,12 +22,11 @@
 import {Menu, MenuItem} from 'element-ui'
 import {defineComponent, useRouter} from '@nuxtjs/composition-api'
 import GlobalDropdownMenu from '@/components/GlobalDropdownMenu.vue'
-import {routingService} from '@/services/routingService'
 
-type menuType = 'new' | 'ranking' | 'favorite'
+type menuType = 'admin' | 'user'
 
 export default defineComponent({
-  name: 'GlobalHeader',
+  name: 'AdminHeader',
   components: {
     [`${Menu.name}`]: Menu,
     [`${MenuItem.name}`]: MenuItem,
@@ -38,22 +34,18 @@ export default defineComponent({
   },
   setup(_props) {
     const router = useRouter()
-    const selectedPage: menuType = 'new'
     const handleSelect = (value: menuType) => {
       switch (value) {
-        case 'new':
-          router.push(routingService.Top())
+        case 'admin':
+          router.push('/admin')
           break
-        case 'ranking':
-          router.push(routingService.Ranking())
-          break
-        case 'favorite':
-          router.push(routingService.Favorite())
+        case 'user':
+          router.push('/')
           break
       }
     }
 
-    return {selectedPage, handleSelect}
+    return {handleSelect}
   },
 })
 </script>
@@ -74,20 +66,5 @@ export default defineComponent({
 .header-menu > li > i {
   font-size: 16px;
   width: fit-content;
-}
-
-.star,
-.header-menu > li.is-active > i.star {
-  color: var(--hilight-yellow);
-}
-
-.flag,
-.header-menu > li.is-active > i.flag {
-  color: #f48c06;
-}
-
-.new,
-.header-menu > li.is-active > i.new {
-  color: #48cae4;
 }
 </style>

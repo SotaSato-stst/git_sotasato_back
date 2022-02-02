@@ -35,6 +35,16 @@ class Subsidy < ApplicationRecord
   validate :start_from_cannot_be_greater_than_end_to
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }
 
+  scope :published, -> { where(publishing_code: 'published') }
+
+  enum publishing_code: { published: 'published', editing: 'editing' }
+  enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
+  enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
+
+  def business_categories
+    [] # TODO
+  end
+
   def start_from_cannot_be_greater_than_end_to
     return if start_from.blank? || end_to.blank? || start_from < end_to
 
@@ -52,8 +62,4 @@ class Subsidy < ApplicationRecord
       errors.add(:supplier_type, 'cityが存在しません')
     end
   end
-
-  enum publishing_code: { published: 'published', editing: 'editing' }
-  enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
-  enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 end

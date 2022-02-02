@@ -30,4 +30,8 @@ export type SubsidiesResponse = {
   subsidies: Subsidy[]
   currentPage: number
   totalPages: number
+  itemsTotal: number
+  itemsPerPage: number
+  prevPage: number
+  nextPage: number
 }
