@@ -112,8 +112,8 @@ export default defineComponent({
     const company = computed(() => companiesModule.company)
     const prefectures = computed(() => optionsModule.prefectures)
     const businessCategories = computed(() => optionsModule.businessCategories)
-    const selectPrefectureId = (prefectureId: number) => {
-      optionsModule.getCities(prefectureId)
+    const selectPrefectureId = async (prefectureId: number) => {
+      await optionsModule.getCities(prefectureId)
     }
     const cities = computed(() => optionsModule.cities)
     const state = reactive(companiesModule.companyParams)
@@ -130,13 +130,13 @@ export default defineComponent({
     onMounted(() => {
       load(loading, async () => {
         await companiesModule.getCompany(pageId)
-        Object.assign(state, companiesModule.companyParams)
-        optionsModule.getPrefectures()
         optionsModule.getBusinessCategories()
+        await optionsModule.getPrefectures()
         const prfecture = companiesModule.company?.prefecture
         if (prfecture) {
-          selectPrefectureId(prfecture.id)
+          await selectPrefectureId(prfecture.id)
         }
+        Object.assign(state, companiesModule.companyParams)
       })
     })
 
