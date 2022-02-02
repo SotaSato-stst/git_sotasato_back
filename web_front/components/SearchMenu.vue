@@ -1,27 +1,31 @@
 <template>
-  <div class="container">
+  <div v-loading="loading" class="container">
     <div class="search-title">補助金情報検索</div>
     <el-form class="form" :model="state" label-width="120px">
       <div class="search-item">
         <div class="search-label">都道府県</div>
         <el-select
+          v-if="prefectures.length > 0"
           v-model="state.prefectureId"
           placeholder="都道府県"
+          clearable
           @change="selectPrefectureId"
         >
           <el-option
             v-for="prefecture in prefectures"
             :key="prefecture.id"
             :label="prefecture.name"
-            :value="prefecture.id"
+            :value="prefecture.id.toString()"
           />
         </el-select>
       </div>
       <div class="search-item">
         <div class="search-label">市長区村</div>
         <el-select
+          v-if="prefectures.length > 0"
           v-model="state.cityIds"
           multiple
+          clearable
           placeholder="市長区村"
           no-data-text="都道府県を選択してください"
         >
@@ -29,7 +33,7 @@
             v-for="city in cities"
             :key="city.id"
             :label="city.name"
-            :value="city.id"
+            :value="city.id.toString()"
           />
         </el-select>
       </div>
@@ -45,14 +49,16 @@ import {
   defineComponent,
   computed,
   onMounted,
+  onUnmounted,
   reactive,
+  useRoute,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button} from 'element-ui'
 import {optionsModule, subsidiesModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 
 export default defineComponent({
-  name: 'GlobalSideMenu',
+  name: 'SearchMenu',
   components: {
     [`${Form.name}`]: Form,
     [`${FormItem.name}`]: FormItem,
@@ -61,31 +67,52 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
-    const {loading, load} = useLoader()
+    const route = useRoute()
+    const router = useRouter()
+    const {loading, load} = subsidiesModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
-    const selectPrefectureId = async (prefectureId: number) => {
+    const selectPrefectureId = async (prefectureId: string) => {
+      if (prefectureId.length === 0) {
+        return
+      }
+      state.cityIds = []
       await optionsModule.getCities(prefectureId)
     }
     const cities = computed(() => optionsModule.cities)
     const state = reactive({
-      prefectureId: '',
-      cityIds: [],
+      prefectureId: route.value.query.prefectureIds?.toString() || '',
+      cityIds: route.value.query.cityIds?.toString().split('|') || [],
     })
 
-    const submit = () => {
+    const setParams = () => {
       subsidiesModule.setSearchParams({
         prefectureIds: state.prefectureId,
         cityIds: state.cityIds.join('|'),
       })
+    }
+
+    const submit = () => {
+      setParams()
       load(loading, async () => {
         await subsidiesModule.getSubsidies()
+        router.push({query: subsidiesModule.searchParams})
       })
     }
 
     onMounted(() => {
+      setParams()
       load(loading, async () => {
+        subsidiesModule.getSubsidies()
         await optionsModule.getPrefectures()
+        if (state.prefectureId.length > 0) {
+          optionsModule.getCities(state.prefectureId)
+        }
       })
+    })
+
+    onUnmounted(() => {
+      subsidiesModule.setSubsidies([])
+      optionsModule.setCities([])
     })
 
     return {

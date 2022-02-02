@@ -2,6 +2,7 @@ import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
 import {Subsidy, SubsidiesResponse, SubsidySearchParams} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
+import {useLoader} from '~/services/useLoader'
 
 @Module({
   name: 'subsidies',
@@ -9,6 +10,7 @@ import {Pagination} from '@/types/Pagination'
   namespaced: true,
 })
 export default class SubsidiesModule extends VuexModule {
+  loader = useLoader()
   subsidies: Subsidy[] = []
   subsidy: Subsidy | null = null
   pagination: Pagination = {
@@ -53,11 +55,6 @@ export default class SubsidiesModule extends VuexModule {
     })
     this.setSubsidies(res.subsidies)
     this.setPagination(res.pagination)
-  }
-
-  @Action({rawError: true})
-  updateCurrentPage(page: number) {
-    this.getSubsidies(page)
   }
 
   // TODO:ikegaki APIでサーバーからsubsidyを取得するように変更

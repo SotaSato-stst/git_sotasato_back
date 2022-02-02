@@ -87,6 +87,7 @@ import {
   computed,
   defineComponent,
   onMounted,
+  onUnmounted,
   useRoute,
   reactive,
 } from '@nuxtjs/composition-api'
@@ -113,6 +114,7 @@ export default defineComponent({
     const prefectures = computed(() => optionsModule.prefectures)
     const businessCategories = computed(() => optionsModule.businessCategories)
     const selectPrefectureId = async (prefectureId: number) => {
+      state.cityId = null
       await optionsModule.getCities(prefectureId)
     }
     const cities = computed(() => optionsModule.cities)
@@ -138,6 +140,10 @@ export default defineComponent({
         }
         Object.assign(state, companiesModule.companyParams)
       })
+    })
+
+    onUnmounted(() => {
+      optionsModule.setCities([])
     })
 
     return {
