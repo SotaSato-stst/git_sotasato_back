@@ -48,6 +48,11 @@ export default defineComponent({
     //   itemsPerPage,
     // }
   },
+  head(): object {
+    return {
+      title: '管理画面',
+    }
+  },
 })
 </script>
 

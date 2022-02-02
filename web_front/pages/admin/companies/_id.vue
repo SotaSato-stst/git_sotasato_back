@@ -159,6 +159,11 @@ export default defineComponent({
       submit,
     }
   },
+  head(): object {
+    return {
+      title: this.company?.name,
+    }
+  },
 })
 </script>
 

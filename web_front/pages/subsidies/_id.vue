@@ -90,6 +90,11 @@ export default defineComponent({
       subsidyCategoryLabel,
     }
   },
+  head(): object {
+    return {
+      title: this.subsidy?.title,
+    }
+  },
 })
 </script>
 

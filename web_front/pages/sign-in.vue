@@ -59,6 +59,11 @@ export default defineComponent({
 
     return {state, signIn}
   },
+  head(): object {
+    return {
+      title: 'サインイン',
+    }
+  },
 })
 </script>
 

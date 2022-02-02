@@ -8,7 +8,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'web_front',
+    titleTemplate: '%s | 補助金ドック',
     htmlAttrs: {
       lang: 'en',
     },

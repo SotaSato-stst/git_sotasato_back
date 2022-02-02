@@ -87,6 +87,11 @@ export default defineComponent({
       convertToShortJPY,
     }
   },
+  head(): object {
+    return {
+      title: '会社管理',
+    }
+  },
 })
 </script>
 

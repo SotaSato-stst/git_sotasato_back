@@ -1,7 +1,7 @@
 <template>
   <el-container class="center-container">
     <el-aside class="left-side-menu" width="var(--header-width)">
-      <search-menu :loader="loader" />
+      <search-menu />
     </el-aside>
     <el-main>
       <div class="container">
@@ -61,6 +61,11 @@ export default defineComponent({
       loading,
       subsidies,
       pagination,
+    }
+  },
+  head(): object {
+    return {
+      title: 'トップ',
     }
   },
 })
