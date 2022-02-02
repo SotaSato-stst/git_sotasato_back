@@ -1,62 +1,70 @@
-// TODO:ikegaki 詳細ページをつくる
 <template>
-  <div class="container">
-    <div v-if="subsidy" class="background">
-      <el-container>
-        <supplier-information :subsidy="subsidy" />
-        <el-container class="card-container">
-          <el-header height="32px" class="card-header">
-            <el-tag type="info" effect="plain" class="subsidy-type">
-              {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
-            </el-tag>
-            <span v-if="subsidy.priceMax" class="header-info">
-              <span class="label">
-                上限金額:
-                {{ convertToShortJPY(subsidy.priceMax) }}円
+  <el-container class="container">
+    <el-aside class="left-side-menu" width="var(--header-width)"> </el-aside>
+    <el-main>
+      <el-card v-if="subsidy">
+        <el-container>
+          <supplier-information :subsidy="subsidy" />
+          <el-container class="card-container">
+            <el-header height="32px" class="card-header">
+              <el-tag type="info" effect="plain" class="subsidy-type">
+                {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
+              </el-tag>
+              <span v-if="subsidy.priceMax" class="header-info">
+                <span class="label">
+                  上限金額:
+                  {{ convertToShortJPY(subsidy.priceMax) }}円
+                </span>
               </span>
-            </span>
-            <span v-if="subsidy.level" class="header-info">
-              <span class="label">
-                申請難易度:{{ starView(subsidy.level) }}
+              <span v-if="subsidy.level" class="header-info">
+                <span class="label">
+                  申請難易度:{{ starView(subsidy.level) }}
+                </span>
               </span>
-            </span>
-            <favorite-button :subsidy="subsidy" />
-          </el-header>
-          <el-main class="card-content">
-            <a class="title" @click="clickSubsidy(subsidy.id)">
-              {{ subsidy.title }}
-            </a>
-            <span class="header-info">
-              <span class="label block">
-                募集期間:
-                {{ convertToJpDate(subsidy.startFrom) }}
-                ~
-                {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
+              <favorite-button :subsidy="subsidy" />
+            </el-header>
+            <el-main class="card-content">
+              <div class="title">
+                {{ subsidy.title }}
+              </div>
+              <span class="header-info">
+                <span class="label block">
+                  募集期間:
+                  {{ convertToJpDate(subsidy.startFrom) }}
+                  ~
+                  {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
+                </span>
               </span>
-            </span>
-            <span class="header-info">
-              <span class="label block">
-                URL:
-                <a :href="subsidy.url" target="_blank">
-                  {{ subsidy.url }}
-                </a>
+              <span class="header-info">
+                <span class="label block">
+                  URL:
+                  <a :href="subsidy.url" target="_blank">
+                    {{ subsidy.url }}
+                  </a>
+                </span>
               </span>
-            </span>
-          </el-main>
+            </el-main>
+          </el-container>
         </el-container>
-      </el-container>
-      <div class="detail">
-        <span class="label">対象</span>
-        <div class="content">
-          {{ subsidy.targetDetail }}
+        <div class="divider" />
+        <div class="detail">
+          <span class="label">対象</span>
+          <div class="content">
+            {{ subsidy.targetDetail }}
+          </div>
         </div>
-        <span class="label">支援内容</span>
-        <div class="content">
-          {{ subsidy.detail }}
+        <div class="detail">
+          <span class="label">支援内容</span>
+          <div class="content">
+            {{ subsidy.detail }}
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </el-card>
+    </el-main>
+    <el-aside width="316px">
+      <side-right-menu />
+    </el-aside>
+  </el-container>
 </template>
 
 <script lang="ts">
@@ -66,13 +74,21 @@ import {
   onMounted,
   useRoute,
 } from '@nuxtjs/composition-api'
+import {Container, Aside, Main, Card} from 'element-ui'
 import {subsidiesModule} from '~/store'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
+
 export default defineComponent({
   name: 'SubsidyDetailPage',
+  components: {
+    [`${Container.name}`]: Container,
+    [`${Aside.name}`]: Aside,
+    [`${Main.name}`]: Main,
+    [`${Card.name}`]: Card,
+  },
   setup(_props) {
     const route = useRoute()
     const pageId = Number(route.value.params.id)
@@ -99,28 +115,6 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.container > * {
-  margin-bottom: var(--spacing-4);
-}
-
-.block {
-  display: block;
-  margin-top: var(--spacing-4);
-  margin-bottom: var(--spacing-4);
-}
-
-.background {
-  background-color: var(--white);
-  padding: var(--spacing-5);
-  border: 1px solid var(--border-grey-color);
-  color: var(--primary-font-color);
-  border-radius: var(--spacing-1);
-}
-
-.card {
-  overflow: auto;
-}
-
 .clearfix::before,
 .clearfix::after {
   display: table;
@@ -159,7 +153,7 @@ export default defineComponent({
 }
 
 .header-info {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .card-container {
@@ -178,33 +172,42 @@ export default defineComponent({
 .title {
   font-size: 18px;
   font-weight: bold;
-  text-decoration-line: underline;
-  cursor: pointer;
 }
 
 .favorite {
   float: right;
 }
 
-.target {
-  font-size: 12px;
-  width: 100%;
+.block {
+  display: block;
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.divider {
+  margin: var(--spacing-3) 0;
+  border-top: 1px solid var(--border-grey-color);
+  height: 1px;
 }
 
 .detail {
-  padding-top: var(--spacing-5);
-  margin-top: var(--spacing-5);
-  border-top: 1px solid var(--border-grey-color);
+  color: var(--primary-font-color);
+  margin: var(--spacing-6) 0;
 }
 
 .detail .label {
-  font-size: 14px;
+  font-size: 16px;
   width: 100%;
 }
 
 .detail .content {
-  font-size: 12px;
-  line-height: 18px;
-  margin: var(--spacing-5) 0;
+  font-size: 14px;
+  white-space: pre-line;
+}
+
+.left-side-menu {
+  background-color: white;
+  width: 100%;
+  height: 100%;
 }
 </style>
