@@ -3,7 +3,9 @@
     <el-card v-if="company">
       <div slot="header" class="form-header">
         <p>「{{ company.name }}」の会社情報</p>
-        <el-button type="primary" @click="submit">保存する</el-button>
+        <el-button type="primary" class="submit-button" @click="submit">
+          保存する
+        </el-button>
       </div>
       <el-form class="form" :model="state" label-width="120px">
         <el-form-item label="会社名">
@@ -113,7 +115,7 @@ export default defineComponent({
     const company = computed(() => companiesModule.company)
     const prefectures = computed(() => optionsModule.prefectures)
     const businessCategories = computed(() => optionsModule.businessCategories)
-    const selectPrefectureId = async (prefectureId: number) => {
+    const selectPrefectureId = async (prefectureId: string) => {
       state.cityId = null
       await optionsModule.getCities(prefectureId)
     }
@@ -136,7 +138,7 @@ export default defineComponent({
         await optionsModule.getPrefectures()
         const prfecture = companiesModule.company?.prefecture
         if (prfecture) {
-          await selectPrefectureId(prfecture.id)
+          await selectPrefectureId(prfecture.id.toString())
         }
         Object.assign(state, companiesModule.companyParams)
       })
