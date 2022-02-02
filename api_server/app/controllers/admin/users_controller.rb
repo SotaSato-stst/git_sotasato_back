@@ -1,7 +1,9 @@
 module Admin
   class UsersController < ApplicationController
     def index
-      @users = User.all.includes(:company)
+      scope = User.all.includes(:company)
+      @items_total = scope.count
+      @users = scope.page(params[:page]).per(50)
     end
 
     def show

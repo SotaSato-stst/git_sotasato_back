@@ -28,12 +28,13 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="companies.length > 0"
       background
       layout="prev, pager, next"
-      :page-count="totalPages"
-      :total="itemsTotal"
-      :page-size="itemsPerPage"
-      :current-page="currentPage"
+      :page-count="pagination.totalPages"
+      :total="pagination.itemsTotal"
+      :page-size="pagination.itemsPerPage"
+      :current-page="pagination.currentPage"
     />
   </div>
 </template>
@@ -66,10 +67,7 @@ export default defineComponent({
     const router = useRouter()
     const {loading, load} = useLoader()
     const companies = computed(() => companiesModule.companies)
-    const currentPage = computed(() => companiesModule.currentPage)
-    const totalPages = computed(() => companiesModule.totalPages)
-    const itemsTotal = computed(() => companiesModule.itemsTotal)
-    const itemsPerPage = computed(() => companiesModule.itemsPerPage)
+    const pagination = computed(() => companiesModule.pagination)
 
     const handleEdit = (company: Company) => {
       router.push(routingService.AdminCompanyDetail(company.id))
@@ -84,10 +82,7 @@ export default defineComponent({
     return {
       loading,
       companies,
-      currentPage,
-      totalPages,
-      itemsTotal,
-      itemsPerPage,
+      pagination,
       handleEdit,
       convertToShortJPY,
     }

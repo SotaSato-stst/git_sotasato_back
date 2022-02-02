@@ -1,6 +1,7 @@
 import {Ministry} from './Ministry'
 import {Prefecture} from './Prefecture'
 import {City} from './City'
+import {Pagination} from './Pagination'
 
 export type SubsidyCategory = 'hojo' | 'josei'
 export type SupplierType = 'ministry' | 'prefecture' | 'city'
@@ -28,12 +29,7 @@ export type Subsidy = {
 
 export type SubsidiesResponse = {
   subsidies: Subsidy[]
-  currentPage: number
-  totalPages: number
-  itemsTotal: number
-  itemsPerPage: number
-  prevPage: number
-  nextPage: number
+  pagination: Pagination
 }
 
 export type SubsidySearchParams = {

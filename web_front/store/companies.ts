@@ -1,6 +1,7 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
 import {Company, CompaniesResponse, CompanyParams} from '@/types/Company'
+import {Pagination} from '@/types/Pagination'
 
 @Module({
   name: 'companies',
@@ -10,10 +11,13 @@ import {Company, CompaniesResponse, CompanyParams} from '@/types/Company'
 export default class CompaniesModule extends VuexModule {
   companies: Company[] = []
   company: Company | null = null
-  currentPage: number = 0
-  totalPages: number = 0
-  itemsTotal: number = 0
-  itemsPerPage: number = 0
+  pagination: Pagination = {
+    currentPage: 0,
+    totalPages: 0,
+    itemsTotal: 0,
+    itemsPerPage: 0,
+  }
+
   companyParams: CompanyParams = {
     name: '',
     adress: '',
@@ -44,23 +48,8 @@ export default class CompaniesModule extends VuexModule {
   }
 
   @Mutation
-  setCurrentPage(currentPage: number) {
-    this.currentPage = currentPage
-  }
-
-  @Mutation
-  setTotalPages(totalPages: number) {
-    this.totalPages = totalPages
-  }
-
-  @Mutation
-  setItemsTotal(itemsTotal: number) {
-    this.itemsTotal = itemsTotal
-  }
-
-  @Mutation
-  setItemsPerPage(itemsPerPage: number) {
-    this.itemsPerPage = itemsPerPage
+  setPagination(pagination: Pagination) {
+    this.pagination = pagination
   }
 
   @Mutation
@@ -69,19 +58,12 @@ export default class CompaniesModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async getCompanies() {
-    const res = await $axios.$get<CompaniesResponse>('/admin/companies')
+  async getCompanies(page?: number) {
+    const res = await $axios.$get<CompaniesResponse>('/admin/companies', {
+      params: {page: page || 1},
+    })
     this.setCompanies(res.companies)
-    this.setCurrentPage(res.currentPage)
-    this.setTotalPages(res.totalPages)
-    this.setItemsTotal(res.itemsTotal)
-    this.setItemsPerPage(res.itemsPerPage)
-  }
-
-  @Action({rawError: true})
-  updateCurrentPage(page: number) {
-    this.setCurrentPage(page)
-    this.getCompanies()
+    this.setPagination(res.pagination)
   }
 
   @Action({rawError: true})

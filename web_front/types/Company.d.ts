@@ -1,6 +1,7 @@
 import {Prefecture} from './Prefecture'
 import {City} from './City'
 import {BusiessCategory} from './BusiessCategory'
+import {Pagination} from './Pagination'
 
 export type Company = {
   id: number
@@ -15,10 +16,7 @@ export type Company = {
 
 export type CompaniesResponse = {
   companies: Company[]
-  currentPage: number
-  totalPages: number
-  itemsTotal: number
-  itemsPerPage: number
+  pagination: Pagination
 }
 
 export type CompanyParams = {

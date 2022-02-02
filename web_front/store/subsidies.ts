@@ -1,6 +1,7 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
 import {Subsidy, SubsidiesResponse, SubsidySearchParams} from '@/types/Subsidy'
+import {Pagination} from '@/types/Pagination'
 
 @Module({
   name: 'subsidies',
@@ -10,10 +11,12 @@ import {Subsidy, SubsidiesResponse, SubsidySearchParams} from '@/types/Subsidy'
 export default class SubsidiesModule extends VuexModule {
   subsidies: Subsidy[] = []
   subsidy: Subsidy | null = null
-  currentPage: number = 0
-  totalPages: number = 0
-  itemsTotal: number = 0
-  itemsPerPage: number = 0
+  pagination: Pagination = {
+    currentPage: 0,
+    totalPages: 0,
+    itemsTotal: 0,
+    itemsPerPage: 0,
+  }
 
   searchParams: SubsidySearchParams = {
     prefectureIds: '',
@@ -36,41 +39,25 @@ export default class SubsidiesModule extends VuexModule {
   }
 
   @Mutation
-  setCurrentPage(currentPage: number) {
-    this.currentPage = currentPage
-  }
-
-  @Mutation
-  setTotalPages(totalPages: number) {
-    this.totalPages = totalPages
-  }
-
-  @Mutation
-  setItemsTotal(itemsTotal: number) {
-    this.itemsTotal = itemsTotal
-  }
-
-  @Mutation
-  setItemsPerPage(itemsPerPage: number) {
-    this.itemsPerPage = itemsPerPage
+  setPagination(pagination: Pagination) {
+    this.pagination = pagination
   }
 
   @Action({rawError: true})
-  async getSubsidies() {
+  async getSubsidies(page?: number) {
     const res = await $axios.$get<SubsidiesResponse>('/subsidies', {
-      params: this.searchParams,
+      params: {
+        page: page || 1,
+        ...this.searchParams,
+      },
     })
     this.setSubsidies(res.subsidies)
-    this.setCurrentPage(res.currentPage)
-    this.setTotalPages(res.totalPages)
-    this.setItemsTotal(res.itemsTotal)
-    this.setItemsPerPage(res.itemsPerPage)
+    this.setPagination(res.pagination)
   }
 
   @Action({rawError: true})
   updateCurrentPage(page: number) {
-    this.setCurrentPage(page)
-    this.getSubsidies()
+    this.getSubsidies(page)
   }
 
   // TODO:ikegaki APIでサーバーからsubsidyを取得するように変更

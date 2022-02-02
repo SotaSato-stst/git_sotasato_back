@@ -12,10 +12,10 @@
       v-if="subsidies.length > 0"
       background
       layout="prev, pager, next"
-      :page-count="totalPages"
-      :total="itemsTotal"
-      :page-size="itemsPerPage"
-      :current-page="currentPage"
+      :page-count="pagination.totalPages"
+      :total="pagination.itemsTotal"
+      :page-size="pagination.itemsPerPage"
+      :current-page="pagination.currentPage"
     />
   </div>
 </template>
@@ -39,10 +39,7 @@ export default defineComponent({
   setup(_props) {
     const {loading, load} = useLoader()
     const subsidies = computed(() => subsidiesModule.subsidies)
-    const currentPage = computed(() => subsidiesModule.currentPage)
-    const totalPages = computed(() => subsidiesModule.totalPages)
-    const itemsTotal = computed(() => subsidiesModule.itemsTotal)
-    const itemsPerPage = computed(() => subsidiesModule.itemsPerPage)
+    const pagination = computed(() => subsidiesModule.pagination)
 
     onMounted(() => {
       load(loading, () => {
@@ -53,10 +50,7 @@ export default defineComponent({
     return {
       loading,
       subsidies,
-      currentPage,
-      totalPages,
-      itemsTotal,
-      itemsPerPage,
+      pagination,
     }
   },
 })
