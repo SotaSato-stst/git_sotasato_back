@@ -31,7 +31,7 @@ export default class SubsidiesModule extends VuexModule {
   }
 
   @Mutation
-  setSubsidy(subsidy: Subsidy) {
+  setSubsidy(subsidy: Subsidy | null) {
     this.subsidy = subsidy
   }
 

@@ -145,6 +145,7 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
+      companiesModule.setCompany(null)
       optionsModule.setCities([])
     })
 

@@ -34,8 +34,11 @@ export default class CompaniesModule extends VuexModule {
   }
 
   @Mutation
-  setCompany(company: Company) {
+  setCompany(company: Company | null) {
     this.company = company
+    if (!company) {
+      return
+    }
     this.companyParams = {
       name: company.name,
       adress: company.adress,

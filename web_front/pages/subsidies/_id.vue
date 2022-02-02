@@ -72,6 +72,7 @@ import {
   computed,
   defineComponent,
   onMounted,
+  onUnmounted,
   useRoute,
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Card} from 'element-ui'
@@ -96,6 +97,10 @@ export default defineComponent({
 
     onMounted(() => {
       subsidiesModule.getSubsidy(pageId)
+    })
+
+    onUnmounted(() => {
+      subsidiesModule.setSubsidy(null)
     })
 
     return {
