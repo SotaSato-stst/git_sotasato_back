@@ -20,3 +20,21 @@ export const notifyError = (title: string, message: string) => {
     duration: 5000,
   })
 }
+
+export const notifyInfo = (title: string, message: string) => {
+  notify({
+    title,
+    type: 'info',
+    message,
+    duration: 5000,
+  })
+}
+
+export const notifyWarning = (title: string, message: string) => {
+  notify({
+    title,
+    type: 'warning',
+    message,
+    duration: 5000,
+  })
+}

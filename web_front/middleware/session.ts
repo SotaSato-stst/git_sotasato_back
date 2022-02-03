@@ -1,15 +1,16 @@
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import {Middleware} from '@nuxt/types'
 import CookieStore from '@/services/cookieStore'
-import {notifyError} from '@/services/notify'
+import {notifyInfo} from '@/services/notify'
+import {routingService} from '~/services/routingService'
 
-const signInPath = '/sign-in'
+const signInPath = routingService.SignIn()
 
 const session: Middleware = ({route, redirect}) => {
   const auth = getAuth()
   onAuthStateChanged(auth, async user => {
     if (!user && route.path !== signInPath) {
-      notifyError('セッションエラー', 'ログインが必要です')
+      notifyInfo('ログアウトしました', 'ログインが必要です')
       redirect(signInPath)
     }
     if (user) {
