@@ -18,6 +18,8 @@
 #
 class User < ApplicationRecord
   belongs_to :company
+  has_many :user_favorite_subsidies
+  has_many :subsidies, through: :user_favorite_subsidies
 
   enum account_role: { user: 'user', editor: 'editor', admin: 'admin' } # editor: 補助金情報の入力者, admin: 社内の管理者
 end

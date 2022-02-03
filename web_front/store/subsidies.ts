@@ -57,7 +57,13 @@ export default class SubsidiesModule extends VuexModule {
     this.setPagination(res.pagination)
   }
 
-  // TODO:ikegaki APIでサーバーからsubsidyを取得するように変更
+  @Action({rawError: true})
+  async postUserFavoriteSubsidy(subsidyId: number) {
+    await $axios.$post('/user_favorite_subsidies', {
+      subsidyId,
+    })
+  }
+
   @Action({rawError: true})
   async getSubsidy(id: number) {
     const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}`)

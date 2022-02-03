@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'health_check', to: 'health_check#index'
   resources :subsidies, only: %i[index show]
   resources :ministries, only: %i[index]
+  resources :user_favorite_subsidies, only: %i[create]
   resources :prefectures, only: %i[index] do
     resources :cities, only: %i[index]
   end
