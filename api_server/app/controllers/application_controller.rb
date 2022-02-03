@@ -1,9 +1,12 @@
 class ApplicationController < ActionController::API
+  include ActionController::HttpAuthentication::Token::ControllerMethods
   before_action :verify_token, :check_permission
 
   def verify_token
-    uid = TokenVerifier.new(params['token']).execute
-    @current_user = User.find_by(firebase_uid: uid)
+    authenticate_or_request_with_http_token do |token, _|
+      uid = TokenVerifier.new(token).execute
+      @current_user = User.find_by(firebase_uid: uid)
+    end
   rescue TokenVerifier::InvalidTokenError
     render json: { message: 'ログインが必要です' }, status: 401
   end

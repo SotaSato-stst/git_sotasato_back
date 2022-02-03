@@ -22,8 +22,10 @@ const accessor: Plugin = ({$axios}) => {
         }
       }
     }
+    request.headers = {
+      Authorization: `Bearer ${CookieStore.getIdToken()}`,
+    }
     request.params = {
-      token: CookieStore.getIdToken(),
       ...keysToSnake(request.params),
     }
     request.data = {
@@ -54,7 +56,6 @@ const accessor: Plugin = ({$axios}) => {
     const auth = getAuth()
     switch (error.response.status) {
       case 401:
-        notifyError('セッションエラー', 'ログインが必要です')
         signOut(auth)
         break
       case 403:
