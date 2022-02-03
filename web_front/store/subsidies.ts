@@ -14,7 +14,6 @@ export default class SubsidiesModule extends VuexModule {
   totalPages: number = 0
   itemsTotal: number = 0
   itemsPerPage: number = 0
-  UserFavoriteSubsidy: number = 0
 
   @Mutation
   setSubsidies(subsidies: Subsidy[]) {
@@ -60,11 +59,6 @@ export default class SubsidiesModule extends VuexModule {
   updateCurrentPage(page: number) {
     this.setCurrentPage(page)
     this.getSubsidies()
-  }
-
-  @Mutation
-  setUserFavoriteSubsidy(UserFavoriteSubsidy: number) {
-    this.UserFavoriteSubsidy = UserFavoriteSubsidy
   }
 
   @Action({rawError: true})
