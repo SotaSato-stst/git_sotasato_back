@@ -1,6 +1,12 @@
 <template>
   <div class="container">
     <card-loading :loading="loading" />
+    <div class="title-header">
+      <div class="title">ユーザー 一覧</div>
+      <el-button type="primary" @click="newUserPage()">
+        新規ユーザー追加
+      </el-button>
+    </div>
     <el-table v-if="!loading" :data="users" stripe style="width: 100%">
       <el-table-column prop="displayName" label="氏名" />
       <el-table-column prop="email" label="E-mail" />
@@ -60,6 +66,9 @@ export default defineComponent({
     const handleEdit = (user: User) => {
       router.push(routingService.AdminUserDetail(user.id))
     }
+    const newUserPage = () => {
+      router.push(routingService.AdminAddUser())
+    }
 
     onMounted(() => {
       load(loading, () => {
@@ -73,6 +82,7 @@ export default defineComponent({
       pagination,
       handleEdit,
       accountRoleLabel,
+      newUserPage,
     }
   },
   head(): object {
@@ -86,5 +96,16 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .container > * {
   margin-bottom: var(--spacing-4);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <el-card v-if="user">
+    <el-card>
       <div slot="header" class="form-header">
-        <p>「{{ user.displayName }}」さんの情報</p>
+        <p>ユーザー新規作成</p>
         <el-button type="primary" class="submit-button" @click="submit">
           保存する
         </el-button>
@@ -38,23 +38,15 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  useRoute,
-  reactive,
-} from '@nuxtjs/composition-api'
+import {defineComponent, useRouter, reactive} from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
-import {usersModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {notifySuccess} from '@/services/notify'
 import {UserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
+import {routingService} from '~/services/routingService'
 
 export default defineComponent({
-  name: 'UserDetail',
+  name: 'NewUser',
   components: {
     [`${Card.name}`]: Card,
     [`${Form.name}`]: Form,
@@ -64,39 +56,23 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
-    const route = useRoute()
-    const {loading, load} = useLoader()
-    const pageId = Number(route.value.params.id)
-    const user = computed(() => usersModule.user)
+    const router = useRouter()
     const state: UserParams = reactive({
       displayName: '',
       email: '',
       accountRole: 'user',
     })
 
-    const submit = async () => {
-      usersModule.setUserParams(state)
-      await usersModule.putUser(pageId)
+    const submit = () => {
+      // TODO: yoshimikeisui
       notifySuccess(
-        '内容を保存しました',
-        `${usersModule.user?.displayName}さんの情報`,
+        'ユーザーを作成しました',
+        `${state.displayName}さんのアカウント`,
       )
+      router.push(routingService.AdminUsers())
     }
 
-    onMounted(() => {
-      load(loading, async () => {
-        await usersModule.getUser(pageId)
-        Object.assign(state, usersModule.userParams)
-      })
-    })
-
-    onUnmounted(() => {
-      usersModule.setUser(null)
-    })
-
     return {
-      loading,
-      user,
       state,
       accountRoleOptions,
       submit,
@@ -104,7 +80,7 @@ export default defineComponent({
   },
   head(): object {
     return {
-      title: this.user?.displayName,
+      title: 'ユーザー作成',
     }
   },
 })

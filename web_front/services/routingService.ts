@@ -11,5 +11,6 @@ export const routingService: {[key: string]: (...args: any[]) => PageUrl} = {
   AdminCompanies: () => '/admin/companies',
   AdminCompanyDetail: (id: number) => `/admin/companies/${id}`,
   AdminUsers: () => '/admin/users',
+  AdminAddUser: () => '/admin/users/new',
   AdminUserDetail: (id: number) => `/admin/users/${id}`,
 } as const
