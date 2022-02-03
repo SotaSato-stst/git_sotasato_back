@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_074831) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["subsidy_id"], name: "index_user_favorite_subsidies_on_subsidy_id"
+    t.index ["user_id", "subsidy_id"], name: "index_user_favorite_subsidies_on_user_id_and_subsidy_id", unique: true
     t.index ["user_id"], name: "index_user_favorite_subsidies_on_user_id"
   end
 

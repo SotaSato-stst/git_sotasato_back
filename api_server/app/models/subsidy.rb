@@ -30,7 +30,8 @@ class Subsidy < ApplicationRecord
   has_one :prefecture, through: :subsidy_prefecture
   has_one :subsidy_city
   has_one :city, through: :subsidy_city
-  has_many :user, through: :user_favorite_subsidy
+  has_many :user_favorite_subsidies
+  has_many :users, through: :user_favorite_subsidies
   validate :supplier_type_must_have_association
   validate :start_from_cannot_be_greater_than_end_to
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }

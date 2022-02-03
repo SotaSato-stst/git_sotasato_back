@@ -24,6 +24,7 @@ export type Subsidy = {
   ministry: Ministry | null
   prefecture: Prefecture | null
   city: City | null
+  favorite: boolean
 }
 
 export type SubsidiesResponse = {

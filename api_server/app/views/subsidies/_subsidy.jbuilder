@@ -10,3 +10,4 @@ end
 json.city do
   json.partial! 'cities/city', city: subsidy.city
 end
+json.favorite @current_user_favorite_ids.include?(subsidy.id)

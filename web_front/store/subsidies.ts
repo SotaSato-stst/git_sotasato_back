@@ -14,6 +14,7 @@ export default class SubsidiesModule extends VuexModule {
   totalPages: number = 0
   itemsTotal: number = 0
   itemsPerPage: number = 0
+  UserFavoriteSubsidy: number = 0
 
   @Mutation
   setSubsidies(subsidies: Subsidy[]) {
@@ -61,7 +62,18 @@ export default class SubsidiesModule extends VuexModule {
     this.getSubsidies()
   }
 
-  // TODO:ikegaki APIでサーバーからsubsidyを取得するように変更
+  @Mutation
+  setUserFavoriteSubsidy(UserFavoriteSubsidy: number) {
+    this.UserFavoriteSubsidy = UserFavoriteSubsidy
+  }
+
+  @Action({rawError: true})
+  async postUserFavoriteSubsidy(subsidyId: number) {
+    await $axios.$post('/user_favorite_subsidies', {
+      subsidyId,
+    })
+  }
+
   @Action({rawError: true})
   async getSubsidy(id: number) {
     const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}`)
