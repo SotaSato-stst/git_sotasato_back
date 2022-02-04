@@ -62,12 +62,18 @@ RSpec.describe 'Admin::Users', type: :request do
   describe 'POST /admin/users' do
     subject { post '/admin/users', params: params }
 
+    let(:company) { create(:company) }
     let(:params) do
       {
         display_name: 'じろう',
         email: 'jiro@test.com',
-        account_role: 'editor'
+        account_role: 'editor',
+        company_id: company.id
       }
+    end
+
+    before do
+      allow_any_instance_of(CreateAccountService).to receive(:execute!).and_return('jiro_uid')
     end
 
     it 'creates a record' do
