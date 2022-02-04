@@ -40,10 +40,11 @@
 <script lang="ts">
 import {defineComponent, useRouter, reactive} from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
-import {notifySuccess} from '@/services/notify'
+import {notifyError, notifySuccess} from '@/services/notify'
 import {UserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
 import {routingService} from '~/services/routingService'
+import {usersModule} from '~/store'
 
 export default defineComponent({
   name: 'NewUser',
@@ -63,13 +64,33 @@ export default defineComponent({
       accountRole: 'user',
     })
 
-    const submit = () => {
-      // TODO: yoshimikeisui
+    const submit = async () => {
+      await usersModule
+        .postUser(state)
+        .then(() => handleSuccess())
+        .catch(error => handleError(error))
+    }
+
+    const handleSuccess = () => {
       notifySuccess(
         'ユーザーを作成しました',
         `${state.displayName}さんのアカウント`,
       )
       router.push(routingService.AdminUsers())
+    }
+
+    const handleError = (error: any) => {
+      switch (error.response.data.message) {
+        case 'EMAIL_EXISTS':
+          notifyError(
+            'ユーザー作成に失敗しました',
+            'すでにE-mailが使われています',
+          )
+          break
+        default:
+          notifyError('ユーザー作成に失敗しました', error.response.data.message)
+          break
+      }
     }
 
     return {

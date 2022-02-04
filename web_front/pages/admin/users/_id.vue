@@ -75,8 +75,7 @@ export default defineComponent({
     })
 
     const submit = async () => {
-      usersModule.setUserParams(state)
-      await usersModule.putUser(pageId)
+      await usersModule.putUser(state)
       notifySuccess(
         '内容を保存しました',
         `${usersModule.user?.displayName}さんの情報`,
@@ -86,7 +85,13 @@ export default defineComponent({
     onMounted(() => {
       load(loading, async () => {
         await usersModule.getUser(pageId)
-        Object.assign(state, usersModule.userParams)
+        if (usersModule.user) {
+          Object.assign(state, {
+            displayName: usersModule.user.displayName,
+            email: usersModule.user.email,
+            accountRole: usersModule.user.accountRole,
+          })
+        }
       })
     })
 

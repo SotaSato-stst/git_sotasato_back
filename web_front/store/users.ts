@@ -1,6 +1,6 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {User, UsersResponse, UserParams, AccountRole} from '@/types/User'
+import {User, UsersResponse, UserParams} from '@/types/User'
 import {Pagination} from '@/types/Pagination'
 
 @Module({
@@ -18,8 +18,6 @@ export default class UsersModule extends VuexModule {
     itemsPerPage: 0,
   }
 
-  userParams: UserParams | null = null
-
   @Mutation
   setUsers(users: User[]) {
     this.users = users
@@ -28,19 +26,6 @@ export default class UsersModule extends VuexModule {
   @Mutation
   setUser(user: User | null) {
     this.user = user
-    if (!user) {
-      return
-    }
-    this.userParams = {
-      displayName: user.displayName,
-      email: user.email,
-      accountRole: user.accountRole,
-    }
-  }
-
-  @Mutation
-  setUserParams(userParams: UserParams | null) {
-    this.userParams = userParams
   }
 
   @Mutation
@@ -64,27 +49,21 @@ export default class UsersModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async postUser(
-    displayName: string,
-    email: string,
-    accountRole: AccountRole,
-    firebaseUid: string,
-  ) {
+  async postUser(params: UserParams) {
     const user = await $axios.$post<User>('/admin/users', {
-      displayName,
-      email,
-      accountRole,
-      firebaseUid,
+      ...params,
     })
     this.setUser(user)
   }
 
   @Action({rawError: true})
-  async putUser(userId: number) {
-    const user = await $axios.$put<User>(
-      `/admin/users/${userId}`,
-      this.userParams,
-    )
+  async putUser(params: UserParams) {
+    if (!this.user) {
+      return
+    }
+    const user = await $axios.$put<User>(`/admin/users/${this.user.id}`, {
+      ...params,
+    })
     this.setUser(user)
   }
 }

@@ -67,11 +67,6 @@ const accessor: Plugin = ({$axios}) => {
       case 404:
         break
       default:
-        notifyError(
-          error.response.status.toString(),
-          error.response.data.message ||
-            'サーバーエラーが発生しました。問題がある場合はお問い合わせください。',
-        )
         break
     }
   })

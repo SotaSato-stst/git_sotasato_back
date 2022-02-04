@@ -66,7 +66,6 @@ RSpec.describe 'Admin::Users', type: :request do
       {
         display_name: 'じろう',
         email: 'jiro@test.com',
-        firebase_uid: 'jiro_id',
         account_role: 'editor'
       }
     end
@@ -80,7 +79,6 @@ RSpec.describe 'Admin::Users', type: :request do
       subject
       expect(json['display_name']).to eq 'じろう'
       expect(json['email']).to eq 'jiro@test.com'
-      expect(json['firebase_uid']).to eq 'jiro_id'
       expect(json['account_role']).to eq 'editor'
     end
 
@@ -101,7 +99,6 @@ RSpec.describe 'Admin::Users', type: :request do
       {
         display_name: 'さぶろう',
         email: 'saburo@test.com',
-        firebase_uid: 'saburo_id',
         account_role: 'admin'
       }
     end
@@ -115,7 +112,6 @@ RSpec.describe 'Admin::Users', type: :request do
       subject
       expect(json['display_name']).to eq 'さぶろう'
       expect(json['email']).to eq 'saburo@test.com'
-      expect(json['firebase_uid']).to eq 'saburo_id'
       expect(json['account_role']).to eq 'admin'
     end
 

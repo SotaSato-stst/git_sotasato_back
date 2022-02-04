@@ -301,23 +301,18 @@ paths:
             schema:
               type: object
               required:
-                - display_name
                 - email
-                - firebase_uid
+                - display_name
                 - account_role
               properties:
-                display_name:
-                  type: string
-                  description: ユーザー名
-                  example: 田中太郎
                 email:
                   type: string
                   description: email
                   example: taro.tanaka@example.com
-                firebase_uid:
+                display_name:
                   type: string
-                  description: firebaseのuid
-                  example: xxxxxxxxxxxxxxxxxxxx
+                  description: ユーザー名
+                  example: 田中太郎
                 account_role:
                   "$ref": "#/components/schemas/account_role"
       responses:
@@ -358,7 +353,6 @@ paths:
               required:
                 - display_name
                 - email
-                - firebase_uid
                 - account_role
               properties:
                 display_name:
@@ -369,10 +363,6 @@ paths:
                   type: string
                   description: email
                   example: taro.tanaka@example.com
-                firebase_uid:
-                  type: string
-                  description: firebaseのuid
-                  example: xxxxxxxxxxxxxxxxxxxx
                 account_role:
                   "$ref": "#/components/schemas/account_role"
       responses:

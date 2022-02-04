@@ -11,14 +11,18 @@ module Admin
     end
 
     def create
-      @user = User.new(user_params)
+      firebase_uid = CreateAccountService.new(user_params[:email]).execute!
+      @user = User.new(user_params.merge(firebase_uid: firebase_uid))
       set_association
 
       if @user.save
         render :show, status: 201
       else
-        render json: { message: '更新に失敗しました' }, status: 400
+        DeleteAccountService.new(firebase_uid).execute! if firebase_uid.present?
+        render json: { message: @user.errors.message }, status: 400
       end
+    rescue CreateAccountService::SignUpError => e
+      render json: { message: e.message }, status: 400
     end
 
     def update
@@ -36,7 +40,7 @@ module Admin
     private
 
     def user_params
-      params.permit(:display_name, :email, :firebase_uid, :account_role)
+      params.permit(:display_name, :email, :account_role)
     end
 
     def set_association
