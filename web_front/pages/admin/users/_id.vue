@@ -20,7 +20,9 @@
             v-model="state.email"
             class="input-text"
             placeholder="hojokin@example.com"
+            disabled
           />
+          <div>E-mailはユーザー自身で更新可能です</div>
         </el-form-item>
         <el-form-item label="アカウント種類">
           <el-select v-model="state.accountRole" placeholder="選択...">
@@ -44,14 +46,16 @@ import {
   onMounted,
   onUnmounted,
   useRoute,
+  useRouter,
   reactive,
 } from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {usersModule} from '@/store'
 import {useLoader} from '@/services/useLoader'
-import {notifySuccess} from '@/services/notify'
-import {UserParams} from '~/types/User'
+import {notifyError, notifySuccess} from '@/services/notify'
+import {UpdateUserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
+import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'UserDetail',
@@ -65,21 +69,26 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const route = useRoute()
+    const router = useRouter()
     const {loading, load} = useLoader()
     const pageId = Number(route.value.params.id)
     const user = computed(() => usersModule.user)
-    const state: UserParams = reactive({
+    const state: UpdateUserParams = reactive({
       displayName: '',
-      email: '',
       accountRole: 'user',
     })
 
-    const submit = async () => {
-      await usersModule.putUser(state)
-      notifySuccess(
-        '内容を保存しました',
-        `${usersModule.user?.displayName}さんの情報`,
-      )
+    const submit = () => {
+      usersModule
+        .putUser(state)
+        .then(() => {
+          notifySuccess(
+            '内容を保存しました',
+            `${usersModule.user?.displayName}さんの情報`,
+          )
+          router.push(routingService.AdminUsers())
+        })
+        .catch(error => notifyError('内容を保存しました', error.message))
     }
 
     onMounted(() => {
@@ -88,7 +97,6 @@ export default defineComponent({
         if (usersModule.user) {
           Object.assign(state, {
             displayName: usersModule.user.displayName,
-            email: usersModule.user.email,
             accountRole: usersModule.user.accountRole,
           })
         }

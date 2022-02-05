@@ -15,8 +15,13 @@ export type UsersResponse = {
   pagination: Pagination
 }
 
-export type UserParams = {
+export type NewUserParams = {
   displayName: string
   email: string
+  accountRole: AccountRole
+}
+
+export type UpdateUserParams = {
+  displayName: string
   accountRole: AccountRole
 }

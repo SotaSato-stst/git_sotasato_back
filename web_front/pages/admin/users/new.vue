@@ -41,7 +41,7 @@
 import {defineComponent, useRouter, reactive} from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {notifyError, notifySuccess} from '@/services/notify'
-import {UserParams} from '~/types/User'
+import {NewUserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
 import {routingService} from '~/services/routingService'
 import {usersModule} from '~/store'
@@ -58,7 +58,7 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
-    const state: UserParams = reactive({
+    const state: NewUserParams = reactive({
       displayName: '',
       email: '',
       accountRole: 'user',

@@ -11,23 +11,24 @@ module Admin
     end
 
     def create
-      firebase_uid = CreateAccountService.new(user_params[:email]).execute!
-      @user = User.new(user_params.merge(firebase_uid: firebase_uid))
+      service = FirebaseAccountService.new
+      firebase_uid = service.sign_up!(signup_user_params[:email])
+      @user = User.new(signup_user_params.merge(firebase_uid: firebase_uid))
       set_association
 
       if @user.save
         render :show, status: 201
       else
-        DeleteAccountService.new(firebase_uid).execute! if firebase_uid.present?
+        service.delete!(firebase_uid) if firebase_uid.present? # rollback
         render json: { message: @user.errors.message }, status: 400
       end
-    rescue CreateAccountService::SignUpError => e
+    rescue FirebaseAccountService::AccountError => e
       render json: { message: e.message }, status: 400
     end
 
     def update
       @user = User.find(params[:id])
-      @user.assign_attributes(user_params)
+      @user.assign_attributes(update_user_params)
       set_association
 
       if @user.save
@@ -39,8 +40,12 @@ module Admin
 
     private
 
-    def user_params
+    def signup_user_params
       params.permit(:display_name, :email, :account_role)
+    end
+
+    def update_user_params
+      params.permit(:display_name, :account_role) # emailはユーザー自身で更新可能
     end
 
     def set_association
