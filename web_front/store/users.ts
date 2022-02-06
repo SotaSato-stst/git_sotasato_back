@@ -1,6 +1,12 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {User, UsersResponse, UserParams} from '@/types/User'
+import {
+  User,
+  UsersResponse,
+  NewUserParams,
+  UpdateUserParams,
+} from '@/types/User'
+import {useLoader} from '~/services/useLoader'
 import {Pagination} from '@/types/Pagination'
 
 @Module({
@@ -9,6 +15,7 @@ import {Pagination} from '@/types/Pagination'
   namespaced: true,
 })
 export default class UsersModule extends VuexModule {
+  loader = useLoader()
   users: User[] = []
   user: User | null = null
   pagination: Pagination = {
@@ -49,7 +56,7 @@ export default class UsersModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async postUser(params: UserParams) {
+  async postUser(params: NewUserParams) {
     const user = await $axios.$post<User>('/admin/users', {
       ...params,
     })
@@ -57,7 +64,7 @@ export default class UsersModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async putUser(params: UserParams) {
+  async putUser(params: UpdateUserParams) {
     if (!this.user) {
       return
     }

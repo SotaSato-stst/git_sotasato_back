@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :loading="loading">
     <el-card v-if="user">
       <div slot="header" class="form-header">
         <p>「{{ user.displayName }}」さんの情報</p>
@@ -61,7 +61,6 @@ import {
 } from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {usersModule, companiesModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {notifyError, notifySuccess} from '@/services/notify'
 import {UpdateUserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
@@ -80,7 +79,7 @@ export default defineComponent({
   setup(_props) {
     const route = useRoute()
     const router = useRouter()
-    const {loading, load} = useLoader()
+    const {loading, load} = usersModule.loader
     const pageId = Number(route.value.params.id)
     const user = computed(() => usersModule.user)
     const companies = computed(() => companiesModule.companies)
