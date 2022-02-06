@@ -8,6 +8,16 @@
         </el-button>
       </div>
       <el-form class="form" :model="state" label-width="120px">
+        <el-form-item label="所属会社">
+          <el-select v-model="state.companyId" placeholder="選択...">
+            <el-option
+              v-for="company in companies"
+              :key="company.id"
+              :label="company.name"
+              :value="company.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="氏名">
           <el-input
             v-model="state.displayName"
@@ -17,7 +27,7 @@
         </el-form-item>
         <el-form-item label="E-mail">
           <el-input
-            v-model="state.email"
+            v-model="user.email"
             class="input-text"
             placeholder="hojokin@example.com"
             disabled
@@ -50,7 +60,7 @@ import {
   reactive,
 } from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
-import {usersModule} from '@/store'
+import {usersModule, companiesModule} from '@/store'
 import {useLoader} from '@/services/useLoader'
 import {notifyError, notifySuccess} from '@/services/notify'
 import {UpdateUserParams} from '~/types/User'
@@ -73,9 +83,11 @@ export default defineComponent({
     const {loading, load} = useLoader()
     const pageId = Number(route.value.params.id)
     const user = computed(() => usersModule.user)
+    const companies = computed(() => companiesModule.companies)
     const state: UpdateUserParams = reactive({
       displayName: '',
       accountRole: 'user',
+      companyId: null,
     })
 
     const submit = () => {
@@ -94,12 +106,15 @@ export default defineComponent({
     onMounted(() => {
       load(loading, async () => {
         await usersModule.getUser(pageId)
-        if (usersModule.user) {
+        const user = usersModule.user
+        if (user) {
           Object.assign(state, {
-            displayName: usersModule.user.displayName,
-            accountRole: usersModule.user.accountRole,
+            displayName: user.displayName,
+            accountRole: user.accountRole,
+            companyId: user.company.id,
           })
         }
+        companiesModule.getCompanies()
       })
     })
 
@@ -110,6 +125,7 @@ export default defineComponent({
     return {
       loading,
       user,
+      companies,
       state,
       accountRoleOptions,
       submit,

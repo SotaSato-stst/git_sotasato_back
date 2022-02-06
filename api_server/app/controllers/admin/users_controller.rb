@@ -16,13 +16,10 @@ module Admin
       @user = User.new(signup_user_params.merge(firebase_uid: firebase_uid))
       set_association
 
-      if @user.save
-        render :show, status: 201
-      else
-        service.delete!(firebase_uid) if firebase_uid.present? # rollback
-        render json: { message: @user.errors.message }, status: 400
-      end
-    rescue FirebaseAccountService::AccountError => e
+      @user.save!
+      render :show, status: 201
+    rescue StandardError => e
+      service.delete!(firebase_uid) if firebase_uid.present? # rollback
       render json: { message: e.message }, status: 400
     end
 
@@ -49,7 +46,7 @@ module Admin
     end
 
     def set_association
-      @user.company = Company.where(params[:company_id]).first
+      @user.company ||= Company.where(id: params[:company_id]).first
     end
   end
 end

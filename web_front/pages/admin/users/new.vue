@@ -8,6 +8,16 @@
         </el-button>
       </div>
       <el-form class="form" :model="state" label-width="120px">
+        <el-form-item label="所属会社">
+          <el-select v-model="state.companyId" placeholder="選択...">
+            <el-option
+              v-for="company in companies"
+              :key="company.id"
+              :label="company.name"
+              :value="company.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="氏名">
           <el-input
             v-model="state.displayName"
@@ -38,13 +48,19 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, useRouter, reactive} from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useRouter,
+  reactive,
+  computed,
+  onMounted,
+} from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {notifyError, notifySuccess} from '@/services/notify'
 import {NewUserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
 import {routingService} from '~/services/routingService'
-import {usersModule} from '~/store'
+import {usersModule, companiesModule} from '~/store'
 
 export default defineComponent({
   name: 'NewUser',
@@ -58,10 +74,12 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
+    const companies = computed(() => companiesModule.companies)
     const state: NewUserParams = reactive({
       displayName: '',
       email: '',
       accountRole: 'user',
+      companyId: null,
     })
 
     const submit = async () => {
@@ -93,7 +111,12 @@ export default defineComponent({
       }
     }
 
+    onMounted(() => {
+      companiesModule.getCompanies()
+    })
+
     return {
+      companies,
       state,
       accountRoleOptions,
       submit,

@@ -780,6 +780,8 @@ components:
         - display_name
         - email
         - firebase_uid
+        - account_role
+        - company
       properties:
         id:
           type: integer
@@ -799,6 +801,8 @@ components:
           example: xxxxxxxxxxxxxxxxxxxx
         account_role:
           "$ref": "#/components/schemas/account_role"
+        company:
+          "$ref": "#/components/schemas/company"
     account_role:
       type: string
       description: アカウント種類

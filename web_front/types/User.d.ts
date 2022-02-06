@@ -1,3 +1,4 @@
+import {Company} from './Company'
 import {Pagination} from './Pagination'
 
 export type AccountRole = 'admin' | 'editor' | 'user'
@@ -8,6 +9,7 @@ export type User = {
   displayName: string
   email: string
   accountRole: AccountRole
+  company: Company
 }
 
 export type UsersResponse = {
@@ -19,9 +21,11 @@ export type NewUserParams = {
   displayName: string
   email: string
   accountRole: AccountRole
+  companyId: number | null
 }
 
 export type UpdateUserParams = {
   displayName: string
   accountRole: AccountRole
+  companyId: number | null
 }
