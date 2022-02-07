@@ -14,6 +14,8 @@
 #  index_prefectures_on_name  (name) UNIQUE
 #
 class Prefecture < ApplicationRecord
+  include SupplierConcern
+
   has_many :cities
   has_many :companies
 end

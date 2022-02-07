@@ -3,21 +3,38 @@ require 'csv'
 
 class NewSubsidyService
   BUCKET_NAME = ENV['NEW_SUBSIDY_BUCKET']
-  CSV_COLUMNS = {
-    target_url: 'source_url',
-    text: 'title',
-    url: 'url'
-  }.freeze
 
   def initialize(scraping_date)
     @scraping_date = scraping_date
+  end
+
+  def execute!
+    ministries = Ministry.index_by_url_domain
+    prefectures = Prefecture.index_by_url_domain
+    cities = City.index_by_url_domain
+    instances = new_url_hashes.map do |hash|
+      hash[:ministry_id] = ministries[hash[:source_url_domain]]
+      hash[:prefecture_id] = prefectures[hash[:source_url_domain]]
+      hash[:city_id] = cities[hash[:source_url_domain]]
+      hash[:created_at] = Time.now
+      hash[:updated_at] = Time.now
+      hash
+    end
+    SubsidyDraft.insert_all instances
   end
 
   def new_url_hashes
     files.map do |file|
       str = file.download
       csv_table = CSV.parse(str.read.force_encoding('UTF-8'), headers: true)
-      csv_to_hashes(csv_table)
+      csv_table.map do |table|
+        uri = URI.parse(table['target_url'])
+        {
+          source_url_domain: "#{uri.scheme}://#{uri.host}",
+          title: table['text'],
+          url: table['url']
+        }
+      end
     end.flatten
   end
 

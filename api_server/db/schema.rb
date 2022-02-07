@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_01_074831) do
+ActiveRecord::Schema.define(version: 2022_02_07_030808) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -90,6 +90,20 @@ ActiveRecord::Schema.define(version: 2022_02_01_074831) do
     t.index ["city_id"], name: "index_subsidy_cities_on_city_id"
     t.index ["subsidy_id", "city_id"], name: "index_subsidy_cities_on_subsidy_id_and_city_id", unique: true
     t.index ["subsidy_id"], name: "index_subsidy_cities_on_subsidy_id"
+  end
+
+  create_table "subsidy_drafts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "url", null: false
+    t.string "source_url_domain", null: false
+    t.bigint "ministry_id"
+    t.bigint "prefecture_id"
+    t.bigint "city_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_subsidy_drafts_on_city_id"
+    t.index ["ministry_id"], name: "index_subsidy_drafts_on_ministry_id"
+    t.index ["prefecture_id"], name: "index_subsidy_drafts_on_prefecture_id"
   end
 
   create_table "subsidy_ministries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -15,6 +15,8 @@
 #  index_cities_on_prefecture_id  (prefecture_id)
 #
 class City < ApplicationRecord
+  include SupplierConcern
+
   belongs_to :prefecture
   has_many :companies
 end

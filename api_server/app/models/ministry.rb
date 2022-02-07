@@ -14,4 +14,5 @@
 #  index_ministries_on_name  (name) UNIQUE
 #
 class Ministry < ApplicationRecord
+  include SupplierConcern
 end
