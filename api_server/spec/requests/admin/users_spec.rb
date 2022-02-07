@@ -104,7 +104,6 @@ RSpec.describe 'Admin::Users', type: :request do
     let(:params) do
       {
         display_name: 'さぶろう',
-        email: 'saburo@test.com',
         account_role: 'admin'
       }
     end
@@ -117,7 +116,6 @@ RSpec.describe 'Admin::Users', type: :request do
     it 'returns object' do
       subject
       expect(json['display_name']).to eq 'さぶろう'
-      expect(json['email']).to eq 'saburo@test.com'
       expect(json['account_role']).to eq 'admin'
     end
 
