@@ -372,11 +372,11 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/user"
-  "/admin/scraping_urls":
+  "/admin/subsidy_drafts":
     get:
       tags:
         - admin/subsidy
-      summary: スクレイピングURL一覧
+      summary: スクレイピング取得URL一覧
       responses:
         "200":
           description: 成功
@@ -385,19 +385,31 @@ paths:
               schema:
                 type: object
                 required:
-                  - scraping_urls
+                  - subsidy_drafts
                 properties:
-                  scraping_urls:
+                  subsidy_drafts:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                          description: 取得URLタイトル
-                        url:
-                          type: string
-                          description: URL
+                      "$ref": "#/components/schemas/subsidy_draft"
+  "/admin/subsidy_drafts/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: subsidy_draftのid
+        schema:
+          type: integer
+    get:
+      tags:
+        - admin/subsidy
+      summary: スクレイピング取得URL一覧
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/subsidy_draft"
   "/admin/subsidies":
     get:
       summary: 補助金情報一覧
@@ -810,3 +822,21 @@ components:
         - user
         - editor
         - admin
+    subsidy_draft:
+      type: object
+      required:
+        - title
+        - url
+      properties:
+        title:
+          type: string
+          description: 取得URLタイトル
+        url:
+          type: string
+          description: URL
+        ministry:
+          "$ref": "#/components/schemas/ministry"
+        prefecture:
+          "$ref": "#/components/schemas/prefecture"
+        city:
+          "$ref": "#/components/schemas/city"

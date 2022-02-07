@@ -73,7 +73,7 @@ RSpec.describe 'Admin::Users', type: :request do
     end
 
     before do
-      allow_any_instance_of(CreateAccountService).to receive(:execute!).and_return('jiro_uid')
+      allow_any_instance_of(FirebaseAccountService).to receive(:sign_up!).and_return('jiro@test.com')
     end
 
     it 'creates a record' do
