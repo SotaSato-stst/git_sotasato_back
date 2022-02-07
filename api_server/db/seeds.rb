@@ -25,7 +25,8 @@ end
 if City.count.zero?
   CSV.open('db/seeds/cities.csv', headers: true).to_a.each do |row|
     city = City.find_or_initialize_by(name: row['name'])
-    city.update(prefecture_id: row['prefecture_id'],
+    city.update(
+      prefecture_id: row['prefecture_id'],
       logo_url: row['logo_url'] || '',
       url_domain: row['url_domain'] || ''
     )
