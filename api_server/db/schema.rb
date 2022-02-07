@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_074831) do
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "logo_url", default: "", null: false
+    t.string "url_domain", default: "", null: false
     t.bigint "prefecture_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_074831) do
   create_table "ministries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "logo_url", default: "", null: false
+    t.string "url_domain", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_ministries_on_name", unique: true
@@ -55,6 +57,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_074831) do
   create_table "prefectures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "logo_url", default: "", null: false
+    t.string "url_domain", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_prefectures_on_name", unique: true

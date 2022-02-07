@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  logo_url   :string(255)      default(""), not null
 #  name       :string(255)      not null
+#  url_domain :string(255)      default(""), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
