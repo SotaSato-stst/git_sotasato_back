@@ -65,6 +65,11 @@ export default class SubsidiesModule extends VuexModule {
   }
 
   @Action({rawError: true})
+  async destroyUserFavoriteSubsidy(subsidyId: number) {
+    await $axios.$delete(`/user_favorite_subsidies/${subsidyId}`)
+  }
+
+  @Action({rawError: true})
   async getSubsidy(id: number) {
     const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}`)
     this.setSubsidy(subsidy)

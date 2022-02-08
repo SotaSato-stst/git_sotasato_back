@@ -69,11 +69,11 @@
 
 <script lang="ts">
 import {
-  computed,
   defineComponent,
   onMounted,
   onUnmounted,
   useRoute,
+  computed,
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Card} from 'element-ui'
 import {subsidiesModule} from '~/store'
@@ -81,6 +81,7 @@ import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
+import FavoriteButton from '@/components/FavoriteButton.vue'
 
 export default defineComponent({
   name: 'SubsidyDetailPage',
@@ -89,7 +90,9 @@ export default defineComponent({
     [`${Aside.name}`]: Aside,
     [`${Main.name}`]: Main,
     [`${Card.name}`]: Card,
+    FavoriteButton,
   },
+
   setup(_props) {
     const route = useRoute()
     const pageId = Number(route.value.params.id)
@@ -104,11 +107,11 @@ export default defineComponent({
     })
 
     return {
-      subsidy,
       convertToShortJPY,
       convertToJpDate,
       starView,
       subsidyCategoryLabel,
+      subsidy,
     }
   },
   head(): object {

@@ -8,6 +8,7 @@ class SubsidiesController < ApplicationController
 
   def show
     @subsidy = Subsidy.find(params[:id])
+    @current_user_favorite_ids = current_user.user_favorite_subsidies.pluck(:subsidy_id)
   end
 
   private
