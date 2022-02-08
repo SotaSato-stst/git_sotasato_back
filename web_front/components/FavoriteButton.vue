@@ -30,8 +30,12 @@ export default defineComponent({
   setup(props) {
     const favorite = ref(props.subsidy.favorite)
     const clickButton = (subsidy: Subsidy) => {
-      subsidiesModule.postUserFavoriteSubsidy(subsidy.id)
-      favorite.value = true
+      if (favorite.value) {
+        subsidiesModule.destroyUserFavoriteSubsidy(subsidy.id)
+      } else {
+        subsidiesModule.postUserFavoriteSubsidy(subsidy.id)
+      }
+      favorite.value = !favorite.value
     }
 
     return {
