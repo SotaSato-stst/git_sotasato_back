@@ -3,6 +3,7 @@ import {$axios} from '@/store/api'
 import {Prefecture, PrefectureResponse} from '@/types/Prefecture'
 import {City, CityResponse} from '@/types/City'
 import {BusiessCategory, BusiessCategoryResponse} from '@/types/BusiessCategory'
+import {Ministry, MinistryResponse} from '~/types/Ministry'
 
 @Module({
   name: 'options',
@@ -10,9 +11,15 @@ import {BusiessCategory, BusiessCategoryResponse} from '@/types/BusiessCategory'
   namespaced: true,
 })
 export default class OptionsModule extends VuexModule {
+  ministries: Ministry[] = []
   prefectures: Prefecture[] = []
   cities: Prefecture[] = []
   businessCategories: BusiessCategory[] = []
+
+  @Mutation
+  setMinistries(ministries: Ministry[]) {
+    this.ministries = ministries
+  }
 
   @Mutation
   setPrefectures(prefectures: Prefecture[]) {
@@ -27,6 +34,12 @@ export default class OptionsModule extends VuexModule {
   @Mutation
   setBusinessCategories(businessCategories: BusiessCategory[]) {
     this.businessCategories = businessCategories
+  }
+
+  @Action({rawError: true})
+  async getMinistries() {
+    const res = await $axios.$get<MinistryResponse>('/ministries')
+    this.setMinistries(res.ministries)
   }
 
   @Action({rawError: true})

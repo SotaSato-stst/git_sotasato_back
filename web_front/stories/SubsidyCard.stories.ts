@@ -1,4 +1,4 @@
-import SubsidyCard from '@/components/SubsidyCard.vue'
+import SubsidyCard from '~/components/subsidies/SubsidyCard.vue'
 
 export default {
   title: 'SubsidyCard',

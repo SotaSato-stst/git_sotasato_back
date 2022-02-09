@@ -12,7 +12,7 @@
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
 import {Container, Header} from 'element-ui'
-import GlobalHeader from '@/components/GlobalHeader.vue'
+import GlobalHeader from '@/components/layouts/GlobalHeader.vue'
 
 export default defineComponent({
   name: 'DefaultLayout',

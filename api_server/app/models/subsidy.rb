@@ -32,6 +32,12 @@ class Subsidy < ApplicationRecord
   has_one :city, through: :subsidy_city
   has_many :user_favorite_subsidies
   has_many :users, through: :user_favorite_subsidies
+  validates :title, presence: { message: 'は必須項目です' }
+  validates :url, presence: { message: 'は必須項目です' }
+  validates :detail, presence: { message: 'は必須項目です' }
+  validates :target_detail, presence: { message: 'は必須項目です' }
+  validates :start_from, presence: { message: 'は必須項目です' }
+  validates :publishing_code, presence: { message: 'は必須項目です' }
   validate :supplier_type_must_have_association
   validate :start_from_cannot_be_greater_than_end_to
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }
@@ -60,18 +66,18 @@ class Subsidy < ApplicationRecord
   def start_from_cannot_be_greater_than_end_to
     return if start_from.blank? || end_to.blank? || start_from < end_to
 
-    errors.add(:start_from, 'を上回ることはできません')
+    errors.add(:start_from, 'の前に終了日を設置できません')
   end
 
   def supplier_type_must_have_association
     if supplier_type == 'ministry' && subsidy_ministry.blank?
-      errors.add(:supplier_type, 'ministryが存在しません')
+      errors.add(:supplier_type, 'の省庁の指定は必須です')
     end
     if supplier_type == 'prefecture' && subsidy_prefecture.blank?
-      errors.add(:supplier_type, 'prefectureが存在しません')
+      errors.add(:supplier_type, 'の都道府県の指定は必須です')
     end
     if supplier_type == 'city' && (subsidy_city.blank? || subsidy_prefecture.blank?)
-      errors.add(:supplier_type, 'cityが存在しません')
+      errors.add(:supplier_type, 'の市長区村の指定は必須です')
     end
   end
 end

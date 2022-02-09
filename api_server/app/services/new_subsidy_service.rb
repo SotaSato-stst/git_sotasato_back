@@ -9,13 +9,17 @@ class NewSubsidyService
   end
 
   def execute!
-    ministries = Ministry.index_by_url_domain
-    prefectures = Prefecture.index_by_url_domain
-    cities = City.index_by_url_domain
+    ministry_ids = Ministry.index_by_url_domain
+    prefecture_ids = Prefecture.index_by_url_domain
+    city_ids = City.index_by_url_domain
+    cities = City.all.includes(:prefecture).index_by(&:id)
     instances = new_url_hashes.map do |hash|
-      hash[:ministry_id] = ministries[hash[:source_url_domain]]
-      hash[:prefecture_id] = prefectures[hash[:source_url_domain]]
-      hash[:city_id] = cities[hash[:source_url_domain]]
+      hash[:ministry_id] = ministry_ids[hash[:source_url_domain]]
+      hash[:prefecture_id] = prefecture_ids[hash[:source_url_domain]]
+      city_id = city_ids[hash[:source_url_domain]]
+      hash[:city_id] = city_id
+      hash[:prefecture_id] = cities[city_id].prefecture.id if city_id.present?
+      hash[:supplier_type] = detect_supplier_type(hash)
       hash[:created_at] = Time.now
       hash[:updated_at] = Time.now
       hash
@@ -23,12 +27,23 @@ class NewSubsidyService
     SubsidyDraft.insert_all instances
   end
 
+  def detect_supplier_type(hash)
+    case
+    when hash[:ministry_id].present?
+      'ministry'
+    when hash[:city_id].present?
+      'city'
+    when hash[:prefecture_id].present?
+      'prefecture'
+    end
+  end
+
   def new_url_hashes
     files.map do |file|
       str = file.download
       csv_table = CSV.parse(str.read.force_encoding('UTF-8'), headers: true)
       csv_table.map do |table|
-        uri = URI.parse(table['target_url'])
+        uri = URI.parse(table['url'])
         {
           source_url_domain: "#{uri.scheme}://#{uri.host}",
           title: table['text'],

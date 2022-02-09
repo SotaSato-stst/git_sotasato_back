@@ -47,3 +47,6 @@ Style/GuardClause:
 
 Style/Lambda:
   Enabled: false
+
+Style/EmptyCaseCondition:
+  Enabled: false

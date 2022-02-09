@@ -576,6 +576,12 @@ components:
           type: string
           description: 補助金名
           example: IT導入補助金
+        publishing_code:
+          type: string
+          description: 公開状況
+          enum:
+            - published
+            - editing
         url:
           type: string
           description: URL
@@ -840,3 +846,11 @@ components:
           "$ref": "#/components/schemas/prefecture"
         city:
           "$ref": "#/components/schemas/city"
+        supplier_type:
+          type: string
+          description: 発行機関
+          nullable: true
+          enum:
+            - ministry
+            - prefecture
+            - city

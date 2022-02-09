@@ -7,6 +7,7 @@ export const routingService: {[key: string]: (...args: any[]) => PageUrl} = {
   Ranking: () => '/ranking',
   Favorite: () => '/favorite',
   AdminTop: () => '/admin',
+  AdminSubsidyDraftDetail: (id: number) => `/admin/subsidy_drafts/${id}`,
   AdminSubsidies: () => '/admin/subsidies',
   AdminSubsidyDetail: (id: number) => `/admin/subsidies/${id}`,
   AdminCompanies: () => '/admin/companies',

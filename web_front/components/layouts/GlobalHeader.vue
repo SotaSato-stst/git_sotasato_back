@@ -27,7 +27,7 @@
 <script lang="ts">
 import {Menu, MenuItem} from 'element-ui'
 import {defineComponent, useRouter} from '@nuxtjs/composition-api'
-import GlobalDropdownMenu from '@/components/GlobalDropdownMenu.vue'
+import GlobalDropdownMenu from '@/components/layouts/GlobalDropdownMenu.vue'
 import {routingService} from '@/services/routingService'
 
 type menuType = 'new' | 'ranking' | 'favorite'
