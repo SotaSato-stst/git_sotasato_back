@@ -24,6 +24,7 @@ import {Menu, MenuItem} from 'element-ui'
 import {
   defineComponent,
   computed,
+  onMounted,
   useRouter,
   useRoute,
 } from '@nuxtjs/composition-api'
@@ -42,7 +43,7 @@ export default defineComponent({
     const router = useRouter()
     const path = useRoute().value.path
     const totalCount = computed(
-      () => adminSubsidiesModule.pagination.itemsTotal,
+      () => adminSubsidiesModule.subsidyDraftPagination.itemsTotal,
     )
     const selectedPage = computed(() => {
       if (path.startsWith(routingService.AdminSubsidies())) {
@@ -71,6 +72,10 @@ export default defineComponent({
           break
       }
     }
+
+    onMounted(() => {
+      adminSubsidiesModule.getSubsidyDrafts()
+    })
 
     return {totalCount, selectedPage, handleSelect}
   },

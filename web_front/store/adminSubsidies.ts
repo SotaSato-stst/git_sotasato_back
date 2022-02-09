@@ -16,7 +16,14 @@ export default class AdminSubsidiesModule extends VuexModule {
   subsidyDraft: SubsidyDraft | null = null
   subsidies: Subsidy[] = []
   subsidy: Subsidy | null = null
-  pagination: Pagination = {
+  subsidyPagination: Pagination = {
+    currentPage: 0,
+    totalPages: 0,
+    itemsTotal: 0,
+    itemsPerPage: 0,
+  }
+
+  subsidyDraftPagination: Pagination = {
     currentPage: 0,
     totalPages: 0,
     itemsTotal: 0,
@@ -44,8 +51,13 @@ export default class AdminSubsidiesModule extends VuexModule {
   }
 
   @Mutation
-  setPagination(pagination: Pagination) {
-    this.pagination = pagination
+  setSubsidyPagination(pagination: Pagination) {
+    this.subsidyPagination = pagination
+  }
+
+  @Mutation
+  setSubsidyDraftPagination(pagination: Pagination) {
+    this.subsidyDraftPagination = pagination
   }
 
   @Action({rawError: true})
@@ -55,7 +67,7 @@ export default class AdminSubsidiesModule extends VuexModule {
       {params: {page: page || 1}},
     )
     this.setSubsidyDrafts(res.subsidyDrafts)
-    this.setPagination(res.pagination)
+    this.setSubsidyDraftPagination(res.pagination)
   }
 
   @Action({rawError: true})
@@ -72,7 +84,7 @@ export default class AdminSubsidiesModule extends VuexModule {
       params: {page: page || 1},
     })
     this.setSubsidies(res.subsidies)
-    this.setPagination(res.pagination)
+    this.setSubsidyPagination(res.pagination)
   }
 
   @Action({rawError: true})

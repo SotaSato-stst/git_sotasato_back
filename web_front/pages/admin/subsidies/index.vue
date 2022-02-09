@@ -101,7 +101,7 @@ export default defineComponent({
     const router = useRouter()
     const {loading, load} = useLoader()
     const subsidies = computed(() => adminSubsidiesModule.subsidies)
-    const pagination = computed(() => adminSubsidiesModule.pagination)
+    const pagination = computed(() => adminSubsidiesModule.subsidyPagination)
 
     const detailPath = (id: number) => {
       return routingService.AdminSubsidyDetail(id)
