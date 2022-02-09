@@ -10,7 +10,7 @@
         @select="handleSelect"
       >
         <el-menu-item index="new">
-          <i class="el-icon-s-order new"></i>新着 (12件)
+          <i class="el-icon-s-order new"></i>新着 ({{ totalCount }}件)
         </el-menu-item>
         <el-menu-item index="ranking">
           <i class="el-icon-s-flag flag"></i>ランキング
@@ -26,9 +26,10 @@
 
 <script lang="ts">
 import {Menu, MenuItem} from 'element-ui'
-import {defineComponent, useRouter} from '@nuxtjs/composition-api'
+import {computed, defineComponent, useRouter} from '@nuxtjs/composition-api'
 import GlobalDropdownMenu from '@/components/layouts/GlobalDropdownMenu.vue'
 import {routingService} from '@/services/routingService'
+import {subsidiesModule} from '@/store'
 
 type menuType = 'new' | 'ranking' | 'favorite'
 
@@ -42,6 +43,7 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const selectedPage: menuType = 'new'
+    const totalCount = computed(() => subsidiesModule.pagination.itemsTotal)
     const handleSelect = (value: menuType) => {
       switch (value) {
         case 'new':
@@ -56,7 +58,7 @@ export default defineComponent({
       }
     }
 
-    return {selectedPage, handleSelect}
+    return {totalCount, selectedPage, handleSelect}
   },
 })
 </script>
