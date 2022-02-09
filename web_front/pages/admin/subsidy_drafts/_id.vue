@@ -26,9 +26,9 @@
             type="danger"
             class="submit-button"
             size="small"
-            @click="destroy"
+            @click="archive"
           >
-            削除
+            アーカイブ
           </el-button>
         </div>
       </div>
@@ -44,7 +44,6 @@ import {
   onMounted,
   onUnmounted,
   useRoute,
-  useRouter,
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
@@ -67,7 +66,6 @@ export default defineComponent({
   setup(_props) {
     const form = ref<ValidationForm | null>(null)
     const route = useRoute()
-    const router = useRouter()
     const {loading, load} = useLoader()
     const pageId = Number(route.value.params.id)
     const subsidyDraft = computed(() => subsidyDraftModule.subsidyDraft)
@@ -138,18 +136,17 @@ export default defineComponent({
       console.log('saveAsPersonal')
     }
 
-    const destroy = async () => {
-      await subsidyDraftModule
+    const archive = () => {
+      subsidyDraftModule
         .deleteSubsidyDraft(pageId)
         .then(() => {
           notifySuccess(
-            '削除しました',
+            'アーカイブしました',
             `${subsidyDraftModule.subsidyDraft?.title}`,
           )
-          router.push(routingService.AdminTop())
         })
         .catch(error =>
-          notifyError('削除に失敗しました', error.response.data.message),
+          notifyError('アーカイブに失敗しました', error.response.data.message),
         )
     }
 
@@ -182,7 +179,7 @@ export default defineComponent({
       subsidyParams,
       save,
       saveAsPersonal,
-      destroy,
+      archive,
     }
   },
   head(): object {

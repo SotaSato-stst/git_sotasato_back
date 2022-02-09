@@ -3,6 +3,7 @@
 # Table name: subsidy_drafts
 #
 #  id                :bigint           not null, primary key
+#  archived          :boolean          default(FALSE), not null
 #  source_url_domain :string(255)      not null
 #  supplier_type     :string(255)
 #  title             :string(255)      not null
@@ -25,4 +26,6 @@ class SubsidyDraft < ApplicationRecord
   belongs_to :city, optional: true
 
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
+
+  scope :not_archived, -> { where(archived: false) }
 end

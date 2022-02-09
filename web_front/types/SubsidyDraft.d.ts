@@ -12,6 +12,7 @@ export type SubsidyDraft = {
   prefecture: Prefecture | null
   city: City | null
   supplierType: SupplierType
+  archived: boolean
 }
 
 export type SubsidyDraftsResponse = {

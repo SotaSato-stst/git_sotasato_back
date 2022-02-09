@@ -8,6 +8,7 @@ class CreateSubsidyDrafts < ActiveRecord::Migration[6.1]
       t.references :prefecture
       t.references :city
       t.string :supplier_type
+      t.boolean :archived, null: false, default: false
       t.timestamps
     end
   end

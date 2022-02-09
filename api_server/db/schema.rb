@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2022_02_07_030808) do
     t.bigint "prefecture_id"
     t.bigint "city_id"
     t.string "supplier_type"
+    t.boolean "archived", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["city_id"], name: "index_subsidy_drafts_on_city_id"
