@@ -168,7 +168,9 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, async () => {
-        await subsidyDraftModule.getSubsidyDraft(pageId)
+        await subsidyDraftModule
+          .getSubsidyDraft(pageId)
+          .catch(_ => router.push(routingService.AdminTop()))
         const subsidyDraft = subsidyDraftModule.subsidyDraft
         if (!subsidyDraft) {
           return
