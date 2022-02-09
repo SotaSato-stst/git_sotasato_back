@@ -10,7 +10,7 @@
           <el-button
             class="submit-button"
             size="small"
-            @click="save('下書き保存', 'editing')"
+            @click="submit('editing')"
           >
             下書き保存
           </el-button>
@@ -22,7 +22,7 @@
             class="submit-button"
             size="small"
             :disabled="subsidyDraft.archived"
-            @click="save('保存して公開', 'published')"
+            @click="submit('published')"
           >
             保存して公開
           </el-button>
@@ -97,7 +97,7 @@ export default defineComponent({
       businessCategories: [],
     })
 
-    const save = (publishingCode: PublishingCode) => {
+    const submit = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
       form.value?.validate(valid => {
         if (!valid) {
@@ -127,7 +127,7 @@ export default defineComponent({
             `${subsidyDraftModule.subsidyDraft?.title}
             <br/><a href="
             ${routingService.SubsidyDetail(subsidyId)}
-            ">公開ページ</a>`,
+            " target="_blank">公開ページを確認する</a>`,
           )
           break
       }
@@ -193,7 +193,7 @@ export default defineComponent({
       loading,
       subsidyDraft,
       subsidyParams,
-      save,
+      submit,
       saveAsPersonal,
       archive,
     }
