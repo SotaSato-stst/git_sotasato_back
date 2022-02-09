@@ -33,10 +33,10 @@
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Pagination, Empty} from 'element-ui'
-import SearchMenu from '~/components/SearchMenu.vue'
-import SideRightMenu from '@/components/SideRightMenu.vue'
+import SearchMenu from '~/components/subsidies/SearchMenu.vue'
+import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
-import SubsidyCard from '@/components/SubsidyCard.vue'
+import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
 import {subsidiesModule} from '@/store'
 
 export default defineComponent({
