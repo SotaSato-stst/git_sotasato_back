@@ -101,40 +101,36 @@ export default defineComponent({
         load(loading, async () => {
           await subsidyDraftModule
             .postSubsidy(subsidyParams)
-            .then(id => {
-              switch (publishingCode) {
-                case 'editing':
-                  postedEditing()
-                  break
-                case 'published':
-                  postedPublished(id)
-                  break
-              }
-            })
-            .catch(error =>
-              notifyError(
-                '更新に失敗しました',
-                error.response?.data?.errors?.join('<br/>') || error.message,
-              ),
-            )
+            .then(showMessage)
+            .catch(showErrorMessage)
         })
       })
     }
 
-    const postedEditing = () => {
-      notifySuccess(
-        '下書き保存しました',
-        `${subsidyDraftModule.subsidyDraft?.title}`,
-      )
+    const showMessage = (subsidyId: number) => {
+      switch (subsidyParams.publishingCode) {
+        case 'editing':
+          notifySuccess(
+            '下書き保存しました',
+            `${subsidyDraftModule.subsidyDraft?.title}`,
+          )
+          break
+        case 'published':
+          notifySuccess(
+            '情報を公開しました',
+            `${subsidyDraftModule.subsidyDraft?.title}
+            <br/><a href="
+            ${routingService.SubsidyDetail(subsidyId)}
+            ">公開ページ</a>`,
+          )
+          break
+      }
     }
 
-    const postedPublished = (subsidyId: number) => {
-      notifySuccess(
-        '情報を公開しました',
-        `${subsidyDraftModule.subsidyDraft?.title}
-        <br/><a href="
-        ${routingService.SubsidyDetail(subsidyId)}
-        ">公開ページ</a>`,
+    const showErrorMessage = (error: any) => {
+      notifyError(
+        '更新に失敗しました',
+        error.response?.data?.errors?.join('<br/>') || error.message,
       )
     }
 
