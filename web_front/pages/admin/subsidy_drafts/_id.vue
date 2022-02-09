@@ -1,6 +1,9 @@
 <template>
   <div class="container" :loading="loading">
     <el-card v-if="subsidyDraft">
+      <el-alert v-if="subsidyDraft.archived" type="error">
+        アーカイブされています
+      </el-alert>
       <div slot="header" class="form-header">
         <p>新着補助金情報の編集・公開</p>
         <div class="button-group">
@@ -18,6 +21,7 @@
             type="success"
             class="submit-button"
             size="small"
+            :disabled="subsidyDraft.archived"
             @click="save('保存して公開', 'published')"
           >
             保存して公開
@@ -26,6 +30,7 @@
             type="danger"
             class="submit-button"
             size="small"
+            :disabled="subsidyDraft.archived"
             @click="archive"
           >
             アーカイブ
@@ -44,10 +49,11 @@ import {
   onMounted,
   onUnmounted,
   useRoute,
+  useRouter,
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {Card} from 'element-ui'
+import {Card, Alert, MessageBox} from 'element-ui'
 import {subsidyDraftModule} from '@/store'
 import {useLoader} from '@/services/useLoader'
 import {notifyError, notifySuccess} from '@/services/notify'
@@ -60,12 +66,14 @@ export default defineComponent({
   name: 'SubsidyDraftPage',
   components: {
     [`${Card.name}`]: Card,
+    [`${Alert.name}`]: Alert,
     SubsidyForm,
   },
   layout: 'admin',
   setup(_props) {
     const form = ref<ValidationForm | null>(null)
     const route = useRoute()
+    const router = useRouter()
     const {loading, load} = useLoader()
     const pageId = Number(route.value.params.id)
     const subsidyDraft = computed(() => subsidyDraftModule.subsidyDraft)
@@ -137,17 +145,25 @@ export default defineComponent({
     }
 
     const archive = () => {
-      subsidyDraftModule
-        .deleteSubsidyDraft(pageId)
+      MessageBox.confirm(subsidyParams.title, 'この情報をアーカイブしますか？')
         .then(() => {
-          notifySuccess(
-            'アーカイブしました',
-            `${subsidyDraftModule.subsidyDraft?.title}`,
-          )
+          subsidyDraftModule
+            .deleteSubsidyDraft(pageId)
+            .then(() => {
+              notifySuccess(
+                'アーカイブしました',
+                `${subsidyDraftModule.subsidyDraft?.title}`,
+              )
+              router.push(routingService.AdminTop())
+            })
+            .catch(error =>
+              notifyError(
+                'アーカイブに失敗しました',
+                error.response.data.message,
+              ),
+            )
         })
-        .catch(error =>
-          notifyError('アーカイブに失敗しました', error.response.data.message),
-        )
+        .catch(_ => {})
     }
 
     onMounted(() => {
