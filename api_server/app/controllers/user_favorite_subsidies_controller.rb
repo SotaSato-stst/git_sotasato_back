@@ -1,4 +1,15 @@
 class UserFavoriteSubsidiesController < ApplicationController
+  def index
+    scope = Subsidy.joins(:user_favorite_subsidies).where(
+      user_favorite_subsidies: { user_id: current_user.id }
+    ).includes(
+      :ministry, :prefecture, :city
+    )
+    @items_total = scope.count
+    @favorite_subsidies = scope.page(params[:page]).per(20)
+    @current_user_favorite_ids = current_user.user_favorite_subsidies.pluck(:subsidy_id) & @favorite_subsidies.map(&:id)
+  end
+
   def create
     user_favorite_subsidy = UserFavoriteSubsidy.find_or_initialize_by(
       subsidy_id: params[:subsidy_id],
