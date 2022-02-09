@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import DefaultBanner from './../components/DefaultBanner.vue'
+import DefaultBanner from '@/components/DefaultBanner.vue'
 
 export default Vue.extend({
   name: 'SideRightMenu',

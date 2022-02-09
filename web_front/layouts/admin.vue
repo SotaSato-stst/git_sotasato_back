@@ -20,8 +20,8 @@
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
 import {Container, Header, Aside, Main} from 'element-ui'
-import AdminHeader from '@/components/AdminHeader.vue'
-import AdminSideMenu from '@/components/AdminSideMenu.vue'
+import AdminHeader from '@/components/layouts/AdminHeader.vue'
+import AdminSideMenu from '@/components/layouts/AdminSideMenu.vue'
 
 export default defineComponent({
   name: 'AdminLayout',

@@ -7,6 +7,7 @@ class CreateSubsidyDrafts < ActiveRecord::Migration[6.1]
       t.references :ministry
       t.references :prefecture
       t.references :city
+      t.string :supplier_type
       t.timestamps
     end
   end

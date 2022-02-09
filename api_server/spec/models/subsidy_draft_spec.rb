@@ -4,6 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  source_url_domain :string(255)      not null
+#  supplier_type     :string(255)
 #  title             :string(255)      not null
 #  url               :text(65535)      not null
 #  created_at        :datetime         not null

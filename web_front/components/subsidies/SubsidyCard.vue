@@ -57,8 +57,8 @@ import {Subsidy} from '@/types/Subsidy'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
-import SupplierInformation from '@/components/SupplierInformation.vue'
-import FavoriteButton from '@/components/FavoriteButton.vue'
+import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
+import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
 import {subsidyCategoryLabel} from '~/utils/enumKeyToName'
 
 export default defineComponent({

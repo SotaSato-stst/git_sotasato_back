@@ -9,6 +9,7 @@ export const notifySuccess = (title: string, message: string) => {
     type: 'success',
     message,
     duration: 5000,
+    dangerouslyUseHTMLString: true,
   })
 }
 
@@ -18,6 +19,7 @@ export const notifyError = (title: string, message: string) => {
     type: 'error',
     message,
     duration: 5000,
+    dangerouslyUseHTMLString: true,
   })
 }
 
@@ -27,6 +29,7 @@ export const notifyInfo = (title: string, message: string) => {
     type: 'info',
     message,
     duration: 5000,
+    dangerouslyUseHTMLString: true,
   })
 }
 
@@ -36,5 +39,6 @@ export const notifyWarning = (title: string, message: string) => {
     type: 'warning',
     message,
     duration: 5000,
+    dangerouslyUseHTMLString: true,
   })
 }
