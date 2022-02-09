@@ -57,6 +57,7 @@ import {notifyError, notifySuccess} from '@/services/notify'
 import {PublishingCode, UpdateSubsidyParams} from '@/types/Subsidy'
 import {ValidationForm} from '@/types/Validate'
 import SubsidyForm from '@/components/subsidies/SubsidyForm.vue'
+import {routingService} from '~/services/routingService'
 
 export default defineComponent({
   name: 'SubsidyDraftPage',
@@ -101,8 +102,14 @@ export default defineComponent({
         load(loading, async () => {
           await subsidyDraftModule
             .postSubsidy(subsidyParams)
-            .then(() =>
-              notifySuccess(title, `${subsidyDraftModule.subsidyDraft?.title}`),
+            .then(id =>
+              notifySuccess(
+                title,
+                `${subsidyDraftModule.subsidyDraft?.title}
+                <br/><a href="
+                ${routingService.SubsidyDetail(id)}
+                ">公開ページ</a>`,
+              ),
             )
             .catch(error =>
               notifyError(

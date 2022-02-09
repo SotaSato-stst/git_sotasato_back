@@ -60,7 +60,8 @@ export default class SubsidyDraftModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async postSubsidy(params: UpdateSubsidyParams) {
-    await $axios.$post<Subsidy>('/admin/subsidies', params)
+  async postSubsidy(params: UpdateSubsidyParams): Promise<number> {
+    const res = await $axios.$post<Subsidy>('/admin/subsidies', params)
+    return res.id
   }
 }

@@ -82,6 +82,8 @@ import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
+import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
+import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 
 export default defineComponent({
   name: 'SubsidyDetailPage',
@@ -90,7 +92,9 @@ export default defineComponent({
     [`${Aside.name}`]: Aside,
     [`${Main.name}`]: Main,
     [`${Card.name}`]: Card,
+    SupplierInformation,
     FavoriteButton,
+    SideRightMenu,
   },
 
   setup(_props) {
