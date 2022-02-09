@@ -2,6 +2,13 @@
   <div class="container">
     <card-loading :loading="loading" />
     <el-table v-if="!loading" :data="subsidyDrafts" stripe style="width: 100%">
+      <el-table-column label="対応" width="100">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="handleEdit(scope.row)">
+            対応する
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
           <a class="detail-link" :href="detailPath(scope.row.id)">{{
@@ -25,11 +32,16 @@
           <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100">
+      <el-table-column label="操作" width="120">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.row)">
-            対応する
+          <el-button type="danger" size="mini" @click="archive(scope.row)">
+            アーカイブ
           </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="更新日" width="120">
+        <template slot-scope="scope">
+          {{ convertToJpDate(scope.row.createdAt) }}
         </template>
       </el-table-column>
     </el-table>
@@ -51,11 +63,13 @@ import {
   onMounted,
   useRouter,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Pagination} from 'element-ui'
+import {Table, TableColumn, Pagination, MessageBox} from 'element-ui'
 import CardLoading from '~/components/CardLoading.vue'
 import {subsidyDraftModule} from '@/store'
 import {SubsidyDraft} from '~/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
+import {convertToJpDate} from '@/utils/dateFormatter'
+import {notifySuccess, notifyError} from '@/services/notify'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -80,6 +94,28 @@ export default defineComponent({
       router.push(detailPath(subsidyDraft.id))
     }
 
+    const archive = (subsidyDraft: SubsidyDraft) => {
+      MessageBox.confirm(subsidyDraft.title, 'この情報をアーカイブしますか？')
+        .then(() => {
+          subsidyDraftModule
+            .deleteSubsidyDraft(subsidyDraft.id)
+            .then(() => {
+              notifySuccess(
+                'アーカイブしました',
+                `${subsidyDraftModule.subsidyDraft?.title}`,
+              )
+              subsidyDraftModule.getSubsidyDrafts()
+            })
+            .catch(error =>
+              notifyError(
+                'アーカイブに失敗しました',
+                error.response.data.message,
+              ),
+            )
+        })
+        .catch(_ => {})
+    }
+
     onMounted(() => {
       load(loading, () => {
         subsidyDraftModule.getSubsidyDrafts()
@@ -92,6 +128,8 @@ export default defineComponent({
       pagination,
       detailPath,
       handleEdit,
+      archive,
+      convertToJpDate,
     }
   },
   head(): object {

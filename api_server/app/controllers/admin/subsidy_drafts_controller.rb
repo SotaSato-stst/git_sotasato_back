@@ -1,7 +1,7 @@
 module Admin
   class SubsidyDraftsController < ApplicationController
     def index
-      scope = SubsidyDraft.not_archived.includes(:ministry, :prefecture, :city)
+      scope = SubsidyDraft.not_archived.includes(:ministry, :prefecture, :city).order(id: :desc)
       @items_total = scope.count
       @subsidy_drafts = scope.page(params[:page]).per(50)
     end
