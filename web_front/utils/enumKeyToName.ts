@@ -1,4 +1,4 @@
-import {SubsidyCategory} from '@/types/Subsidy'
+import {PublishingCode, SubsidyCategory} from '@/types/Subsidy'
 import {AccountRole} from '~/types/User'
 
 export const subsidyCategoryLabel = (category: SubsidyCategory) => {
@@ -7,6 +7,15 @@ export const subsidyCategoryLabel = (category: SubsidyCategory) => {
       return '補助金'
     case 'josei':
       return '助成金'
+  }
+}
+
+export const publishingCodeLabel = (code: PublishingCode) => {
+  switch (code) {
+    case 'published':
+      return '公開中'
+    case 'editing':
+      return '非公開中'
   }
 }
 

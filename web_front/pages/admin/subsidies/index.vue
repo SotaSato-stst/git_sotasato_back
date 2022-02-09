@@ -1,12 +1,16 @@
 <template>
   <div class="container">
     <card-loading :loading="loading" />
-    <el-table v-if="!loading" :data="subsidyDrafts" stripe style="width: 100%">
-      <el-table-column label="対応" width="100">
+    <el-table v-if="!loading" :data="subsidies" stripe style="width: 100%">
+      <el-table-column label="公開状況" width="90" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.row)">
-            対応する
-          </el-button>
+          <el-tag
+            :type="scope.row.publishingCode == 'published' ? 'success' : 'info'"
+            effect="dark"
+            size="mini"
+          >
+            {{ publishingCodeLabel(scope.row.publishingCode) }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="タイトル">
@@ -16,11 +20,16 @@
           }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="URL">
+      <el-table-column label="URL" width="160">
         <template slot-scope="scope">
-          <a class="detail-link" :href="scope.row.url" target="_blank">{{
-            scope.row.url
-          }}</a>
+          <a
+            class="detail-link"
+            :href="scope.row.url"
+            target="_blank"
+            style="word-break: keep-all"
+          >
+            {{ scope.row.url }}
+          </a>
         </template>
       </el-table-column>
       <el-table-column label="発行機関" width="110">
@@ -32,20 +41,26 @@
           <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="120">
+      <el-table-column prop="businessCategories" label="業種" width="210">
         <template slot-scope="scope">
-          <el-button type="danger" size="mini" @click="archive(scope.row)">
-            アーカイブ
-          </el-button>
+          <span>{{
+            scope.row.businessCategories.map(c => c.name).join(',')
+          }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="更新日" width="120">
+      <el-table-column prop="priceMax" label="最大支援金額" width="120">
         <template slot-scope="scope">
-          {{ convertToJpDate(scope.row.createdAt) }}
+          {{ convertToShortJPY(scope.row.priceMax) }}
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="90" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="handleEdit(scope.row)">編集</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="subsidies.length > 0"
       background
       layout="prev, pager, next"
       :page-count="pagination.totalPages"
@@ -63,78 +78,57 @@ import {
   onMounted,
   useRouter,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Pagination, MessageBox} from 'element-ui'
-import CardLoading from '~/components/CardLoading.vue'
+import {Table, TableColumn, Pagination, Tag} from 'element-ui'
+import CardLoading from '@/components/CardLoading.vue'
 import {adminSubsidiesModule} from '@/store'
-import {SubsidyDraft} from '~/types/SubsidyDraft'
+import {useLoader} from '@/services/useLoader'
 import {routingService} from '@/services/routingService'
-import {convertToJpDate} from '@/utils/dateFormatter'
-import {notifySuccess, notifyError} from '@/services/notify'
+import {Subsidy} from '@/types/Subsidy'
+import {convertToShortJPY} from '@/utils/numberFormatter'
+import {publishingCodeLabel} from '@/utils/enumKeyToName'
 
 export default defineComponent({
-  name: 'IndexPage',
+  name: 'AdminSubsidyIndex',
   components: {
     [`${Table.name}`]: Table,
     [`${TableColumn.name}`]: TableColumn,
     [`${Pagination.name}`]: Pagination,
+    [`${Tag.name}`]: Tag,
     CardLoading,
   },
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
-    const {loading, load} = adminSubsidiesModule.loader
-    const subsidyDrafts = computed(() => adminSubsidiesModule.subsidyDrafts)
+    const {loading, load} = useLoader()
+    const subsidies = computed(() => adminSubsidiesModule.subsidies)
     const pagination = computed(() => adminSubsidiesModule.pagination)
 
     const detailPath = (id: number) => {
-      return routingService.AdminSubsidyDraftDetail(id)
+      return routingService.AdminSubsidyDetail(id)
     }
-
-    const handleEdit = (subsidyDraft: SubsidyDraft) => {
-      router.push(detailPath(subsidyDraft.id))
-    }
-
-    const archive = (subsidyDraft: SubsidyDraft) => {
-      MessageBox.confirm(subsidyDraft.title, 'この情報をアーカイブしますか？')
-        .then(() => {
-          adminSubsidiesModule
-            .deleteSubsidyDraft(subsidyDraft.id)
-            .then(() => {
-              notifySuccess(
-                'アーカイブしました',
-                `${adminSubsidiesModule.subsidyDraft?.title}`,
-              )
-              adminSubsidiesModule.getSubsidyDrafts()
-            })
-            .catch(error =>
-              notifyError(
-                'アーカイブに失敗しました',
-                error.response.data.message,
-              ),
-            )
-        })
-        .catch(_ => {})
+    const handleEdit = (subsidy: Subsidy) => {
+      router.push(detailPath(subsidy.id))
     }
 
     onMounted(() => {
       load(loading, () => {
-        adminSubsidiesModule.getSubsidyDrafts()
+        adminSubsidiesModule.getSubsidies()
       })
     })
 
     return {
       loading,
-      subsidyDrafts,
+      subsidies,
       pagination,
       detailPath,
       handleEdit,
-      archive,
-      convertToJpDate,
+      convertToShortJPY,
+      publishingCodeLabel,
     }
   },
   head(): object {
     return {
-      title: '管理画面',
+      title: '補助金情報管理',
     }
   },
 })

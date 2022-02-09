@@ -1,7 +1,9 @@
 module Admin
   class SubsidiesController < ApplicationController
     def index
-      # TODO
+      scope = Subsidy.all.includes(:ministry, :prefecture, :city)
+      @items_total = scope.count
+      @subsidies = scope.page(params[:page]).per(20)
     end
 
     def show
@@ -9,11 +11,23 @@ module Admin
     end
 
     def create
-      @subsidy = Subsidy.new(create_params)
+      @subsidy = Subsidy.new(subsidy_params)
       set_association
 
       if @subsidy.save
-        SubsidyDraft.find_by(url: params[:url]).destroy
+        SubsidyDraft.find_by(url: params[:url])&.destroy
+        render :show, status: 201
+      else
+        render json: { message: '入力内容を確認してください', errors: @subsidy.errors.full_messages }, status: 400
+      end
+    end
+
+    def update
+      @subsidy = Subsidy.find(params[:id])
+      @subsidy.assign_attributes(subsidy_params)
+      set_association
+
+      if @subsidy.save
         render :show, status: 201
       else
         render json: { message: '入力内容を確認してください', errors: @subsidy.errors.full_messages }, status: 400
@@ -22,7 +36,7 @@ module Admin
 
     private
 
-    def create_params
+    def subsidy_params
       params.permit(
         :title,
         :publishing_code,
