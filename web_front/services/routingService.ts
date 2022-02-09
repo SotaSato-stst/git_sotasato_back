@@ -5,6 +5,7 @@ export const routingService: {[key: string]: (...args: any[]) => PageUrl} = {
   SignIn: () => '/sign-in',
   SubsidyDetail: (id: number) => `/subsidies/${id}`,
   Ranking: () => '/ranking',
+  Favorite: () => '/favorite',
   AdminTop: () => '/admin',
   AdminSubsidies: () => '/admin/subsidies',
   AdminSubsidyDetail: (id: number) => `/admin/subsidies/${id}`,
