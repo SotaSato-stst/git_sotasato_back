@@ -1,6 +1,8 @@
 type PageUrl = string
 
-export const routingService: {[key: string]: (...args: any[]) => PageUrl} = {
+export const routingService: {
+  [key: string]: (...args: any[]) => PageUrl
+} = {
   Top: () => '/',
   SignIn: () => '/sign-in',
   SubsidyDetail: (id: number) => `/subsidies/${id}`,

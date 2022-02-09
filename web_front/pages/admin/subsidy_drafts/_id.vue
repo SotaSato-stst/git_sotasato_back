@@ -4,9 +4,6 @@
       <div slot="header" class="form-header">
         <p>新着補助金情報の編集・公開</p>
         <div class="button-group">
-          <el-button class="submit-button" size="small" @click="skip">
-            スキップ
-          </el-button>
           <el-button
             class="submit-button"
             size="small"
@@ -47,6 +44,7 @@ import {
   onMounted,
   onUnmounted,
   useRoute,
+  useRouter,
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
@@ -57,7 +55,7 @@ import {notifyError, notifySuccess} from '@/services/notify'
 import {PublishingCode, UpdateSubsidyParams} from '@/types/Subsidy'
 import {ValidationForm} from '@/types/Validate'
 import SubsidyForm from '@/components/subsidies/SubsidyForm.vue'
-import {routingService} from '~/services/routingService'
+import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'SubsidyDraftPage',
@@ -69,6 +67,7 @@ export default defineComponent({
   setup(_props) {
     const form = ref<ValidationForm | null>(null)
     const route = useRoute()
+    const router = useRouter()
     const {loading, load} = useLoader()
     const pageId = Number(route.value.params.id)
     const subsidyDraft = computed(() => subsidyDraftModule.subsidyDraft)
@@ -92,7 +91,7 @@ export default defineComponent({
       businessCategories: [],
     })
 
-    const save = (title: string, publishingCode: PublishingCode) => {
+    const save = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
       form.value?.validate(valid => {
         if (!valid) {
@@ -102,15 +101,16 @@ export default defineComponent({
         load(loading, async () => {
           await subsidyDraftModule
             .postSubsidy(subsidyParams)
-            .then(id =>
-              notifySuccess(
-                title,
-                `${subsidyDraftModule.subsidyDraft?.title}
-                <br/><a href="
-                ${routingService.SubsidyDetail(id)}
-                ">公開ページ</a>`,
-              ),
-            )
+            .then(id => {
+              switch (publishingCode) {
+                case 'editing':
+                  postedEditing()
+                  break
+                case 'published':
+                  postedPublished(id)
+                  break
+              }
+            })
             .catch(error =>
               notifyError(
                 '更新に失敗しました',
@@ -121,23 +121,37 @@ export default defineComponent({
       })
     }
 
-    const saveAsPersonal = () => {
-      console.log('saveAsPersonal')
+    const postedEditing = () => {
+      notifySuccess(
+        '下書き保存しました',
+        `${subsidyDraftModule.subsidyDraft?.title}`,
+      )
     }
 
-    const skip = () => {
-      console.log('skip')
+    const postedPublished = (subsidyId: number) => {
+      notifySuccess(
+        '情報を公開しました',
+        `${subsidyDraftModule.subsidyDraft?.title}
+        <br/><a href="
+        ${routingService.SubsidyDetail(subsidyId)}
+        ">公開ページ</a>`,
+      )
+    }
+
+    const saveAsPersonal = () => {
+      console.log('saveAsPersonal')
     }
 
     const destroy = async () => {
       await subsidyDraftModule
         .deleteSubsidyDraft(pageId)
-        .then(() =>
+        .then(() => {
           notifySuccess(
             '削除しました',
             `${subsidyDraftModule.subsidyDraft?.title}`,
-          ),
-        )
+          )
+          router.push(routingService.AdminTop())
+        })
         .catch(error =>
           notifyError('削除に失敗しました', error.response.data.message),
         )
@@ -173,7 +187,6 @@ export default defineComponent({
       save,
       saveAsPersonal,
       destroy,
-      skip,
     }
   },
   head(): object {

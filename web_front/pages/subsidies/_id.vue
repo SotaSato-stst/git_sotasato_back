@@ -73,6 +73,7 @@ import {
   onMounted,
   onUnmounted,
   useRoute,
+  useRouter,
   computed,
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Card} from 'element-ui'
@@ -99,11 +100,12 @@ export default defineComponent({
 
   setup(_props) {
     const route = useRoute()
+    const router = useRouter()
     const pageId = Number(route.value.params.id)
     const subsidy = computed(() => subsidiesModule.subsidy)
 
     onMounted(() => {
-      subsidiesModule.getSubsidy(pageId)
+      subsidiesModule.getSubsidy(pageId).catch(_ => router.push('/'))
     })
 
     onUnmounted(() => {

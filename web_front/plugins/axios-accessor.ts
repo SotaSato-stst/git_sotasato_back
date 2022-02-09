@@ -65,6 +65,7 @@ const accessor: Plugin = ({$axios}) => {
         )
         break
       case 404:
+        notifyError('404', 'ページが見つかりません')
         break
       default:
         break
