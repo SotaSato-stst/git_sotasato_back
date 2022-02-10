@@ -52,6 +52,7 @@
       :total="pagination.itemsTotal"
       :page-size="pagination.itemsPerPage"
       :current-page="pagination.currentPage"
+      @current-change="getPage"
     />
   </div>
 </template>
@@ -87,6 +88,11 @@ export default defineComponent({
     const pagination = computed(
       () => adminSubsidiesModule.subsidyDraftPagination,
     )
+
+    const getPage = (page: number) => {
+      adminSubsidiesModule.setSubsidyDrafts([])
+      adminSubsidiesModule.getSubsidyDrafts(page)
+    }
 
     const detailPath = (id: number) => {
       return routingService.AdminSubsidyDraftDetail(id)
@@ -131,6 +137,7 @@ export default defineComponent({
       loading,
       subsidyDrafts,
       pagination,
+      getPage,
       detailPath,
       handleEdit,
       archive,

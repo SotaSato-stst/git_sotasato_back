@@ -35,6 +35,7 @@
       :total="pagination.itemsTotal"
       :page-size="pagination.itemsPerPage"
       :current-page="pagination.currentPage"
+      @current-change="getPage"
     />
   </div>
 </template>
@@ -69,6 +70,11 @@ export default defineComponent({
     const companies = computed(() => companiesModule.companies)
     const pagination = computed(() => companiesModule.pagination)
 
+    const getPage = (page: number) => {
+      companiesModule.setCompanies([])
+      companiesModule.getCompanies(page)
+    }
+
     const handleEdit = (company: Company) => {
       router.push(routingService.AdminCompanyDetail(company.id))
     }
@@ -83,6 +89,7 @@ export default defineComponent({
       loading,
       companies,
       pagination,
+      getPage,
       handleEdit,
       convertToShortJPY,
     }

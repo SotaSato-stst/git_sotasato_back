@@ -7,20 +7,21 @@
       <div class="container">
         <card-loading :loading="loading" />
         <div v-for="subsidy in subsidies" :key="subsidy.id">
-          <subsidy-card :subsidy="subsidy" />
+          <subsidy-card v-if="!loading" :subsidy="subsidy" />
         </div>
         <el-empty
           v-if="!loading && subsidies.length == 0"
           description="データがありません"
         />
         <el-pagination
-          v-if="subsidies.length > 0"
+          v-if="!loading && subsidies.length > 0"
           background
           layout="prev, pager, next"
           :page-count="pagination.totalPages"
           :total="pagination.itemsTotal"
           :page-size="pagination.itemsPerPage"
           :current-page="pagination.currentPage"
+          @current-change="getPage"
         />
       </div>
     </el-main>
@@ -57,10 +58,16 @@ export default defineComponent({
     const subsidies = computed(() => subsidiesModule.subsidies)
     const pagination = computed(() => subsidiesModule.pagination)
 
+    const getPage = (page: number) => {
+      subsidiesModule.setSubsidies([])
+      subsidiesModule.getSubsidies(page)
+    }
+
     return {
       loading,
       subsidies,
       pagination,
+      getPage,
     }
   },
   head(): object {
