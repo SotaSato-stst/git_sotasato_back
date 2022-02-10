@@ -23,11 +23,11 @@ export const accountRoleOptions = () => {
   return [
     {
       key: 'admin',
-      name: '管理者',
+      name: 'すべての権限を持つ管理者',
     },
     {
       key: 'editor',
-      name: '情報編集者',
+      name: '補助金情報の編集者',
     },
     {
       key: 'user',

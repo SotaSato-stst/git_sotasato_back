@@ -7,8 +7,8 @@
           保存する
         </el-button>
       </div>
-      <el-form class="form" :model="state" label-width="120px">
-        <el-form-item label="所属会社">
+      <el-form class="form" :model="state" label-width="120px" :rules="rules">
+        <el-form-item label="所属会社" prop="companyId">
           <el-select v-model="state.companyId" placeholder="選択...">
             <el-option
               v-for="company in companies"
@@ -18,21 +18,21 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="氏名">
+        <el-form-item label="氏名" prop="displayName">
           <el-input
             v-model="state.displayName"
             class="input-text"
             placeholder="田中太郎"
           />
         </el-form-item>
-        <el-form-item label="E-mail">
+        <el-form-item label="E-mail" prop="email">
           <el-input
             v-model="state.email"
             class="input-text"
             placeholder="hojokin@example.com"
           />
         </el-form-item>
-        <el-form-item label="アカウント種類">
+        <el-form-item label="アカウント" prop="accountRole">
           <el-select v-model="state.accountRole" placeholder="選択...">
             <el-option
               v-for="accountRole in accountRoleOptions()"
@@ -83,10 +83,7 @@ export default defineComponent({
     })
 
     const submit = async () => {
-      await usersModule
-        .postUser(state)
-        .then(() => handleSuccess())
-        .catch(error => handleError(error))
+      await usersModule.postUser(state).then(handleSuccess).catch(handleError)
     }
 
     const handleSuccess = () => {
@@ -111,6 +108,37 @@ export default defineComponent({
       }
     }
 
+    const rules = {
+      companyId: [
+        {
+          required: true,
+          message: '所属は必須です',
+          trigger: 'change',
+        },
+      ],
+      displayName: [
+        {
+          required: true,
+          message: '氏名は必須です',
+          trigger: 'change',
+        },
+      ],
+      email: [
+        {
+          required: true,
+          message: 'E-mailは必須です',
+          trigger: 'change',
+        },
+      ],
+      accountRole: [
+        {
+          required: true,
+          message: 'アカウント種類は必須です',
+          trigger: 'change',
+        },
+      ],
+    }
+
     onMounted(() => {
       companiesModule.getCompanies()
     })
@@ -120,6 +148,7 @@ export default defineComponent({
       state,
       accountRoleOptions,
       submit,
+      rules,
     }
   },
   head(): object {
