@@ -21,7 +21,7 @@
             <span class="label">
               {{ convertToJpDate(subsidy.startFrom) }}
               ~
-              {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
+              {{ subsidy.endTo && convertToJpDate(subsidy.endTo, false) }}
             </span>
           </span>
           <favorite-button :subsidy="subsidy" />
