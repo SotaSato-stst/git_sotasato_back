@@ -7,7 +7,13 @@
           保存する
         </el-button>
       </div>
-      <el-form class="form" :model="state" label-width="120px" :rules="rules">
+      <el-form
+        ref="form"
+        class="form"
+        :model="state"
+        label-width="120px"
+        :rules="rules"
+      >
         <el-form-item label="所属会社" prop="companyId">
           <el-select v-model="state.companyId" placeholder="選択...">
             <el-option
@@ -54,9 +60,10 @@ import {
   reactive,
   computed,
   onMounted,
+  ref,
 } from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
-import {notifyError, notifySuccess} from '@/services/notify'
+import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 import {NewUserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
 import {routingService} from '~/services/routingService'
@@ -73,6 +80,7 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
+    const form = ref<Form | null>(null)
     const router = useRouter()
     const companies = computed(() => companiesModule.companies)
     const state: NewUserParams = reactive({
@@ -82,8 +90,12 @@ export default defineComponent({
       companyId: null,
     })
 
-    const submit = async () => {
-      await usersModule.postUser(state).then(handleSuccess).catch(handleError)
+    const submit = () => {
+      form.value
+        ?.validate()
+        .then(() => usersModule.postUser(state))
+        .then(handleSuccess)
+        .catch(showApiErrorMessage)
     }
 
     const handleSuccess = () => {
@@ -92,20 +104,6 @@ export default defineComponent({
         `${state.displayName}さんのアカウント`,
       )
       router.push(routingService.AdminUsers())
-    }
-
-    const handleError = (error: any) => {
-      switch (error.response.data.message) {
-        case 'EMAIL_EXISTS':
-          notifyError(
-            'ユーザー作成に失敗しました',
-            'すでにE-mailが使われています',
-          )
-          break
-        default:
-          notifyError('ユーザー作成に失敗しました', error.response.data.message)
-          break
-      }
     }
 
     const rules = {
@@ -144,6 +142,7 @@ export default defineComponent({
     })
 
     return {
+      form,
       companies,
       state,
       accountRoleOptions,

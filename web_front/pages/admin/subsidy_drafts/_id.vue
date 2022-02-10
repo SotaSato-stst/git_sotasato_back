@@ -53,7 +53,11 @@ import {
 import {Card, Alert, MessageBox} from 'element-ui'
 import {adminSubsidiesModule} from '@/store'
 import {useLoader} from '@/services/useLoader'
-import {notifyError, notifySuccess} from '@/services/notify'
+import {
+  notifyError,
+  notifySuccess,
+  showApiErrorMessage,
+} from '@/services/notify'
 import {PublishingCode, UpdateSubsidyParams} from '@/types/Subsidy'
 import {ValidationForm} from '@/types/Validate'
 import SubsidyForm from '@/components/subsidies/SubsidyForm.vue'
@@ -105,7 +109,7 @@ export default defineComponent({
           await adminSubsidiesModule
             .postSubsidy(subsidyParams)
             .then(showMessage)
-            .catch(showErrorMessage)
+            .catch(showApiErrorMessage)
         })
       })
     }
@@ -129,13 +133,6 @@ export default defineComponent({
           break
       }
       router.replace(routingService.AdminSubsidyDetail(subsidyId))
-    }
-
-    const showErrorMessage = (error: any) => {
-      notifyError(
-        '更新に失敗しました',
-        error.response?.data?.errors?.join('<br/>') || error.message,
-      )
     }
 
     const archive = () => {

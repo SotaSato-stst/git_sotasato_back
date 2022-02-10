@@ -42,3 +42,10 @@ export const notifyWarning = (title: string, message: string) => {
     dangerouslyUseHTMLString: true,
   })
 }
+
+export const showApiErrorMessage = (error: any) => {
+  notifyError(
+    error.response?.data?.message || '更新に失敗しました',
+    error.response?.data?.errors?.join('<br/>') || '入力内容を確認してください',
+  )
+}

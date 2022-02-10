@@ -20,7 +20,12 @@ module Admin
       render :show, status: 201
     rescue StandardError => e
       service.delete!(firebase_uid) if firebase_uid.present? # rollback
-      render json: { message: e.message }, status: 400
+      errors = []
+      case e.message
+      when 'EMAIL_EXISTS'
+        errors << 'メールアドレスはすでに登録されています'
+      end
+      render json: { message: 'ユーザーの作成に失敗しました', errors: errors }, status: 400
     end
 
     def update
