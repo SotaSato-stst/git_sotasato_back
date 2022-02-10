@@ -25,6 +25,37 @@ export default class UsersModule extends VuexModule {
     itemsPerPage: 0,
   }
 
+  rules = {
+    companyId: [
+      {
+        required: true,
+        message: '所属は必須です',
+        trigger: 'change',
+      },
+    ],
+    displayName: [
+      {
+        required: true,
+        message: '氏名は必須です',
+        trigger: 'change',
+      },
+    ],
+    email: [
+      {
+        required: true,
+        message: 'E-mailは必須です',
+        trigger: 'change',
+      },
+    ],
+    accountRole: [
+      {
+        required: true,
+        message: 'アカウント種類は必須です',
+        trigger: 'change',
+      },
+    ],
+  }
+
   @Mutation
   setUsers(users: User[]) {
     this.users = users

@@ -89,6 +89,7 @@ export default defineComponent({
       accountRole: 'user',
       companyId: null,
     })
+    const rules = usersModule.rules
 
     const submit = () => {
       form.value
@@ -104,37 +105,6 @@ export default defineComponent({
         `${state.displayName}さんのアカウント`,
       )
       router.push(routingService.AdminUsers())
-    }
-
-    const rules = {
-      companyId: [
-        {
-          required: true,
-          message: '所属は必須です',
-          trigger: 'change',
-        },
-      ],
-      displayName: [
-        {
-          required: true,
-          message: '氏名は必須です',
-          trigger: 'change',
-        },
-      ],
-      email: [
-        {
-          required: true,
-          message: 'E-mailは必須です',
-          trigger: 'change',
-        },
-      ],
-      accountRole: [
-        {
-          required: true,
-          message: 'アカウント種類は必須です',
-          trigger: 'change',
-        },
-      ],
     }
 
     onMounted(() => {

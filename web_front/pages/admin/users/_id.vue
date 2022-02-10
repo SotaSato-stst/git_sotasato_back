@@ -7,8 +7,14 @@
           保存する
         </el-button>
       </div>
-      <el-form class="form" :model="state" label-width="120px">
-        <el-form-item label="所属会社">
+      <el-form
+        ref="form"
+        class="form"
+        :model="state"
+        label-width="120px"
+        :rules="rules"
+      >
+        <el-form-item label="所属会社" prop="companyId">
           <el-select v-model="state.companyId" placeholder="選択...">
             <el-option
               v-for="company in companies"
@@ -18,7 +24,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="氏名">
+        <el-form-item label="氏名" prop="displayName">
           <el-input
             v-model="state.displayName"
             class="input-text"
@@ -34,7 +40,7 @@
           />
           <div>E-mailはユーザー自身で更新可能です</div>
         </el-form-item>
-        <el-form-item label="アカウント種類">
+        <el-form-item label="アカウント種類" prop="accountRole">
           <el-select v-model="state.accountRole" placeholder="選択...">
             <el-option
               v-for="accountRole in accountRoleOptions()"
@@ -58,10 +64,11 @@ import {
   useRoute,
   useRouter,
   reactive,
+  ref,
 } from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {usersModule, companiesModule} from '@/store'
-import {notifyError, notifySuccess} from '@/services/notify'
+import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 import {UpdateUserParams} from '~/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
 import {routingService} from '@/services/routingService'
@@ -77,6 +84,7 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
+    const form = ref<Form | null>(null)
     const route = useRoute()
     const router = useRouter()
     const {loading, load} = usersModule.loader
@@ -88,18 +96,22 @@ export default defineComponent({
       accountRole: 'user',
       companyId: null,
     })
+    const rules = usersModule.rules
 
     const submit = () => {
-      usersModule
-        .putUser(state)
-        .then(() => {
-          notifySuccess(
-            '内容を保存しました',
-            `${usersModule.user?.displayName}さんの情報`,
-          )
-          router.push(routingService.AdminUsers())
-        })
-        .catch(error => notifyError('内容を保存しました', error.message))
+      form.value
+        ?.validate()
+        .then(() => usersModule.putUser(state))
+        .then(handleSuccess)
+        .catch(showApiErrorMessage)
+    }
+
+    const handleSuccess = () => {
+      notifySuccess(
+        '内容を保存しました',
+        `${usersModule.user?.displayName}さんの情報`,
+      )
+      router.push(routingService.AdminUsers())
     }
 
     onMounted(() => {
@@ -122,10 +134,12 @@ export default defineComponent({
     })
 
     return {
+      form,
       loading,
       user,
       companies,
       state,
+      rules,
       accountRoleOptions,
       submit,
     }
