@@ -51,7 +51,7 @@ export default class OptionsModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async getCities(prefectureId: string) {
+  async getCities(prefectureId: number) {
     const res = await $axios.$get<CityResponse>(
       `/prefectures/${prefectureId}/cities`,
     )

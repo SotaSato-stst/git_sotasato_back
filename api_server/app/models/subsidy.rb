@@ -45,11 +45,11 @@ class Subsidy < ApplicationRecord
   scope :published, -> { where(publishing_code: 'published') }
   scope :search_by_user, ->(search_params) {
     published
-      .search_with_prefecture(search_params[:prefecture_ids])
+      .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])
   }
-  scope :search_with_prefecture, ->(prefecture_ids) { # "1|2|3" のような形で受け取る
-    joins(:prefecture).merge(Prefecture.where(id: prefecture_ids.to_s.split('|'))) if prefecture_ids.present?
+  scope :search_with_prefecture, ->(prefecture_id) {
+    joins(:prefecture).merge(Prefecture.where(id: prefecture_id)) if prefecture_id.present?
   }
   scope :search_with_city, ->(city_ids) { # "1|2|3" のような形で受け取る
     joins(:city).merge(City.where(id: city_ids.to_s.split('|'))) if city_ids.present?

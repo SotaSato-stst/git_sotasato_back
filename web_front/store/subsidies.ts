@@ -1,6 +1,11 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {Subsidy, SubsidiesResponse, SubsidySearchParams} from '@/types/Subsidy'
+import {
+  Subsidy,
+  SubsidiesResponse,
+  SubsidySearchQuery,
+  SubsidySearchForm,
+} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
 import {useLoader} from '~/services/useLoader'
 
@@ -21,8 +26,8 @@ export default class SubsidiesModule extends VuexModule {
     itemsPerPage: 0,
   }
 
-  searchParams: SubsidySearchParams = {
-    prefectureIds: '',
+  searchParams: SubsidySearchQuery = {
+    prefectureId: null,
     cityIds: '',
   }
 
@@ -42,8 +47,11 @@ export default class SubsidiesModule extends VuexModule {
   }
 
   @Mutation
-  setSearchParams(searchParams: SubsidySearchParams) {
-    this.searchParams = searchParams
+  setSearchParams(form: SubsidySearchForm) {
+    this.searchParams = {
+      prefectureId: form.prefectureId?.toString() || null,
+      cityIds: form.cityIds?.join('|') || null,
+    }
   }
 
   @Mutation

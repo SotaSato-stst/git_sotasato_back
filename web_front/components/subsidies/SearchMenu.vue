@@ -15,7 +15,7 @@
             v-for="prefecture in prefectures"
             :key="prefecture.id"
             :label="prefecture.name"
-            :value="prefecture.id.toString()"
+            :value="prefecture.id"
           />
         </el-select>
       </div>
@@ -33,11 +33,11 @@
             v-for="city in cities"
             :key="city.id"
             :label="city.name"
-            :value="city.id.toString()"
+            :value="city.id"
           />
         </el-select>
       </div>
-      <el-button class="search-button" type="primary" @click="submit">
+      <el-button class="search-button" type="primary" @click="search">
         以上の条件で検索
       </el-button>
     </el-form>
@@ -50,12 +50,14 @@ import {
   computed,
   onMounted,
   onUnmounted,
-  reactive,
   useRoute,
   useRouter,
+  reactive,
 } from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button} from 'element-ui'
 import {optionsModule, subsidiesModule} from '@/store'
+import {routingService} from '~/services/routingService'
+import {SubsidySearchForm} from '@/types/Subsidy'
 
 export default defineComponent({
   name: 'SearchMenu',
@@ -68,43 +70,49 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const route = useRoute()
+    const query = route.value.query
     const router = useRouter()
     const {loading, load} = subsidiesModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
-    const selectPrefectureId = async (prefectureId: string) => {
-      if (prefectureId.length === 0) {
-        return
+    const selectPrefectureId = (prefectureId: number | null) => {
+      if (prefectureId) {
+        optionsModule.getCities(prefectureId)
       }
-      state.cityIds = []
-      await optionsModule.getCities(prefectureId)
     }
     const cities = computed(() => optionsModule.cities)
-    const state = reactive({
-      prefectureId: route.value.query.prefectureIds?.toString() || '',
-      cityIds: route.value.query.cityIds?.toString().split('|') || [],
+
+    const state: SubsidySearchForm = reactive({
+      prefectureId: null,
+      cityIds: [],
     })
 
-    const setParams = () => {
-      subsidiesModule.setSearchParams({
-        prefectureIds: state.prefectureId,
-        cityIds: state.cityIds.join('|'),
-      })
+    const setStateFromQuery = () => {
+      const prefectureIdQuery = Number(query.prefectureId)
+      const prefectureId =
+        isNaN(prefectureIdQuery) || prefectureIdQuery === 0
+          ? null
+          : prefectureIdQuery
+      const cityIds = query.cityIds?.toString().split('|').map(Number)
+      Object.assign(state, {cityIds, prefectureId})
     }
 
-    const submit = () => {
-      setParams()
-      load(loading, async () => {
-        await subsidiesModule.getSubsidies()
-        router.push({query: subsidiesModule.searchParams})
+    const search = () => {
+      subsidiesModule.setSearchParams(state)
+      load(loading, () => {
+        router.push({
+          path: routingService.Top(),
+          query: subsidiesModule.searchParams,
+        })
+        subsidiesModule.getSubsidies()
       })
     }
 
     onMounted(() => {
-      setParams()
+      setStateFromQuery()
       load(loading, async () => {
-        subsidiesModule.getSubsidies()
+        search()
         await optionsModule.getPrefectures()
-        if (state.prefectureId.length > 0) {
+        if (state.prefectureId) {
           optionsModule.getCities(state.prefectureId)
         }
       })
@@ -121,7 +129,7 @@ export default defineComponent({
       selectPrefectureId,
       cities,
       state,
-      submit,
+      search,
     }
   },
 })
