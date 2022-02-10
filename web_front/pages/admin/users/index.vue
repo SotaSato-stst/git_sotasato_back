@@ -63,17 +63,15 @@ export default defineComponent({
     const {loading, load} = useLoader()
     const users = computed(() => usersModule.users)
     const pagination = computed(() => usersModule.pagination)
-
     const getPage = (page: number) => {
       usersModule.setUsers([])
       usersModule.getUsers(page)
     }
-
     const handleEdit = (user: User) => {
       router.push(routingService.AdminUserDetail(user.id))
     }
     const newUserPage = () => {
-      router.push(routingService.AdminAddUser())
+      router.push(routingService.AdminNewUser())
     }
 
     onMounted(() => {

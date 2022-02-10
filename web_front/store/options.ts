@@ -4,6 +4,7 @@ import {Prefecture, PrefectureResponse} from '@/types/Prefecture'
 import {City, CityResponse} from '@/types/City'
 import {BusiessCategory, BusiessCategoryResponse} from '@/types/BusiessCategory'
 import {Ministry, MinistryResponse} from '~/types/Ministry'
+import {useLoader} from '@/services/useLoader'
 
 @Module({
   name: 'options',
@@ -11,6 +12,7 @@ import {Ministry, MinistryResponse} from '~/types/Ministry'
   namespaced: true,
 })
 export default class OptionsModule extends VuexModule {
+  loader = useLoader()
   ministries: Ministry[] = []
   prefectures: Prefecture[] = []
   cities: Prefecture[] = []

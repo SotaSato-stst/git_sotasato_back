@@ -2,6 +2,7 @@ import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
 import {Company, CompaniesResponse, CompanyParams} from '@/types/Company'
 import {Pagination} from '@/types/Pagination'
+import {useLoader} from '@/services/useLoader'
 
 @Module({
   name: 'companies',
@@ -9,6 +10,7 @@ import {Pagination} from '@/types/Pagination'
   namespaced: true,
 })
 export default class CompaniesModule extends VuexModule {
+  loader = useLoader()
   companies: Company[] = []
   company: Company | null = null
   pagination: Pagination = {
@@ -16,16 +18,6 @@ export default class CompaniesModule extends VuexModule {
     totalPages: 0,
     itemsTotal: 0,
     itemsPerPage: 0,
-  }
-
-  companyParams: CompanyParams = {
-    name: '',
-    adress: '',
-    capital: null,
-    totalEmployee: null,
-    prefectureId: null,
-    cityId: null,
-    businessCategories: [],
   }
 
   @Mutation
@@ -36,28 +28,11 @@ export default class CompaniesModule extends VuexModule {
   @Mutation
   setCompany(company: Company | null) {
     this.company = company
-    if (!company) {
-      return
-    }
-    this.companyParams = {
-      name: company.name,
-      adress: company.adress,
-      capital: company.capital,
-      totalEmployee: company.totalEmployee,
-      prefectureId: company.prefecture.id,
-      cityId: company.city.id,
-      businessCategories: company.businessCategories.map(c => c.key),
-    }
   }
 
   @Mutation
   setPagination(pagination: Pagination) {
     this.pagination = pagination
-  }
-
-  @Mutation
-  setCompanyParams(companyParams: CompanyParams) {
-    this.companyParams = companyParams
   }
 
   @Action({rawError: true})
@@ -76,19 +51,16 @@ export default class CompaniesModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async postCompany() {
-    const company = await $axios.$post<Company>(
-      '/admin/companies',
-      this.companyParams,
-    )
+  async postCompany(params: CompanyParams) {
+    const company = await $axios.$post<Company>('/admin/companies', params)
     this.setCompany(company)
   }
 
   @Action({rawError: true})
-  async putCompany(companyId: number) {
+  async putCompany(params: CompanyParams) {
     const company = await $axios.$put<Company>(
-      `/admin/companies/${companyId}`,
-      this.companyParams,
+      `/admin/companies/${this.company!.id}`,
+      params,
     )
     this.setCompany(company)
   }
