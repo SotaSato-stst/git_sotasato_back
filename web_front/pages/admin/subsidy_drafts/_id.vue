@@ -14,9 +14,6 @@
           >
             下書き保存
           </el-button>
-          <el-button class="submit-button" size="small" @click="saveAsPersonal">
-            個人向けの情報として保存
-          </el-button>
           <el-button
             type="success"
             class="submit-button"
@@ -82,7 +79,7 @@ export default defineComponent({
       url: '',
       publishingCode: 'editing',
       subsidyCategory: 'hojo',
-      startFrom: new Date(),
+      startFrom: null,
       endTo: null,
       priceMax: 10000,
       supportRatioMin: '',
@@ -131,6 +128,7 @@ export default defineComponent({
           )
           break
       }
+      router.replace(routingService.AdminSubsidyDetail(subsidyId))
     }
 
     const showErrorMessage = (error: any) => {
@@ -138,10 +136,6 @@ export default defineComponent({
         '更新に失敗しました',
         error.response?.data?.errors?.join('<br/>') || error.message,
       )
-    }
-
-    const saveAsPersonal = () => {
-      console.log('saveAsPersonal')
     }
 
     const archive = () => {
@@ -196,7 +190,6 @@ export default defineComponent({
       subsidyDraft,
       subsidyParams,
       submit,
-      saveAsPersonal,
       archive,
     }
   },

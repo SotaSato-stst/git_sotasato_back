@@ -43,8 +43,8 @@ export type UpdateSubsidyParams = {
   url: string
   publishingCode: PublishingCode
   subsidyCategory: SubsidyCategory
-  startFrom: Date
-  endTo: Date | null
+  startFrom: string | null
+  endTo: string | null
   priceMax: number | null
   supportRatioMin: string | null
   supportRatioMax: string | null

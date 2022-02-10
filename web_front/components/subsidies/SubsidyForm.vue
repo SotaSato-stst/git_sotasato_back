@@ -145,7 +145,7 @@
       <div class="inline">
         <el-form-item prop="startFrom">
           <el-date-picker
-            v-model="state.startFrom"
+            v-model="startFrom"
             type="date"
             placeholder="選択"
             class="input-range"
@@ -155,7 +155,7 @@
         <span class="range-between">~</span>
         <el-form-item prop="endTo">
           <el-date-picker
-            v-model="state.endTo"
+            v-model="endTo"
             type="date"
             placeholder="選択"
             class="input-range"
@@ -268,6 +268,15 @@ export default defineComponent({
       state.priceMax = priceMaxMan.value * 10000
     }
 
+    const startFrom = ref<Date | null>(null)
+    const startFromChanged = () => {
+      state.startFrom = startFrom.value?.toISOString() || null
+    }
+    const endTo = ref<Date | null>(null)
+    const endToChanged = () => {
+      state.endTo = endTo.value?.toISOString() || null
+    }
+
     const validate: Validate = (result: (valid: boolean) => void) => {
       form.value?.validate(valid => result(valid))
     }
@@ -326,6 +335,8 @@ export default defineComponent({
         }
         optionsModule.getBusinessCategories()
         priceMaxMan.value = (state.priceMax || 1000) / 10000
+        startFrom.value = state.startFrom ? new Date(state.startFrom) : null
+        endTo.value = state.endTo ? new Date(state.endTo) : null
       })
     })
 
@@ -345,6 +356,10 @@ export default defineComponent({
       clearBusinessCategories,
       priceMaxMan,
       priceMaxChanged,
+      startFrom,
+      startFromChanged,
+      endTo,
+      endToChanged,
       validate,
       rules,
     }

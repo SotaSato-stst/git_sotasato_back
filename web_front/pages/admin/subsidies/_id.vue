@@ -75,7 +75,7 @@ export default defineComponent({
       url: '',
       publishingCode: 'editing',
       subsidyCategory: 'hojo',
-      startFrom: new Date(),
+      startFrom: null,
       endTo: null,
       priceMax: 0,
       supportRatioMin: '',
