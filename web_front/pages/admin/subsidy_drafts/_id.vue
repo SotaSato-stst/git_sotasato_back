@@ -84,7 +84,7 @@ export default defineComponent({
       subsidyCategory: 'hojo',
       startFrom: new Date(),
       endTo: null,
-      priceMax: 0,
+      priceMax: 10000,
       supportRatioMin: '',
       supportRatioMax: '',
       level: null,

@@ -182,6 +182,15 @@
         placeholder="URLに記載されている内容"
       />
     </el-form-item>
+    <el-form-item label="申請難易度" prop="level">
+      <el-rate
+        v-model="state.level"
+        :colors="['var(--text-color)']"
+        :texts="['低い', 'やや低め', '普通', 'やや高め', '高い']"
+        show-text
+        class="level"
+      />
+    </el-form-item>
   </el-form>
 </template>
 
@@ -202,6 +211,7 @@ import {
   Button,
   RadioGroup,
   RadioButton,
+  Rate,
 } from 'element-ui'
 import {optionsModule} from '@/store'
 import {useLoader} from '@/services/useLoader'
@@ -218,6 +228,7 @@ export default defineComponent({
     [`${Button.name}`]: Button,
     [`${RadioGroup.name}`]: RadioGroup,
     [`${RadioButton.name}`]: RadioButton,
+    [`${Rate.name}`]: Rate,
     IconExternal,
   },
   layout: 'admin',
@@ -379,10 +390,21 @@ export default defineComponent({
   display: flex;
   align-items: center;
 }
+
+.level {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
 </style>
 
 <style lang="postcss">
 .input-number-text-align-center input {
   text-align: center;
+}
+
+.el-icon-star-on {
+  font-size: 24px;
+  color: var(--text-color);
 }
 </style>
