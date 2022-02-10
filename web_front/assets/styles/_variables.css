@@ -7,8 +7,7 @@
   --text-color: #495057;
   --primary-fonr-color: #303133;
   --header-width: 240px;
-  --default-banner-width: 300px;
-  --default-banner-height: 250px;
+  --banner-width: 300px;
   --base-space-px: 4px;
   --spacing-1: calc(var(--base-space-px) * 1);
   --spacing-2: calc(var(--base-space-px) * 2);
