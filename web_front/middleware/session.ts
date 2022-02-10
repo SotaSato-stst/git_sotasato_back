@@ -1,7 +1,7 @@
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import {Middleware} from '@nuxt/types'
 import CookieStore from '@/services/cookieStore'
-import {notifyInfo} from '@/services/notify'
+import {notifyError, notifyInfo} from '@/services/notify'
 import {routingService} from '~/services/routingService'
 
 const signInPath = routingService.SignIn()
@@ -18,6 +18,13 @@ const session: Middleware = ({route, redirect}) => {
       CookieStore.setAuth(res.token, res.expirationTime)
     }
   })
+
+  if (window.$nuxt.isOffline) {
+    notifyError(
+      'インターネット接続がありません',
+      'ネットワーク環境をご確認ください',
+    )
+  }
 }
 
 export default session
