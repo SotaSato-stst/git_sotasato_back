@@ -9,6 +9,11 @@
     </div>
     <el-table v-if="!loading" :data="users" stripe style="width: 100%">
       <el-table-column prop="displayName" label="氏名" />
+      <el-table-column prop="companyName" label="会社名">
+        <template slot-scope="scope">
+          {{ scope.row.company.name }}
+        </template>
+      </el-table-column>
       <el-table-column prop="email" label="E-mail" />
       <el-table-column prop="accountRole" label="アカウント種類">
         <template slot-scope="scope">

@@ -15,7 +15,11 @@
         :rules="rules"
       >
         <el-form-item label="所属会社" prop="companyId">
-          <el-select v-model="state.companyId" placeholder="選択...">
+          <el-select
+            v-model="state.companyId"
+            placeholder="選択..."
+            class="category-select"
+          >
             <el-option
               v-for="company in companies"
               :key="company.id"
@@ -40,8 +44,12 @@
           />
           <div>E-mailはユーザー自身で更新可能です</div>
         </el-form-item>
-        <el-form-item label="アカウント種類" prop="accountRole">
-          <el-select v-model="state.accountRole" placeholder="選択...">
+        <el-form-item label="アカウント" prop="accountRole">
+          <el-select
+            v-model="state.accountRole"
+            placeholder="選択..."
+            class="category-select"
+          >
             <el-option
               v-for="accountRole in accountRoleOptions()"
               :key="accountRole.key"
@@ -167,6 +175,6 @@ export default defineComponent({
 }
 
 .category-select {
-  width: 400px;
+  width: 240px;
 }
 </style>
