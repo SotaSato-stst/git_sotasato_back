@@ -97,14 +97,17 @@ export default defineComponent({
     }
 
     const archive = (subsidyDraft: SubsidyDraft) => {
-      MessageBox.confirm(subsidyDraft.title, 'この情報をアーカイブしますか？')
+      MessageBox.confirm(
+        `「${subsidyDraft.title}」`,
+        'この情報をアーカイブしますか？',
+      )
         .then(() => {
           adminSubsidiesModule
             .deleteSubsidyDraft(subsidyDraft.id)
             .then(() => {
               notifySuccess(
                 'アーカイブしました',
-                `${adminSubsidiesModule.subsidyDraft?.title}`,
+                `${adminSubsidiesModule.subsidyDraft?.title || ''}`,
               )
               adminSubsidiesModule.getSubsidyDrafts()
             })
