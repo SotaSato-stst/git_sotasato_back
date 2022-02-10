@@ -13,6 +13,14 @@
         </div>
         <div class="button-group">
           <el-button
+            v-if="subsidy.publishingCode == 'published'"
+            class="submit-button"
+            size="small"
+            @click="preview(subsidy.id)"
+          >
+            掲載中のページを確認
+          </el-button>
+          <el-button
             class="submit-button"
             size="small"
             @click="submit('editing')"
@@ -124,6 +132,7 @@ export default defineComponent({
           )
           break
       }
+      adminSubsidiesModule.getSubsidy(pageId)
     }
 
     const showErrorMessage = (error: any) => {
@@ -131,6 +140,10 @@ export default defineComponent({
         '更新に失敗しました',
         error.response?.data?.errors?.join('<br/>') || error.message,
       )
+    }
+
+    const preview = (subsidyId: number) => {
+      router.push(routingService.SubsidyDetail(subsidyId))
     }
 
     onMounted(() => {
@@ -161,6 +174,7 @@ export default defineComponent({
       subsidy,
       subsidyParams,
       submit,
+      preview,
       publishingCodeLabel,
     }
   },

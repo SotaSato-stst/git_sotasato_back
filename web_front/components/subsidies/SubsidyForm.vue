@@ -6,7 +6,7 @@
     label-width="120px"
     :rules="rules"
   >
-    <el-form-item label="URL">
+    <el-form-item label="参照元URL">
       <a :href="state.url" target="_blank" class="external-link">
         <span>{{ state.url }}</span>
         <icon-external :size="16" />
