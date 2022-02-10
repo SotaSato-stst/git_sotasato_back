@@ -15,11 +15,11 @@ export default defineComponent({
   },
   props: {
     href: {
-      type: Object as PropType<string>,
+      type: String as PropType<string>,
       required: true,
     },
     src: {
-      type: Object as PropType<string>,
+      type: String as PropType<string>,
       required: true,
     },
   },
