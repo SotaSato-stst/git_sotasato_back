@@ -86,7 +86,9 @@ export default defineComponent({
 }
 
 .header-menu {
-  border: none;
+  border-bottom: solid 1px var(--border-grey-color);
+  box-sizing: border-box;
+  height: 60px;
 }
 
 .header-menu > li {
