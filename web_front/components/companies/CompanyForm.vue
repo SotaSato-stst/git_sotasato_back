@@ -6,15 +6,22 @@
         保存する
       </el-button>
     </div>
-    <el-form class="form" :model="state" label-width="120px" :loading="loading">
-      <el-form-item label="会社名">
+    <el-form
+      ref="form"
+      class="form"
+      :model="state"
+      :rules="rules"
+      label-width="120px"
+      :loading="loading"
+    >
+      <el-form-item label="会社名" prop="name">
         <el-input
           v-model="state.name"
           class="input-text"
           placeholder="株式会社補助金ドック"
         />
       </el-form-item>
-      <el-form-item label="都道府県">
+      <el-form-item label="都道府県" prop="prefectureId">
         <el-select
           v-model="state.prefectureId"
           placeholder="都道府県"
@@ -28,7 +35,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="市長区村">
+      <el-form-item label="市長区村" prop="cityId">
         <el-select v-model="state.cityId" placeholder="市長区村">
           <el-option
             v-for="city in cities"
@@ -38,32 +45,14 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="住所">
+      <el-form-item label="住所" prop="adress">
         <el-input
           v-model="state.adress"
           class="input-text"
           placeholder="東京都千代田区oo町oo丁目oo番oo号 補助金ビル2F"
         />
       </el-form-item>
-      <el-form-item label="資本金">
-        <el-input
-          v-model="state.capital"
-          class="input-number"
-          type="number"
-          placeholder="10000000"
-        />
-        円
-      </el-form-item>
-      <el-form-item label="従業員数">
-        <el-input
-          v-model="state.totalEmployee"
-          class="input-number"
-          type="number"
-          placeholder="100"
-        />
-        人
-      </el-form-item>
-      <el-form-item label="業種">
+      <el-form-item label="業種" prop="businessCategories">
         <el-select
           v-model="state.businessCategories"
           multiple
@@ -78,6 +67,24 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="資本金" prop="capital">
+        <el-input
+          v-model="state.capital"
+          class="input-number"
+          type="number"
+          placeholder="10000000"
+        />
+        円
+      </el-form-item>
+      <el-form-item label="従業員数" prop="totalEmployee">
+        <el-input
+          v-model="state.totalEmployee"
+          class="input-number"
+          type="number"
+          placeholder="100"
+        />
+        人
+      </el-form-item>
     </el-form>
   </el-card>
 </template>
@@ -91,10 +98,12 @@ import {
   onUnmounted,
   reactive,
   PropType,
+  ref,
 } from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {optionsModule} from '@/store'
 import {CompanyParams} from '@/types/Company'
+import {notifyError} from '~/services/notify'
 
 export default defineComponent({
   name: 'CompanyForm',
@@ -113,6 +122,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const form = ref<Form | null>(null)
     const {loading, load} = optionsModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
     const businessCategories = computed(() => optionsModule.businessCategories)
@@ -124,7 +134,43 @@ export default defineComponent({
     const state: CompanyParams = reactive(props.companyParams)
 
     const submit = () => {
-      context.emit('submit')
+      form.value
+        ?.validate()
+        .then(() => context.emit('submit'))
+        .catch(() =>
+          notifyError('更新に失敗しました', '入力内容を確認してください'),
+        )
+    }
+
+    const rules = {
+      name: [
+        {
+          required: true,
+          message: '会社名は必須です',
+          trigger: 'change',
+        },
+      ],
+      prefectureId: [
+        {
+          required: true,
+          message: '都道府県は必須です',
+          trigger: 'change',
+        },
+      ],
+      cityId: [
+        {
+          required: true,
+          message: '市長区村は必須です',
+          trigger: 'change',
+        },
+      ],
+      businessCategories: [
+        {
+          required: true,
+          message: '業種は必須です',
+          trigger: 'change',
+        },
+      ],
     }
 
     onMounted(() => {
@@ -145,12 +191,14 @@ export default defineComponent({
     })
 
     return {
+      form,
       loading,
       prefectures,
       selectPrefectureId,
       cities,
       businessCategories,
       state,
+      rules,
       submit,
     }
   },
