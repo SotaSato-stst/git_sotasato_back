@@ -16,7 +16,8 @@
 #
 class City < ApplicationRecord
   include SupplierConcern
-
   belongs_to :prefecture
   has_many :companies
+  has_many :subsidy_cities
+  has_many :subsidies, through: :subsidy_cities
 end

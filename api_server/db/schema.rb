@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_07_030808) do
+ActiveRecord::Schema.define(version: 2022_02_09_120006) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 2022_02_07_030808) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
+  end
+
+  create_table "subsidy_business_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "subsidy_id", null: false
+    t.string "business_category", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subsidy_id", "business_category"], name: "index_unique_subsidy_business_categories", unique: true
+    t.index ["subsidy_id"], name: "index_subsidy_business_categories_on_subsidy_id"
   end
 
   create_table "subsidy_cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

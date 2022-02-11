@@ -26,4 +26,7 @@ end
 json.city do
   json.partial! 'cities/city', city: subsidy.city
 end
+json.business_categories subsidy.business_categories.map do |business_category|
+  json.merge! business_category
+end
 json.favorite @current_user_favorite_ids.to_a.include?(subsidy.id)
