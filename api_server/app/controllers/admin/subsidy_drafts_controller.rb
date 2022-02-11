@@ -3,7 +3,7 @@ module Admin
     def index
       scope = SubsidyDraft.not_archived.includes(:ministry, :prefecture, :city).order(id: :desc)
       @items_total = scope.count
-      @subsidy_drafts = scope.page(params[:page]).per(50)
+      @subsidy_drafts = scope.page(params[:page]).per(30)
     end
 
     def show

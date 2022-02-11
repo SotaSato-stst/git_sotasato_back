@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <card-loading :loading="loading" />
     <div class="title-header">
       <div class="title">未対応の新着情報 一覧</div>
       <el-button
@@ -12,6 +11,7 @@
         まとめてアーカイブする
       </el-button>
     </div>
+    <card-loading :loading="loading" />
     <el-table
       v-if="!loading"
       :data="subsidyDrafts"
@@ -132,13 +132,16 @@ export default defineComponent({
     }
 
     const confirmArchive = (text: string) => {
-      return MessageBox.confirm(text, 'この情報をアーカイブしますか？')
+      return MessageBox.confirm(text, 'この情報をアーカイブしますか？', {
+        customClass: 'confirm-dialog',
+        dangerouslyUseHTMLString: true,
+      })
     }
 
     const archiveAll = () => {
       const titles = adminSubsidiesModule.selectedSubsidyDrafts
         .map(d => `「${d.title}」`)
-        .join('\n')
+        .join('<br/>')
       confirmArchive(titles)
         .then(() => {
           adminSubsidiesModule.selectedSubsidyDrafts.forEach(d => {
@@ -214,5 +217,17 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+</style>
+
+<style lang="postcss">
+.confirm-dialog {
+  width: 600px;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.el-message-box__container {
+  overflow: scroll;
+  max-height: 600px;
 }
 </style>
