@@ -26,6 +26,13 @@ export default class SubsidiesModule extends VuexModule {
     itemsPerPage: 0,
   }
 
+  favoritePagination: Pagination = {
+    currentPage: 0,
+    totalPages: 0,
+    itemsTotal: 0,
+    itemsPerPage: 0,
+  }
+
   searchParams: SubsidySearchQuery = {
     prefectureId: null,
     cityIds: '',
@@ -59,6 +66,11 @@ export default class SubsidiesModule extends VuexModule {
     this.pagination = pagination
   }
 
+  @Mutation
+  setFavoritePagination(favoritePagination: Pagination) {
+    this.favoritePagination = favoritePagination
+  }
+
   @Action({rawError: true})
   async getSubsidies(page?: number) {
     const res = await $axios.$get<SubsidiesResponse>('/subsidies', {
@@ -72,9 +84,13 @@ export default class SubsidiesModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async getUserFavoriteSubsidies() {
-    const res = await $axios.$get<SubsidiesResponse>('/user_favorite_subsidies')
+  async getUserFavoriteSubsidies(page?: number) {
+    const res = await $axios.$get<SubsidiesResponse>(
+      '/user_favorite_subsidies',
+      {params: {page: page || 1}},
+    )
     this.setUserFavoriteSubsidies(res.subsidies)
+    this.setFavoritePagination(res.pagination)
   }
 
   @Action({rawError: true})

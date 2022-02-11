@@ -21,6 +21,7 @@
           :total="pagination.itemsTotal"
           :page-size="pagination.itemsPerPage"
           :current-page="pagination.currentPage"
+          @current-change="getPage"
         />
       </div>
     </el-main>
@@ -57,7 +58,12 @@ export default defineComponent({
     const userFavoriteSubsidies = computed(
       () => subsidiesModule.userFavoriteSubsidies,
     )
-    const pagination = computed(() => subsidiesModule.pagination)
+    const pagination = computed(() => subsidiesModule.favoritePagination)
+    const getPage = (page: number) => {
+      subsidiesModule.setUserFavoriteSubsidies([])
+      subsidiesModule.getUserFavoriteSubsidies(page)
+    }
+
     onMounted(() => {
       load(loading, () => {
         subsidiesModule.getUserFavoriteSubsidies()
@@ -68,6 +74,7 @@ export default defineComponent({
       loading,
       userFavoriteSubsidies,
       pagination,
+      getPage,
     }
   },
   head(): object {
