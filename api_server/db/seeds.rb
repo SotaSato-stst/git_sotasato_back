@@ -59,7 +59,8 @@ if Rails.env.development?
       ２．最近１か月間の売上高または生産量などが前年同月比５％以上減少している(※)
       ※比較対象とする月についても、柔軟な取り扱いとする特例措置があります。３．労使間の協定に基づき休業などを実施し、休業手当を支払っている',
       subsidy_category: 'josei',
-      supplier_type: 'ministry'
+      supplier_type: 'ministry',
+      business_categories: ['kensetsu']
     },
     {
       title: 'ものづくり補助金',
@@ -85,7 +86,8 @@ if Rails.env.development?
        ・給与支給総額＋１．５％以上／年
       ・事業場内最低賃金≧地域別最低賃金＋３０円',
       subsidy_category: 'hojo',
-      supplier_type: 'ministry'
+      supplier_type: 'ministry',
+      business_categories: ['seizo']
     },
     {
       title: '令和３年度茨城県宿泊事業者感染対策支援事業費補助金',
@@ -111,6 +113,7 @@ if Rails.env.development?
       ※風営法第２条第６項に規定する店舗型性風俗特殊営業を営む者は除く',
       subsidy_category: 'hojo',
       supplier_type: 'prefecture',
+      business_categories: ['kensetsu']
     },
     {
       title: '令和3年度福岡県農業振興対策事業費補助金（水田農業DX推進事業）',
@@ -137,10 +140,203 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      business_categories: ['seizo', 'hotel_insyoku']
+    },
+    {
+      title: 'start & category & tsukuba & prefecture',
+      url: 'https://www.city.ihisjijiizuka.lg.jp/norinnose/suidenndx.html',
+      start_from: '2022-02-03',
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: 'つくば市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/6',
+      support_ratio_max: '1/3',
+      level: nil,
+      detail: 'ロボットコンバイン
+      ロボットトラクター
+      ロボット田植機
+      農業用ドローン
+      自動操舵システム
+      水管理システム
+      RTK基地局
+      耕起や整地等、その他管理に必要な付属機械器具（ロボットコンバイン等の付属機械器具）
+      上記は耐用年数が7年以上で50万円以上のものに限ります。',
+      target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      business_categories: ['seizo']
+    },
+    {
+      title: 'start & category & tsukuba & prefecture',
+      url: 'https://www.cidwdty.ihisjijiizuka.lg.jp/norinnose/suidenndx.html',
+      start_from: '2022-02-05',
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: 'つくば市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/6',
+      support_ratio_max: '1/3',
+      level: nil,
+      detail: 'ロボットコンバイン
+      ロボットトラクター
+      ロボット田植機
+      農業用ドローン
+      自動操舵システム
+      水管理システム
+      RTK基地局
+      耕起や整地等、その他管理に必要な付属機械器具（ロボットコンバイン等の付属機械器具）
+      上記は耐用年数が7年以上で50万円以上のものに限ります。',
+      target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      business_categories: ['kensetsu']
+    },
+    {
+      title: 'start & category & prefecture ',
+      url: 'https://www.city.ihisjiddfjiizuka.lg.jp/norinnose/suidenndx.html',
+      start_from: '2022-02-7',
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/6',
+      support_ratio_max: '1/3',
+      level: nil,
+      detail: 'ロボットコンバイン
+      ロボットトラクター
+      ロボット田植機
+      農業用ドローン
+      自動操舵システム
+      水管理システム
+      RTK基地局
+      耕起や整地等、その他管理に必要な付属機械器具（ロボットコンバイン等の付属機械器具）
+      上記は耐用年数が7年以上で50万円以上のものに限ります。',
+      target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
+      subsidy_category: 'hojo',
+      supplier_type: 'prefecture',
+      business_categories: ['seizo']
+    },
+    {
+      title: 'start & category',
+      url: 'https://www.city.ihisjiddfjijjiizukdwa.lg.jp/norinnose/suidenndx.html',
+      start_from: '2022-02-02',
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/6',
+      support_ratio_max: '1/3',
+      level: nil,
+      detail: 'ロボットコンバイン
+      ロボットトラクター
+      ロボット田植機
+      農業用ドローン
+      自動操舵システム
+      水管理システム
+      RTK基地局
+      耕起や整地等、その他管理に必要な付属機械器具（ロボットコンバイン等の付属機械器具）
+      上記は耐用年数が7年以上で50万円以上のものに限ります。',
+      target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      business_categories: ['kensetsu']
+    },
+    {
+      title: 'start',
+      url: 'https://www.city.ihisjidiiidfjijjiizukdwa.lg.jp/norinnose/suidenndx.html',
+      start_from: '2022-02-02',
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/6',
+      support_ratio_max: '1/3',
+      level: nil,
+      detail: 'ロボットコンバイン
+      ロボットトラクター
+      ロボット田植機
+      農業用ドローン
+      自動操舵システム
+      水管理システム
+      RTK基地局
+      耕起や整地等、その他管理に必要な付属機械器具（ロボットコンバイン等の付属機械器具）
+      上記は耐用年数が7年以上で50万円以上のものに限ります。',
+      target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      business_categories: ['gyogyo']
+    },
+    {
+      title: 'no-match',
+      url: 'https://www.city.ihisjidiiidfjijjiizukdwa.lg.jp/norinnose/suidenndx.html',
+      start_from: '2022-01-02',
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/6',
+      support_ratio_max: '1/3',
+      level: nil,
+      detail: 'ロボットコンバイン
+      ロボットトラクター
+      ロボット田植機
+      農業用ドローン
+      自動操舵システム
+      水管理システム
+      RTK基地局
+      耕起や整地等、その他管理に必要な付属機械器具（ロボットコンバイン等の付属機械器具）
+      上記は耐用年数が7年以上で50万円以上のものに限ります。',
+      target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      business_categories: ['gyogyo']
+    },
+    {
+      title: 'start & category & prefecture & hitachinaka',
+      url: 'https://www.city.ihokisjiddfjiiihuhzuka.lg.jp/norinnose/suidenndx.html',
+      start_from: '2022-02-07',
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: 'ひたちなか市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/6',
+      support_ratio_max: '1/3',
+      level: nil,
+      detail: 'ロボットコンバイン
+      ロボットトラクター
+      ロボット田植機
+      農業用ドローン
+      自動操舵システム
+      水管理システム
+      RTK基地局
+      耕起や整地等、その他管理に必要な付属機械器具（ロボットコンバイン等の付属機械器具）
+      上記は耐用年数が7年以上で50万円以上のものに限ります。',
+      target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      business_categories: ['seizo'],
     },
   ]
   subsidy_hashes.each do |hash|
     subsidy = Subsidy.find_or_initialize_by(url: hash[:url])
+    subsidy.subsidy_business_categories = hash[:business_categories].map do |category|
+      subsidy.subsidy_business_categories.build(business_category: category)
+    end
     subsidy.update!(
       title: hash[:title],
       ministry: ministries[hash[:ministry_name]],

@@ -31,6 +31,7 @@ class Subsidy < ApplicationRecord
   has_one :subsidy_city
   has_one :city, through: :subsidy_city
   has_many :user_favorite_subsidies
+  has_many :subsidy_business_categories, dependent: :destroy
   has_many :users, through: :user_favorite_subsidies
   validates :title, presence: { message: 'は必須項目です' }
   validates :url, presence: { message: 'は必須項目です' }
@@ -60,7 +61,9 @@ class Subsidy < ApplicationRecord
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
   def business_categories
-    [] # TODO
+    subsidy_business_categories.map do |subsidy_business_category|
+      BusinessCategory.to_option(subsidy_business_category.business_category)
+    end
   end
 
   def start_from_cannot_be_greater_than_end_to
