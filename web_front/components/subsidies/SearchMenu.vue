@@ -58,6 +58,7 @@ import {Form, FormItem, Input, Button} from 'element-ui'
 import {optionsModule, subsidiesModule} from '@/store'
 import {routingService} from '~/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
+import {removeEmpty} from '@/utils/objectUtil'
 
 export default defineComponent({
   name: 'SearchMenu',
@@ -101,7 +102,7 @@ export default defineComponent({
       load(loading, () => {
         router.push({
           path: routingService.Top(),
-          query: subsidiesModule.searchParams,
+          query: removeEmpty(subsidiesModule.searchParams),
         })
         subsidiesModule.getSubsidies()
       })
