@@ -1,6 +1,5 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {SubsidyDraft, SubsidyDraftsResponse} from '@/types/SubsidyDraft'
 import {SubsidiesResponse, Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
 import {useLoader} from '~/services/useLoader'
@@ -12,38 +11,13 @@ import {useLoader} from '~/services/useLoader'
 })
 export default class AdminSubsidiesModule extends VuexModule {
   loader = useLoader()
-  subsidyDrafts: SubsidyDraft[] = []
-  selectedSubsidyDrafts: SubsidyDraft[] = []
-  subsidyDraft: SubsidyDraft | null = null
   subsidies: Subsidy[] = []
   subsidy: Subsidy | null = null
-  subsidyPagination: Pagination = {
+  pagination: Pagination = {
     currentPage: 0,
     totalPages: 0,
     itemsTotal: 0,
     itemsPerPage: 0,
-  }
-
-  subsidyDraftPagination: Pagination = {
-    currentPage: 0,
-    totalPages: 0,
-    itemsTotal: 0,
-    itemsPerPage: 0,
-  }
-
-  @Mutation
-  setSubsidyDrafts(subsidyDrafts: SubsidyDraft[]) {
-    this.subsidyDrafts = subsidyDrafts
-  }
-
-  @Mutation
-  setSelectedSubsidyDrafts(selectedSubsidyDrafts: SubsidyDraft[]) {
-    this.selectedSubsidyDrafts = selectedSubsidyDrafts
-  }
-
-  @Mutation
-  setSubsidyDraft(subsidyDraft: SubsidyDraft | null) {
-    this.subsidyDraft = subsidyDraft
   }
 
   @Mutation
@@ -57,31 +31,8 @@ export default class AdminSubsidiesModule extends VuexModule {
   }
 
   @Mutation
-  setSubsidyPagination(pagination: Pagination) {
-    this.subsidyPagination = pagination
-  }
-
-  @Mutation
-  setSubsidyDraftPagination(pagination: Pagination) {
-    this.subsidyDraftPagination = pagination
-  }
-
-  @Action({rawError: true})
-  async getSubsidyDrafts(page?: number) {
-    const res = await $axios.$get<SubsidyDraftsResponse>(
-      '/admin/subsidy_drafts',
-      {params: {page: page || 1}},
-    )
-    this.setSubsidyDrafts(res.subsidyDrafts)
-    this.setSubsidyDraftPagination(res.pagination)
-  }
-
-  @Action({rawError: true})
-  async getSubsidyDraft(id: number) {
-    const subsidyDraft = await $axios.$get<SubsidyDraft>(
-      `/admin/subsidy_drafts/${id}`,
-    )
-    this.setSubsidyDraft(subsidyDraft)
+  setPagination(pagination: Pagination) {
+    this.pagination = pagination
   }
 
   @Action({rawError: true})
@@ -90,7 +41,7 @@ export default class AdminSubsidiesModule extends VuexModule {
       params: {page: page || 1},
     })
     this.setSubsidies(res.subsidies)
-    this.setSubsidyPagination(res.pagination)
+    this.setPagination(res.pagination)
   }
 
   @Action({rawError: true})

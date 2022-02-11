@@ -29,7 +29,7 @@ import {
   useRoute,
 } from '@nuxtjs/composition-api'
 import {routingService} from '@/services/routingService'
-import {adminSubsidiesModule} from '@/store'
+import {subsidyDraftsModule} from '@/store'
 
 type menuType = 'new_urls' | 'subsidies' | 'companies' | 'users'
 
@@ -42,9 +42,7 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const path = useRoute().value.path
-    const totalCount = computed(
-      () => adminSubsidiesModule.subsidyDraftPagination.itemsTotal,
-    )
+    const totalCount = computed(() => subsidyDraftsModule.pagination.itemsTotal)
     const selectedPage = computed(() => {
       if (path.startsWith(routingService.AdminSubsidies())) {
         return 'subsidies'
@@ -74,7 +72,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      adminSubsidiesModule.getSubsidyDrafts()
+      subsidyDraftsModule.getSubsidyDrafts()
     })
 
     return {totalCount, selectedPage, handleSelect}

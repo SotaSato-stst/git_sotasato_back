@@ -51,7 +51,7 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 import {Card, Alert, MessageBox} from 'element-ui'
-import {adminSubsidiesModule} from '@/store'
+import {subsidyDraftsModule} from '@/store'
 import {useLoader} from '@/services/useLoader'
 import {
   notifyError,
@@ -77,7 +77,7 @@ export default defineComponent({
     const router = useRouter()
     const {loading, load} = useLoader()
     const pageId = Number(route.value.params.id)
-    const subsidyDraft = computed(() => adminSubsidiesModule.subsidyDraft)
+    const subsidyDraft = computed(() => subsidyDraftsModule.subsidyDraft)
     const subsidyParams: UpdateSubsidyParams = reactive({
       title: '',
       url: '',
@@ -106,7 +106,7 @@ export default defineComponent({
           return
         }
         load(loading, async () => {
-          await adminSubsidiesModule
+          await subsidyDraftsModule
             .postSubsidy(subsidyParams)
             .then(showMessage)
             .catch(showApiErrorMessage)
@@ -119,13 +119,13 @@ export default defineComponent({
         case 'editing':
           notifySuccess(
             '下書き保存しました',
-            `${adminSubsidiesModule.subsidyDraft?.title}`,
+            `${subsidyDraftsModule.subsidyDraft?.title}`,
           )
           break
         case 'published':
           notifySuccess(
             '情報を公開しました',
-            `${adminSubsidiesModule.subsidyDraft?.title}
+            `${subsidyDraftsModule.subsidyDraft?.title}
             <br/><a href="
             ${routingService.SubsidyDetail(subsidyId)}
             " target="_blank">公開ページを確認する</a>`,
@@ -138,12 +138,12 @@ export default defineComponent({
     const archive = () => {
       MessageBox.confirm(subsidyParams.title, 'この情報をアーカイブしますか？')
         .then(() => {
-          adminSubsidiesModule
+          subsidyDraftsModule
             .deleteSubsidyDraft(pageId)
             .then(() => {
               notifySuccess(
                 'アーカイブしました',
-                `${adminSubsidiesModule.subsidyDraft?.title}`,
+                `${subsidyDraftsModule.subsidyDraft?.title}`,
               )
               router.push(routingService.AdminTop())
             })
@@ -159,10 +159,10 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, async () => {
-        await adminSubsidiesModule
+        await subsidyDraftsModule
           .getSubsidyDraft(pageId)
           .catch(_ => router.push(routingService.AdminTop()))
-        const subsidyDraft = adminSubsidiesModule.subsidyDraft
+        const subsidyDraft = subsidyDraftsModule.subsidyDraft
         if (!subsidyDraft) {
           return
         }
@@ -178,7 +178,7 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
-      adminSubsidiesModule.setSubsidyDraft(null)
+      subsidyDraftsModule.setSubsidyDraft(null)
     })
 
     return {

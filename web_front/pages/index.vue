@@ -14,7 +14,7 @@
           description="データがありません"
         />
         <el-pagination
-          v-if="!loading && subsidies.length > 0"
+          v-if="!loading && subsidies.length > 0 && !loading"
           background
           layout="prev, pager, next"
           :page-count="pagination.totalPages"

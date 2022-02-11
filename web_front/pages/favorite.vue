@@ -7,14 +7,14 @@
       <div class="container">
         <card-loading :loading="loading" />
         <div v-for="subsidy in userFavoriteSubsidies" :key="subsidy.id">
-          <subsidy-card :subsidy="subsidy" />
+          <subsidy-card v-if="!loading" :subsidy="subsidy" />
         </div>
         <el-empty
           v-if="!loading && userFavoriteSubsidies.length == 0"
           description="データがありません"
         />
         <el-pagination
-          v-if="userFavoriteSubsidies.length > 0"
+          v-if="userFavoriteSubsidies.length > 0 && !loading"
           background
           layout="prev, pager, next"
           :page-count="pagination.totalPages"
@@ -38,7 +38,7 @@ import SearchMenu from '~/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
-import {subsidiesModule} from '@/store'
+import {favoriteSubsidiesModule} from '@/store'
 
 export default defineComponent({
   name: 'FavoritePage',
@@ -54,19 +54,19 @@ export default defineComponent({
     CardLoading,
   },
   setup(_props) {
-    const {loading, load} = subsidiesModule.loader
+    const {loading, load} = favoriteSubsidiesModule.loader
     const userFavoriteSubsidies = computed(
-      () => subsidiesModule.userFavoriteSubsidies,
+      () => favoriteSubsidiesModule.userFavoriteSubsidies,
     )
-    const pagination = computed(() => subsidiesModule.favoritePagination)
+    const pagination = computed(() => favoriteSubsidiesModule.pagination)
     const getPage = (page: number) => {
-      subsidiesModule.setUserFavoriteSubsidies([])
-      subsidiesModule.getUserFavoriteSubsidies(page)
+      favoriteSubsidiesModule.setUserFavoriteSubsidies([])
+      favoriteSubsidiesModule.getUserFavoriteSubsidies(page)
     }
 
     onMounted(() => {
       load(loading, () => {
-        subsidiesModule.getUserFavoriteSubsidies()
+        favoriteSubsidiesModule.getUserFavoriteSubsidies()
       })
     })
 

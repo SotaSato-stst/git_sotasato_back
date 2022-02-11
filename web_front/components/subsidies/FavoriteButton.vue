@@ -15,7 +15,7 @@
 import {defineComponent, PropType, ref} from '@nuxtjs/composition-api'
 import {Button} from 'element-ui'
 import {Subsidy} from '@/types/Subsidy'
-import {subsidiesModule} from '@/store'
+import {favoriteSubsidiesModule} from '@/store'
 export default defineComponent({
   name: 'FavoriteButton',
   components: {
@@ -31,9 +31,9 @@ export default defineComponent({
     const favorite = ref(props.subsidy.favorite)
     const clickButton = (subsidy: Subsidy) => {
       if (favorite.value) {
-        subsidiesModule.destroyUserFavoriteSubsidy(subsidy.id)
+        favoriteSubsidiesModule.destroyUserFavoriteSubsidy(subsidy.id)
       } else {
-        subsidiesModule.postUserFavoriteSubsidy(subsidy.id)
+        favoriteSubsidiesModule.postUserFavoriteSubsidy(subsidy.id)
       }
       favorite.value = !favorite.value
     }

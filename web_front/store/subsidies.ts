@@ -18,15 +18,8 @@ export default class SubsidiesModule extends VuexModule {
   loader = useLoader()
   subsidies: Subsidy[] = []
   subsidy: Subsidy | null = null
-  userFavoriteSubsidies: Subsidy[] = []
-  pagination: Pagination = {
-    currentPage: 0,
-    totalPages: 0,
-    itemsTotal: 0,
-    itemsPerPage: 0,
-  }
 
-  favoritePagination: Pagination = {
+  pagination: Pagination = {
     currentPage: 0,
     totalPages: 0,
     itemsTotal: 0,
@@ -41,11 +34,6 @@ export default class SubsidiesModule extends VuexModule {
   @Mutation
   setSubsidies(subsidies: Subsidy[]) {
     this.subsidies = subsidies
-  }
-
-  @Mutation
-  setUserFavoriteSubsidies(userFavoriteSubsidies: Subsidy[]) {
-    this.userFavoriteSubsidies = userFavoriteSubsidies
   }
 
   @Mutation
@@ -66,11 +54,6 @@ export default class SubsidiesModule extends VuexModule {
     this.pagination = pagination
   }
 
-  @Mutation
-  setFavoritePagination(favoritePagination: Pagination) {
-    this.favoritePagination = favoritePagination
-  }
-
   @Action({rawError: true})
   async getSubsidies(page?: number) {
     const res = await $axios.$get<SubsidiesResponse>('/subsidies', {
@@ -81,28 +64,6 @@ export default class SubsidiesModule extends VuexModule {
     })
     this.setSubsidies(res.subsidies)
     this.setPagination(res.pagination)
-  }
-
-  @Action({rawError: true})
-  async getUserFavoriteSubsidies(page?: number) {
-    const res = await $axios.$get<SubsidiesResponse>(
-      '/user_favorite_subsidies',
-      {params: {page: page || 1}},
-    )
-    this.setUserFavoriteSubsidies(res.subsidies)
-    this.setFavoritePagination(res.pagination)
-  }
-
-  @Action({rawError: true})
-  async postUserFavoriteSubsidy(subsidyId: number) {
-    await $axios.$post('/user_favorite_subsidies', {
-      subsidyId,
-    })
-  }
-
-  @Action({rawError: true})
-  async destroyUserFavoriteSubsidy(subsidyId: number) {
-    await $axios.$delete(`/user_favorite_subsidies/${subsidyId}`)
   }
 
   @Action({rawError: true})

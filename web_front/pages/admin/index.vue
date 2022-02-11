@@ -89,7 +89,7 @@ import {
 } from '@nuxtjs/composition-api'
 import {Table, TableColumn, Pagination, MessageBox} from 'element-ui'
 import CardLoading from '~/components/CardLoading.vue'
-import {adminSubsidiesModule} from '@/store'
+import {subsidyDraftsModule} from '@/store'
 import {SubsidyDraft} from '~/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -106,18 +106,16 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
-    const {loading, load} = adminSubsidiesModule.loader
-    const subsidyDrafts = computed(() => adminSubsidiesModule.subsidyDrafts)
+    const {loading, load} = subsidyDraftsModule.loader
+    const subsidyDrafts = computed(() => subsidyDraftsModule.subsidyDrafts)
     const selectedSubsidyDrafts = computed(
-      () => adminSubsidiesModule.selectedSubsidyDrafts,
+      () => subsidyDraftsModule.selectedSubsidyDrafts,
     )
-    const pagination = computed(
-      () => adminSubsidiesModule.subsidyDraftPagination,
-    )
+    const pagination = computed(() => subsidyDraftsModule.pagination)
 
     const getPage = (page: number) => {
-      adminSubsidiesModule.setSubsidyDrafts([])
-      adminSubsidiesModule.getSubsidyDrafts(page)
+      subsidyDraftsModule.setSubsidyDrafts([])
+      subsidyDraftsModule.getSubsidyDrafts(page)
     }
 
     const detailPath = (id: number) => {
@@ -129,7 +127,7 @@ export default defineComponent({
     }
 
     const handleSelectionChange = (selections: SubsidyDraft[]) => {
-      adminSubsidiesModule.setSelectedSubsidyDrafts(selections)
+      subsidyDraftsModule.setSelectedSubsidyDrafts(selections)
     }
 
     const confirmArchive = (text: string) => {
@@ -140,13 +138,13 @@ export default defineComponent({
     }
 
     const archiveAll = () => {
-      const titles = adminSubsidiesModule.selectedSubsidyDrafts
+      const titles = subsidyDraftsModule.selectedSubsidyDrafts
         .map(d => `「${d.title}」`)
         .join('<br/>')
       confirmArchive(titles)
         .then(() => {
-          adminSubsidiesModule.selectedSubsidyDrafts.forEach(d => {
-            adminSubsidiesModule.deleteSubsidyDraft(d.id)
+          subsidyDraftsModule.selectedSubsidyDrafts.forEach(d => {
+            subsidyDraftsModule.deleteSubsidyDraft(d.id)
           })
           handleSuccess()
         })
@@ -156,7 +154,7 @@ export default defineComponent({
     const archive = (subsidyDraft: SubsidyDraft) => {
       confirmArchive(`「${subsidyDraft.title}」`)
         .then(() => {
-          adminSubsidiesModule
+          subsidyDraftsModule
             .deleteSubsidyDraft(subsidyDraft.id)
             .then(handleSuccess)
             .catch(showApiErrorMessage)
@@ -167,14 +165,14 @@ export default defineComponent({
     const handleSuccess = () => {
       notifySuccess(
         'アーカイブしました',
-        `${adminSubsidiesModule.subsidyDraft?.title || ''}`,
+        `${subsidyDraftsModule.subsidyDraft?.title || ''}`,
       )
-      adminSubsidiesModule.getSubsidyDrafts()
+      subsidyDraftsModule.getSubsidyDrafts()
     }
 
     onMounted(() => {
       load(loading, () => {
-        adminSubsidiesModule.getSubsidyDrafts()
+        subsidyDraftsModule.getSubsidyDrafts()
       })
     })
 
