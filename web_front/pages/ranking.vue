@@ -5,24 +5,33 @@
     </el-aside>
     <el-main>
       <div class="container">
-        <div class="title">保存済みの補助金情報</div>
+        <div class="title">おすすめの補助金・助成金ランキング</div>
         <card-loading :loading="loading" />
-        <div v-for="subsidy in userFavoriteSubsidies" :key="subsidy.id">
+        <div
+          v-for="(subsidy, index) in rankings"
+          :key="subsidy.id"
+          class="subsidy-card"
+        >
+          <el-tag
+            effect="plain"
+            class="ranking-title"
+            :style="`border-color: ${
+              rankingColors[index] || 'var(--text-color)'
+            }`"
+          >
+            <icon-crown
+              v-if="index < rankingColors.length"
+              :size="24"
+              :color="rankingColors[index]"
+            />
+            <div>第{{ index + 1 }}位</div>
+            <div>「{{ subsidy.title }}」</div>
+          </el-tag>
           <subsidy-card v-if="!loading" :subsidy="subsidy" />
         </div>
         <el-empty
-          v-if="!loading && userFavoriteSubsidies.length == 0"
+          v-if="!loading && rankings.length == 0"
           description="データがありません"
-        />
-        <el-pagination
-          v-if="userFavoriteSubsidies.length > 0 && !loading"
-          background
-          layout="prev, pager, next"
-          :page-count="pagination.totalPages"
-          :total="pagination.itemsTotal"
-          :page-size="pagination.itemsPerPage"
-          :current-page="pagination.currentPage"
-          @current-change="getPage"
         />
       </div>
     </el-main>
@@ -39,10 +48,11 @@ import SearchMenu from '~/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
-import {favoriteSubsidiesModule} from '@/store'
+import IconCrown from '@/components/icons/IconCrown.vue'
+import {subsidiesModule} from '@/store'
 
 export default defineComponent({
-  name: 'FavoritePage',
+  name: 'RankingPage',
   components: {
     [`${Container.name}`]: Container,
     [`${Aside.name}`]: Aside,
@@ -53,34 +63,32 @@ export default defineComponent({
     SideRightMenu,
     SubsidyCard,
     CardLoading,
+    IconCrown,
   },
   setup(_props) {
-    const {loading, load} = favoriteSubsidiesModule.loader
-    const userFavoriteSubsidies = computed(
-      () => favoriteSubsidiesModule.userFavoriteSubsidies,
-    )
-    const pagination = computed(() => favoriteSubsidiesModule.pagination)
-    const getPage = (page: number) => {
-      favoriteSubsidiesModule.setUserFavoriteSubsidies([])
-      favoriteSubsidiesModule.getUserFavoriteSubsidies(page)
-    }
+    const {loading, load} = subsidiesModule.loader
+    const rankings = computed(() => subsidiesModule.subsidies)
+    const rankingColors = [
+      'var(--color-gold)',
+      'var(--color-silver)',
+      'var(--color-bronze)',
+    ]
 
     onMounted(() => {
       load(loading, () => {
-        favoriteSubsidiesModule.getUserFavoriteSubsidies()
+        // get ranking
       })
     })
 
     return {
       loading,
-      userFavoriteSubsidies,
-      pagination,
-      getPage,
+      rankings,
+      rankingColors,
     }
   },
   head(): object {
     return {
-      title: '保存済みの補助金情報',
+      title: 'おすすめの補助金・助成金ランキング',
     }
   },
 })
@@ -100,5 +108,24 @@ export default defineComponent({
 .title {
   font-size: 21px;
   font-weight: bold;
+}
+
+.ranking-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  margin-bottom: var(--spacing-4);
+}
+
+.ranking-title > * {
+  margin-right: var(--spacing-4);
+}
+
+.subsidy-card:nth-child(n + 2) {
+  margin-top: var(--spacing-8);
 }
 </style>

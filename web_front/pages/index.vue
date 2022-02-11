@@ -5,6 +5,7 @@
     </el-aside>
     <el-main>
       <div class="container">
+        <div class="title">新着の情報一覧</div>
         <card-loading :loading="loading" />
         <div v-for="subsidy in subsidies" :key="subsidy.id">
           <subsidy-card v-if="!loading" :subsidy="subsidy" />
@@ -72,7 +73,7 @@ export default defineComponent({
   },
   head(): object {
     return {
-      title: 'トップ',
+      title: '新着一覧',
     }
   },
 })
@@ -87,5 +88,10 @@ export default defineComponent({
   background-color: white;
   width: 100%;
   height: 100%;
+}
+
+.title {
+  font-size: 21px;
+  font-weight: bold;
 }
 </style>

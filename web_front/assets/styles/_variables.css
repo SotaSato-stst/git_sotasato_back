@@ -9,6 +9,9 @@
   --header-width: 240px;
   --banner-width: 300px;
   --base-space-px: 4px;
+  --color-gold: #FFCA09;
+  --color-silver: #B6B5B8;
+  --color-bronze: #8c7853;
   --spacing-1: calc(var(--base-space-px) * 1);
   --spacing-2: calc(var(--base-space-px) * 2);
   --spacing-3: calc(var(--base-space-px) * 3);
