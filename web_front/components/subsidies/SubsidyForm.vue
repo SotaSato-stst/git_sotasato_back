@@ -6,7 +6,8 @@
     label-width="120px"
     :rules="rules"
   >
-    <el-form-item label="参照元URL">
+    <el-form-item label="参照元URL" prop="url">
+      <el-input v-model="state.url" class="input-text" />
       <a :href="state.url" target="_blank" class="external-link">
         <span>{{ state.url }}</span>
         <icon-external :size="16" />
@@ -286,6 +287,13 @@ export default defineComponent({
         {
           required: true,
           message: '種類は必須です',
+          trigger: 'change',
+        },
+      ],
+      url: [
+        {
+          required: true,
+          message: 'URLは必須です',
           trigger: 'change',
         },
       ],
