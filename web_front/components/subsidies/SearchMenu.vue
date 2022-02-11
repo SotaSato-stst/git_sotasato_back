@@ -108,6 +108,9 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      if (route.value.path !== routingService.Top()) {
+        return
+      }
       setStateFromQuery()
       load(loading, async () => {
         search()
