@@ -13,6 +13,7 @@ import {useLoader} from '~/services/useLoader'
 export default class AdminSubsidiesModule extends VuexModule {
   loader = useLoader()
   subsidyDrafts: SubsidyDraft[] = []
+  selectedSubsidyDrafts: SubsidyDraft[] = []
   subsidyDraft: SubsidyDraft | null = null
   subsidies: Subsidy[] = []
   subsidy: Subsidy | null = null
@@ -33,6 +34,11 @@ export default class AdminSubsidiesModule extends VuexModule {
   @Mutation
   setSubsidyDrafts(subsidyDrafts: SubsidyDraft[]) {
     this.subsidyDrafts = subsidyDrafts
+  }
+
+  @Mutation
+  setSelectedSubsidyDrafts(selectedSubsidyDrafts: SubsidyDraft[]) {
+    this.selectedSubsidyDrafts = selectedSubsidyDrafts
   }
 
   @Mutation

@@ -1,7 +1,25 @@
 <template>
   <div class="container">
     <card-loading :loading="loading" />
-    <el-table v-if="!loading" :data="subsidyDrafts" stripe style="width: 100%">
+    <div class="title-header">
+      <div class="title">未対応の新着情報 一覧</div>
+      <el-button
+        type="danger"
+        size="mini"
+        :disabled="selectedSubsidyDrafts.length === 0"
+        @click="archiveAll()"
+      >
+        まとめてアーカイブする
+      </el-button>
+    </div>
+    <el-table
+      v-if="!loading"
+      :data="subsidyDrafts"
+      stripe
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" width="55" />
       <el-table-column label="対応" width="100">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row)">
@@ -18,9 +36,13 @@
       </el-table-column>
       <el-table-column label="URL">
         <template slot-scope="scope">
-          <a class="detail-link" :href="scope.row.url" target="_blank">{{
-            scope.row.url
-          }}</a>
+          <a
+            class="detail-link"
+            :href="scope.row.url"
+            target="_blank"
+            style="word-break: keep-all"
+            >{{ scope.row.url }}</a
+          >
         </template>
       </el-table-column>
       <el-table-column label="発行機関" width="110">
@@ -70,7 +92,7 @@ import {adminSubsidiesModule} from '@/store'
 import {SubsidyDraft} from '~/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
-import {notifySuccess, notifyError} from '@/services/notify'
+import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -85,6 +107,9 @@ export default defineComponent({
     const router = useRouter()
     const {loading, load} = adminSubsidiesModule.loader
     const subsidyDrafts = computed(() => adminSubsidiesModule.subsidyDrafts)
+    const selectedSubsidyDrafts = computed(
+      () => adminSubsidiesModule.selectedSubsidyDrafts,
+    )
     const pagination = computed(
       () => adminSubsidiesModule.subsidyDraftPagination,
     )
@@ -102,29 +127,45 @@ export default defineComponent({
       router.push(detailPath(subsidyDraft.id))
     }
 
+    const handleSelectionChange = (selections: SubsidyDraft[]) => {
+      adminSubsidiesModule.setSelectedSubsidyDrafts(selections)
+    }
+
+    const confirmArchive = (text: string) => {
+      return MessageBox.confirm(text, 'この情報をアーカイブしますか？')
+    }
+
+    const archiveAll = () => {
+      const titles = adminSubsidiesModule.selectedSubsidyDrafts
+        .map(d => `「${d.title}」`)
+        .join('\n')
+      confirmArchive(titles)
+        .then(() => {
+          adminSubsidiesModule.selectedSubsidyDrafts.forEach(d => {
+            adminSubsidiesModule.deleteSubsidyDraft(d.id)
+          })
+          handleSuccess()
+        })
+        .catch(_ => {})
+    }
+
     const archive = (subsidyDraft: SubsidyDraft) => {
-      MessageBox.confirm(
-        `「${subsidyDraft.title}」`,
-        'この情報をアーカイブしますか？',
-      )
+      confirmArchive(`「${subsidyDraft.title}」`)
         .then(() => {
           adminSubsidiesModule
             .deleteSubsidyDraft(subsidyDraft.id)
-            .then(() => {
-              notifySuccess(
-                'アーカイブしました',
-                `${adminSubsidiesModule.subsidyDraft?.title || ''}`,
-              )
-              adminSubsidiesModule.getSubsidyDrafts()
-            })
-            .catch(error =>
-              notifyError(
-                'アーカイブに失敗しました',
-                error.response.data.message,
-              ),
-            )
+            .then(handleSuccess)
+            .catch(showApiErrorMessage)
         })
         .catch(_ => {})
+    }
+
+    const handleSuccess = () => {
+      notifySuccess(
+        'アーカイブしました',
+        `${adminSubsidiesModule.subsidyDraft?.title || ''}`,
+      )
+      adminSubsidiesModule.getSubsidyDrafts()
     }
 
     onMounted(() => {
@@ -136,11 +177,14 @@ export default defineComponent({
     return {
       loading,
       subsidyDrafts,
+      selectedSubsidyDrafts,
       pagination,
       getPage,
       detailPath,
       handleEdit,
+      handleSelectionChange,
       archive,
+      archiveAll,
       convertToJpDate,
     }
   },
@@ -159,5 +203,16 @@ export default defineComponent({
 
 .detail-link {
   color: var(--primary-color);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 </style>
