@@ -46,27 +46,9 @@ RSpec.describe Subsidy, type: :model do
         expect(subsidy).to be_invalid
       end
     end
-    context 'when start_from = ""' do
-      it 'returns true' do
-        subsidy = build(:subsidy, start_from: '', end_to: '2021-01-24')
-        expect(subsidy).to be_valid
-      end
-    end
     context 'when end_to = ""' do
       it 'returns false' do
         subsidy = build(:subsidy, start_from: '2021-01-01', end_to: '')
-        expect(subsidy).to be_valid
-      end
-    end
-    context 'when start_from = nil' do
-      it 'returns false' do
-        subsidy = build(:subsidy, start_from: nil, end_to: '2021-01-01')
-        expect(subsidy).to be_valid
-      end
-    end
-    context 'when end_to = nil' do
-      it 'returns false' do
-        subsidy = build(:subsidy, start_from: '2021-01-01', end_to: nil)
         expect(subsidy).to be_valid
       end
     end
