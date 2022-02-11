@@ -11,6 +11,7 @@ export const routingService: {
   AdminTop: () => '/admin',
   AdminSubsidyDraftDetail: (id: number) => `/admin/subsidy_drafts/${id}`,
   AdminSubsidies: () => '/admin/subsidies',
+  AdminNewSubsidy: () => '/admin/subsidies/new',
   AdminSubsidyDetail: (id: number) => `/admin/subsidies/${id}`,
   AdminCompanies: () => '/admin/companies',
   AdminNewCompany: () => '/admin/companies/new',

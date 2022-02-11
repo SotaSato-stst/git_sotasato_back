@@ -9,3 +9,4 @@ ja:
         start_from: 募集開始日
         end_to: 募集終了日
         supplier_type: 発行機関
+        level: 申請難易度

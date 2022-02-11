@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div class="title-header">
+      <div class="title">補助金情報 一覧</div>
+      <el-button type="primary" @click="newSubsidyPage()">
+        新規補助金情報追加
+      </el-button>
+    </div>
     <card-loading :loading="loading" />
     <el-table v-if="!loading" :data="subsidies" stripe style="width: 100%">
       <el-table-column label="公開状況" width="90" align="center">
@@ -60,7 +66,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      v-if="subsidies.length > 0"
+      v-if="subsidies.length > 0 && !loading"
       background
       layout="prev, pager, next"
       :page-count="pagination.totalPages"
@@ -115,6 +121,9 @@ export default defineComponent({
     const handleEdit = (subsidy: Subsidy) => {
       router.push(detailPath(subsidy.id))
     }
+    const newSubsidyPage = () => {
+      router.push(routingService.AdminNewSubsidy())
+    }
 
     onMounted(() => {
       load(loading, () => {
@@ -129,6 +138,7 @@ export default defineComponent({
       getPage,
       detailPath,
       handleEdit,
+      newSubsidyPage,
       convertToShortJPY,
       publishingCodeLabel,
     }
@@ -148,5 +158,16 @@ export default defineComponent({
 
 .detail-link {
   color: var(--primary-color);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 </style>

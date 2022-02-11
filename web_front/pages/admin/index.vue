@@ -68,6 +68,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="subsidyDrafts.length > 0 && !loading"
       background
       layout="prev, pager, next"
       :page-count="pagination.totalPages"

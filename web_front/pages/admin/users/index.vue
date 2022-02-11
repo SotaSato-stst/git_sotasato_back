@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <card-loading :loading="loading" />
     <div class="title-header">
       <div class="title">ユーザー 一覧</div>
       <el-button type="primary" @click="newUserPage()">
         新規ユーザー追加
       </el-button>
     </div>
+    <card-loading :loading="loading" />
     <el-table v-if="!loading" :data="users" stripe style="width: 100%">
       <el-table-column prop="displayName" label="氏名" />
       <el-table-column prop="companyName" label="会社名">
@@ -27,7 +27,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      v-if="users.length > 0"
+      v-if="users.length > 0 && !loading"
       background
       layout="prev, pager, next"
       :page-count="pagination.totalPages"

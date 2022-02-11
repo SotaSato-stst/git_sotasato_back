@@ -185,11 +185,12 @@
     </el-form-item>
     <el-form-item label="申請難易度" prop="level">
       <el-rate
-        v-model="state.level"
+        v-model="level"
         :colors="['var(--text-color)']"
         :texts="['低い', 'やや低め', '普通', 'やや高め', '高い']"
         show-text
         class="level"
+        @change="levelChanged()"
       />
     </el-form-item>
   </el-form>
@@ -276,6 +277,14 @@ export default defineComponent({
     const endTo = ref<Date | null>(null)
     const endToChanged = () => {
       state.endTo = endTo.value?.toISOString() || null
+    }
+    const level = ref<number | null>(null)
+    const levelChanged = () => {
+      if (level.value === 0) {
+        state.level = null
+      } else {
+        state.level = level.value
+      }
     }
 
     const validate: Validate = (result: (valid: boolean) => void) => {
@@ -368,6 +377,8 @@ export default defineComponent({
       startFromChanged,
       endTo,
       endToChanged,
+      level,
+      levelChanged,
       validate,
       rules,
     }

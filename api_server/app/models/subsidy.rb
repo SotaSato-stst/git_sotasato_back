@@ -41,7 +41,7 @@ class Subsidy < ApplicationRecord
   validates :publishing_code, presence: { message: 'は必須項目です' }
   validate :supplier_type_must_have_association
   validate :start_from_cannot_be_greater_than_end_to
-  validates_inclusion_of :level, in: 1..5, if: -> { level.present? }
+  validates_inclusion_of :level, in: 1..5, if: -> { level.present? }, message: 'は1から5の間にしてください'
 
   scope :published, -> { where(publishing_code: 'published') }
   scope :search_by_user, ->(search_params) {
