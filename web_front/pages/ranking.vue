@@ -76,7 +76,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        // get ranking
+        subsidiesModule.getSubsidies()
       })
     })
 
