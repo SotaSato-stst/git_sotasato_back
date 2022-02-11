@@ -126,7 +126,10 @@ export default defineComponent({
     const {loading, load} = optionsModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
     const businessCategories = computed(() => optionsModule.businessCategories)
-    const selectPrefectureId = async (prefectureId: string) => {
+    const selectPrefectureId = async (prefectureId: number | null) => {
+      if (!prefectureId) {
+        return
+      }
       state.cityId = null
       await optionsModule.getCities(prefectureId)
     }
@@ -182,7 +185,7 @@ export default defineComponent({
 
     onUpdated(() => {
       if (state.prefectureId && optionsModule.cities.length === 0) {
-        optionsModule.getCities(state.prefectureId.toString())
+        optionsModule.getCities(state.prefectureId)
       }
     })
 

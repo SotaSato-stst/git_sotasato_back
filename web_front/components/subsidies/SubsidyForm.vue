@@ -245,7 +245,7 @@ export default defineComponent({
     const ministries = computed(() => optionsModule.ministries)
     const prefectures = computed(() => optionsModule.prefectures)
     const cities = computed(() => optionsModule.cities)
-    const selectPrefectureId = async (prefectureId: string | null) => {
+    const selectPrefectureId = async (prefectureId: number | null) => {
       if (!prefectureId) {
         return
       }
@@ -331,7 +331,7 @@ export default defineComponent({
         optionsModule.getMinistries()
         await optionsModule.getPrefectures()
         if (state.prefectureId) {
-          await optionsModule.getCities(`${state.prefectureId}`)
+          await optionsModule.getCities(state.prefectureId)
         }
         optionsModule.getBusinessCategories()
         priceMaxMan.value = (state.priceMax || 1000) / 10000
