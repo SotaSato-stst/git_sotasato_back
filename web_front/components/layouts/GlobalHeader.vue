@@ -26,7 +26,13 @@
 
 <script lang="ts">
 import {Menu, MenuItem} from 'element-ui'
-import {computed, defineComponent, useRouter} from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  useRoute,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import GlobalDropdownMenu from '@/components/layouts/GlobalDropdownMenu.vue'
 import {routingService} from '@/services/routingService'
 import {subsidiesModule} from '@/store'
@@ -41,9 +47,20 @@ export default defineComponent({
     GlobalDropdownMenu,
   },
   setup(_props) {
+    const {loading} = subsidiesModule.loader
+    const route = useRoute()
     const router = useRouter()
-    const selectedPage: menuType = 'new'
     const totalCount = computed(() => subsidiesModule.pagination.itemsTotal)
+    const selectedPage = computed(() => {
+      switch (route.value.path) {
+        case routingService.Top():
+          return 'new'
+        case routingService.Ranking():
+          return 'ranking'
+        case routingService.Favorite():
+          return 'favorite'
+      }
+    })
     const handleSelect = (value: menuType) => {
       switch (value) {
         case 'new':
@@ -57,6 +74,12 @@ export default defineComponent({
           break
       }
     }
+
+    onMounted(() => {
+      if (subsidiesModule.pagination.itemsTotal === 0 && !loading) {
+        subsidiesModule.getSubsidies()
+      }
+    })
 
     return {totalCount, selectedPage, handleSelect}
   },

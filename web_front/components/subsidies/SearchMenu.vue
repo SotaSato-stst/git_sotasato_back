@@ -108,15 +108,14 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      if (route.value.path !== routingService.Top()) {
-        return
-      }
-      setStateFromQuery()
       load(loading, async () => {
-        search()
         await optionsModule.getPrefectures()
-        if (state.prefectureId) {
-          optionsModule.getCities(state.prefectureId)
+        if (route.value.path === routingService.Top()) {
+          setStateFromQuery()
+          if (state.prefectureId) {
+            optionsModule.getCities(state.prefectureId)
+          }
+          search()
         }
       })
     })
