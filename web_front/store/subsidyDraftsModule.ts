@@ -6,7 +6,7 @@ import {Pagination} from '@/types/Pagination'
 import {useLoader} from '~/services/useLoader'
 
 @Module({
-  name: 'subsidyDrafts',
+  name: 'subsidyDraftsModule',
   stateFactory: true,
   namespaced: true,
 })

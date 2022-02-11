@@ -7,7 +7,7 @@ import {Ministry, MinistryResponse} from '~/types/Ministry'
 import {useLoader} from '@/services/useLoader'
 
 @Module({
-  name: 'options',
+  name: 'optionsModule',
   stateFactory: true,
   namespaced: true,
 })

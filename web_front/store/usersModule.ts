@@ -10,7 +10,7 @@ import {useLoader} from '~/services/useLoader'
 import {Pagination} from '@/types/Pagination'
 
 @Module({
-  name: 'users',
+  name: 'usersModule',
   stateFactory: true,
   namespaced: true,
 })

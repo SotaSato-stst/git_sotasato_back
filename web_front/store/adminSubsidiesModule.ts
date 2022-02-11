@@ -5,7 +5,7 @@ import {Pagination} from '@/types/Pagination'
 import {useLoader} from '~/services/useLoader'
 
 @Module({
-  name: 'adminSubsidies',
+  name: 'adminSubsidiesModule',
   stateFactory: true,
   namespaced: true,
 })

@@ -1,13 +1,13 @@
 /* eslint-disable import/no-mutable-exports */
 import {Store} from 'vuex'
 import {getModule} from 'vuex-module-decorators'
-import SubsidiesModule from '@/store/subsidies'
-import FavoriteSubsidiesModule from '@/store/favoriteSubsidies'
-import AdminSubsidiesModule from '~/store/adminSubsidies'
-import SubsidyDraftsModule from '~/store/subsidyDrafts'
-import CompaniesModule from '@/store/companies'
-import UsersModule from '@/store/users'
-import OptionsModule from '~/store/options'
+import SubsidiesModule from '~/store/subsidiesModule'
+import FavoriteSubsidiesModule from '~/store/favoriteSubsidiesModule'
+import AdminSubsidiesModule from '~/store/adminSubsidiesModule'
+import SubsidyDraftsModule from '~/store/subsidyDraftsModule'
+import CompaniesModule from '~/store/companiesModule'
+import UsersModule from '~/store/usersModule'
+import OptionsModule from '~/store/optionsModule'
 
 let subsidiesModule: SubsidiesModule
 let favoriteSubsidiesModule: FavoriteSubsidiesModule
