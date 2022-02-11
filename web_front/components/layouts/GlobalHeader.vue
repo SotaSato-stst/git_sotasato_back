@@ -47,7 +47,6 @@ export default defineComponent({
     GlobalDropdownMenu,
   },
   setup(_props) {
-    const {loading} = subsidiesModule.loader
     const route = useRoute()
     const router = useRouter()
     const totalCount = computed(() => subsidiesModule.pagination.itemsTotal)
@@ -76,7 +75,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      if (subsidiesModule.pagination.itemsTotal === 0 && !loading) {
+      if (subsidiesModule.pagination.itemsTotal === 0) {
         subsidiesModule.getSubsidies()
       }
     })
