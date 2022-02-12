@@ -8,6 +8,7 @@ import {
 } from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
 import {useLoader} from '~/services/useLoader'
+import {filterUniqueObj} from '@/utils/arrayUtil'
 
 @Module({
   name: 'subsidiesModule',
@@ -18,6 +19,7 @@ export default class SubsidiesModule extends VuexModule {
   loader = useLoader()
   subsidies: Subsidy[] = []
   subsidy: Subsidy | null = null
+  viewedSubsidies: Subsidy[] = []
 
   pagination: Pagination = {
     currentPage: 0,
@@ -39,6 +41,12 @@ export default class SubsidiesModule extends VuexModule {
   @Mutation
   setSubsidy(subsidy: Subsidy | null) {
     this.subsidy = subsidy
+  }
+
+  @Mutation
+  addViewedSubsidies(subsidy: Subsidy) {
+    const subsidies = [subsidy].concat(this.viewedSubsidies)
+    this.viewedSubsidies = filterUniqueObj(subsidies, 'id')
   }
 
   @Mutation

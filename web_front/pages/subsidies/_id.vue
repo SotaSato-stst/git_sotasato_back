@@ -1,6 +1,8 @@
 <template>
   <el-container class="container">
-    <el-aside class="left-side-menu" width="var(--header-width)"> </el-aside>
+    <el-aside class="left-side-menu" width="var(--header-width)">
+      <viewed-subsidies />
+    </el-aside>
     <el-main>
       <el-card v-if="subsidy">
         <el-container>
@@ -85,6 +87,7 @@ import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
 import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
+import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
 
 export default defineComponent({
   name: 'SubsidyDetailPage',
@@ -96,6 +99,7 @@ export default defineComponent({
     SupplierInformation,
     FavoriteButton,
     SideRightMenu,
+    ViewedSubsidies,
   },
 
   setup(_props) {
@@ -104,8 +108,11 @@ export default defineComponent({
     const pageId = Number(route.value.params.id)
     const subsidy = computed(() => subsidiesModule.subsidy)
 
-    onMounted(() => {
-      subsidiesModule.getSubsidy(pageId).catch(_ => router.push('/'))
+    onMounted(async () => {
+      await subsidiesModule.getSubsidy(pageId).catch(_ => router.push('/'))
+      if (subsidiesModule.subsidy) {
+        subsidiesModule.addViewedSubsidies(subsidiesModule.subsidy)
+      }
     })
 
     onUnmounted(() => {
@@ -217,11 +224,5 @@ export default defineComponent({
 .detail .content {
   font-size: 14px;
   white-space: pre-line;
-}
-
-.left-side-menu {
-  background-color: white;
-  width: 100%;
-  height: 100%;
 }
 </style>
