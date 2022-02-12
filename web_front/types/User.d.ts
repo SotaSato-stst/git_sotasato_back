@@ -29,3 +29,8 @@ export type UpdateUserParams = {
   accountRole: AccountRole
   companyId: number | null
 }
+
+export type UpdateCurrentUserParams = {
+  displayName: string
+  email: string
+}

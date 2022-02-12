@@ -6,7 +6,7 @@
       </el-button>
     </span>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item command="user_setting">アカウント情報</el-dropdown-item>
+      <el-dropdown-item command="account">アカウント情報</el-dropdown-item>
       <el-dropdown-item command="top" divided>ユーザー画面</el-dropdown-item>
       <el-dropdown-item command="admin">管理画面</el-dropdown-item>
       <el-dropdown-item command="sign_out" divided>
@@ -22,7 +22,7 @@ import {defineComponent, useRouter} from '@nuxtjs/composition-api'
 import {getAuth, signOut} from 'firebase/auth'
 import {routingService} from '@/services/routingService'
 
-type menuType = 'user_setting' | 'admin' | 'sign_out' | 'top'
+type menuType = 'account' | 'admin' | 'sign_out' | 'top'
 
 export default defineComponent({
   name: 'GlobalDropdownMenu',
@@ -35,8 +35,8 @@ export default defineComponent({
     const router = useRouter()
     const handleSelect = (value: menuType) => {
       switch (value) {
-        case 'user_setting':
-          router.push(routingService.Top())
+        case 'account':
+          router.push(routingService.Account())
           break
         case 'admin':
           router.push(routingService.AdminTop())

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :cities, only: %i[index]
   end
   resources :business_categories, only: :index
+  resource :current_user, only: %i[show update]
 
   namespace :admin do
     resources :companies, only: %i[index show create update]

@@ -8,6 +8,7 @@ export const routingService: {
   SubsidyDetail: (id: number) => `/subsidies/${id}`,
   Ranking: () => '/ranking',
   Favorite: () => '/favorite',
+  Account: () => '/account',
   AdminTop: () => '/admin',
   AdminSubsidyDraftDetail: (id: number) => `/admin/subsidy_drafts/${id}`,
   AdminSubsidies: () => '/admin/subsidies',
