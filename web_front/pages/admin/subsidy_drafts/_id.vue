@@ -10,6 +10,7 @@
           <el-button
             class="submit-button"
             size="small"
+            :disabled="subsidyDraft.archived || loading"
             @click="submit('editing')"
           >
             下書き保存
@@ -18,7 +19,7 @@
             type="success"
             class="submit-button"
             size="small"
-            :disabled="subsidyDraft.archived"
+            :disabled="subsidyDraft.archived || loading"
             @click="submit('published')"
           >
             保存して公開
@@ -27,7 +28,7 @@
             type="danger"
             class="submit-button"
             size="small"
-            :disabled="subsidyDraft.archived"
+            :disabled="subsidyDraft.archived || loading"
             @click="archive"
           >
             アーカイブ
@@ -188,6 +189,7 @@ export default defineComponent({
     return {
       form,
       loader,
+      loading,
       subsidyDraft,
       subsidyParams,
       submit,

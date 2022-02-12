@@ -16,6 +16,7 @@
             v-if="subsidy.publishingCode == 'published'"
             class="submit-button"
             size="small"
+            :disabled="loading"
             @click="preview(subsidy.id)"
           >
             掲載中のページを確認
@@ -23,6 +24,7 @@
           <el-button
             class="submit-button"
             size="small"
+            :disabled="loading"
             @click="submit('editing')"
           >
             非公開で保存
@@ -31,6 +33,7 @@
             type="success"
             class="submit-button"
             size="small"
+            :disabled="loading"
             @click="submit('published')"
           >
             保存して公開
@@ -172,6 +175,7 @@ export default defineComponent({
     return {
       form,
       loader,
+      loading,
       subsidy,
       subsidyParams,
       submit,
