@@ -3,7 +3,12 @@
     <el-card>
       <div slot="header" class="form-header">
         <p>ユーザー新規作成</p>
-        <el-button type="primary" class="submit-button" @click="submit">
+        <el-button
+          type="primary"
+          class="submit-button"
+          :disabled="loading"
+          @click="submit"
+        >
           保存する
         </el-button>
       </div>
@@ -15,7 +20,11 @@
         :rules="rules"
       >
         <el-form-item label="所属会社" prop="companyId">
-          <el-select v-model="state.companyId" placeholder="選択...">
+          <el-select
+            v-model="state.companyId"
+            placeholder="選択..."
+            :disabled="loading"
+          >
             <el-option
               v-for="company in companies"
               :key="company.id"
@@ -29,6 +38,7 @@
             v-model="state.displayName"
             class="input-text"
             placeholder="田中太郎"
+            :disabled="loading"
           />
         </el-form-item>
         <el-form-item label="E-mail" prop="email">
@@ -36,10 +46,15 @@
             v-model="state.email"
             class="input-text"
             placeholder="hojokin@example.com"
+            :disabled="loading"
           />
         </el-form-item>
         <el-form-item label="アカウント" prop="accountRole">
-          <el-select v-model="state.accountRole" placeholder="選択...">
+          <el-select
+            v-model="state.accountRole"
+            placeholder="選択..."
+            :disabled="loading"
+          >
             <el-option
               v-for="accountRole in accountRoleOptions()"
               :key="accountRole.key"
@@ -81,6 +96,7 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const form = ref<Form | null>(null)
+    const {loading, load} = usersModule.loader
     const router = useRouter()
     const companies = computed(() => companiesModule.companies)
     const state: NewUserParams = reactive({
@@ -92,11 +108,13 @@ export default defineComponent({
     const rules = usersModule.rules
 
     const submit = () => {
-      form.value
-        ?.validate()
-        .then(() => usersModule.postUser(state))
-        .then(handleSuccess)
-        .catch(showApiErrorMessage)
+      load(loading, async () => {
+        await form.value
+          ?.validate()
+          .then(() => usersModule.postUser(state))
+          .then(handleSuccess)
+          .catch(showApiErrorMessage)
+      })
     }
 
     const handleSuccess = () => {
@@ -113,6 +131,7 @@ export default defineComponent({
 
     return {
       form,
+      loading,
       companies,
       state,
       accountRoleOptions,

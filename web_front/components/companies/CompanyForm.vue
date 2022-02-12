@@ -2,7 +2,12 @@
   <el-card v-if="state">
     <div slot="header" class="form-header">
       <p>「{{ state.name }}」の会社情報</p>
-      <el-button type="primary" class="submit-button" @click="submit">
+      <el-button
+        type="primary"
+        class="submit-button"
+        :disabled="loading"
+        @click="submit"
+      >
         保存する
       </el-button>
     </div>
@@ -19,12 +24,14 @@
           v-model="state.name"
           class="input-text"
           placeholder="株式会社補助金ドック"
+          :disabled="loading"
         />
       </el-form-item>
       <el-form-item label="都道府県" prop="prefectureId">
         <el-select
           v-model="state.prefectureId"
           placeholder="都道府県"
+          :disabled="loading"
           @change="selectPrefectureId"
         >
           <el-option
@@ -36,7 +43,11 @@
         </el-select>
       </el-form-item>
       <el-form-item label="市長区村" prop="cityId">
-        <el-select v-model="state.cityId" placeholder="市長区村">
+        <el-select
+          v-model="state.cityId"
+          placeholder="市長区村"
+          :disabled="loading"
+        >
           <el-option
             v-for="city in cities"
             :key="city.id"
@@ -50,6 +61,7 @@
           v-model="state.adress"
           class="input-text"
           placeholder="東京都千代田区oo町oo丁目oo番oo号 補助金ビル2F"
+          :disabled="loading"
         />
       </el-form-item>
       <el-form-item label="業種" prop="businessCategories">
@@ -57,6 +69,7 @@
           v-model="state.businessCategories"
           multiple
           placeholder="業種"
+          :disabled="loading"
           class="category-select"
         >
           <el-option
@@ -73,6 +86,7 @@
           class="input-number"
           type="number"
           placeholder="10000000"
+          :disabled="loading"
         />
         円
       </el-form-item>
@@ -82,6 +96,7 @@
           class="input-number"
           type="number"
           placeholder="100"
+          :disabled="loading"
         />
         人
       </el-form-item>
@@ -137,12 +152,14 @@ export default defineComponent({
     const state: CompanyParams = reactive(props.companyParams)
 
     const submit = () => {
-      form.value
-        ?.validate()
-        .then(() => context.emit('submit'))
-        .catch(() =>
-          notifyError('更新に失敗しました', '入力内容を確認してください'),
-        )
+      load(loading, () => {
+        form.value
+          ?.validate()
+          .then(() => context.emit('submit'))
+          .catch(() =>
+            notifyError('更新に失敗しました', '入力内容を確認してください'),
+          )
+      })
     }
 
     const rules = {
