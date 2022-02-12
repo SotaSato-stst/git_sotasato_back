@@ -7,7 +7,7 @@
     :rules="rules"
   >
     <el-form-item label="参照元URL" prop="url">
-      <el-input v-model="state.url" class="input-text" />
+      <el-input v-model="state.url" class="input-text" :disabled="loading" />
       <a :href="state.url" target="_blank" class="external-link">
         <span>{{ state.url }}</span>
         <icon-external :size="16" />
@@ -20,7 +20,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="タイトル" prop="title">
-      <el-input v-model="state.title" class="input-text" />
+      <el-input v-model="state.title" class="input-text" :disabled="loading" />
     </el-form-item>
     <div class="inline">
       <el-form-item label="発行機関" prop="supplierType">
@@ -28,6 +28,7 @@
           v-model="state.supplierType"
           placeholder="選択"
           class="select-input"
+          :disabled="loading"
         >
           <el-option key="ministry" label="省庁" value="ministry" />
           <el-option key="prefecture" label="都道府県" value="prefecture" />
@@ -43,6 +44,7 @@
           v-model="state.ministryId"
           placeholder="省庁"
           class="select-input"
+          :disabled="loading"
         >
           <el-option
             v-for="ministry in ministries"
@@ -61,6 +63,7 @@
           v-model="state.prefectureId"
           placeholder="都道府県"
           class="select-input"
+          :disabled="loading"
           @change="selectPrefectureId"
         >
           <el-option key="all" label="全域" :value="null" />
@@ -81,6 +84,7 @@
           v-model="state.cityId"
           placeholder="市長区村"
           class="select-input"
+          :disabled="loading"
         >
           <el-option key="all" label="全域" :value="null" />
           <el-option
@@ -99,6 +103,7 @@
         placeholder="対応可能な業種"
         class="category-select"
         clearable
+        :disabled="loading"
       >
         <el-option
           v-for="businessCategory in businessCategories"
@@ -119,6 +124,7 @@
         v-model="priceMaxMan"
         type="number"
         class="input-number input-number-text-align-center"
+        :disabled="loading"
         @change="priceMaxChanged()"
       />
       万円
@@ -130,6 +136,7 @@
             v-model="state.supportRatioMin"
             placeholder="1/2, 30%など"
             class="input-range"
+            :disabled="loading"
           />
         </el-form-item>
         <span class="range-between">~</span>
@@ -138,6 +145,7 @@
             v-model="state.supportRatioMax"
             placeholder="2/3, 60%など"
             class="input-range"
+            :disabled="loading"
           />
         </el-form-item>
       </div>
@@ -150,6 +158,7 @@
             type="date"
             placeholder="選択"
             class="input-range"
+            :disabled="loading"
             @change="startFromChanged()"
           />
         </el-form-item>
@@ -160,6 +169,7 @@
             type="date"
             placeholder="選択"
             class="input-range"
+            :disabled="loading"
             @change="endToChanged()"
           />
         </el-form-item>
@@ -172,6 +182,7 @@
         :autosize="{minRows: 4}"
         class="input-text"
         placeholder="受け取れることのできる条件"
+        :disabled="loading"
       />
     </el-form-item>
     <el-form-item label="詳細" prop="detail">
@@ -181,6 +192,7 @@
         class="input-text"
         :autosize="{minRows: 4}"
         placeholder="URLに記載されている内容"
+        :disabled="loading"
       />
     </el-form-item>
     <el-form-item label="申請難易度" prop="level">
@@ -190,6 +202,7 @@
         :texts="['低い', 'やや低め', '普通', 'やや高め', '高い']"
         show-text
         class="level"
+        :disabled="loading"
         @change="levelChanged()"
       />
     </el-form-item>
@@ -216,7 +229,7 @@ import {
   Rate,
 } from 'element-ui'
 import {optionsModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
+import {Loader} from '@/services/useLoader'
 import {UpdateSubsidyParams} from '@/types/Subsidy'
 import {Validate} from '@/types/Validate'
 import IconExternal from '@/components/icons/IconExternal.vue'
@@ -239,11 +252,15 @@ export default defineComponent({
       type: Object as PropType<UpdateSubsidyParams>,
       required: true,
     },
+    loader: {
+      type: Loader,
+      required: true,
+    },
   },
   setup(props) {
     const form = ref<Form | null>(null)
     const state: UpdateSubsidyParams = reactive(props.subsidyParams)
-    const {loading, load} = useLoader()
+    const {loading, load} = props.loader
     const ministries = computed(() => optionsModule.ministries)
     const prefectures = computed(() => optionsModule.prefectures)
     const cities = computed(() => optionsModule.cities)

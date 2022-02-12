@@ -21,7 +21,11 @@
           </el-button>
         </div>
       </div>
-      <subsidy-form ref="form" :subsidy-params="subsidyParams" />
+      <subsidy-form
+        ref="form"
+        :subsidy-params="subsidyParams"
+        :loader="loader"
+      />
     </el-card>
   </div>
 </template>
@@ -36,7 +40,6 @@ import {
 } from '@nuxtjs/composition-api'
 import {Card, Tag} from 'element-ui'
 import {adminSubsidiesModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {
   notifyError,
   notifySuccess,
@@ -60,7 +63,8 @@ export default defineComponent({
   setup(_props) {
     const form = ref<ValidationForm | null>(null)
     const router = useRouter()
-    const {loading, load} = useLoader()
+    const loader = adminSubsidiesModule.loader
+    const {loading, load} = loader
     const subsidyParams: UpdateSubsidyParams = reactive({
       title: '',
       url: '',
@@ -83,16 +87,18 @@ export default defineComponent({
 
     const submit = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
-      form.value?.validate(valid => {
-        if (!valid) {
-          notifyError('更新に失敗しました', '入力項目を確認してください')
-          return
-        }
-        load(loading, async () => {
-          await adminSubsidiesModule
-            .postSubsidy(removeEmpty(subsidyParams))
-            .then(showMessage)
-            .catch(showApiErrorMessage)
+      load(loading, () => {
+        form.value?.validate(valid => {
+          if (!valid) {
+            notifyError('更新に失敗しました', '入力項目を確認してください')
+            return
+          }
+          load(loading, async () => {
+            await adminSubsidiesModule
+              .postSubsidy(removeEmpty(subsidyParams))
+              .then(showMessage)
+              .catch(showApiErrorMessage)
+          })
         })
       })
     }
@@ -121,6 +127,7 @@ export default defineComponent({
 
     return {
       form,
+      loader,
       subsidyParams,
       submit,
       publishingCodeLabel,

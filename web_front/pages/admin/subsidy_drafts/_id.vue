@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :loading="loading">
+  <div class="container">
     <el-card v-if="subsidyDraft">
       <el-alert v-if="subsidyDraft.archived" type="error">
         アーカイブされています
@@ -34,7 +34,11 @@
           </el-button>
         </div>
       </div>
-      <subsidy-form ref="form" :subsidy-params="subsidyParams" />
+      <subsidy-form
+        ref="form"
+        :subsidy-params="subsidyParams"
+        :loader="loader"
+      />
     </el-card>
   </div>
 </template>
@@ -52,7 +56,6 @@ import {
 } from '@nuxtjs/composition-api'
 import {Card, Alert, MessageBox} from 'element-ui'
 import {subsidyDraftsModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {
   notifyError,
   notifySuccess,
@@ -75,7 +78,8 @@ export default defineComponent({
     const form = ref<ValidationForm | null>(null)
     const route = useRoute()
     const router = useRouter()
-    const {loading, load} = useLoader()
+    const loader = subsidyDraftsModule.loader
+    const {loading, load} = loader
     const pageId = Number(route.value.params.id)
     const subsidyDraft = computed(() => subsidyDraftsModule.subsidyDraft)
     const subsidyParams: UpdateSubsidyParams = reactive({
@@ -100,13 +104,13 @@ export default defineComponent({
 
     const submit = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
-      form.value?.validate(valid => {
-        if (!valid) {
-          notifyError('更新に失敗しました', '入力項目を確認してください')
-          return
-        }
-        load(loading, async () => {
-          await subsidyDraftsModule
+      load(loading, () => {
+        form.value?.validate(valid => {
+          if (!valid) {
+            notifyError('更新に失敗しました', '入力項目を確認してください')
+            return
+          }
+          subsidyDraftsModule
             .postSubsidy(subsidyParams)
             .then(showMessage)
             .catch(showApiErrorMessage)
@@ -183,7 +187,7 @@ export default defineComponent({
 
     return {
       form,
-      loading,
+      loader,
       subsidyDraft,
       subsidyParams,
       submit,

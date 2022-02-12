@@ -56,7 +56,6 @@ import {
 import {Table, TableColumn, Pagination} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import {companiesModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {routingService} from '@/services/routingService'
 import {Company} from '@/types/Company'
 import {convertToShortJPY} from '@/utils/numberFormatter'
@@ -72,7 +71,7 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
-    const {loading, load} = useLoader()
+    const {loading, load} = companiesModule.loader
     const companies = computed(() => companiesModule.companies)
     const pagination = computed(() => companiesModule.pagination)
     const getPage = (page: number) => {

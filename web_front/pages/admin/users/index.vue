@@ -49,7 +49,6 @@ import {
 import {Table, TableColumn, Pagination} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import {usersModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {routingService} from '@/services/routingService'
 import {User} from '@/types/User'
 import {accountRoleLabel} from '@/utils/enumKeyToName'
@@ -65,7 +64,7 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
-    const {loading, load} = useLoader()
+    const {loading, load} = usersModule.loader
     const users = computed(() => usersModule.users)
     const pagination = computed(() => usersModule.pagination)
     const getPage = (page: number) => {

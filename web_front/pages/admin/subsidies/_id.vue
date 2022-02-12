@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :loading="loading">
+  <div class="container">
     <el-card v-if="subsidy">
       <div slot="header" class="form-header">
         <div class="inline">
@@ -37,7 +37,11 @@
           </el-button>
         </div>
       </div>
-      <subsidy-form ref="form" :subsidy-params="subsidyParams" />
+      <subsidy-form
+        ref="form"
+        :subsidy-params="subsidyParams"
+        :loader="loader"
+      />
     </el-card>
   </div>
 </template>
@@ -55,7 +59,6 @@ import {
 } from '@nuxtjs/composition-api'
 import {Card, Tag} from 'element-ui'
 import {adminSubsidiesModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {
   notifyError,
   notifySuccess,
@@ -79,7 +82,8 @@ export default defineComponent({
     const form = ref<ValidationForm | null>(null)
     const route = useRoute()
     const router = useRouter()
-    const {loading, load} = useLoader()
+    const loader = adminSubsidiesModule.loader
+    const {loading, load} = loader
     const pageId = Number(route.value.params.id)
     const subsidy = computed(() => adminSubsidiesModule.subsidy)
     const subsidyParams: UpdateSubsidyParams = reactive({
@@ -104,13 +108,13 @@ export default defineComponent({
 
     const submit = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
-      form.value?.validate(valid => {
-        if (!valid) {
-          notifyError('更新に失敗しました', '入力項目を確認してください')
-          return
-        }
-        load(loading, async () => {
-          await adminSubsidiesModule
+      load(loading, () => {
+        form.value?.validate(valid => {
+          if (!valid) {
+            notifyError('更新に失敗しました', '入力項目を確認してください')
+            return
+          }
+          adminSubsidiesModule
             .putSubsidy(subsidyParams)
             .then(showMessage)
             .catch(showApiErrorMessage)
@@ -167,7 +171,7 @@ export default defineComponent({
 
     return {
       form,
-      loading,
+      loader,
       subsidy,
       subsidyParams,
       submit,

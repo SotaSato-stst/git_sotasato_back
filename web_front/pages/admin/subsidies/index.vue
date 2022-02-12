@@ -88,7 +88,6 @@ import {
 import {Table, TableColumn, Pagination, Tag} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import {adminSubsidiesModule} from '@/store'
-import {useLoader} from '@/services/useLoader'
 import {routingService} from '@/services/routingService'
 import {Subsidy} from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
@@ -106,7 +105,7 @@ export default defineComponent({
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
-    const {loading, load} = useLoader()
+    const {loading, load} = adminSubsidiesModule.loader
     const subsidies = computed(() => adminSubsidiesModule.subsidies)
     const pagination = computed(() => adminSubsidiesModule.pagination)
 
