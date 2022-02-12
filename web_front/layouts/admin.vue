@@ -1,13 +1,12 @@
 <template>
-  <el-container class="default-layout">
-    <el-aside width="240px" class="side-menu-container">
-      <div class="title-container">Admin</div>
-      <admin-side-menu />
-    </el-aside>
+  <el-container class="admin-layout">
+    <el-header class="header-container">
+      <admin-header />
+    </el-header>
     <el-container>
-      <el-header class="header-container">
-        <admin-header />
-      </el-header>
+      <el-aside class="left-side-menu" width="var(--header-width)">
+        <admin-side-menu />
+      </el-aside>
       <el-container class="center-container">
         <el-main>
           <nuxt />
@@ -37,24 +36,13 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.default-layout {
+.admin-layout {
   height: 100vh;
-}
-
-.title-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: var(--spacing-15);
-  padding-left: var(--spacing-4);
-  font-size: 27px;
-  font-family: 'Open Sans', sans-serif;
-  color: var(--primary-color);
-  border-bottom: solid 1px var(--border-grey-color);
 }
 
 .header-container {
   padding: 0;
+  border-bottom: solid 1px var(--border-grey-color);
 }
 
 .center-container {
