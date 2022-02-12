@@ -380,6 +380,7 @@ export default defineComponent({
 
     return {
       form,
+      loading,
       state,
       ministries,
       prefectures,
