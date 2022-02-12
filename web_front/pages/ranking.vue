@@ -13,6 +13,7 @@
           class="subsidy-card"
         >
           <el-tag
+            v-if="!loading"
             effect="plain"
             class="ranking-title"
             :style="`border-color: ${
