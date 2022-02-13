@@ -242,4 +242,8 @@ export default defineComponent({
 .category-select {
   width: 400px;
 }
+
+.submit-button {
+  height: fit-content;
+}
 </style>
