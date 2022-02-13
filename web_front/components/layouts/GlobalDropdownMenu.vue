@@ -21,6 +21,7 @@ import {Dropdown, DropdownItem, Button} from 'element-ui'
 import {defineComponent, useRouter} from '@nuxtjs/composition-api'
 import {getAuth, signOut} from 'firebase/auth'
 import {routingService} from '@/services/routingService'
+import {notifyInfo} from '@/services/notify'
 
 type menuType = 'account' | 'admin' | 'sign_out' | 'top'
 
@@ -46,6 +47,8 @@ export default defineComponent({
           break
         case 'sign_out':
           signOut(getAuth())
+          notifyInfo('ログアウトしました', 'ログインが必要です')
+          router.push(routingService.SignIn())
           break
       }
     }

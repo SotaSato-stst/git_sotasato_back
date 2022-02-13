@@ -36,6 +36,7 @@ export default {
     '@/plugins/axios-accessor',
     '@/plugins/element-ui',
     '@/plugins/firebase',
+    '@/plugins/firebase-auth',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
