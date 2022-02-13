@@ -441,6 +441,7 @@ export default defineComponent({
 .external-link {
   display: flex;
   align-items: center;
+  width: fit-content;
 }
 
 .level {
