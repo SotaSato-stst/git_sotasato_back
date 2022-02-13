@@ -13,6 +13,9 @@
       </el-form-item>
       <el-button @click="signIn">ログイン</el-button>
     </el-form>
+    <a class="password-reset" :href="passwordResetPath"
+      >パスワードをお忘れの方はこちら</a
+    >
   </div>
 </template>
 
@@ -84,7 +87,9 @@ export default defineComponent({
       )
     }
 
-    return {state, signIn}
+    const passwordResetPath = routingService.PasswordReset()
+
+    return {state, signIn, passwordResetPath}
   },
   head(): object {
     return {
@@ -109,7 +114,13 @@ export default defineComponent({
 }
 
 .form {
-  width: 300px;
+  width: 360px;
   text-align: center;
+}
+
+.password-reset {
+  margin-top: var(--spacing-6);
+  color: var(--text-color);
+  font-size: 12px;
 }
 </style>

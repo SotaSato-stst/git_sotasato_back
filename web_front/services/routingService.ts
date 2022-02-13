@@ -5,6 +5,7 @@ export const routingService: {
 } = {
   Top: () => '/',
   SignIn: () => '/sign-in',
+  PasswordReset: () => '/password-reset',
   SubsidyDetail: (id: number) => `/subsidies/${id}`,
   Ranking: () => '/ranking',
   Favorite: () => '/favorite',

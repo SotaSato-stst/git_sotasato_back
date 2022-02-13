@@ -3,13 +3,16 @@ import {notifyError, notifyInfo} from '@/services/notify'
 import {routingService} from '~/services/routingService'
 import {getUser} from '@/services/authService'
 
-const signInPath = routingService.SignIn()
+const sessionFreePaths = [
+  routingService.SignIn(),
+  routingService.PasswordReset(),
+]
 
 const middleware: Middleware = async ({route, redirect}) => {
   const user = await getUser()
-  if (!user && route.path !== signInPath) {
+  if (!user && !sessionFreePaths.includes(route.path)) {
     notifyInfo('ログアウトしました', 'ログインが必要です')
-    redirect(signInPath)
+    redirect(routingService.SignIn())
   }
 
   if (window.$nuxt.isOffline) {
