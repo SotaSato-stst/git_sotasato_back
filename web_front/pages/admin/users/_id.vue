@@ -42,14 +42,14 @@
             :disabled="loading"
           />
         </el-form-item>
-        <el-form-item label="E-mail">
+        <el-form-item label="メールアドレス">
           <el-input
             v-model="user.email"
             class="input-text"
             placeholder="hojokin@example.com"
             disabled
           />
-          <div>E-mailはユーザー自身で更新可能です</div>
+          <div>メールアドレスはユーザー自身で更新可能です</div>
         </el-form-item>
         <el-form-item label="アカウント" prop="accountRole">
           <el-select

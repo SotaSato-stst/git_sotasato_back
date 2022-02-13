@@ -33,7 +33,7 @@
                 :disabled="loading"
               />
             </el-form-item>
-            <el-form-item label="E-mail" prop="email">
+            <el-form-item label="メールアドレス" prop="email">
               <el-input
                 v-model="state.email"
                 class="input-text"

@@ -14,7 +14,7 @@
           {{ scope.row.company.name }}
         </template>
       </el-table-column>
-      <el-table-column prop="email" label="E-mail" />
+      <el-table-column prop="email" label="メールアドレス" />
       <el-table-column prop="accountRole" label="アカウント種類">
         <template slot-scope="scope">
           {{ accountRoleLabel(scope.row.accountRole) }}
