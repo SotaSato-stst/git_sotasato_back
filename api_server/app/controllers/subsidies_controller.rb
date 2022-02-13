@@ -14,6 +14,6 @@ class SubsidiesController < ApplicationController
   private
 
   def search_params
-    params.slice(:prefecture_id, :city_ids)
+    params.slice(:prefecture_id, :city_ids, :checked, :business_category_keys)
   end
 end
