@@ -17,7 +17,8 @@ const middleware: Middleware = async ({route, redirect}) => {
   }
   if (
     route.path.startsWith('/admin') &&
-    CookieStore.getAccountRole() !== 'admin'
+    CookieStore.getAccountRole() !== 'admin' &&
+    CookieStore.getAccountRole() !== 'editor'
   ) {
     redirect(routingService.Top())
   }

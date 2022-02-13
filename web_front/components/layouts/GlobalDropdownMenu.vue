@@ -7,10 +7,10 @@
     </span>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item command="account">アカウント情報</el-dropdown-item>
-      <el-dropdown-item v-if="isAdmin" command="top" divided
+      <el-dropdown-item v-if="isAdmin || isEditor" command="top" divided
         >ユーザー画面</el-dropdown-item
       >
-      <el-dropdown-item v-if="isAdmin" command="admin"
+      <el-dropdown-item v-if="isAdmin || isEditor" command="admin"
         >管理画面</el-dropdown-item
       >
       <el-dropdown-item command="sign_out" divided>
@@ -44,9 +44,8 @@ export default defineComponent({
     [`${Button.name}`]: Button,
   },
   setup(_props) {
-    const isAdmin = computed(
-      () => accountModule.currentUser?.accountRole === 'admin',
-    )
+    const isAdmin = computed(() => accountModule.isAdmin)
+    const isEditor = computed(() => accountModule.isEditor)
     const router = useRouter()
     const handleSelect = (value: menuType) => {
       switch (value) {
@@ -77,7 +76,7 @@ export default defineComponent({
       accountModule.setCurrentUser(null)
     })
 
-    return {isAdmin, handleSelect}
+    return {isAdmin, isEditor, handleSelect}
   },
 })
 </script>

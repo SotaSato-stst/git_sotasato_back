@@ -59,5 +59,9 @@ module Admin
       @subsidy.prefecture = Prefecture.where(id: params[:prefecture_id]).first
       @subsidy.city = City.where(id: params[:city_id]).first
     end
+
+    def controller_action_authrized?
+      current_user.admin? || current_user.editor?
+    end
   end
 end

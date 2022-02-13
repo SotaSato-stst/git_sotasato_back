@@ -17,13 +17,10 @@ class ApplicationController < ActionController::API
   end
 
   def check_permission
-    permission =
-      if params[:controller].start_with?('admin')
-        current_user.admin?
-      else
-        true
-      end
+    render json: { message: '権限がありません' }, status: 403 unless controller_action_authrized?
+  end
 
-    render json: { message: '権限がありません' }, status: 403 unless permission
+  def controller_action_authrized?
+    raise '各controllerで定義すること'
   end
 end

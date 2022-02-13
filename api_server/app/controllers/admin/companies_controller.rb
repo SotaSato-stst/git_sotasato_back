@@ -45,5 +45,9 @@ module Admin
         @company.company_business_categories.build(business_category: business_category)
       end
     end
+
+    def controller_action_authrized?
+      current_user.admin?
+    end
   end
 end

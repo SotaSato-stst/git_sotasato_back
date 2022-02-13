@@ -33,4 +33,10 @@ class UserFavoriteSubsidiesController < ApplicationController
       render json: { message: '更新に失敗しました' }, status: 400
     end
   end
+
+  private
+
+  def controller_action_authrized?
+    current_user.present?
+  end
 end

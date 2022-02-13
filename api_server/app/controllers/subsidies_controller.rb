@@ -16,4 +16,8 @@ class SubsidiesController < ApplicationController
   def search_params
     params.slice(:prefecture_id, :city_ids)
   end
+
+  def controller_action_authrized?
+    current_user.present?
+  end
 end

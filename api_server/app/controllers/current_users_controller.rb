@@ -14,4 +14,8 @@ class CurrentUsersController < ApplicationController
   def update_params
     params.permit(:display_name, :email)
   end
+
+  def controller_action_authrized?
+    current_user.present?
+  end
 end

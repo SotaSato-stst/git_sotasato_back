@@ -17,5 +17,11 @@ module Admin
     rescue StandardError => e
       render json: { message: e.message }, status: 400
     end
+
+    private
+
+    def controller_action_authrized?
+      current_user.admin? || current_user.editor?
+    end
   end
 end

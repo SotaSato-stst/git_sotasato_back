@@ -59,5 +59,9 @@ module Admin
         'しばらく時間を置いてからお試しください'
       end
     end
+
+    def controller_action_authrized?
+      current_user.admin?
+    end
   end
 end

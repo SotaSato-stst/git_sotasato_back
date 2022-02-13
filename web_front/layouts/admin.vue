@@ -5,7 +5,8 @@
     </el-header>
     <el-container>
       <el-aside class="left-side-menu" width="var(--header-width)">
-        <admin-side-menu />
+        <admin-side-menu v-if="isAdmin" />
+        <editor-side-menu v-if="isEditor" />
       </el-aside>
       <el-container class="center-container">
         <el-main>
@@ -17,10 +18,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from '@nuxtjs/composition-api'
+import {computed, defineComponent} from '@nuxtjs/composition-api'
 import {Container, Header, Aside, Main} from 'element-ui'
 import AdminHeader from '@/components/layouts/AdminHeader.vue'
 import AdminSideMenu from '@/components/layouts/AdminSideMenu.vue'
+import EditorSideMenu from '@/components/layouts/EditorSideMenu.vue'
+import {accountModule} from '@/store'
 
 export default defineComponent({
   name: 'AdminLayout',
@@ -31,6 +34,13 @@ export default defineComponent({
     [`${Main.name}`]: Main,
     AdminHeader,
     AdminSideMenu,
+    EditorSideMenu,
+  },
+  setup(_props) {
+    const isAdmin = computed(() => accountModule.isAdmin)
+    const isEditor = computed(() => accountModule.isEditor)
+
+    return {isAdmin, isEditor}
   },
 })
 </script>

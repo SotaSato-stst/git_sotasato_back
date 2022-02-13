@@ -13,6 +13,14 @@ export default class AccountModule extends VuexModule {
   loader = useLoader()
   currentUser: CurrentUser | null = null
 
+  get isAdmin() {
+    return this.currentUser?.accountRole === 'admin'
+  }
+
+  get isEditor() {
+    return this.currentUser?.accountRole === 'editor'
+  }
+
   @Mutation
   setCurrentUser(currentUser: CurrentUser | null) {
     this.currentUser = currentUser
