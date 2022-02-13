@@ -42,8 +42,9 @@ export default class UsersModule extends VuexModule {
     ],
     email: [
       {
+        type: 'email',
         required: true,
-        message: 'E-mailは必須です',
+        message: 'メールアドレスを入力してください',
         trigger: 'change',
       },
     ],
