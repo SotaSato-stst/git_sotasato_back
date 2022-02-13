@@ -9,18 +9,33 @@ const sessionFreePaths = [
   routingService.PasswordReset(),
 ]
 
+const editorPrefixes = ['/admin/subsidies', '/admin/subsidy_drafts']
+
 const middleware: Middleware = async ({route, redirect}) => {
   const user = await getUser()
   if (!user && !sessionFreePaths.includes(route.path)) {
     notifyInfo('ログアウトしました', 'ログインが必要です')
     redirect(routingService.SignIn())
   }
+
+  // 一般ユーザーが管理画面にアクセスできないようにする
+  // ※cookieを書き換えればアクセスできるが、APIで弾いており情報は取得できない
   if (
     route.path.startsWith('/admin') &&
     CookieStore.getAccountRole() !== 'admin' &&
     CookieStore.getAccountRole() !== 'editor'
   ) {
     redirect(routingService.Top())
+  }
+
+  // 編集者(editor)が権限のないURLにアクセスできないようにする
+  if (
+    CookieStore.getAccountRole() === 'editor' &&
+    route.path.startsWith('/admin') &&
+    route.path !== routingService.AdminTop() &&
+    !editorPrefixes.find(prefix => route.path.startsWith(prefix))
+  ) {
+    redirect(routingService.AdminTop())
   }
 
   if (window.$nuxt.isOffline) {
