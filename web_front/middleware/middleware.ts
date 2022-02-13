@@ -5,7 +5,7 @@ import {getUser} from '@/services/authService'
 
 const signInPath = routingService.SignIn()
 
-const session: Middleware = async ({route, redirect}) => {
+const middleware: Middleware = async ({route, redirect}) => {
   const user = await getUser()
   if (!user && route.path !== signInPath) {
     notifyInfo('ログアウトしました', 'ログインが必要です')
@@ -20,4 +20,4 @@ const session: Middleware = async ({route, redirect}) => {
   }
 }
 
-export default session
+export default middleware

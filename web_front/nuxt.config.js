@@ -66,7 +66,7 @@ export default {
   },
 
   router: {
-    middleware: ['session'],
+    middleware: ['middleware'],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
