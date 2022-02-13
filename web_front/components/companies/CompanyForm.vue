@@ -118,7 +118,7 @@ import {
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {optionsModule} from '@/store'
 import {CompanyParams} from '@/types/Company'
-import {notifyError} from '~/services/notify'
+import {notifyError} from '@/services/notify'
 
 export default defineComponent({
   name: 'CompanyForm',

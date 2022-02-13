@@ -1,6 +1,6 @@
 import {Middleware} from '@nuxt/types'
 import {notifyError, notifyInfo} from '@/services/notify'
-import {routingService} from '~/services/routingService'
+import {routingService} from '@/services/routingService'
 import {getUser} from '@/services/authService'
 
 const sessionFreePaths = [

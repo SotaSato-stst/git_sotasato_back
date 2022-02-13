@@ -30,7 +30,7 @@
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
 import {Button} from 'element-ui'
-import Banner from '~/components/banners/Banner.vue'
+import Banner from '@/components/banners/Banner.vue'
 
 export default defineComponent({
   name: 'SideRightMenu',

@@ -2,7 +2,7 @@ import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
 import {SubsidiesResponse, Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
-import {useLoader} from '~/services/useLoader'
+import {useLoader} from '@/services/useLoader'
 
 @Module({
   name: 'adminSubsidiesModule',

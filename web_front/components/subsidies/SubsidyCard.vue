@@ -59,7 +59,7 @@ import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
 import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
-import {subsidyCategoryLabel} from '~/utils/enumKeyToName'
+import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 
 export default defineComponent({
   components: {

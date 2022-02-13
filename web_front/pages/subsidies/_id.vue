@@ -79,7 +79,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Card} from 'element-ui'
-import {subsidiesModule} from '~/store'
+import {subsidiesModule} from '@/store'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'

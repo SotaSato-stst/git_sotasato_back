@@ -3,7 +3,7 @@ import {$axios} from '@/store/api'
 import {Prefecture, PrefectureResponse} from '@/types/Prefecture'
 import {City, CityResponse} from '@/types/City'
 import {BusiessCategory, BusiessCategoryResponse} from '@/types/BusiessCategory'
-import {Ministry, MinistryResponse} from '~/types/Ministry'
+import {Ministry, MinistryResponse} from '@/types/Ministry'
 import {useLoader} from '@/services/useLoader'
 
 @Module({

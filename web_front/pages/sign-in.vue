@@ -34,7 +34,7 @@ import {
 } from 'firebase/auth'
 import {notifyError} from '@/services/notify'
 import CookieStore from '@/services/cookieStore'
-import {routingService} from '~/services/routingService'
+import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'SignInPage',

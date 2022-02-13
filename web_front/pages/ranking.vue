@@ -45,7 +45,7 @@
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Pagination, Empty} from 'element-ui'
-import SearchMenu from '~/components/subsidies/SearchMenu.vue'
+import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'

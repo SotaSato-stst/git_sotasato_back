@@ -79,10 +79,10 @@ import {
 } from '@nuxtjs/composition-api'
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
-import {NewUserParams} from '~/types/User'
+import {NewUserParams} from '@/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
-import {routingService} from '~/services/routingService'
-import {usersModule, companiesModule} from '~/store'
+import {routingService} from '@/services/routingService'
+import {usersModule, companiesModule} from '@/store'
 
 export default defineComponent({
   name: 'NewUser',

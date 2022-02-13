@@ -1,7 +1,7 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
 import {UpdateCurrentUserParams, User} from '@/types/User'
-import {useLoader} from '~/services/useLoader'
+import {useLoader} from '@/services/useLoader'
 
 @Module({
   name: 'accountModule',

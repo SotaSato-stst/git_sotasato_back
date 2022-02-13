@@ -1,5 +1,5 @@
 import {PublishingCode, SubsidyCategory} from '@/types/Subsidy'
-import {AccountRole} from '~/types/User'
+import {AccountRole} from '@/types/User'
 
 export const subsidyCategoryLabel = (category: SubsidyCategory) => {
   switch (category) {

@@ -88,9 +88,9 @@ import {
   useRouter,
 } from '@nuxtjs/composition-api'
 import {Table, TableColumn, Pagination, MessageBox} from 'element-ui'
-import CardLoading from '~/components/CardLoading.vue'
+import CardLoading from '@/components/CardLoading.vue'
 import {subsidyDraftsModule} from '@/store'
-import {SubsidyDraft} from '~/types/SubsidyDraft'
+import {SubsidyDraft} from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'

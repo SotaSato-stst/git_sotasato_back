@@ -18,7 +18,7 @@ import {defineComponent, reactive, useRouter} from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button} from 'element-ui'
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import {notifyError, notifySuccess} from '@/services/notify'
-import {routingService} from '~/services/routingService'
+import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'PasswordResetPage',

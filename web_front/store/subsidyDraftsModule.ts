@@ -3,7 +3,7 @@ import {$axios} from '@/store/api'
 import {SubsidyDraft, SubsidyDraftsResponse} from '@/types/SubsidyDraft'
 import {Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
-import {useLoader} from '~/services/useLoader'
+import {useLoader} from '@/services/useLoader'
 
 @Module({
   name: 'subsidyDraftsModule',

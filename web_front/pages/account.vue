@@ -65,10 +65,10 @@ import {
   notifySuccess,
   showApiErrorMessage,
 } from '@/services/notify'
-import {UpdateCurrentUserParams} from '~/types/User'
-import AccountMenu from '~/components/layouts/AccountMenu.vue'
-import {getUser} from '~/services/authService'
-import {routingService} from '~/services/routingService'
+import {UpdateCurrentUserParams} from '@/types/User'
+import AccountMenu from '@/components/layouts/AccountMenu.vue'
+import {getUser} from '@/services/authService'
+import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'AccountPage',

@@ -56,7 +56,7 @@ import {
 } from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button} from 'element-ui'
 import {optionsModule, subsidiesModule} from '@/store'
-import {routingService} from '~/services/routingService'
+import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
 import {removeEmpty} from '@/utils/objectUtil'
 

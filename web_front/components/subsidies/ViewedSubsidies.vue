@@ -9,7 +9,7 @@
 <script lang="ts">
 import {computed, defineComponent} from '@nuxtjs/composition-api'
 import MiniSubsidyCard from '@/components/subsidies/MiniSubsidyCard.vue'
-import {subsidiesModule} from '~/store'
+import {subsidiesModule} from '@/store'
 
 export default defineComponent({
   components: {MiniSubsidyCard},

@@ -6,7 +6,7 @@ import {
   NewUserParams,
   UpdateUserParams,
 } from '@/types/User'
-import {useLoader} from '~/services/useLoader'
+import {useLoader} from '@/services/useLoader'
 import {Pagination} from '@/types/Pagination'
 
 @Module({

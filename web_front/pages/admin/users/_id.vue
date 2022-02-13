@@ -77,7 +77,7 @@ import {
 import {Card, Form, FormItem, Input, Button} from 'element-ui'
 import {usersModule, companiesModule} from '@/store'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
-import {UpdateUserParams} from '~/types/User'
+import {UpdateUserParams} from '@/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
 import {routingService} from '@/services/routingService'
 

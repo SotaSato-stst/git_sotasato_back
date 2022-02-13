@@ -14,7 +14,7 @@ import CompanyForm from '@/components/companies/CompanyForm.vue'
 import {companiesModule} from '@/store'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 import {CompanyParams} from '@/types/Company'
-import {routingService} from '~/services/routingService'
+import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'NewCompanyPage',
