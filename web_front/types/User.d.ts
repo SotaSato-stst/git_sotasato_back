@@ -12,6 +12,12 @@ export type User = {
   company: Company
 }
 
+export type CurrentUser = {
+  displayName: string
+  email: string
+  accountRole: AccountRole
+}
+
 export type UsersResponse = {
   users: User[]
   pagination: Pagination

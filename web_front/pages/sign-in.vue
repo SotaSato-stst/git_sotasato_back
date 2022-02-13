@@ -25,6 +25,7 @@ import {
   reactive,
   useRouter,
   useRoute,
+  onMounted,
 } from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button} from 'element-ui'
 import {
@@ -86,6 +87,10 @@ export default defineComponent({
         'emailとパスワードを確認してください',
       )
     }
+
+    onMounted(() => {
+      CookieStore.clear()
+    })
 
     const passwordResetPath = routingService.PasswordReset()
 

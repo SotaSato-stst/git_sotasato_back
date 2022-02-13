@@ -63,6 +63,7 @@ const accessor: Plugin = ({$axios}) => {
           '操作エラー',
           error.response.data.message || '閲覧権限がありません。',
         )
+        CookieStore.clearAccountRole()
         break
       case 404:
         notifyError('404', 'ページが見つかりません')

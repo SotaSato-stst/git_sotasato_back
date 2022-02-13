@@ -7,8 +7,12 @@
     </span>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item command="account">アカウント情報</el-dropdown-item>
-      <el-dropdown-item command="top" divided>ユーザー画面</el-dropdown-item>
-      <el-dropdown-item command="admin">管理画面</el-dropdown-item>
+      <el-dropdown-item v-if="isAdmin" command="top" divided
+        >ユーザー画面</el-dropdown-item
+      >
+      <el-dropdown-item v-if="isAdmin" command="admin"
+        >管理画面</el-dropdown-item
+      >
       <el-dropdown-item command="sign_out" divided>
         ログアウト
       </el-dropdown-item>
@@ -18,8 +22,15 @@
 
 <script lang="ts">
 import {Dropdown, DropdownItem, Button} from 'element-ui'
-import {defineComponent, useRouter} from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  onUnmounted,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import {getAuth, signOut} from 'firebase/auth'
+import {accountModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {notifyInfo} from '@/services/notify'
 
@@ -33,6 +44,9 @@ export default defineComponent({
     [`${Button.name}`]: Button,
   },
   setup(_props) {
+    const isAdmin = computed(
+      () => accountModule.currentUser?.accountRole === 'admin',
+    )
     const router = useRouter()
     const handleSelect = (value: menuType) => {
       switch (value) {
@@ -53,7 +67,17 @@ export default defineComponent({
       }
     }
 
-    return {handleSelect}
+    onMounted(async () => {
+      if (!accountModule.currentUser) {
+        await accountModule.getCurrentUser()
+      }
+    })
+
+    onUnmounted(() => {
+      accountModule.setCurrentUser(null)
+    })
+
+    return {isAdmin, handleSelect}
   },
 })
 </script>

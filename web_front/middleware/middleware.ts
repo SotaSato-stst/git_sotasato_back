@@ -2,6 +2,7 @@ import {Middleware} from '@nuxt/types'
 import {notifyError, notifyInfo} from '@/services/notify'
 import {routingService} from '@/services/routingService'
 import {getUser} from '@/services/authService'
+import CookieStore from '@/services/cookieStore'
 
 const sessionFreePaths = [
   routingService.SignIn(),
@@ -13,6 +14,12 @@ const middleware: Middleware = async ({route, redirect}) => {
   if (!user && !sessionFreePaths.includes(route.path)) {
     notifyInfo('ログアウトしました', 'ログインが必要です')
     redirect(routingService.SignIn())
+  }
+  if (
+    route.path.startsWith('/admin') &&
+    CookieStore.getAccountRole() !== 'admin'
+  ) {
+    redirect(routingService.Top())
   }
 
   if (window.$nuxt.isOffline) {

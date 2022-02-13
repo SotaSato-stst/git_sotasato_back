@@ -1,7 +1,8 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {UpdateCurrentUserParams, User} from '@/types/User'
+import {UpdateCurrentUserParams, CurrentUser} from '@/types/User'
 import {useLoader} from '@/services/useLoader'
+import CookieStore from '@/services/cookieStore'
 
 @Module({
   name: 'accountModule',
@@ -10,22 +11,25 @@ import {useLoader} from '@/services/useLoader'
 })
 export default class AccountModule extends VuexModule {
   loader = useLoader()
-  currentUser: User | null = null
+  currentUser: CurrentUser | null = null
 
   @Mutation
-  setCurrentUser(currentUser: User) {
+  setCurrentUser(currentUser: CurrentUser | null) {
     this.currentUser = currentUser
+    if (currentUser && currentUser.accountRole !== 'user') {
+      CookieStore.setAccountRole(currentUser.accountRole)
+    }
   }
 
   @Action({rawError: true})
   async getCurrentUser() {
-    const user = await $axios.$get<User>('/current_user')
+    const user = await $axios.$get<CurrentUser>('/current_user')
     this.setCurrentUser(user)
   }
 
   @Action({rawError: true})
   async putCurrentUser(params: UpdateCurrentUserParams) {
-    const user = await $axios.$put<User>('/current_user', {
+    const user = await $axios.$put<CurrentUser>('/current_user', {
       ...params,
     })
     this.setCurrentUser(user)
