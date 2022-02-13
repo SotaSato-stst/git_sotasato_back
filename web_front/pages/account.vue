@@ -54,14 +54,21 @@ import {
   onMounted,
   reactive,
   ref,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Card, Form, FormItem, Input, Button} from 'element-ui'
 import {updateEmail} from 'firebase/auth'
 import {accountModule} from '@/store'
-import {notifySuccess, showApiErrorMessage} from '@/services/notify'
+import {
+  notifyError,
+  notifyInfo,
+  notifySuccess,
+  showApiErrorMessage,
+} from '@/services/notify'
 import {UpdateCurrentUserParams} from '~/types/User'
 import AccountMenu from '~/components/layouts/AccountMenu.vue'
 import {getUser} from '~/services/authService'
+import {routingService} from '~/services/routingService'
 
 export default defineComponent({
   name: 'AccountPage',
@@ -78,6 +85,7 @@ export default defineComponent({
   setup(_props) {
     const form = ref<Form | null>(null)
     const {loading, load} = accountModule.loader
+    const router = useRouter()
     const state: UpdateCurrentUserParams = reactive({
       displayName: '',
       email: '',
@@ -107,12 +115,41 @@ export default defineComponent({
           .then(user => updateEmail(user!, state.email))
           .then(() => accountModule.putCurrentUser(state))
           .then(handleSuccess)
+          .catch(handleFirebaseAuthError)
           .catch(showApiErrorMessage)
       })
     }
 
     const handleSuccess = () => {
       notifySuccess('内容を保存しました', '')
+    }
+
+    const handleFirebaseAuthError = (error: any) => {
+      // https://firebase.google.com/docs/reference/js/v8/firebase.User#updateemail
+      switch (error.code) {
+        case 'auth/requires-recent-login':
+          notifyInfo(
+            'ログイン情報を再入力してください',
+            'ログイン後、登録情報の変更が可能になります',
+          )
+          router.push({
+            path: routingService.SignIn(),
+            query: {redirection: 'account'},
+          })
+          break
+        case 'auth/email-already-in-use':
+          notifyError(
+            '更新に失敗しました',
+            'すでに利用されているメールアドレスです',
+          )
+          break
+        case 'auth/invalid-email':
+          notifyError('更新に失敗しました', 'メールアドレスの形式が不正です')
+          break
+        default:
+          notifyError('更新に失敗しました', '内容をご確認ください')
+          break
+      }
     }
 
     onMounted(() => {

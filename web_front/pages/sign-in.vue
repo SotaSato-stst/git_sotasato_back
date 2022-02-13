@@ -17,11 +17,21 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, useRouter} from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  useRouter,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button} from 'element-ui'
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  UserCredential,
+} from 'firebase/auth'
 import {notifyError} from '@/services/notify'
 import CookieStore from '@/services/cookieStore'
+import {routingService} from '~/services/routingService'
 
 export default defineComponent({
   name: 'SignInPage',
@@ -34,6 +44,7 @@ export default defineComponent({
   layout: 'plain-layout',
   setup(_props) {
     const router = useRouter()
+    const route = useRoute()
     const state = reactive({
       email: '',
       password: '',
@@ -42,19 +53,35 @@ export default defineComponent({
     const signIn = () => {
       const auth = getAuth()
       signInWithEmailAndPassword(auth, state.email, state.password)
-        .then(userCredential => {
-          const user = userCredential.user
-          user.getIdTokenResult().then(res => {
-            CookieStore.setAuth(res.token, res.expirationTime)
-            router.replace('/')
-          })
-        })
-        .catch(_ => {
-          notifyError(
-            'ログインに失敗しました',
-            'emailとパスワードを確認してください',
-          )
-        })
+        .then(handleSuccess)
+        .catch(handleError)
+    }
+
+    const handleSuccess = (userCredential: UserCredential) => {
+      const user = userCredential.user
+      user.getIdTokenResult().then(res => {
+        CookieStore.setAuth(res.token, res.expirationTime)
+        handleRedirect()
+      })
+    }
+
+    const handleRedirect = () => {
+      const redirection = route.value.query.redirection
+      switch (redirection) {
+        case 'account':
+          router.replace(routingService.Account())
+          break
+        default:
+          router.replace(routingService.Top())
+          break
+      }
+    }
+
+    const handleError = () => {
+      notifyError(
+        'ログインに失敗しました',
+        'emailとパスワードを確認してください',
+      )
     }
 
     return {state, signIn}

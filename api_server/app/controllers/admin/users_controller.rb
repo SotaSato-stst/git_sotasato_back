@@ -20,11 +20,7 @@ module Admin
       render :show, status: 201
     rescue StandardError => e
       service.delete!(firebase_uid) if firebase_uid.present? # rollback
-      errors = []
-      case e.message
-      when 'EMAIL_EXISTS'
-        errors << 'メールアドレスはすでに登録されています'
-      end
+      errors = [firebase_error_messages(e)]
       render json: { message: 'ユーザーの作成に失敗しました', errors: errors }, status: 400
     end
 
@@ -52,6 +48,16 @@ module Admin
 
     def set_association
       @user.company ||= Company.where(id: params[:company_id]).first
+    end
+
+    # # https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
+    def firebase_error_messages(error)
+      case error.message
+      when 'EMAIL_EXISTS'
+        'メールアドレスはすでに登録されています'
+      when 'TOO_MANY_ATTEMPTS_TRY_LATER'
+        'しばらく時間を置いてからお試しください'
+      end
     end
   end
 end
