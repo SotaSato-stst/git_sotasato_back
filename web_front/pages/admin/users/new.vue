@@ -122,7 +122,9 @@ export default defineComponent({
         'ユーザーを作成しました',
         `${state.displayName}さんのアカウント`,
       )
-      router.push(routingService.AdminUsers())
+      if (usersModule.user) {
+        router.push(routingService.AdminUserDetail(usersModule.user.id))
+      }
     }
 
     onMounted(() => {

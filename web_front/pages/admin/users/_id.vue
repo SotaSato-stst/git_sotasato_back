@@ -3,9 +3,14 @@
     <el-card v-if="user">
       <div slot="header" class="form-header">
         <p>「{{ user.displayName }}」さんの情報</p>
-        <el-button type="primary" class="submit-button" @click="submit">
-          保存する
-        </el-button>
+        <div class="button-group">
+          <el-button class="submit-button" @click="passwordReset">
+            パスワード設定のメールを送信
+          </el-button>
+          <el-button type="primary" class="submit-button" @click="submit">
+            保存する
+          </el-button>
+        </div>
       </div>
       <el-form
         ref="form"
@@ -19,6 +24,7 @@
             v-model="state.companyId"
             placeholder="選択..."
             class="category-select"
+            :disabled="loading"
           >
             <el-option
               v-for="company in companies"
@@ -33,6 +39,7 @@
             v-model="state.displayName"
             class="input-text"
             placeholder="田中太郎"
+            :disabled="loading"
           />
         </el-form-item>
         <el-form-item label="E-mail">
@@ -49,6 +56,7 @@
             v-model="state.accountRole"
             placeholder="選択..."
             class="category-select"
+            :disabled="loading"
           >
             <el-option
               v-for="accountRole in accountRoleOptions()"
@@ -70,16 +78,19 @@ import {
   onMounted,
   onUnmounted,
   useRoute,
-  useRouter,
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {Card, Form, FormItem, Input, Button} from 'element-ui'
+import {Card, Form, FormItem, Input, Button, MessageBox} from 'element-ui'
+import {getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import {usersModule, companiesModule} from '@/store'
-import {notifySuccess, showApiErrorMessage} from '@/services/notify'
+import {
+  notifyError,
+  notifySuccess,
+  showApiErrorMessage,
+} from '@/services/notify'
 import {UpdateUserParams} from '@/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
-import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'UserDetail',
@@ -94,7 +105,6 @@ export default defineComponent({
   setup(_props) {
     const form = ref<Form | null>(null)
     const route = useRoute()
-    const router = useRouter()
     const {loading, load} = usersModule.loader
     const pageId = Number(route.value.params.id)
     const user = computed(() => usersModule.user)
@@ -107,11 +117,13 @@ export default defineComponent({
     const rules = usersModule.rules
 
     const submit = () => {
-      form.value
-        ?.validate()
-        .then(() => usersModule.putUser(state))
-        .then(handleSuccess)
-        .catch(showApiErrorMessage)
+      load(loading, () => {
+        form.value
+          ?.validate()
+          .then(() => usersModule.putUser(state))
+          .then(handleSuccess)
+          .catch(showApiErrorMessage)
+      })
     }
 
     const handleSuccess = () => {
@@ -119,7 +131,24 @@ export default defineComponent({
         '内容を保存しました',
         `${usersModule.user?.displayName}さんの情報`,
       )
-      router.push(routingService.AdminUsers())
+    }
+
+    const passwordReset = () => {
+      MessageBox.confirm(
+        'お客様へパスワード設定のメールをご案内しますか？',
+        'メール送信',
+      )
+        .then(sendEmail)
+        .catch(_ => {})
+    }
+
+    const sendEmail = () => {
+      const auth = getAuth()
+      sendPasswordResetEmail(auth, usersModule.user!.email)
+        .then(() =>
+          notifySuccess('メールを送信しました', usersModule.user!.email),
+        )
+        .catch(error => notifyError('送信に失敗しました', error.message))
     }
 
     onMounted(() => {
@@ -150,6 +179,7 @@ export default defineComponent({
       rules,
       accountRoleOptions,
       submit,
+      passwordReset,
     }
   },
   head(): object {
@@ -176,5 +206,15 @@ export default defineComponent({
 
 .category-select {
   width: 240px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit-button {
+  height: fit-content;
 }
 </style>

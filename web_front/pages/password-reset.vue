@@ -35,7 +35,6 @@ export default defineComponent({
 
     const submit = () => {
       const auth = getAuth()
-      auth.languageCode = 'ja'
       sendPasswordResetEmail(auth, state.email)
         .then(handleSuccess)
         .catch(handleError)
