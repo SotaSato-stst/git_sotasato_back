@@ -159,4 +159,34 @@ RSpec.describe Subsidy, type: :model do
       end
     end
   end
+  describe 'in_application_period' do
+    subject { Subsidy.in_application_period(checked) }
+
+    context '一致するデータが存在するとき' do
+      let(:checked) { true }
+      let!(:target_record) { create(:subsidy, end_to: '2023-11-22') }
+      let!(:not_target_record) { create(:subsidy, end_to: '2011-11-22') }
+      it 'end_to>Date.todayのsubsidyが抽出される' do
+        expect(subject).to include(target_record)
+      end
+      it 'end_to<Date.todayのsubsidyは抽出されない' do
+        expect(subject).not_to include(not_target_record)
+      end
+    end
+  end
+  describe 'business_category' do
+    subject { Subsidy.search_with_business_category(business_category_keys) }
+    context '一致するデータが存在するとき' do
+      let(:business_category_keys) { 'seizo' }
+      let!(:target_record) { create(:subsidy_business_category, business_category: 'seizo') }
+      let!(:not_target_record) { create(:subsidy_business_category, business_category: 'kensetsu') }
+
+      it '業種がseizoのsubsidyが抽出される' do
+        expect(subject).to include(target_record.subsidy)
+      end
+      it 'seizoではないsubjectは抽出されない' do
+        expect(subject).not_to include(not_target_record.subsidy)
+      end
+    end
+  end
 end

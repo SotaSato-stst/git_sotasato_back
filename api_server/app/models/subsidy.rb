@@ -48,6 +48,8 @@ class Subsidy < ApplicationRecord
     published
       .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])
+      .in_application_period(search_params[:checked])
+      .search_with_business_category(search_params[:business_category_keys])
   }
   scope :search_with_prefecture, ->(prefecture_id) {
     joins(:prefecture).merge(Prefecture.where(id: prefecture_id)) if prefecture_id.present?
@@ -55,7 +57,12 @@ class Subsidy < ApplicationRecord
   scope :search_with_city, ->(city_ids) { # "1|2|3" のような形で受け取る
     joins(:city).merge(City.where(id: city_ids.to_s.split('|'))) if city_ids.present?
   }
-
+  scope :in_application_period, ->(checked) {
+    merge(Subsidy.where(end_to: Date.today..)) if checked.present?
+  }
+  scope :search_with_business_category, ->(business_category_keys) { # "seizo|kensetsu" のような形で受け取る
+    joins(:subsidy_business_categories).merge(SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))) if business_category_keys.present?
+  }
   enum publishing_code: { published: 'published', editing: 'editing' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
