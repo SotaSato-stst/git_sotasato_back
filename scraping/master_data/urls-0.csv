@@ -15,7 +15,7 @@ selector_name,url
 #main,https://www.city.moriya.ibaraki.jp/allNewsList.html
 #main,https://www.city.kawagoe.saitama.jp/allNewsList.html
 #main,https://www.city.tokorozawa.saitama.jp/allNewsList.html
-#main,http://www.city.kasukabe.lg.jp/allNewsList.html
+#main,https://www.city.kasukabe.lg.jp/newslist.html
 #main,https://www.city.matsudo.chiba.jp/allNewsList.html
 #main,http://www.city.abiko.chiba.jp/allNewsList.html
 #main,http://www.city.katori.lg.jp/allNewsList.html
@@ -46,10 +46,10 @@ selector_name,url
 #main,https://www.town.kamiichi.toyama.jp/event-topics/svTopiList.aspx?srch=M
 #main,https://www.city.uenohara.yamanashi.jp/gyosei/topics/info
 #main,https://www.kumamura.com/gyousei
-#main,https://www.city.kitahiroshima.hokkaido.jp/hotnews/backnumber
-#main,https://www.vill.shinshinotsu.hokkaido.jp/hotnews/backnumber
-#main,https://www.town.nanae.hokkaido.jp/hotnews/backnumber
-#main,https://www.town.koshimizu.hokkaido.jp/hotnews/backnumber
+#main,https://www.city.kitahiroshima.hokkaido.jp/hotnews/backnumber/
+#main,https://www.vill.shinshinotsu.hokkaido.jp/hotnews/backnumber/
+#main,https://www.town.nanae.hokkaido.jp/hotnews/backnumber/
+#main,https://www.town.koshimizu.hokkaido.jp/hotnews/backnumber/
 #main,http://www.town.furubira.lg.jp/info
 #main,http://www.city.shobara.hiroshima.jp/info
 #main,https://www.town.itayanagi.aomori.jp/info/index.php
@@ -111,7 +111,7 @@ selector_name,url
 #main,https://www.vill.hirata.fukushima.jp/soshiki/list1-1.html
 #main,http://www.town.fukushima.hokkaido.jp/shigoto/%e5%8a%a9%e6%88%90%e5%88%b6%e5%ba%a6%e3%81%ae%e3%81%8a%e7%9f%a5%e3%82%89%e3%81%9b/
 #main,https://www.town.yoshioka.gunma.jp/topics
-#main,http://www.city.yamatotakada.nara.jp/topics
+#main,https://www.city.yamatotakada.nara.jp/news_list.html
 #main,http://www.town.yakushima.kagoshima.jp/topics-info-list
 #main,https://www.town.nagashima.lg.jp/topinfolist
 #main,https://www.city.hokuto.hokkaido.jp/whatsnew
