@@ -164,6 +164,7 @@ export default defineComponent({
           ministryId: subsidy.ministry?.id,
           prefectureId: subsidy.prefecture?.id,
           cityId: subsidy.city?.id,
+          businessCategories: subsidy.businessCategories.map(b => b.key),
         })
       })
     })

@@ -7,9 +7,9 @@ export const convertToShortJPY = (price: number) => {
   if (price > oku) {
     const underOKuDigitsNumber = 8
     const overDigits = price.toString().length - underOKuDigitsNumber
-    const jpMan = Number(price.toString().substr(overDigits))
+    const jpMan = Number(price.toString().substring(overDigits))
     const underOku = format.format(jpMan)
-    const overOku = format.format(price)
+    const overOku = format.format(price - jpMan)
     return overOku + underOku
   } else {
     return format.format(price)

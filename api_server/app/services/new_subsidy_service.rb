@@ -40,7 +40,7 @@ class NewSubsidyService
 
   def new_url_hashes
     existing_urls = SubsidyDraft.all.pluck(:url) + Subsidy.all.pluck(:url)
-    files.map do |file|
+    hashes = files.map do |file|
       str = file.download
       csv_table = CSV.parse(str.read.force_encoding('UTF-8'), headers: true)
       csv_table.map do |table|
@@ -49,11 +49,12 @@ class NewSubsidyService
         uri = URI.parse(table['url'])
         {
           source_url_domain: "#{uri.scheme}://#{uri.host}",
-          title: table['text'],
-          url: table['url']
+          title: table['text'].gsub(/[[:space:]]/, ''),
+          url: table['url'].gsub(/[[:space:]]/, '')
         }
       end.compact
-    end.flatten
+    end
+    hashes.flatten.uniq { |h| h[:url] }
   end
 
   private

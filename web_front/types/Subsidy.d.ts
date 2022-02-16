@@ -2,6 +2,7 @@ import {Ministry} from './Ministry'
 import {Prefecture} from './Prefecture'
 import {City} from './City'
 import {Pagination} from './Pagination'
+import {BusiessCategory} from './BusiessCategory'
 
 export type SubsidyCategory = 'hojo' | 'josei'
 export type SupplierType = 'ministry' | 'prefecture' | 'city'
@@ -25,6 +26,7 @@ export type Subsidy = {
   ministry: Ministry | null
   prefecture: Prefecture | null
   city: City | null
+  businessCategories: BusiessCategory[]
   favorite: boolean
 }
 

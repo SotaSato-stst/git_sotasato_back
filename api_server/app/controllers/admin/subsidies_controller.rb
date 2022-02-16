@@ -58,6 +58,10 @@ module Admin
       @subsidy.ministry = Ministry.where(id: params[:ministry_id]).first
       @subsidy.prefecture = Prefecture.where(id: params[:prefecture_id]).first
       @subsidy.city = City.where(id: params[:city_id]).first
+      business_category_keys = params.permit(:business_categories)[:business_categories]
+      @subsidy.subsidy_business_categories = business_category_keys.to_a.map do |category|
+        @subsidy.subsidy_business_categories.build(business_category: category)
+      end
     end
 
     def controller_action_authrized?

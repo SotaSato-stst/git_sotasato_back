@@ -66,11 +66,16 @@ class Subsidy < ApplicationRecord
     scope.merge(SubsidyCity.where(city_id: city_ids.to_s.split('|'))).or(city_nil)
   }
   scope :in_application_period, ->(checked) {
-    merge(Subsidy.where(end_to: Date.today..)) if ActiveModel::Type::Boolean.new.cast(checked)
+    return unless ActiveModel::Type::Boolean.new.cast(checked)
+
+    merge(Subsidy.where(end_to: Date.today..).or(Subsidy.where(end_to: nil)))
   }
   scope :search_with_business_category, ->(business_category_keys) { # "seizo|kensetsu" のような形で受け取る
+    return if business_category_keys.blank?
+
+    scope = left_joins(:subsidy_business_categories)
     categories = SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))
-    joins(:subsidy_business_categories).merge(categories) if business_category_keys.present?
+    scope.merge(categories).or(scope.where(subsidy_business_categories: { id: nil }))
   }
   enum publishing_code: { published: 'published', editing: 'editing' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
