@@ -127,8 +127,7 @@ export default defineComponent({
       const businessCategoryKeys = query.businessCategoryKeys
         ?.toString()
         .split('|')
-      const inApplicationPeriod =
-        query.inApplicationPeriod === 'true' || state.inApplicationPeriod
+      const inApplicationPeriod = query.inApplicationPeriod !== 'false'
       Object.assign(state, {
         cityIds,
         prefectureId,
@@ -139,11 +138,12 @@ export default defineComponent({
 
     const search = () => {
       subsidiesModule.setSearchParams(state)
+      const query = removeEmpty(subsidiesModule.searchParams)
+      if (query.inApplicationPeriod === true) {
+        query.inApplicationPeriod = undefined
+      }
       load(loading, () => {
-        router.push({
-          path: routingService.Top(),
-          query: removeEmpty(subsidiesModule.searchParams),
-        })
+        router.push({path: routingService.Top(), query})
         subsidiesModule.getSubsidies()
       })
     }
