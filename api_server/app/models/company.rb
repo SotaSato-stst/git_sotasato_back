@@ -18,10 +18,17 @@
 #  index_companies_on_city_id        (city_id)
 #  index_companies_on_prefecture_id  (prefecture_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (city_id => cities.id)
+#  fk_rails_...  (prefecture_id => prefectures.id)
+#
 class Company < ApplicationRecord
   belongs_to :prefecture
   belongs_to :city
   has_many :company_business_categories, dependent: :destroy
+  has_many :users, dependent: :destroy
+
   enum business_scale: { small_business: 'small_business', small_and_medium: 'small_and_medium', large: 'large' }
 
   def business_categories

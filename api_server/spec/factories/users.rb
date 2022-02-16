@@ -16,6 +16,10 @@
 #  index_users_on_company_id    (company_id)
 #  index_users_on_firebase_uid  (firebase_uid) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
+#
 FactoryBot.define do
   factory :user do
     display_name { '田中太郎' }

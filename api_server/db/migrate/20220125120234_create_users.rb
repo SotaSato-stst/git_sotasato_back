@@ -2,7 +2,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|
       t.string :firebase_uid, null: false, index: {unique: true}
-      t.references :company, null: false
+      t.references :company, null: false, foreign_key: true
       t.string :email, null: false, default: ''
       t.string :display_name, null: false, default: ''
       t.string :account_role, null: false, default: 'user'

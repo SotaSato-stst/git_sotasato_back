@@ -18,6 +18,11 @@
 #  index_companies_on_city_id        (city_id)
 #  index_companies_on_prefecture_id  (prefecture_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (city_id => cities.id)
+#  fk_rails_...  (prefecture_id => prefectures.id)
+#
 require 'rails_helper'
 
 RSpec.describe Company, type: :model do

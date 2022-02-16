@@ -13,6 +13,10 @@
 #  index_subsidy_business_categories_on_subsidy_id  (subsidy_id)
 #  index_unique_subsidy_business_categories         (subsidy_id,business_category) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (subsidy_id => subsidies.id)
+#
 FactoryBot.define do
   factory :subsidy_business_category do
     subsidy { association(:subsidy) }

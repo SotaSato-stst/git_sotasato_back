@@ -14,6 +14,10 @@
 #
 #  index_cities_on_prefecture_id  (prefecture_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (prefecture_id => prefectures.id)
+#
 class City < ApplicationRecord
   include SupplierConcern
   belongs_to :prefecture

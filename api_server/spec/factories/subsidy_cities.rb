@@ -14,6 +14,11 @@
 #  index_subsidy_cities_on_subsidy_id              (subsidy_id)
 #  index_subsidy_cities_on_subsidy_id_and_city_id  (subsidy_id,city_id) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (city_id => cities.id)
+#  fk_rails_...  (subsidy_id => subsidies.id)
+#
 FactoryBot.define do
   factory :subsidy_city do
     association(:subsidy)

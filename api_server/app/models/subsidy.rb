@@ -24,13 +24,13 @@
 #  index_subsidies_on_url  (url) UNIQUE
 #
 class Subsidy < ApplicationRecord
-  has_one :subsidy_ministry
+  has_one :subsidy_ministry, dependent: :destroy
   has_one :ministry, through: :subsidy_ministry
-  has_one :subsidy_prefecture
+  has_one :subsidy_prefecture, dependent: :destroy
   has_one :prefecture, through: :subsidy_prefecture
-  has_one :subsidy_city
+  has_one :subsidy_city, dependent: :destroy
   has_one :city, through: :subsidy_city
-  has_many :user_favorite_subsidies
+  has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidy_business_categories, dependent: :destroy
   has_many :users, through: :user_favorite_subsidies
   validates :title, presence: { message: 'は必須項目です' }

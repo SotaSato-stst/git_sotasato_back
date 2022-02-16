@@ -20,6 +20,12 @@
 #  index_subsidy_drafts_on_ministry_id    (ministry_id)
 #  index_subsidy_drafts_on_prefecture_id  (prefecture_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (city_id => cities.id)
+#  fk_rails_...  (ministry_id => ministries.id)
+#  fk_rails_...  (prefecture_id => prefectures.id)
+#
 require 'rails_helper'
 
 RSpec.describe SubsidyDraft, type: :model do

@@ -159,4 +159,21 @@ ActiveRecord::Schema.define(version: 2022_02_09_120006) do
     t.index ["firebase_uid"], name: "index_users_on_firebase_uid", unique: true
   end
 
+  add_foreign_key "cities", "prefectures"
+  add_foreign_key "companies", "cities"
+  add_foreign_key "companies", "prefectures"
+  add_foreign_key "company_business_categories", "companies"
+  add_foreign_key "subsidy_business_categories", "subsidies"
+  add_foreign_key "subsidy_cities", "cities"
+  add_foreign_key "subsidy_cities", "subsidies"
+  add_foreign_key "subsidy_drafts", "cities"
+  add_foreign_key "subsidy_drafts", "ministries"
+  add_foreign_key "subsidy_drafts", "prefectures"
+  add_foreign_key "subsidy_ministries", "ministries"
+  add_foreign_key "subsidy_ministries", "subsidies"
+  add_foreign_key "subsidy_prefectures", "prefectures"
+  add_foreign_key "subsidy_prefectures", "subsidies"
+  add_foreign_key "user_favorite_subsidies", "subsidies"
+  add_foreign_key "user_favorite_subsidies", "users"
+  add_foreign_key "users", "companies"
 end

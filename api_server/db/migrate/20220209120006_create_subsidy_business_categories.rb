@@ -1,7 +1,7 @@
 class CreateSubsidyBusinessCategories < ActiveRecord::Migration[6.1]
   def change
     create_table :subsidy_business_categories do |t|
-      t.references :subsidy, null: false
+      t.references :subsidy, null: false, foreign_key: true
       t.string :business_category, null: false
       t.timestamps
 

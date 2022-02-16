@@ -13,6 +13,10 @@
 #  index_company_business_categories_on_company_id  (company_id)
 #  index_unique_company_business_categories         (company_id,business_category) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
+#
 FactoryBot.define do
   factory :company_business_category do
     company { association(:company) }

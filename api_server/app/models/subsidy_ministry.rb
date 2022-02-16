@@ -14,6 +14,11 @@
 #  index_subsidy_ministries_on_subsidy_id                  (subsidy_id)
 #  index_subsidy_ministries_on_subsidy_id_and_ministry_id  (subsidy_id,ministry_id) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (ministry_id => ministries.id)
+#  fk_rails_...  (subsidy_id => subsidies.id)
+#
 class SubsidyMinistry < ApplicationRecord
   belongs_to :ministry
   belongs_to :subsidy

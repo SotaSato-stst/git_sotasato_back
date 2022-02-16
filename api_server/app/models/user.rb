@@ -16,9 +16,13 @@
 #  index_users_on_company_id    (company_id)
 #  index_users_on_firebase_uid  (firebase_uid) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
+#
 class User < ApplicationRecord
   belongs_to :company
-  has_many :user_favorite_subsidies
+  has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidies, through: :user_favorite_subsidies
 
   enum account_role: { user: 'user', editor: 'editor', admin: 'admin' } # editor: 補助金情報の入力者, admin: 社内の管理者
