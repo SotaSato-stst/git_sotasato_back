@@ -24,7 +24,7 @@ require 'rails_helper'
 RSpec.describe SubsidyMinistry, type: :model do
   describe '#create' do
     it do
-      expect(create(:subsidy_ministry)).to be_present
+      expect(create(:subsidy_ministry, :with_association)).to be_present
     end
   end
 end

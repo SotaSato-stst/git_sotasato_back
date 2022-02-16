@@ -174,7 +174,7 @@ RSpec.describe Subsidy, type: :model do
       end
     end
   end
-  describe 'business_category' do
+  describe 'search_with_business_category' do
     subject { Subsidy.search_with_business_category(business_category_keys) }
     context '一致するデータが存在するとき' do
       let(:business_category_keys) { 'seizo' }
@@ -187,6 +187,36 @@ RSpec.describe Subsidy, type: :model do
       it 'seizoではないsubjectは抽出されない' do
         expect(subject).not_to include(not_target_record.subsidy)
       end
+    end
+  end
+
+  describe 'search_by_user' do
+    subject { Subsidy.search_by_user(params) }
+
+    let(:prefecture) { create(:prefecture) }
+    let(:city) { create(:city) }
+    let(:city2) { create(:city) }
+    let(:business_category_keys) { %w[seizo] }
+    let(:params) do
+      {
+        prefecture_id: prefecture.id,
+        city_ids: [city.id, city2.id].join('|'),
+        in_application_period: false,
+        business_category_keys: business_category_keys.join('|')
+      }
+    end
+
+    before do
+      create(:subsidy, prefecture: prefecture)
+      create(:subsidy, prefecture: prefecture, business_categories: business_category_keys)
+      create(:subsidy, prefecture: prefecture, city: city, business_categories: business_category_keys)
+      create(:subsidy, prefecture: prefecture, city: city2)
+      create(:subsidy, business_categories: business_category_keys)
+      create(:subsidy, business_categories: business_category_keys)
+    end
+
+    it 'includes targets' do
+      expect(subject.count).to eq 4
     end
   end
 end

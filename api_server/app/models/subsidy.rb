@@ -46,16 +46,24 @@ class Subsidy < ApplicationRecord
   scope :published, -> { where(publishing_code: 'published') }
   scope :search_by_user, ->(search_params) {
     published
-      .search_with_prefecture(search_params[:prefecture_id])
-      .search_with_city(search_params[:city_ids])
       .in_application_period(search_params[:in_application_period])
       .search_with_business_category(search_params[:business_category_keys])
+      .search_with_prefecture(search_params[:prefecture_id])
+      .search_with_city(search_params[:city_ids])
   }
   scope :search_with_prefecture, ->(prefecture_id) {
-    joins(:prefecture).merge(Prefecture.where(id: prefecture_id)) if prefecture_id.present?
+    return if prefecture_id.blank?
+
+    scope = left_joins(:subsidy_prefecture)
+    prefecture_nil = scope.where(subsidy_prefectures: { id: nil })
+    scope.merge(SubsidyPrefecture.where(prefecture_id: prefecture_id)).or(prefecture_nil)
   }
-  scope :search_with_city, ->(city_ids) { # "1|2|3" のような形で受け取る
-    joins(:city).merge(City.where(id: city_ids.to_s.split('|'))) if city_ids.present?
+  scope :search_with_city, ->(city_ids) {
+    return if city_ids.blank?
+
+    scope = left_joins(:subsidy_city)
+    city_nil = scope.where(subsidy_cities: { id: nil })
+    scope.merge(SubsidyCity.where(city_id: city_ids.to_s.split('|'))).or(city_nil)
   }
   scope :in_application_period, ->(checked) {
     merge(Subsidy.where(end_to: Date.today..)) if ActiveModel::Type::Boolean.new.cast(checked)

@@ -21,7 +21,9 @@
 #
 FactoryBot.define do
   factory :subsidy_city do
-    association(:subsidy)
-    association(:city)
+    trait :with_association do
+      subsidy { association(:subsidy) }
+      city { association(:city) }
+    end
   end
 end

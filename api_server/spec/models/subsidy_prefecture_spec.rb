@@ -24,7 +24,7 @@ require 'rails_helper'
 RSpec.describe SubsidyPrefecture, type: :model do
   describe '#crate' do
     it do
-      expect(create(:subsidy_prefecture)).to be_present
+      expect(create(:subsidy_prefecture, :with_association)).to be_present
     end
   end
 end

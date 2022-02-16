@@ -21,7 +21,9 @@
 #
 FactoryBot.define do
   factory :subsidy_ministry do
-    association(:subsidy)
-    association(:ministry)
+    trait :with_association do
+      subsidy { association(:subsidy) }
+      ministry { association(:ministry) }
+    end
   end
 end

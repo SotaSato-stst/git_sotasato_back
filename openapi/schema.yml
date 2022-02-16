@@ -528,22 +528,27 @@ components:
           format: date
           description: 募集期間（終了日）
           example: "2022-02-01"
+          nullable: true
         price_max:
           type: integer
           description: 最大支援金額
           example: 60000000
+          nullable: true
         support_ratio_min:
           type: string
           description: 支援割合（最小）
           example: 1/2
+          nullable: true
         support_ratio_max:
           type: string
           description: 支援割合（最大）
           example: 3/4
+          nullable: true
         level:
           type: integer
           description: 申請難易度
           example: 4
+          nullable: true
         detail:
           type: string
           description: 詳細文章

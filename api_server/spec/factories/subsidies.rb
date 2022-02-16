@@ -33,7 +33,29 @@ FactoryBot.define do
     level { '4' }
     detail { 'アイウエオ' }
     target_detail { '対象の説明文' }
+    price_max { 10_000_000 }
     subsidy_category { 'hojo' }
-    supplier_type { nil }
+
+    transient do
+      ministry { nil }
+      prefecture { nil }
+      city { nil }
+      business_categories { nil }
+    end
+
+    subsidy_ministry do |this|
+      association(:subsidy_ministry, subsidy: this.instance, ministry: ministry) if ministry
+    end
+    subsidy_prefecture do |this|
+      association(:subsidy_prefecture, subsidy: this.instance, prefecture: prefecture) if prefecture
+    end
+    subsidy_city do |this|
+      association(:subsidy_city, subsidy: this.instance, city: city) if city
+    end
+    subsidy_business_categories do |this|
+      business_categories.to_a.map do |category|
+        association(:subsidy_business_category, subsidy: this.instance, business_category: category)
+      end
+    end
   end
 end
