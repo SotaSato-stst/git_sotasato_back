@@ -61,7 +61,8 @@ class Subsidy < ApplicationRecord
     merge(Subsidy.where(end_to: Date.today..)) if ActiveModel::Type::Boolean.new.cast(checked)
   }
   scope :search_with_business_category, ->(business_category_keys) { # "seizo|kensetsu" のような形で受け取る
-    joins(:subsidy_business_categories).merge(SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))) if business_category_keys.present?
+    categories = SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))
+    joins(:subsidy_business_categories).merge(categories) if business_category_keys.present?
   }
   enum publishing_code: { published: 'published', editing: 'editing' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
