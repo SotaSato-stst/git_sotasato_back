@@ -825,7 +825,19 @@ components:
         account_role:
           "$ref": "#/components/schemas/account_role"
         company:
-          "$ref": "#/components/schemas/company"
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: integer
+              description: id
+              example: 1
+            name:
+              type: string
+              description: 会社名
+              example: つくば株式会社
     account_role:
       type: string
       description: アカウント種類

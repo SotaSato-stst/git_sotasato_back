@@ -200,7 +200,7 @@ RSpec.describe Subsidy, type: :model do
     let(:params) do
       {
         prefecture_id: prefecture.id,
-        city_ids: [city.id, city2.id].join('|'),
+        city_ids: [city.id].join('|'),
         in_application_period: false,
         business_category_keys: business_category_keys.join('|')
       }
@@ -208,15 +208,15 @@ RSpec.describe Subsidy, type: :model do
 
     before do
       create(:subsidy, prefecture: prefecture)
-      create(:subsidy, prefecture: prefecture, business_categories: business_category_keys)
-      create(:subsidy, prefecture: prefecture, city: city, business_categories: business_category_keys)
+      create(:subsidy, prefecture: create(:prefecture))
+      create(:subsidy, prefecture: prefecture, city: city)
       create(:subsidy, prefecture: prefecture, city: city2)
       create(:subsidy, business_categories: business_category_keys)
-      create(:subsidy, business_categories: business_category_keys)
+      create(:subsidy, business_categories: %w[gyogyo])
     end
 
     it 'includes targets' do
-      expect(subject.count).to eq 4
+      expect(subject.count).to eq 3
     end
   end
 end

@@ -1,7 +1,7 @@
 module Admin
   class SubsidiesController < ApplicationController
     def index
-      scope = Subsidy.all.includes(:ministry, :prefecture, :city)
+      scope = Subsidy.all.includes(:ministry, :prefecture, :city, :subsidy_business_categories)
       @items_total = scope.count
       @subsidies = scope.page(params[:page]).per(20)
     end

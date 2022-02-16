@@ -1,7 +1,7 @@
 module Admin
   class CompaniesController < ApplicationController
     def index
-      scope = Company.all.includes(:prefecture, :city)
+      scope = Company.all.includes(:prefecture, :city, :company_business_categories)
       @items_total = scope.count
       @companies = scope.page(params[:page]).per(20)
     end
