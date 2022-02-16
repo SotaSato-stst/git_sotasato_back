@@ -37,6 +37,28 @@
           />
         </el-select>
       </div>
+      <div class="search-item">
+        <div class="search-label">業種</div>
+        <el-select
+          v-model="state.businessCategoryKeys"
+          multiple
+          placeholder="業種"
+          :disabled="loading"
+          class="category-select"
+        >
+          <el-option
+            v-for="businessCategory in businessCategoryKeys"
+            :key="businessCategory.key"
+            :label="businessCategory.name"
+            :value="businessCategory.key"
+          />
+        </el-select>
+      </div>
+      <div class="search-item">
+        <el-checkbox v-model="state.inApplicationPeriod">
+          募集期間中のみに絞る
+        </el-checkbox>
+      </div>
       <el-button class="search-button" type="primary" @click="search">
         以上の条件で検索
       </el-button>
@@ -54,7 +76,7 @@ import {
   useRouter,
   reactive,
 } from '@nuxtjs/composition-api'
-import {Form, FormItem, Input, Button} from 'element-ui'
+import {Form, FormItem, Input, Button, Checkbox} from 'element-ui'
 import {optionsModule, subsidiesModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
@@ -67,6 +89,7 @@ export default defineComponent({
     [`${FormItem.name}`]: FormItem,
     [`${Input.name}`]: Input,
     [`${Button.name}`]: Button,
+    [`${Checkbox.name}`]: Checkbox,
   },
   layout: 'admin',
   setup(_props) {
@@ -75,6 +98,9 @@ export default defineComponent({
     const router = useRouter()
     const {loading, load} = subsidiesModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
+    const businessCategoryKeys = computed(
+      () => optionsModule.businessCategories,
+    )
     const selectPrefectureId = (prefectureId: number | null) => {
       if (prefectureId) {
         optionsModule.getCities(prefectureId)
@@ -85,16 +111,30 @@ export default defineComponent({
     const state: SubsidySearchForm = reactive({
       prefectureId: null,
       cityIds: [],
+      inApplicationPeriod: true,
+      businessCategoryKeys: [],
     })
 
     const setStateFromQuery = () => {
       const prefectureIdQuery = Number(query.prefectureId)
       const prefectureId =
-        isNaN(prefectureIdQuery) || prefectureIdQuery === 0
+        isNaN(prefectureIdQuery) ||
+        prefectureIdQuery === 0 ||
+        prefectureIdQuery > 47
           ? null
           : prefectureIdQuery
       const cityIds = query.cityIds?.toString().split('|').map(Number)
-      Object.assign(state, {cityIds, prefectureId})
+      const businessCategoryKeys = query.businessCategoryKeys
+        ?.toString()
+        .split('|')
+      const inApplicationPeriod =
+        query.inApplicationPeriod === 'true' || state.inApplicationPeriod
+      Object.assign(state, {
+        cityIds,
+        prefectureId,
+        inApplicationPeriod,
+        businessCategoryKeys,
+      })
     }
 
     const search = () => {
@@ -110,6 +150,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, async () => {
+        await optionsModule.getBusinessCategories()
         await optionsModule.getPrefectures()
         if (route.value.path === routingService.Top()) {
           setStateFromQuery()
@@ -130,6 +171,7 @@ export default defineComponent({
       loading,
       prefectures,
       selectPrefectureId,
+      businessCategoryKeys,
       cities,
       state,
       search,

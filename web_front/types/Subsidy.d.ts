@@ -32,16 +32,19 @@ export type SubsidiesResponse = {
   subsidies: Subsidy[]
   pagination: Pagination
 }
-
 // APIで投げるフォーマット
 export type SubsidySearchQuery = {
   prefectureId: string | null
   cityIds: string | null // 1|2|3のような形
+  inApplicationPeriod: boolean
+  businessCategoryKeys: string | null
 }
 // フォームで取り扱うフォーマット
 export type SubsidySearchForm = {
   prefectureId: number | null
   cityIds: number[]
+  inApplicationPeriod: boolean
+  businessCategoryKeys: string[]
 }
 
 export type UpdateSubsidyParams = {
