@@ -5,7 +5,7 @@
     </el-aside>
     <el-main>
       <div class="container">
-        <div class="title">新着の情報一覧</div>
+        <div class="title">新着の情報一覧 ({{ pagination.itemsTotal }}件)</div>
         <card-loading :loading="loading" />
         <div v-for="subsidy in subsidies" :key="subsidy.id">
           <subsidy-card v-if="!loading" :subsidy="subsidy" />
