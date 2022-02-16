@@ -16,12 +16,12 @@ class TokenVerifier
   end
 
   def execute
-    response_json.each do |kid, public_key|
+    response_json.each do |_, public_key|
       cert = OpenSSL::X509::Certificate.new(public_key)
       jwt = JWT.decode(@token, cert.public_key, true, option)
 
       return jwt[0]['user_id'] # firebaseのuid
-    rescue OpenSSL::X509::CertificateError, JWT::DecodeError => e
+    rescue OpenSSL::X509::CertificateError, JWT::DecodeError
       next
     end
 
