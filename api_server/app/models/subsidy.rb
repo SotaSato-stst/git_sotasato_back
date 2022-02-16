@@ -48,7 +48,7 @@ class Subsidy < ApplicationRecord
     published
       .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])
-      .in_application_period(search_params[:checked])
+      .in_application_period(search_params[:in_application_period])
       .search_with_business_category(search_params[:business_category_keys])
   }
   scope :search_with_prefecture, ->(prefecture_id) {
@@ -58,7 +58,7 @@ class Subsidy < ApplicationRecord
     joins(:city).merge(City.where(id: city_ids.to_s.split('|'))) if city_ids.present?
   }
   scope :in_application_period, ->(checked) {
-    merge(Subsidy.where(end_to: Date.today..)) if checked.present?
+    merge(Subsidy.where(end_to: Date.today..)) if ActiveModel::Type::Boolean.new.cast(checked)
   }
   scope :search_with_business_category, ->(business_category_keys) { # "seizo|kensetsu" のような形で受け取る
     joins(:subsidy_business_categories).merge(SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))) if business_category_keys.present?

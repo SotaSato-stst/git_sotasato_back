@@ -31,6 +31,8 @@ export default class SubsidiesModule extends VuexModule {
   searchParams: SubsidySearchQuery = {
     prefectureId: null,
     cityIds: '',
+    inApplicationPeriod: true,
+    businessCategoryKeys: '',
   }
 
   @Mutation
@@ -50,10 +52,12 @@ export default class SubsidiesModule extends VuexModule {
   }
 
   @Mutation
-  setSearchParams(form: SubsidySearchForm) {
+  setSearchParams(state: SubsidySearchForm) {
     this.searchParams = {
-      prefectureId: form.prefectureId?.toString() || null,
-      cityIds: form.cityIds?.join('|') || null,
+      prefectureId: state.prefectureId?.toString() || null,
+      cityIds: state.cityIds?.join('|') || null,
+      inApplicationPeriod: state.inApplicationPeriod,
+      businessCategoryKeys: state.businessCategoryKeys?.join('|') || null,
     }
   }
 
