@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
       @current_user = User.find_by!(firebase_uid: uid)
       @token = token
     end
-  rescue TokenVerifier::InvalidTokenError
+  rescue TokenVerifier::InvalidTokenError, ActiveRecord::RecordNotFound
     render json: { message: 'ログインが必要です' }, status: 401
   end
 
