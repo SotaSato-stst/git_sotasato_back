@@ -50,4 +50,11 @@ export default defineComponent({
 .favorite {
   float: right;
 }
+
+.favorite.is-plain:hover,
+.favorite.is-plain:focus {
+  color: #e6a23c;
+  background: #fdf6ec;
+  border-color: #f5dab1;
+}
 </style>
