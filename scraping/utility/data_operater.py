@@ -18,6 +18,8 @@ class DataOperater:
         new_urls = [url for url in current_urls if url not in uploaded_urls]
 
         new_df = df[df['url'].isin(new_urls)]
+        new_df.drop_duplicates(subset='url', inplace=True)
+
         for _, row in new_df.iterrows():
             self.slack.notify_new_content(row['text'], row['url'])
 
