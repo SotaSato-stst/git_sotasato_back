@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'api_server/**'
+      - '.github/workflows/rails_test.yml'
 jobs:
   test:
     timeout-minutes: 10
