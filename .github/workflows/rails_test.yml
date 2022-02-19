@@ -6,6 +6,9 @@ on:
       - '.github/workflows/rails_test.yml'
 jobs:
   test:
+    defaults:
+      run:
+        working-directory: api_server
     timeout-minutes: 10
     runs-on: ubuntu-latest
     env:
@@ -27,9 +30,7 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
-      - name: Go to rails repo
-        run: cd api_server
       - name: Set up database schema
-        run: bundle exec rails db:test:prepare
+        run: bin/rails db:test:prepare
       - name: Run tests
         run: bundle exec rspec spec
