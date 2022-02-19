@@ -28,6 +28,7 @@ export type Subsidy = {
   city: City | null
   businessCategories: BusiessCategory[]
   favorite: boolean
+  rankingScore: number | null
 }
 
 export type SubsidiesResponse = {
@@ -67,4 +68,5 @@ export type UpdateSubsidyParams = {
   cityId: number | null
   supplierType: SupplierType
   businessCategories: string[]
+  rankingScore: number | null
 }

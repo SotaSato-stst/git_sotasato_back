@@ -50,7 +50,8 @@ module Admin
         :support_ratio_max,
         :level,
         :detail,
-        :target_detail
+        :target_detail,
+        :ranking_score
       )
     end
 

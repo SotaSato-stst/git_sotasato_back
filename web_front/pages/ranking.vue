@@ -50,7 +50,7 @@ import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
 import IconCrown from '@/components/icons/IconCrown.vue'
-import {subsidiesModule} from '@/store'
+import {rankingSubsidiesModule} from '@/store'
 
 export default defineComponent({
   name: 'RankingPage',
@@ -67,17 +67,16 @@ export default defineComponent({
     IconCrown,
   },
   setup(_props) {
-    const {loading, load} = subsidiesModule.loader
-    const rankings = computed(() => subsidiesModule.subsidies)
+    const {loading, load} = rankingSubsidiesModule.loader
+    const rankings = computed(() => rankingSubsidiesModule.rankingSubsidies)
     const rankingColors = [
       'var(--color-gold)',
       'var(--color-silver)',
       'var(--color-bronze)',
     ]
-
     onMounted(() => {
       load(loading, () => {
-        subsidiesModule.getSubsidies()
+        rankingSubsidiesModule.getRankingSubsidies()
       })
     })
 

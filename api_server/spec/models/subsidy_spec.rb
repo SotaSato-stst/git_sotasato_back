@@ -8,6 +8,7 @@
 #  level             :integer
 #  price_max         :integer
 #  publishing_code   :string(255)      not null
+#  ranking_score     :integer
 #  start_from        :date             not null
 #  subsidy_category  :string(255)
 #  supplier_type     :string(255)

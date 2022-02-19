@@ -206,6 +206,14 @@
         @change="levelChanged()"
       />
     </el-form-item>
+    <el-form-item label="ランキング点数" prop="rankingScore">
+      <el-input
+        v-model="state.rankingScore"
+        type="number"
+        class="input-number input-number-text-align-center"
+        :disabled="loading"
+      />
+    </el-form-item>
   </el-form>
 </template>
 
