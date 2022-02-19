@@ -30,6 +30,8 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Install gems
+        run: bundle install
       - name: Set up database schema
         run: bin/rails db:test:prepare
       - name: Run tests
