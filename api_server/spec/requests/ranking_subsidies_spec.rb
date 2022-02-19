@@ -69,7 +69,7 @@ RSpec.describe 'ranking_subsidies API', type: :request do
     it 'returns object' do
       subject
       titles_order = json['subsidies'].map { |s| s['title'] }
-      expect(titles_order).to match_array %w[1st 2nd 3rd]
+      expect(titles_order).to match %w[1st 2nd 3rd]
     end
   end
 end
