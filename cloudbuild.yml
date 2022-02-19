@@ -1,0 +1,12 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'gcloud config set app/cloud_build_timeout 1000 && cd api_server && gcloud app deploy']
+  env:
+    - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
+    - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
+    - PRODUCTION_FIREBASE_PROJECT_ID=${_PRODUCTION_FIREBASE_PROJECT_ID}
+    - PRODUCTION_FIREBASE_API_KEY=${_PRODUCTION_FIREBASE_API_KEY}
+    - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
+    - PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}
+timeout: '1200s'
