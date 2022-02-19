@@ -28,7 +28,9 @@ class ApplicationController < ActionController::API
     return false unless params[:controller].start_with?('tasks/')
 
     cron = request.headers['X-Appengine-Cron']
-    unless ActiveModel::Type::Boolean.new.cast(cron)
+    if ActiveModel::Type::Boolean.new.cast(cron)
+      true
+    else
       render json: {}, status: 401
     end
   end
