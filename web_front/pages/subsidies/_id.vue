@@ -18,6 +18,18 @@
                   {{ convertToShortJPY(subsidy.priceMax) }}円
                 </span>
               </span>
+              <span v-if="subsidy.supportRatioMax" class="header-info">
+                <span class="label">
+                  最大支援割合:
+                  {{ subsidy.supportRatioMax }}
+                </span>
+              </span>
+              <span v-if="subsidy.supportRatioMin" class="header-info">
+                <span class="label">
+                  最小支援割合:
+                  {{ subsidy.supportRatioMin }}
+                </span>
+              </span>
               <span v-if="subsidy.level" class="header-info">
                 <span class="label">
                   申請難易度:{{ starView(subsidy.level) }}
