@@ -1,0 +1,3 @@
+firebase_project_id: <%= ENV["PRODUCTION_FIREBASE_PROJECT_ID"] %>
+firebaes_api_key: <%= ENV["PRODUCTION_FIREBASE_API_KEY"] %>
+scraping_bucket: <%= ENV["PRODUCTION_SCRAPING_BUCKET"] %>

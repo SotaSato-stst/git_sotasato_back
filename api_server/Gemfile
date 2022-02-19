@@ -6,12 +6,15 @@ ruby '3.0.3'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'mysql2', '~> 0.5'
 gem 'puma', '~> 5.0'
+gem 'config'
 gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jwt'
 gem 'kaminari'
 gem 'rack-cors'
+gem 'dotenv-rails'
 gem 'google-cloud-storage'
+gem 'appengine', '~> 0.6.0'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -23,7 +26,6 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem 'annotate'
   gem 'committee-rails'
-  gem 'dotenv-rails'
 end
 
 group :development do

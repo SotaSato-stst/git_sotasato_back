@@ -1,13 +1,14 @@
 import {initializeApp} from 'firebase/app'
-require('dotenv').config()
+const environment = process.env.NODE_ENV || 'development'
+const envSet = require(`./../environments/${environment}.ts`)
 
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SNDER_ID,
-  appId: process.env.APP_ID,
+  apiKey: envSet.apiKey,
+  authDomain: envSet.authDomain,
+  projectId: envSet.projectId,
+  storageBucket: envSet.storageBucket,
+  messagingSenderId: envSet.messagingSenderId,
+  appId: envSet.appId,
 }
 
 initializeApp(firebaseConfig)

@@ -7,7 +7,7 @@ require 'net/http'
 class TokenVerifier
   class InvalidTokenError < StandardError; end
   GOOGLE_TOKEN_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'.freeze
-  FIREBASE_PROJECT_ID = ENV['FIREBASE_PROJECT_ID']
+  FIREBASE_PROJECT_ID = Settings.firebase_project_id
 
   def initialize(token)
     raise InvalidTokenError if token.blank?

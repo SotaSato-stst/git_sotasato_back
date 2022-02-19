@@ -1,12 +1,9 @@
 require 'csv'
 
-ActiveRecord::Base.logger = Logger.new($stdout)
-Rails.logger.level = Logger::DEBUG
-
 if Ministry.count.zero?
   CSV.open('db/seeds/ministries.csv', headers: true).to_a.each do |row|
-    ministry = Ministry.find_or_initialize_by(name: row['name'])
-    ministry.update(
+    Ministry.create(
+      name: row['name'],
       logo_url: row['logo_url'],
       url_domain: row['url_domain'] || ''
     )
@@ -14,8 +11,8 @@ if Ministry.count.zero?
 end
 if Prefecture.count.zero?
   CSV.open('db/seeds/prefectures.csv', headers: true).to_a.each do |row|
-    prefecture = Prefecture.find_or_initialize_by(id: row['id'])
-    prefecture.update(
+    Prefecture.create(
+      id: row['id'],
       name: row['name'],
       logo_url: row['logo_url'] || '',
       url_domain: row['url_domain'] || ''
@@ -24,8 +21,8 @@ if Prefecture.count.zero?
 end
 if City.count.zero?
   CSV.open('db/seeds/cities.csv', headers: true).to_a.each do |row|
-    city = City.find_or_initialize_by(name: row['name'])
-    city.update(
+    City.create(
+      name: row['name'],
       prefecture_id: row['prefecture_id'],
       logo_url: row['logo_url'] || '',
       url_domain: row['url_domain'] || ''

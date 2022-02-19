@@ -1,7 +1,7 @@
 class FirebaseAccountService
   class AccountError < StandardError; end
 
-  FIREBASE_API_KEY = ENV['FIREBASE_API_KEY']
+  FIREBASE_API_KEY = Settings.firebaes_api_key
   SIGNUP_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp'.freeze
   DELETE_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:delete'.freeze
 

@@ -50,3 +50,6 @@ Style/Lambda:
 
 Style/EmptyCaseCondition:
   Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false

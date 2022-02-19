@@ -58,4 +58,9 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  config.google_cloud.use_logging = false
+  config.google_cloud.use_debugger = false
+  config.google_cloud.use_error_reporting = false
+  config.google_cloud.use_trace = false
 end
