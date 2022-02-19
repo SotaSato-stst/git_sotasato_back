@@ -2,7 +2,7 @@ require 'google/cloud/storage'
 require 'csv'
 
 class NewSubsidyService
-  BUCKET_NAME = ENV['NEW_SUBSIDY_BUCKET']
+  BUCKET_NAME = Settings.scraping_bucket
 
   def initialize(scraping_date)
     @scraping_date = scraping_date
@@ -60,7 +60,11 @@ class NewSubsidyService
   private
 
   def storage
-    @storage ||= Google::Cloud::Storage.new(credentials: 'config/credentials/google.json')
+    if Rails.env.production?
+      @storage ||= Google::Cloud::Storage.new
+    else
+      @storage ||= Google::Cloud::Storage.new(credentials: 'config/credentials/google.json')
+    end
   end
 
   def bucket

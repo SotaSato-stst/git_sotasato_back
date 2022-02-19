@@ -80,4 +80,9 @@ Rails.application.configure do
   }
 
   config.hosts << 'http://localhost:8080'
+
+  config.google_cloud.use_logging = false
+  config.google_cloud.use_debugger = false
+  config.google_cloud.use_error_reporting = false
+  config.google_cloud.use_trace = false
 end
