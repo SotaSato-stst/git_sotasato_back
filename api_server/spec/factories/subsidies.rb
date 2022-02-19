@@ -36,6 +36,7 @@ FactoryBot.define do
     target_detail { '対象の説明文' }
     price_max { 10_000_000 }
     subsidy_category { 'hojo' }
+    ranking_score { 30 }
 
     transient do
       ministry { nil }
