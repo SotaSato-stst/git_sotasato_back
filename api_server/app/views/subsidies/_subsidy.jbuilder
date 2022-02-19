@@ -14,7 +14,8 @@ json.call(
   :target_detail,
   :subsidy_category,
   :supplier_type,
-  :business_categories
+  :business_categories,
+  :ranking_score
 )
 
 json.ministry do

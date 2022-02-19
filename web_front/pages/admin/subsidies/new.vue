@@ -85,6 +85,7 @@ export default defineComponent({
       cityId: null,
       supplierType: 'ministry',
       businessCategories: [],
+      rankingScore: 50,
     })
 
     const submit = (publishingCode: PublishingCode) => {

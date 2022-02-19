@@ -60,6 +60,7 @@ if Rails.env.development?
       ※比較対象とする月についても、柔軟な取り扱いとする特例措置があります。３．労使間の協定に基づき休業などを実施し、休業手当を支払っている',
       subsidy_category: 'josei',
       supplier_type: 'ministry',
+      ranking_score: 50,
       business_categories: ['kensetsu']
     },
     {
@@ -87,6 +88,7 @@ if Rails.env.development?
       ・事業場内最低賃金≧地域別最低賃金＋３０円',
       subsidy_category: 'hojo',
       supplier_type: 'ministry',
+      ranking_score: 50,
       business_categories: ['seizo']
     },
     {
@@ -113,6 +115,7 @@ if Rails.env.development?
       ※風営法第２条第６項に規定する店舗型性風俗特殊営業を営む者は除く',
       subsidy_category: 'hojo',
       supplier_type: 'prefecture',
+      ranking_score: 50,
       business_categories: ['kensetsu']
     },
     {
@@ -140,6 +143,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      ranking_score: 50,
       business_categories: ['seizo', 'hotel_insyoku']
     },
     {
@@ -167,6 +171,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      ranking_score: 50,
       business_categories: ['seizo']
     },
     {
@@ -194,6 +199,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      ranking_score: 50,
       business_categories: ['kensetsu']
     },
     {
@@ -221,6 +227,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'prefecture',
+      ranking_score: 50,
       business_categories: ['seizo']
     },
     {
@@ -248,6 +255,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      ranking_score: 50,
       business_categories: ['kensetsu']
     },
     {
@@ -275,6 +283,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      ranking_score: 50,
       business_categories: ['gyogyo']
     },
     {
@@ -302,6 +311,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      ranking_score: 50,
       business_categories: ['gyogyo']
     },
     {
@@ -329,6 +339,7 @@ if Rails.env.development?
       target_detail: '集落営農組織、農地所有適格法人、認定農業者、農業協同組合等',
       subsidy_category: 'hojo',
       supplier_type: 'city',
+      ranking_score: 50,
       business_categories: ['seizo'],
     },
   ]
@@ -352,7 +363,8 @@ if Rails.env.development?
       detail: hash[:detail],
       target_detail: hash[:target_detail],
       subsidy_category: hash[:subsidy_category],
-      supplier_type: hash[:supplier_type]
+      supplier_type: hash[:supplier_type],
+      ranking_score: hash[:ranking_score],
     )
   end
   company_hashes = [

@@ -3,6 +3,7 @@ import {Store} from 'vuex'
 import {getModule} from 'vuex-module-decorators'
 import SubsidiesModule from '@/store/subsidiesModule'
 import FavoriteSubsidiesModule from '@/store/favoriteSubsidiesModule'
+import RankingSubsidiesModule from '@/store/rankingSubsidiesModule'
 import AccountModule from '@/store/accountModule'
 import AdminSubsidiesModule from '@/store/adminSubsidiesModule'
 import SubsidyDraftsModule from '@/store/subsidyDraftsModule'
@@ -12,6 +13,7 @@ import OptionsModule from '@/store/optionsModule'
 
 let subsidiesModule: SubsidiesModule
 let favoriteSubsidiesModule: FavoriteSubsidiesModule
+let rankingSubsidiesModule: RankingSubsidiesModule
 let accountModule: AccountModule
 let adminSubsidiesModule: AdminSubsidiesModule
 let subsidyDraftsModule: SubsidyDraftsModule
@@ -22,6 +24,7 @@ let optionsModule: OptionsModule
 function initialiseStores(store: Store<any>): void {
   subsidiesModule = getModule(SubsidiesModule, store)
   favoriteSubsidiesModule = getModule(FavoriteSubsidiesModule, store)
+  rankingSubsidiesModule = getModule(RankingSubsidiesModule, store)
   accountModule = getModule(AccountModule, store)
   adminSubsidiesModule = getModule(AdminSubsidiesModule, store)
   subsidyDraftsModule = getModule(SubsidyDraftsModule, store)
@@ -34,6 +37,7 @@ export {
   initialiseStores,
   subsidiesModule,
   favoriteSubsidiesModule,
+  rankingSubsidiesModule,
   accountModule,
   adminSubsidiesModule,
   subsidyDraftsModule,

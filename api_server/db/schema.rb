@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 2022_02_09_120006) do
     t.text "target_detail", null: false
     t.string "subsidy_category"
     t.string "supplier_type"
+    t.integer "ranking_score"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
