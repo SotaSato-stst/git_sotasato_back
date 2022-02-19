@@ -2,14 +2,24 @@
   <div class="container">
     <div class="title-header">
       <div class="title">未対応の新着情報 一覧</div>
-      <el-button
-        type="danger"
-        size="mini"
-        :disabled="selectedSubsidyDrafts.length === 0"
-        @click="archiveAll()"
-      >
-        まとめてアーカイブする
-      </el-button>
+      <div>
+        <el-button
+          v-if="isAdmin"
+          size="mini"
+          :disabled="loading"
+          @click="requestNewSubsidy()"
+        >
+          最新情報を取得
+        </el-button>
+        <el-button
+          type="danger"
+          size="mini"
+          :disabled="selectedSubsidyDrafts.length === 0"
+          @click="archiveAll()"
+        >
+          まとめてアーカイブする
+        </el-button>
+      </div>
     </div>
     <card-loading :loading="loading" />
     <el-table
@@ -89,7 +99,7 @@ import {
 } from '@nuxtjs/composition-api'
 import {Table, TableColumn, Pagination, MessageBox} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
-import {subsidyDraftsModule} from '@/store'
+import {subsidyDraftsModule, accountModule} from '@/store'
 import {SubsidyDraft} from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -107,6 +117,7 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const {loading, load} = subsidyDraftsModule.loader
+    const isAdmin = computed(() => accountModule.isAdmin)
     const subsidyDrafts = computed(() => subsidyDraftsModule.subsidyDrafts)
     const selectedSubsidyDrafts = computed(
       () => subsidyDraftsModule.selectedSubsidyDrafts,
@@ -170,6 +181,22 @@ export default defineComponent({
       subsidyDraftsModule.getSubsidyDrafts()
     }
 
+    const requestNewSubsidy = () => {
+      MessageBox.prompt(
+        `
+Slackに新着通知が来ているのに、この画面に表示されてない場合にだけ使ってください。
+この場でスクレイピングが走るわけではなく、スクレイピング済みのデータをこの画面へ同期します。'
+`,
+        '最新情報を取得しますか？',
+        {inputType: 'date'},
+      )
+        .then(async (date: any) => {
+          await subsidyDraftsModule.getNewSubsidy(date.value)
+          subsidyDraftsModule.getSubsidyDrafts()
+        })
+        .catch(_ => {})
+    }
+
     onMounted(() => {
       load(loading, () => {
         subsidyDraftsModule.getSubsidyDrafts()
@@ -178,6 +205,7 @@ export default defineComponent({
 
     return {
       loading,
+      isAdmin,
       subsidyDrafts,
       selectedSubsidyDrafts,
       pagination,
@@ -187,6 +215,7 @@ export default defineComponent({
       handleSelectionChange,
       archive,
       archiveAll,
+      requestNewSubsidy,
       convertToJpDate,
     }
   },

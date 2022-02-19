@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
-  before_action :verify_token, :check_permission
+  before_action :verify_token, :check_permission, unless: :request_from_cron?
 
   def verify_token
     authenticate_or_request_with_http_token do |token, _|
@@ -22,5 +22,14 @@ class ApplicationController < ActionController::API
 
   def controller_action_authrized?
     raise '各controllerで定義すること'
+  end
+
+  def request_from_cron?
+    return false unless params[:controller].start_with?('tasks/')
+
+    cron = request.headers['X-Appengine-Cron']
+    unless ActiveModel::Type::Boolean.new.cast(cron)
+      render json: {}, status: 401
+    end
   end
 end

@@ -71,4 +71,9 @@ export default class SubsidyDraftsModule extends VuexModule {
     const res = await $axios.$post<Subsidy>('/admin/subsidies', params)
     return res.id
   }
+
+  @Action({rawError: true})
+  async getNewSubsidy(date: string) {
+    await $axios.$get('/admin/new_subsidy', {params: {date}})
+  }
 }
