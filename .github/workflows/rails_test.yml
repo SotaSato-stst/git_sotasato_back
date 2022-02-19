@@ -1,0 +1,36 @@
+name: "Rails test"
+on:
+  push:
+    paths:
+      - 'api_server/**'
+      - '.github/workflows/rails_test.yml'
+jobs:
+  test:
+    defaults:
+      run:
+        working-directory: api_server
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      RUBY_VERSION: 3.0.3
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: api_server_test
+        ports:
+          - 3306:3306
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+        with:
+          bundler-cache: true
+          ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Set up database schema
+        run: bin/rails db:test:prepare
+      - name: Run tests
+        run: bundle exec rspec spec
