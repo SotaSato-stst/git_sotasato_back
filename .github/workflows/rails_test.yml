@@ -33,10 +33,7 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
-      - name: Install gems
-        run: |
-          bundle config set clean 'true'
-          bundle install --jobs 4 --retry 3
+        working-directory: api_server
       - name: Database setup
         run: |
           mv config/database.ci.yml config/database.yml
