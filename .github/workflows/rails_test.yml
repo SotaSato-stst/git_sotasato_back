@@ -37,6 +37,7 @@ jobs:
         run: bundle install --jobs 4 --retry 3
       - name: Database setup
         run: |
+          sudo systemctl start mysql
           mv config/database.ci.yml config/database.yml
           bundle exec rails db:setup
       - name: Run rspec
