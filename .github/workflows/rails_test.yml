@@ -14,6 +14,7 @@ jobs:
     env:
       RAILS_ENV: test
       RUBY_VERSION: 3.0.3
+      BUNDLE_GEMFILE: api_server/Gemfile
     services:
       mysql:
         image: mysql:5.7
@@ -26,6 +27,13 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
+      - name: set MySQL sql_mode
+        run: |
+          mysql --ssl-mode=DISABLE --protocol=tcp --host 127.0.0.1 --user=root --password=root mysql <<SQL
+          SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';
+          SET GLOBAL character_set_server = 'utf8mb4';
+          SET GLOBAL collation_server = 'utf8mb4_general_ci';
+          SQL
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install Ruby
@@ -33,11 +41,8 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
-      - name: Install gems
-        run: bundle install --jobs 4 --retry 3
       - name: Database setup
         run: |
-          sudo systemctl start mysql
           mv config/database.ci.yml config/database.yml
           bundle exec rails db:setup
       - name: Run rspec
