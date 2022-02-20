@@ -6,6 +6,9 @@ on:
       - '.github/workflows/rails_test.yml'
 jobs:
   rspec:
+    defaults:
+      run:
+        working-directory: api_server
     timeout-minutes: 10
     runs-on: ubuntu-latest
     env:
@@ -24,7 +27,8 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - name: Set sql_mode
+      - name: set MySQL sql_mode
+        working-directory: ~
         run: |
           mysql --ssl-mode=DISABLE --protocol=tcp --host 127.0.0.1 --user=root --password=root mysql <<SQL
           SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';
@@ -39,10 +43,8 @@ jobs:
           bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
       - name: Database setup
-        working-directory: api_server
         run: |
           mv config/database.ci.yml config/database.yml
           bundle exec rails db:setup
       - name: Run rspec
-        working-directory: api_server
         run: bundle exec rspec --force-color --format progress
