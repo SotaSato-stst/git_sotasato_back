@@ -31,6 +31,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: set MySQL sql_mode
+        run: |
+          mysql --ssl-mode=DISABLE --protocol=tcp --host 127.0.0.1 --user=root --password=root mysql <<SQL
+          SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';
+          SET GLOBAL character_set_server = 'utf8mb4';
+          SET GLOBAL collation_server = 'utf8mb4_general_ci';
+          SQL
       - name: Install Ruby
         uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
         with:
