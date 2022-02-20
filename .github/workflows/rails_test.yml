@@ -5,7 +5,7 @@ on:
       - 'api_server/**'
       - '.github/workflows/rails_test.yml'
 jobs:
-  test:
+  rspec:
     defaults:
       run:
         working-directory: api_server
@@ -18,22 +18,28 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_DATABASE: api_server_test
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-        ports:
-          - 3306:3306
-        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+          MYSQL_ROOT_PASSWORD: root
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd "mysqladmin ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Install Ruby and gems
+      - name: Install Ruby
         uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
         with:
           bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
       - name: Install gems
-        run: bundle install
-      - name: Set up database schema
-        run: bundle exec rails db:test:prepare
-      - name: Run tests
-        run: bundle exec rspec spec
+        run: |
+          bundle config set clean 'true'
+          bundle install --jobs 4 --retry 3
+      - name: Database setup
+        run: |
+          mv config/database.ci.yml config/database.yml
+          bundle exec rails db:setup
+      - name: Run rspec
+        run: bundle exec rspec --force-color --format progress

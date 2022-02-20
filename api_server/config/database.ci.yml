@@ -1,0 +1,10 @@
+default: &default
+  adapter: mysql2
+  username: root
+
+test:
+  <<: *default
+  database: api_server_test
+  password: root
+  host: mysql
+  port: 3306
