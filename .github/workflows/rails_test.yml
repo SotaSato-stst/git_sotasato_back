@@ -21,7 +21,8 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: root
-        ports: ['3306:3306']
+        ports:
+          - '3306:3306'
         options: >-
           --health-cmd "mysqladmin ping"
           --health-interval 10s
@@ -30,13 +31,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Set sql_mode
-        run: |
-          mysql --ssl-mode=DISABLE --protocol=tcp --host 127.0.0.1 --user=root --password=root mysql <<SQL
-          SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';
-          SET GLOBAL character_set_server = 'utf8mb4';
-          SET GLOBAL collation_server = 'utf8mb4_general_ci';
-          SQL
       - name: Install Ruby
         uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
         with:
@@ -46,6 +40,8 @@ jobs:
         run: |
           bundle install --jobs 4 --retry 3
       - name: Create database
+        env:
+          DATABASE_PORT: 3306
         run: |
           mv config/database.ci.yml config/database.yml
           bundle exec rails db:setup
