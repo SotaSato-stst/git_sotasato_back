@@ -1,33 +1,42 @@
 require 'csv'
 
 if Ministry.count.zero?
-  CSV.open('db/seeds/ministries.csv', headers: true).to_a.each do |row|
-    Ministry.create(
+  instances = CSV.open('db/seeds/ministries.csv', headers: true).to_a.map do |row|
+    {
       name: row['name'],
       logo_url: row['logo_url'],
-      url_domain: row['url_domain'] || ''
-    )
+      url_domain: row['url_domain'] || '',
+      created_at: Time.now,
+      updated_at: Time.now
+    }
   end
+  Ministry.insert_all instances
 end
 if Prefecture.count.zero?
-  CSV.open('db/seeds/prefectures.csv', headers: true).to_a.each do |row|
-    Prefecture.create(
+  instances = CSV.open('db/seeds/prefectures.csv', headers: true).to_a.map do |row|
+    {
       id: row['id'],
       name: row['name'],
       logo_url: row['logo_url'] || '',
-      url_domain: row['url_domain'] || ''
-    )
+      url_domain: row['url_domain'] || '',
+      created_at: Time.now,
+      updated_at: Time.now
+    }
   end
+  Prefecture.insert_all instances
 end
 if City.count.zero?
-  CSV.open('db/seeds/cities.csv', headers: true).to_a.each do |row|
-    City.create(
+  instances = CSV.open('db/seeds/cities.csv', headers: true).to_a.map do |row|
+    {
       name: row['name'],
       prefecture_id: row['prefecture_id'],
       logo_url: row['logo_url'] || '',
-      url_domain: row['url_domain'] || ''
-    )
+      url_domain: row['url_domain'] || '',
+      created_at: Time.now,
+      updated_at: Time.now
+    }
   end
+  City.insert_all instances
 end
 
 # 開発用のテストデータ
