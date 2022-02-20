@@ -26,6 +26,7 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem 'annotate'
   gem 'committee-rails'
+  gem 'database_cleaner-active_record'
 end
 
 group :development do
