@@ -38,11 +38,11 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Change directory
+        run: cd api_server
       - name: Database setup
-        working-directory: api_server
         run: |
           mv config/database.ci.yml config/database.yml
           bundle exec rails db:setup
       - name: Run rspec
-        working-directory: api_server
         run: bundle exec rspec --force-color --format progress
