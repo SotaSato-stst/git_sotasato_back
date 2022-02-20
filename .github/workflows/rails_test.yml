@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: set MySQL sql_mode
+      - name: Set sql_mode
         run: |
           mysql --ssl-mode=DISABLE --protocol=tcp --host 127.0.0.1 --user=root --password=root mysql <<SQL
           SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';
