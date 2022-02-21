@@ -4,6 +4,7 @@
 #
 #  id           :bigint           not null, primary key
 #  account_role :string(255)      default("user"), not null
+#  disabled     :boolean          default(FALSE)
 #  display_name :string(255)      default(""), not null
 #  email        :string(255)      default(""), not null
 #  firebase_uid :string(255)      not null
@@ -26,4 +27,6 @@ class User < ApplicationRecord
   has_many :subsidies, through: :user_favorite_subsidies
 
   enum account_role: { user: 'user', editor: 'editor', admin: 'admin' } # editor: 補助金情報の入力者, admin: 社内の管理者
+
+  scope :activated, -> { where(disabled: false) }
 end

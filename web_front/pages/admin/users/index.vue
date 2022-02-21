@@ -20,6 +20,12 @@
           {{ accountRoleLabel(scope.row.accountRole) }}
         </template>
       </el-table-column>
+      <el-table-column prop="disabled" label="利用可否">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.disabled" type="danger">停止中</el-tag>
+          <el-tag v-if="!scope.row.disabled" type="success">利用可能</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row)">編集</el-button>
@@ -46,7 +52,7 @@ import {
   onMounted,
   useRouter,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Pagination} from 'element-ui'
+import {Table, TableColumn, Pagination, Tag} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import {usersModule} from '@/store'
 import {routingService} from '@/services/routingService'
@@ -59,6 +65,7 @@ export default defineComponent({
     [`${Table.name}`]: Table,
     [`${TableColumn.name}`]: TableColumn,
     [`${Pagination.name}`]: Pagination,
+    [`${Tag.name}`]: Tag,
     CardLoading,
   },
   layout: 'admin',

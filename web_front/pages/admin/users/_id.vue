@@ -12,6 +12,9 @@
           </el-button>
         </div>
       </div>
+      <el-alert v-if="state.disabled" type="error">
+        このアカウントは停止中です
+      </el-alert>
       <el-form
         ref="form"
         class="form"
@@ -66,6 +69,9 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="利用停止" prop="disabled">
+          <el-checkbox v-model="state.disabled" />
+        </el-form-item>
       </el-form>
     </el-card>
   </div>
@@ -81,7 +87,15 @@ import {
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {Card, Form, FormItem, Input, Button, MessageBox} from 'element-ui'
+import {
+  Card,
+  Form,
+  FormItem,
+  Input,
+  Button,
+  MessageBox,
+  Alert,
+} from 'element-ui'
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import {usersModule, companiesModule} from '@/store'
 import {
@@ -100,6 +114,7 @@ export default defineComponent({
     [`${FormItem.name}`]: FormItem,
     [`${Input.name}`]: Input,
     [`${Button.name}`]: Button,
+    [`${Alert.name}`]: Alert,
   },
   layout: 'admin',
   setup(_props) {
@@ -113,6 +128,7 @@ export default defineComponent({
       displayName: '',
       accountRole: 'user',
       companyId: null,
+      disabled: false,
     })
     const rules = usersModule.rules
 
@@ -171,6 +187,7 @@ export default defineComponent({
             displayName: user.displayName,
             accountRole: user.accountRole,
             companyId: user.company.id,
+            disabled: user.disabled,
           })
         }
         companiesModule.getCompanies()

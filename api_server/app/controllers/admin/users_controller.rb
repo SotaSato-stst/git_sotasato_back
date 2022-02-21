@@ -43,7 +43,9 @@ module Admin
     end
 
     def update_user_params
-      params.permit(:display_name, :account_role) # emailはユーザー自身で更新可能
+      user_params = params.permit(:display_name, :account_role) # emailはユーザー自身で更新可能
+      user_params[:disabled] = ActiveModel::Type::Boolean.new.cast(params[:disabled])
+      user_params
     end
 
     def set_association

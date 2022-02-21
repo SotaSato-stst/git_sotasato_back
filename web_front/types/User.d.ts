@@ -9,6 +9,7 @@ export type User = {
   displayName: string
   email: string
   accountRole: AccountRole
+  disabled: boolean
   company: Company
 }
 
@@ -35,6 +36,7 @@ export type UpdateUserParams = {
   displayName: string
   accountRole: AccountRole
   companyId: number | null
+  disabled: boolean
 }
 
 export type UpdateCurrentUserParams = {
