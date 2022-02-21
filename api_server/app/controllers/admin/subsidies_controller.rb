@@ -63,6 +63,10 @@ module Admin
       @subsidy.subsidy_business_categories = business_category_keys.to_a.map do |category|
         @subsidy.subsidy_business_categories.build(business_category: category)
       end
+      keywords = params.permit(:keywords)[:keywords]
+      @subsidy.subsidy_keywords = keywords.to_a.map do |content|
+        @subsidy.subsidy_keywords.build(content: content)
+      end
     end
 
     def controller_action_authrized?

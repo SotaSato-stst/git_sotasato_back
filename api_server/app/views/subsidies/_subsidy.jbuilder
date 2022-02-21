@@ -15,6 +15,7 @@ json.call(
   :subsidy_category,
   :supplier_type,
   :business_categories,
+  :keywords,
   :ranking_score
 )
 
