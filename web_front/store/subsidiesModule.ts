@@ -85,4 +85,10 @@ export default class SubsidiesModule extends VuexModule {
     const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}`)
     this.setSubsidy(subsidy)
   }
+
+  @Action({rawError: true})
+  async getSubsidyPreview(id: number) {
+    const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}/preview`)
+    this.setSubsidy(subsidy)
+  }
 }

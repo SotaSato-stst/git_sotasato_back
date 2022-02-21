@@ -121,7 +121,11 @@ export default defineComponent({
     const subsidy = computed(() => subsidiesModule.subsidy)
 
     onMounted(async () => {
-      await subsidiesModule.getSubsidy(pageId).catch(_ => router.push('/'))
+      if (route.value.query.preview === 'true') {
+        await subsidiesModule.getSubsidyPreview(pageId)
+      } else {
+        await subsidiesModule.getSubsidy(pageId).catch(_ => router.push('/'))
+      }
       if (subsidiesModule.subsidy) {
         subsidiesModule.addViewedSubsidies(subsidiesModule.subsidy)
       }

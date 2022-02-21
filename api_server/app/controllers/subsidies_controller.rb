@@ -13,6 +13,11 @@ class SubsidiesController < ApplicationController
     @current_user_favorite_ids = current_user.user_favorite_subsidies.pluck(:subsidy_id)
   end
 
+  def preview
+    @subsidy = Subsidy.find(params[:id])
+    render :show
+  end
+
   private
 
   def search_params
@@ -20,6 +25,8 @@ class SubsidiesController < ApplicationController
   end
 
   def controller_action_authrized?
+    return false if params[:action] == 'preview' && current_user.user?
+
     current_user.present?
   end
 

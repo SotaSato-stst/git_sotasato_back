@@ -17,9 +17,18 @@
             class="submit-button"
             size="small"
             :disabled="loading"
-            @click="preview(subsidy.id)"
+            @click="show(subsidy.id)"
           >
             掲載中のページを確認
+          </el-button>
+          <el-button
+            v-if="subsidy.publishingCode == 'editing'"
+            class="submit-button"
+            size="small"
+            :disabled="loading"
+            @click="preview(subsidy.id)"
+          >
+            プレビュー
           </el-button>
           <el-button
             class="submit-button"
@@ -148,8 +157,15 @@ export default defineComponent({
       adminSubsidiesModule.getSubsidy(pageId)
     }
 
-    const preview = (subsidyId: number) => {
+    const show = (subsidyId: number) => {
       router.push(routingService.SubsidyDetail(subsidyId))
+    }
+
+    const preview = (subsidyId: number) => {
+      router.push({
+        path: routingService.SubsidyDetail(subsidyId),
+        query: {preview: 'true'},
+      })
     }
 
     onMounted(() => {
@@ -183,6 +199,7 @@ export default defineComponent({
       subsidy,
       subsidyParams,
       submit,
+      show,
       preview,
       publishingCodeLabel,
     }
