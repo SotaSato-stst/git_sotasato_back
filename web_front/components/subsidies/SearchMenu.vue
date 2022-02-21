@@ -163,13 +163,14 @@ export default defineComponent({
       load(loading, async () => {
         await optionsModule.getBusinessCategories()
         await optionsModule.getPrefectures()
-        if (route.value.path === routingService.Top()) {
-          setStateFromQuery()
-          if (state.prefectureId) {
-            optionsModule.getCities(state.prefectureId)
-          }
-          search()
+        if (route.value.path !== routingService.Top()) {
+          return
         }
+        setStateFromQuery()
+        if (state.prefectureId) {
+          optionsModule.getCities(state.prefectureId)
+        }
+        search()
       })
     })
 

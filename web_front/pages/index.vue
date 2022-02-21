@@ -12,7 +12,7 @@
         </div>
         <el-empty
           v-if="!loading && subsidies.length == 0"
-          description="データがありません"
+          description="条件に当てはまるデータがありません"
         />
         <el-pagination
           v-if="!loading && subsidies.length > 0 && !loading"
