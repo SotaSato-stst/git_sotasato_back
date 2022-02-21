@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 2022_02_21_083745) do
 
   create_table "subsidy_keywords", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "subsidy_id", null: false
-    t.bigint "keyword_id", null: false
+    t.bigint "keyword_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["keyword_id"], name: "index_subsidy_keywords_on_keyword_id"
@@ -199,7 +199,6 @@ ActiveRecord::Schema.define(version: 2022_02_21_083745) do
   add_foreign_key "subsidy_drafts", "cities"
   add_foreign_key "subsidy_drafts", "ministries"
   add_foreign_key "subsidy_drafts", "prefectures"
-  add_foreign_key "subsidy_keywords", "keywords"
   add_foreign_key "subsidy_keywords", "subsidies"
   add_foreign_key "subsidy_ministries", "ministries"
   add_foreign_key "subsidy_ministries", "subsidies"

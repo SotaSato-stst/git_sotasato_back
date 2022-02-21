@@ -5,7 +5,7 @@
 #  id         :bigint           not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  keyword_id :bigint           not null
+#  keyword_id :bigint
 #  subsidy_id :bigint           not null
 #
 # Indexes
@@ -16,7 +16,6 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (keyword_id => keywords.id)
 #  fk_rails_...  (subsidy_id => subsidies.id)
 #
 FactoryBot.define do

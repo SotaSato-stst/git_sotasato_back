@@ -20,6 +20,6 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class SearchedKeyword < ApplicationRecord
-  belongs_to :keyword
+  belongs_to :keyword, optional: true
   belongs_to :user
 end
