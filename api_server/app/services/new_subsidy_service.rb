@@ -44,13 +44,14 @@ class NewSubsidyService
       str = file.download
       csv_table = CSV.parse(str.read.force_encoding('UTF-8'), headers: true)
       csv_table.map do |table|
-        next if existing_urls.include?(table['url'])
+        url = table['url'].gsub(/[[:space:]]/, '')
+        next if existing_urls.include?(url)
 
-        uri = URI.parse(table['url'].gsub(/[[:space:]]/, ''))
+        uri = URI.parse(url)
         {
           source_url_domain: "#{uri.scheme}://#{uri.host}",
           title: table['text'].gsub(/[[:space:]]/, ''),
-          url: table['url'].gsub(/[[:space:]]/, '')
+          url: url
         }
       rescue URI::InvalidURIError
         Rails.logger.error("invalid url #{table['url']}")
