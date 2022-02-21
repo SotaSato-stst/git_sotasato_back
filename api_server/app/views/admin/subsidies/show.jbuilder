@@ -1,1 +1,1 @@
-json.partial! 'subsidies/subsidy', subsidy: @subsidy
+json.partial! 'admin/subsidies/subsidy', subsidy: @subsidy

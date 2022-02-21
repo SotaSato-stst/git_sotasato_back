@@ -98,7 +98,7 @@ class Subsidy < ApplicationRecord
   end
 
   def keywords
-    subsidy_keywords.includes(:keyword).map { |sk| sk.keyword.content }
+    subsidy_keywords.map { |sk| sk.keyword.content }
   end
 
   def start_from_cannot_be_greater_than_end_to
