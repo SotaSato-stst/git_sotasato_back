@@ -10,8 +10,9 @@
 #
 # Indexes
 #
-#  index_subsidy_keywords_on_keyword_id  (keyword_id)
-#  index_subsidy_keywords_on_subsidy_id  (subsidy_id)
+#  index_subsidy_keywords_on_keyword_id                 (keyword_id)
+#  index_subsidy_keywords_on_subsidy_id                 (subsidy_id)
+#  index_subsidy_keywords_on_subsidy_id_and_keyword_id  (subsidy_id,keyword_id) UNIQUE
 #
 # Foreign Keys
 #

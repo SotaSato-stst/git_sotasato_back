@@ -49,6 +49,7 @@ class Subsidy < ApplicationRecord
   scope :search_by_user, ->(search_params) {
     published
       .in_application_period(search_params[:in_application_period])
+      .search_by_keyword(search_params[:keyword])
       .search_with_business_category(search_params[:business_category_keys])
       .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])

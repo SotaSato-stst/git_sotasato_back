@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2022_02_21_083745) do
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["content"], name: "index_keywords_on_content", unique: true
   end
 
   create_table "ministries", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -141,6 +142,7 @@ ActiveRecord::Schema.define(version: 2022_02_21_083745) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["keyword_id"], name: "index_subsidy_keywords_on_keyword_id"
+    t.index ["subsidy_id", "keyword_id"], name: "index_subsidy_keywords_on_subsidy_id_and_keyword_id", unique: true
     t.index ["subsidy_id"], name: "index_subsidy_keywords_on_subsidy_id"
   end
 

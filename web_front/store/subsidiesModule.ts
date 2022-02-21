@@ -33,6 +33,7 @@ export default class SubsidiesModule extends VuexModule {
     cityIds: '',
     inApplicationPeriod: true,
     businessCategoryKeys: '',
+    keyword: '',
   }
 
   @Mutation
@@ -58,6 +59,7 @@ export default class SubsidiesModule extends VuexModule {
       cityIds: state.cityIds?.join('|') || null,
       inApplicationPeriod: state.inApplicationPeriod,
       businessCategoryKeys: state.businessCategoryKeys?.join('|') || null,
+      keyword: state.keyword,
     }
   }
 

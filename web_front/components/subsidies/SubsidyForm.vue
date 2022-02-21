@@ -195,6 +195,16 @@
         :disabled="loading"
       />
     </el-form-item>
+    <el-form-item label="検索キーワード" prop="keywords">
+      <el-input
+        v-model="state.keywords"
+        type="textarea"
+        class="input-text"
+        :autosize="{minRows: 2}"
+        :disabled="loading"
+      />
+      <div>スペースまたは改行で単語ごとに登録</div>
+    </el-form-item>
     <el-form-item label="申請難易度" prop="level">
       <el-rate
         v-model="level"
