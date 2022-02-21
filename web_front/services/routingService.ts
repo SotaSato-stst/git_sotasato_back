@@ -21,4 +21,5 @@ export const routingService: {
   AdminUsers: () => '/admin/users',
   AdminNewUser: () => '/admin/users/new',
   AdminUserDetail: (id: number) => `/admin/users/${id}`,
+  AdminSearchedKeywords: () => '/admin/searched_keywords',
 } as const

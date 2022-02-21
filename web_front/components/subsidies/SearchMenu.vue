@@ -3,6 +3,14 @@
     <div class="search-title">補助金情報検索</div>
     <el-form class="form" :model="state" label-width="120px">
       <div class="search-item">
+        <div class="search-label">検索</div>
+        <el-input
+          v-model="state.keyword"
+          placeholder="フリーワード"
+          clearable
+        />
+      </div>
+      <div class="search-item">
         <div class="search-label">都道府県</div>
         <el-select
           v-if="prefectures.length > 0"
@@ -113,6 +121,7 @@ export default defineComponent({
       cityIds: [],
       inApplicationPeriod: true,
       businessCategoryKeys: [],
+      keyword: '',
     })
 
     const setStateFromQuery = () => {
@@ -128,11 +137,13 @@ export default defineComponent({
         ?.toString()
         .split('|')
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
+      const keyword = query.keyword?.toString()
       Object.assign(state, {
         cityIds,
         prefectureId,
         inApplicationPeriod,
         businessCategoryKeys,
+        keyword,
       })
     }
 
@@ -152,13 +163,14 @@ export default defineComponent({
       load(loading, async () => {
         await optionsModule.getBusinessCategories()
         await optionsModule.getPrefectures()
-        if (route.value.path === routingService.Top()) {
-          setStateFromQuery()
-          if (state.prefectureId) {
-            optionsModule.getCities(state.prefectureId)
-          }
-          search()
+        if (route.value.path !== routingService.Top()) {
+          return
         }
+        setStateFromQuery()
+        if (state.prefectureId) {
+          optionsModule.getCities(state.prefectureId)
+        }
+        search()
       })
     })
 

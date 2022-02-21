@@ -1,7 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe 'Subsidies API', type: :request do
-  let(:user) { create(:user) }
+RSpec.describe 'Admin Subsidies', type: :request do
+  let(:sign_in_user) { create(:user, :admin) }
+
+  before do
+    sign_in_with(sign_in_user)
+  end
+
   let(:ministry) { create(:ministry, name: '経済産業省') }
   let!(:subsidy) do
     create(
@@ -23,17 +28,8 @@ RSpec.describe 'Subsidies API', type: :request do
     )
   end
 
-  before do
-    sign_in_with(user)
-  end
-
   describe 'GET /subsidies' do
-    subject { get '/subsidies' }
-
-    it 'returns correct response' do
-      subject
-      assert_response_schema_confirm(200)
-    end
+    subject { get '/admin/subsidies' }
 
     it 'returns object' do
       subject
@@ -42,6 +38,7 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['subsidies'][0]['ministry']['name']).to eq '経済産業省'
       expect(json['subsidies'][0]['start_from']).to eq '2022-01-12'
       expect(json['subsidies'][0]['end_to']).to eq '2023-01-15'
+      expect(json['subsidies'][0]['publishing_code']).to eq 'published'
       expect(json['subsidies'][0]['price_max']).to eq 30
       expect(json['subsidies'][0]['support_ratio_min']).to eq '20'
       expect(json['subsidies'][0]['support_ratio_max']).to eq '40'
@@ -54,12 +51,7 @@ RSpec.describe 'Subsidies API', type: :request do
   end
 
   describe 'GET /subsidies/:id' do
-    subject { get "/subsidies/#{subsidy.id}" }
-
-    it 'returns correct response' do
-      subject
-      assert_response_schema_confirm(200)
-    end
+    subject { get "/admin/subsidies/#{subsidy.id}" }
 
     it 'returns object' do
       subject
@@ -68,6 +60,7 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['ministry']['name']).to eq '経済産業省'
       expect(json['start_from']).to eq '2022-01-12'
       expect(json['end_to']).to eq '2023-01-15'
+      expect(json['publishing_code']).to eq 'published'
       expect(json['price_max']).to eq 30
       expect(json['support_ratio_min']).to eq '20'
       expect(json['support_ratio_max']).to eq '40'

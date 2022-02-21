@@ -10,6 +10,7 @@ import SubsidyDraftsModule from '@/store/subsidyDraftsModule'
 import CompaniesModule from '@/store/companiesModule'
 import UsersModule from '@/store/usersModule'
 import OptionsModule from '@/store/optionsModule'
+import KeywordsModule from '@/store/keywordsModule'
 
 let subsidiesModule: SubsidiesModule
 let favoriteSubsidiesModule: FavoriteSubsidiesModule
@@ -20,6 +21,7 @@ let subsidyDraftsModule: SubsidyDraftsModule
 let companiesModule: CompaniesModule
 let usersModule: UsersModule
 let optionsModule: OptionsModule
+let keywordsModule: KeywordsModule
 
 function initialiseStores(store: Store<any>): void {
   subsidiesModule = getModule(SubsidiesModule, store)
@@ -31,6 +33,7 @@ function initialiseStores(store: Store<any>): void {
   companiesModule = getModule(CompaniesModule, store)
   usersModule = getModule(UsersModule, store)
   optionsModule = getModule(OptionsModule, store)
+  keywordsModule = getModule(KeywordsModule, store)
 }
 
 export {
@@ -44,4 +47,5 @@ export {
   companiesModule,
   usersModule,
   optionsModule,
+  keywordsModule,
 }

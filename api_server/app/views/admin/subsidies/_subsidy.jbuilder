@@ -5,6 +5,7 @@ json.call(
   :url,
   :start_from,
   :end_to,
+  :publishing_code,
   :price_max,
   :support_ratio_min,
   :support_ratio_max,
@@ -13,7 +14,9 @@ json.call(
   :target_detail,
   :subsidy_category,
   :supplier_type,
-  :business_categories
+  :business_categories,
+  :keywords,
+  :ranking_score
 )
 
 json.ministry do
@@ -28,4 +31,3 @@ end
 json.business_categories subsidy.business_categories.map do |business_category|
   json.merge! business_category
 end
-json.favorite @current_user_favorite_ids.to_a.include?(subsidy.id)

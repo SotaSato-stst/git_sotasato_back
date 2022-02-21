@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_09_120006) do
+ActiveRecord::Schema.define(version: 2022_02_21_083745) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 2022_02_09_120006) do
     t.index ["company_id"], name: "index_company_business_categories_on_company_id"
   end
 
+  create_table "keywords", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "content", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["content"], name: "index_keywords_on_content", unique: true
+  end
+
   create_table "ministries", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "logo_url", default: "", null: false
@@ -61,6 +68,17 @@ ActiveRecord::Schema.define(version: 2022_02_09_120006) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_prefectures_on_name", unique: true
+  end
+
+  create_table "searched_keywords", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "keyword_id"
+    t.string "content"
+    t.integer "hit_count", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["keyword_id"], name: "index_searched_keywords_on_keyword_id"
+    t.index ["user_id"], name: "index_searched_keywords_on_user_id"
   end
 
   create_table "subsidies", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -118,6 +136,16 @@ ActiveRecord::Schema.define(version: 2022_02_09_120006) do
     t.index ["prefecture_id"], name: "index_subsidy_drafts_on_prefecture_id"
   end
 
+  create_table "subsidy_keywords", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "subsidy_id", null: false
+    t.bigint "keyword_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["keyword_id"], name: "index_subsidy_keywords_on_keyword_id"
+    t.index ["subsidy_id", "keyword_id"], name: "index_subsidy_keywords_on_subsidy_id_and_keyword_id", unique: true
+    t.index ["subsidy_id"], name: "index_subsidy_keywords_on_subsidy_id"
+  end
+
   create_table "subsidy_ministries", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "subsidy_id", null: false
     t.bigint "ministry_id", null: false
@@ -164,12 +192,14 @@ ActiveRecord::Schema.define(version: 2022_02_09_120006) do
   add_foreign_key "companies", "cities"
   add_foreign_key "companies", "prefectures"
   add_foreign_key "company_business_categories", "companies"
+  add_foreign_key "searched_keywords", "users"
   add_foreign_key "subsidy_business_categories", "subsidies"
   add_foreign_key "subsidy_cities", "cities"
   add_foreign_key "subsidy_cities", "subsidies"
   add_foreign_key "subsidy_drafts", "cities"
   add_foreign_key "subsidy_drafts", "ministries"
   add_foreign_key "subsidy_drafts", "prefectures"
+  add_foreign_key "subsidy_keywords", "subsidies"
   add_foreign_key "subsidy_ministries", "ministries"
   add_foreign_key "subsidy_ministries", "subsidies"
   add_foreign_key "subsidy_prefectures", "prefectures"

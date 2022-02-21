@@ -101,6 +101,7 @@ export default defineComponent({
       cityId: null,
       supplierType: 'ministry',
       businessCategories: [],
+      keywords: '',
       rankingScore: 50,
     })
 
