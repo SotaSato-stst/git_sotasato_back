@@ -46,12 +46,15 @@ class NewSubsidyService
       csv_table.map do |table|
         next if existing_urls.include?(table['url'])
 
-        uri = URI.parse(table['url'])
+        uri = URI.parse(table['url'].gsub(/[[:space:]]/, ''))
         {
           source_url_domain: "#{uri.scheme}://#{uri.host}",
           title: table['text'].gsub(/[[:space:]]/, ''),
           url: table['url'].gsub(/[[:space:]]/, '')
         }
+      rescue URI::InvalidURIError
+        Rails.logger.error("invalid url #{table['url']}")
+        next
       end.compact
     end
     hashes.flatten.uniq { |h| h[:url] }
