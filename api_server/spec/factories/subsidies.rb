@@ -2,25 +2,27 @@
 #
 # Table name: subsidies
 #
-#  id                :bigint           not null, primary key
-#  capital           :integer
-#  detail            :text(65535)      not null
-#  end_to            :date
-#  level             :integer
-#  price_max         :integer
-#  publishing_code   :string(255)      not null
-#  ranking_score     :integer
-#  start_from        :date             not null
-#  subsidy_category  :string(255)
-#  supplier_type     :string(255)
-#  support_ratio_max :string(255)
-#  support_ratio_min :string(255)
-#  target_detail     :text(65535)      not null
-#  title             :string(255)      not null
-#  total_employee    :integer
-#  url               :text(65535)      not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                 :bigint           not null, primary key
+#  capital_max        :integer
+#  capital_min        :integer
+#  detail             :text(65535)      not null
+#  end_to             :date
+#  level              :integer
+#  price_max          :integer
+#  publishing_code    :string(255)      not null
+#  ranking_score      :integer
+#  start_from         :date             not null
+#  subsidy_category   :string(255)
+#  supplier_type      :string(255)
+#  support_ratio_max  :string(255)
+#  support_ratio_min  :string(255)
+#  target_detail      :text(65535)      not null
+#  title              :string(255)      not null
+#  total_employee_max :integer
+#  total_employee_min :integer
+#  url                :text(65535)      not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 # Indexes
 #
@@ -39,8 +41,10 @@ FactoryBot.define do
     price_max { 10_000_000 }
     subsidy_category { 'hojo' }
     ranking_score { 30 }
-    total_employee { 100 }
-    capital { 3000 }
+    total_employee_max { 100 }
+    total_employee_min { 30 }
+    capital_max { 3000 }
+    capital_min { 30 }
 
     transient do
       ministry { nil }

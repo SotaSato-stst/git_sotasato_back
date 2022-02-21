@@ -86,8 +86,10 @@ export default defineComponent({
       supplierType: 'ministry',
       businessCategories: [],
       rankingScore: 50,
-      capital: 0,
-      totalEmployee: 0,
+      capitalMax: 0,
+      capitalMin: 0,
+      totalEmployeeMin: 0,
+      totalEmployeeMax: 0,
     })
 
     const submit = (publishingCode: PublishingCode) => {

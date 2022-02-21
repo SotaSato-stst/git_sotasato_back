@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_09_120006) do
+ActiveRecord::Schema.define(version: 2022_02_21_110244) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -78,10 +78,12 @@ ActiveRecord::Schema.define(version: 2022_02_09_120006) do
     t.string "subsidy_category"
     t.string "supplier_type"
     t.integer "ranking_score"
-    t.integer "capital"
-    t.integer "total_employee"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "total_employee_max"
+    t.integer "total_employee_min"
+    t.integer "capital_max"
+    t.integer "capital_min"
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
   end
 

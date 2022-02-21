@@ -2,25 +2,27 @@
 #
 # Table name: subsidies
 #
-#  id                :bigint           not null, primary key
-#  capital           :integer
-#  detail            :text(65535)      not null
-#  end_to            :date
-#  level             :integer
-#  price_max         :integer
-#  publishing_code   :string(255)      not null
-#  ranking_score     :integer
-#  start_from        :date             not null
-#  subsidy_category  :string(255)
-#  supplier_type     :string(255)
-#  support_ratio_max :string(255)
-#  support_ratio_min :string(255)
-#  target_detail     :text(65535)      not null
-#  title             :string(255)      not null
-#  total_employee    :integer
-#  url               :text(65535)      not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                 :bigint           not null, primary key
+#  capital_max        :integer
+#  capital_min        :integer
+#  detail             :text(65535)      not null
+#  end_to             :date
+#  level              :integer
+#  price_max          :integer
+#  publishing_code    :string(255)      not null
+#  ranking_score      :integer
+#  start_from         :date             not null
+#  subsidy_category   :string(255)
+#  supplier_type      :string(255)
+#  support_ratio_max  :string(255)
+#  support_ratio_min  :string(255)
+#  target_detail      :text(65535)      not null
+#  title              :string(255)      not null
+#  total_employee_max :integer
+#  total_employee_min :integer
+#  url                :text(65535)      not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 # Indexes
 #

@@ -29,8 +29,10 @@ export type Subsidy = {
   businessCategories: BusiessCategory[]
   favorite: boolean
   rankingScore: number | null
-  capital: number | null
-  totalEmployee: number | null
+  capitalMax: number | null
+  capitalMin: number | null
+  totalEmployeeMax: number | null
+  totalEmployeeMin: number | null
 }
 
 export type SubsidiesResponse = {
@@ -71,4 +73,8 @@ export type UpdateSubsidyParams = {
   supplierType: SupplierType
   businessCategories: string[]
   rankingScore: number | null
+  capitalMax: number | null
+  capitalMin: number | null
+  totalEmployeeMax: number | null
+  totalEmployeeMin: number | null
 }

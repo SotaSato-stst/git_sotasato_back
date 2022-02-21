@@ -29,8 +29,10 @@ RSpec.describe 'ranking_subsidies API', type: :request do
         subsidy_category: 'hojo',
         supplier_type: 'ministry',
         ranking_score: 40,
-        total_employee: 10,
-        capital: 100
+        total_employee_max: 10,
+        total_employee_min: 1,
+        capital_max: 100,
+        capital_min: 20
       )
     end
   
@@ -56,8 +58,10 @@ RSpec.describe 'ranking_subsidies API', type: :request do
       expect(json['subsidies'][0]['subsidy_category']).to eq 'hojo'
       expect(json['subsidies'][0]['supplier_type']).to eq 'ministry'
       expect(json['subsidies'][0]['ranking_score']).to eq 40
-      expect(json['subsidies'][0]['total_employee']).to eq 10
-      expect(json['subsidies'][0]['capital']).to eq 100
+      expect(json['subsidies'][0]['total_employee_max']).to eq 10
+      expect(json['subsidies'][0]['total_employee_min']).to eq 1
+      expect(json['subsidies'][0]['capital_max']).to eq 100
+      expect(json['subsidies'][0]['capital_min']).to eq 20
     end
   end
 

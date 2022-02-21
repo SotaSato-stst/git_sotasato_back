@@ -16,8 +16,10 @@ json.call(
   :supplier_type,
   :business_categories,
   :ranking_score,
-  :capital,
-  :total_employee,
+  :capital_max,
+  :capital_min,
+  :total_employee_max,
+  :total_employee_min,
 )
 
 json.ministry do
