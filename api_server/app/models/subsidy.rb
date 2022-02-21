@@ -55,6 +55,8 @@ class Subsidy < ApplicationRecord
       .search_with_business_category(search_params[:business_category_keys])
       .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])
+      .search_apply_employee(search_params[:total_employee])
+      .search_apply_capital(search_params[:capital])
   }
   scope :search_with_prefecture, ->(prefecture_id) {
     return if prefecture_id.blank?
@@ -81,6 +83,26 @@ class Subsidy < ApplicationRecord
     scope = left_joins(:subsidy_business_categories)
     categories = SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))
     scope.merge(categories).or(scope.where(subsidy_business_categories: { id: nil }))
+  }
+  scope :search_apply_employee, ->(total_employee) {
+    return if total_employee.blank?
+
+    merge(Subsidy.where('total_employee_min < ?', total_employee).where(
+      'total_employee_max > ?', total_employee).or(
+        Subsidy.where('total_employee_min < ?', total_employee).where(
+          total_employee_max: [nil, ''])).or(Subsidy.where(
+            'total_employee_max > ?', total_employee).where(
+              total_employee_min: [nil, ''])))
+  }
+  scope :search_apply_capital, ->(capital) {
+    return if capital.blank?
+
+    merge(Subsidy.where('capital_min < ?', capital).where(
+      'capital_max > ?', capital).or(
+        Subsidy.where('capital_min < ?', capital).where(
+          capital_max: [nil, ''])).or(Subsidy.where(
+            'capital_max > ?', capital).where(
+              capital_min: [nil, ''])))
   }
   enum publishing_code: { published: 'published', editing: 'editing' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei' }

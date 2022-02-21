@@ -45,6 +45,8 @@ export type SubsidySearchQuery = {
   cityIds: string | null // 1|2|3のような形
   inApplicationPeriod: boolean
   businessCategoryKeys: string | null
+  totalEmployee: number | null
+  capital: number | null
 }
 // フォームで取り扱うフォーマット
 export type SubsidySearchForm = {
@@ -52,6 +54,8 @@ export type SubsidySearchForm = {
   cityIds: number[]
   inApplicationPeriod: boolean
   businessCategoryKeys: string[]
+  totalEmployee: number | null
+  capital: number | null
 }
 
 export type UpdateSubsidyParams = {

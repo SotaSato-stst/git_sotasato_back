@@ -59,6 +59,14 @@
           募集期間中のみに絞る
         </el-checkbox>
       </div>
+      <div class="search-item">
+        <div class="search-label">従業員数で探す</div>
+        <el-input-number v-model="state.totalEmployee"> </el-input-number>
+      </div>
+      <div class="search-item">
+        <div class="search-label">資本金で探す</div>
+        <el-input-number v-model="state.capital"> </el-input-number>
+      </div>
       <el-button class="search-button" type="primary" @click="search">
         以上の条件で検索
       </el-button>
@@ -76,7 +84,7 @@ import {
   useRouter,
   reactive,
 } from '@nuxtjs/composition-api'
-import {Form, FormItem, Input, Button, Checkbox} from 'element-ui'
+import {Form, FormItem, Input, Button, Checkbox, InputNumber} from 'element-ui'
 import {optionsModule, subsidiesModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
@@ -90,6 +98,7 @@ export default defineComponent({
     [`${Input.name}`]: Input,
     [`${Button.name}`]: Button,
     [`${Checkbox.name}`]: Checkbox,
+    [`${InputNumber.name}`]: InputNumber,
   },
   layout: 'admin',
   setup(_props) {
@@ -113,6 +122,8 @@ export default defineComponent({
       cityIds: [],
       inApplicationPeriod: true,
       businessCategoryKeys: [],
+      totalEmployee: null,
+      capital: null,
     })
 
     const setStateFromQuery = () => {
@@ -128,11 +139,15 @@ export default defineComponent({
         ?.toString()
         .split('|')
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
+      const totalEmployee = query.totalEmployee
+      const capital = query.capital
       Object.assign(state, {
         cityIds,
         prefectureId,
         inApplicationPeriod,
         businessCategoryKeys,
+        totalEmployee,
+        capital,
       })
     }
 

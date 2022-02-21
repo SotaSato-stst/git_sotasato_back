@@ -14,7 +14,7 @@ class SubsidiesController < ApplicationController
   private
 
   def search_params
-    params.slice(:prefecture_id, :city_ids, :in_application_period, :business_category_keys)
+    params.slice(:prefecture_id, :city_ids, :in_application_period, :business_category_keys, :total_employee, :capital)
   end
 
   def controller_action_authrized?
