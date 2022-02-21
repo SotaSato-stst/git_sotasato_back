@@ -85,7 +85,7 @@ import {
   reactive,
 } from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button, Checkbox} from 'element-ui'
-import {optionsModule, subsidiesModule} from '@/store'
+import {optionsModule, subsidiesModule, accountModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
 import {removeEmpty} from '@/utils/objectUtil'
@@ -124,7 +124,19 @@ export default defineComponent({
       keyword: '',
     })
 
-    const setStateFromQuery = () => {
+    const paramsFromCurrentCompany = () => {
+      const company = accountModule.currentCompany
+      if (!company) {
+        return {}
+      }
+      return {
+        prefectureId: company.prefectureId,
+        cityIds: [company.cityId],
+        businessCategoryKeys: company.businessCategories,
+      }
+    }
+
+    const paramsFromUrlQuery = () => {
       const prefectureIdQuery = Number(query.prefectureId)
       const prefectureId =
         isNaN(prefectureIdQuery) ||
@@ -138,7 +150,7 @@ export default defineComponent({
         .split('|')
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
       const keyword = query.keyword?.toString()
-      Object.assign(state, {
+      return removeEmpty({
         cityIds,
         prefectureId,
         inApplicationPeriod,
@@ -149,14 +161,30 @@ export default defineComponent({
 
     const search = () => {
       subsidiesModule.setSearchParams(state)
-      const query = removeEmpty(subsidiesModule.searchParams)
-      if (query.inApplicationPeriod === true) {
-        query.inApplicationPeriod = undefined
-      }
       load(loading, () => {
-        router.push({path: routingService.Top(), query})
+        router.push({path: routingService.Top(), query: urlQueryFromParams()})
         subsidiesModule.getSubsidies()
       })
+    }
+
+    const urlQueryFromParams = () => {
+      const params = removeEmpty(subsidiesModule.searchParams)
+      if (params.inApplicationPeriod === true) {
+        params.inApplicationPeriod = undefined
+      }
+      const company = accountModule.currentCompany
+      if (params.prefectureId === company?.prefectureId.toString()) {
+        params.prefectureId = undefined
+      }
+      if (params.cityIds === company?.cityId.toString()) {
+        params.cityIds = []
+      }
+      if (
+        params.businessCategoryKeys === company?.businessCategories.join('|')
+      ) {
+        params.businessCategoryKeys = []
+      }
+      return params
     }
 
     onMounted(() => {
@@ -166,11 +194,17 @@ export default defineComponent({
         if (route.value.path !== routingService.Top()) {
           return
         }
-        setStateFromQuery()
+        await accountModule.getCurrentUser()
+        Object.assign(state, paramsFromCurrentCompany())
+        Object.assign(state, paramsFromUrlQuery())
         if (state.prefectureId) {
           optionsModule.getCities(state.prefectureId)
         }
-        search()
+        if (state.prefectureId !== accountModule.currentCompany?.prefectureId) {
+          state.cityIds = []
+        }
+        subsidiesModule.setSearchParams(state)
+        subsidiesModule.getSubsidies()
       })
     })
 

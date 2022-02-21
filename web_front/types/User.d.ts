@@ -1,4 +1,4 @@
-import {Company} from './Company'
+import {Company, CurrentCompany} from './Company'
 import {Pagination} from './Pagination'
 
 export type AccountRole = 'admin' | 'editor' | 'user'
@@ -16,6 +16,7 @@ export type CurrentUser = {
   displayName: string
   email: string
   accountRole: AccountRole
+  company: CurrentCompany
 }
 
 export type UsersResponse = {

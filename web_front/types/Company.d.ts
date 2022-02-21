@@ -28,3 +28,13 @@ export type CompanyParams = {
   cityId: number | null
   businessCategories: string[]
 }
+
+export type CurrentCompany = {
+  name: string
+  adress: string
+  capital: number
+  totalEmployee: number
+  businessCategories: string[]
+  prefectureId: number
+  cityId: number
+}
