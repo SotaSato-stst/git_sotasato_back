@@ -77,15 +77,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+    <pagination
       v-if="subsidyDrafts.length > 0 && !loading"
-      background
-      layout="prev, pager, next"
-      :page-count="pagination.totalPages"
-      :total="pagination.itemsTotal"
-      :page-size="pagination.itemsPerPage"
-      :current-page="pagination.currentPage"
-      @current-change="getPage"
+      :pagination="pagination"
+      :request-page="getPage"
     />
   </div>
 </template>
@@ -96,9 +91,11 @@ import {
   defineComponent,
   onMounted,
   useRouter,
+  useRoute,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Pagination, MessageBox} from 'element-ui'
+import {Table, TableColumn, MessageBox} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
+import Pagination from '@/components/Pagination.vue'
 import {subsidyDraftsModule, accountModule} from '@/store'
 import {SubsidyDraft} from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
@@ -110,12 +107,13 @@ export default defineComponent({
   components: {
     [`${Table.name}`]: Table,
     [`${TableColumn.name}`]: TableColumn,
-    [`${Pagination.name}`]: Pagination,
+    Pagination,
     CardLoading,
   },
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
+    const route = useRoute()
     const {loading, load} = subsidyDraftsModule.loader
     const isAdmin = computed(() => accountModule.isAdmin)
     const subsidyDrafts = computed(() => subsidyDraftsModule.subsidyDrafts)
@@ -199,7 +197,9 @@ Slackに新着通知が来ているのに、この画面に表示されてない
 
     onMounted(() => {
       load(loading, () => {
-        subsidyDraftsModule.getSubsidyDrafts()
+        const pageQuery = route.value.query.page?.toString() || null
+        const page = pageQuery ? Number(pageQuery) : 1
+        subsidyDraftsModule.getSubsidyDrafts(page)
       })
     })
 

@@ -99,7 +99,6 @@ export default defineComponent({
     [`${Button.name}`]: Button,
     [`${Checkbox.name}`]: Checkbox,
   },
-  layout: 'admin',
   setup(_props) {
     const route = useRoute()
     const query = route.value.query
@@ -204,7 +203,9 @@ export default defineComponent({
           state.cityIds = []
         }
         subsidiesModule.setSearchParams(state)
-        subsidiesModule.getSubsidies()
+        const pageQuery = route.value.query.page?.toString() || null
+        const page = pageQuery ? Number(pageQuery) : 1
+        subsidiesModule.getSubsidies(page)
       })
     })
 

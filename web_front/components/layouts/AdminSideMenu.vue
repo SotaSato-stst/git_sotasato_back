@@ -50,7 +50,8 @@ export default defineComponent({
   },
   setup(_props) {
     const router = useRouter()
-    const path = useRoute().value.path
+    const route = useRoute()
+    const path = route.value.path
     const totalCount = computed(() => subsidyDraftsModule.pagination.itemsTotal)
     const selectedPage = computed(() => {
       if (path.startsWith(routingService.AdminSubsidies())) {
@@ -86,6 +87,12 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      if (
+        subsidyDraftsModule.loader.loading ||
+        subsidyDraftsModule.pagination
+      ) {
+        return
+      }
       subsidyDraftsModule.getSubsidyDrafts()
     })
 

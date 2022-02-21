@@ -4,6 +4,7 @@ const envSet = require(`./environments/${environment}.ts`)
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+  env: {NODE_ENV: process.env.NODE_ENV, ...envSet},
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
