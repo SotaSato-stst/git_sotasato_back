@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
-import {Table, TableColumn, Pagination} from 'element-ui'
+import {Table, TableColumn} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import {keywordsModule} from '@/store'
 
@@ -22,7 +22,6 @@ export default defineComponent({
   components: {
     [`${Table.name}`]: Table,
     [`${TableColumn.name}`]: TableColumn,
-    [`${Pagination.name}`]: Pagination,
     CardLoading,
   },
   layout: 'admin',
