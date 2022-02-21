@@ -200,10 +200,10 @@
         v-model="state.keywords"
         type="textarea"
         class="input-text"
+        placeholder="スペースまたは改行で単語ごとに登録"
         :autosize="{minRows: 2}"
         :disabled="loading"
       />
-      <div>スペースまたは改行で単語ごとに登録</div>
       <div>トップ検索ワード一覧</div>
       <div class="inline">
         <div v-for="keyword in topKeywords" :key="keyword">
@@ -235,6 +235,7 @@
         class="input-number input-number-text-align-center"
         :disabled="loading"
       />
+      点
     </el-form-item>
   </el-form>
 </template>
