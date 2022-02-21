@@ -67,7 +67,9 @@ if Rails.env.development?
       subsidy_category: 'josei',
       supplier_type: 'ministry',
       ranking_score: 50,
-      business_categories: ['kensetsu']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['kensetsu'],
     },
     {
       title: 'ものづくり補助金',
@@ -77,7 +79,7 @@ if Rails.env.development?
       ministry_name: '経済産業省',
       publishing_code: 'published',
       price_max: '262144',
-      support_ratio_min: '30',
+      support_ratio_min: 30,
       support_ratio_max: '80',
       level: '1',
       detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
@@ -95,7 +97,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'ministry',
       ranking_score: 50,
-      business_categories: ['seizo']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['seizo'],
     },
     {
       title: '令和３年度茨城県宿泊事業者感染対策支援事業費補助金',
@@ -122,7 +126,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'prefecture',
       ranking_score: 50,
-      business_categories: ['kensetsu']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['kensetsu'],
     },
     {
       title: '令和3年度福岡県農業振興対策事業費補助金（水田農業DX推進事業）',
@@ -150,7 +156,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
-      business_categories: ['seizo', 'hotel_insyoku']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['seizo', 'hotel_insyoku'],
     },
     {
       title: 'start & category & tsukuba & prefecture',
@@ -178,7 +186,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
-      business_categories: ['seizo']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['seizo'],
     },
     {
       title: 'start & category & tsukuba & prefecture',
@@ -206,7 +216,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
-      business_categories: ['kensetsu']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['kensetsu'],
     },
     {
       title: 'start & category & prefecture ',
@@ -234,7 +246,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'prefecture',
       ranking_score: 50,
-      business_categories: ['seizo']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['seizo'],
     },
     {
       title: 'start & category',
@@ -262,7 +276,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
-      business_categories: ['kensetsu']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['kensetsu'],
     },
     {
       title: 'start',
@@ -290,7 +306,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
-      business_categories: ['gyogyo']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['gyogyo'],
     },
     {
       title: 'no-match',
@@ -318,7 +336,9 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
-      business_categories: ['gyogyo']
+      capital: 5040404,
+      total_employee: 30,
+      business_categories: ['gyogyo'],
     },
     {
       title: 'start & category & prefecture & hitachinaka',
@@ -346,6 +366,8 @@ if Rails.env.development?
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
+      capital: 5040404,
+      total_employee: 30,
       business_categories: ['seizo'],
     },
   ]
@@ -371,6 +393,8 @@ if Rails.env.development?
       subsidy_category: hash[:subsidy_category],
       supplier_type: hash[:supplier_type],
       ranking_score: hash[:ranking_score],
+      total_employee: hash[:total_employee],
+      capital: hash[:capital],
     )
   end
   company_hashes = [

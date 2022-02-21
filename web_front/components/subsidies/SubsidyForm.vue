@@ -214,6 +214,26 @@
         :disabled="loading"
       />
     </el-form-item>
+    <el-form-item label="資本金" prop="capital">
+      <el-input
+        v-model="state.capital"
+        class="input-number"
+        type="number"
+        placeholder="10000000"
+        :disabled="loading"
+      />
+      円
+    </el-form-item>
+    <el-form-item label="従業員数" prop="totalEmployee">
+      <el-input
+        v-model="state.totalEmployee"
+        class="input-number"
+        type="number"
+        placeholder="100"
+        :disabled="loading"
+      />
+      人
+    </el-form-item>
   </el-form>
 </template>
 

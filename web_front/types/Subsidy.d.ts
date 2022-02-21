@@ -29,6 +29,8 @@ export type Subsidy = {
   businessCategories: BusiessCategory[]
   favorite: boolean
   rankingScore: number | null
+  capital: number | null
+  totalEmployee: number | null
 }
 
 export type SubsidiesResponse = {

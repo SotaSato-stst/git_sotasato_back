@@ -108,6 +108,8 @@ export default defineComponent({
       supplierType: 'ministry',
       businessCategories: [],
       rankingScore: 0,
+      capital: 0,
+      totalEmployee: 0,
     })
 
     const submit = (publishingCode: PublishingCode) => {

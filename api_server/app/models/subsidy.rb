@@ -3,6 +3,7 @@
 # Table name: subsidies
 #
 #  id                :bigint           not null, primary key
+#  capital           :integer
 #  detail            :text(65535)      not null
 #  end_to            :date
 #  level             :integer
@@ -16,6 +17,7 @@
 #  support_ratio_min :string(255)
 #  target_detail     :text(65535)      not null
 #  title             :string(255)      not null
+#  total_employee    :integer
 #  url               :text(65535)      not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

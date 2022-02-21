@@ -35,6 +35,20 @@
                   申請難易度:{{ starView(subsidy.level) }}
                 </span>
               </span>
+              <span v-if="subsidy.capital" class="header-info">
+                <span class="label">
+                  資本金:
+                  {{ convertToShortJPY(subsidy.capital) }}
+                  円
+                </span>
+              </span>
+              <span v-if="subsidy.totalEmployee" class="header-info">
+                <span class="label">
+                  従業員数:
+                  {{ subsidy.totalEmployee }}
+                  人
+                </span>
+              </span>
               <favorite-button :subsidy="subsidy" />
             </el-header>
             <el-main class="card-content">

@@ -3,6 +3,7 @@
 # Table name: subsidies
 #
 #  id                :bigint           not null, primary key
+#  capital           :integer
 #  detail            :text(65535)      not null
 #  end_to            :date
 #  level             :integer
@@ -16,6 +17,7 @@
 #  support_ratio_min :string(255)
 #  target_detail     :text(65535)      not null
 #  title             :string(255)      not null
+#  total_employee    :integer
 #  url               :text(65535)      not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -37,6 +39,8 @@ FactoryBot.define do
     price_max { 10_000_000 }
     subsidy_category { 'hojo' }
     ranking_score { 30 }
+    total_employee { 100 }
+    capital { 3000 }
 
     transient do
       ministry { nil }
