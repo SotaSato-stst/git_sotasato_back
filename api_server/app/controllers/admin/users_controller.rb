@@ -1,7 +1,7 @@
 module Admin
   class UsersController < ApplicationController
     def index
-      scope = User.all.includes(:company)
+      scope = User.all.includes(:company).order(updated_at: :desc)
       @items_total = scope.count
       @users = scope.page(params[:page]).per(50)
     end
