@@ -6,6 +6,7 @@ AllCops:
     - "db/migrate/*"
     - "vendor/**/*"
     - "lib/tasks/auto_annotate_models.rake"
+    - "app/services/slack_service.rb"
 
 Bundler/OrderedGems:
   Exclude:
