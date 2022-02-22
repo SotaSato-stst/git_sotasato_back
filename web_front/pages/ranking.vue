@@ -15,18 +15,22 @@
           <el-tag
             v-if="!loading"
             effect="plain"
-            class="ranking-title"
+            class="ranking-tag"
             :style="`border-color: ${
               rankingColors[index] || 'var(--text-color)'
             }`"
           >
-            <icon-crown
-              v-if="index < rankingColors.length"
-              :size="24"
-              :color="rankingColors[index]"
-            />
-            <div>第{{ index + 1 }}位</div>
-            <div>「{{ subsidy.title }}」</div>
+            <div>
+              <icon-crown
+                v-if="index < rankingColors.length"
+                :size="24"
+                :color="rankingColors[index]"
+                class="crown"
+              />
+            </div>
+            <div class="ranking-title">
+              第{{ index + 1 }}位 「{{ subsidy.title }}」
+            </div>
           </el-tag>
           <subsidy-card v-if="!loading" :subsidy="subsidy" />
         </div>
@@ -109,7 +113,7 @@ export default defineComponent({
   font-weight: bold;
 }
 
-.ranking-title {
+.ranking-tag {
   font-weight: bold;
   font-size: 16px;
   color: var(--text-color);
@@ -118,10 +122,21 @@ export default defineComponent({
   width: fit-content;
   height: fit-content;
   margin-bottom: var(--spacing-4);
+  max-width: 100%;
+  overflow: hidden;
 }
 
-.ranking-title > * {
-  margin-right: var(--spacing-4);
+.ranking-title {
+  word-break: break-all;
+  max-width: calc(100% - 32px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.crown {
+  margin: 8px 8px 0 0;
+  height: fit-content;
+  width: fit-content;
 }
 
 .subsidy-card:nth-child(n + 2) {
