@@ -35,7 +35,7 @@ RSpec.describe 'ranking_subsidies API', type: :request do
         capital_min: 20
       )
     end
-  
+
     # it 'returns correct response' do
     #   subject
     #   assert_response_schema_confirm(200)

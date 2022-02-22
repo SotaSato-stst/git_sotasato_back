@@ -195,6 +195,38 @@ RSpec.describe Subsidy, type: :model do
     end
   end
 
+  describe 'search_apply_capital' do
+    subject { Subsidy.search_apply_capital(capital) }
+    context '一致するデータが存在するとき' do
+      let(:capital) { 140 }
+      let!(:target_record) { create(:subsidy, capital_max: 200, capital_min: 50) }
+      let!(:not_target_record) { create(:subsidy, capital_max: 2000, capital_min: 500) }
+
+      it '資本金が範囲内のsubsidyが抽出される' do
+        expect(subject).to include(target_record)
+      end
+      it '範囲外のsubjectは抽出されない' do
+        expect(subject).not_to include(not_target_record)
+      end
+    end
+  end
+
+  describe 'search_apply_capital' do
+    subject { Subsidy.search_apply_employee(total_employee) }
+    context '一致するデータが存在するとき' do
+      let(:total_employee) { 10 }
+      let!(:target_record) { create(:subsidy, total_employee_max: 20, total_employee_min: 5) }
+      let!(:not_target_record) { create(:subsidy, total_employee_max: 200, total_employee_min: 50) }
+
+      it '資本金が範囲内のsubsidyが抽出される' do
+        expect(subject).to include(target_record)
+      end
+      it '範囲外のsubjectは抽出されない' do
+        expect(subject).not_to include(not_target_record)
+      end
+    end
+  end
+
   describe 'search_by_user' do
     subject { Subsidy.search_by_user(params) }
 

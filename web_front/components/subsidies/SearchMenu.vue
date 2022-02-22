@@ -55,17 +55,32 @@
         </el-select>
       </div>
       <div class="search-item">
-        <el-checkbox v-model="state.inApplicationPeriod">
-          募集期間中のみに絞る
-        </el-checkbox>
-      </div>
-      <div class="search-item">
         <div class="search-label">従業員数で探す</div>
-        <el-input-number v-model="state.totalEmployee"> </el-input-number>
+        <el-input
+          v-model="state.totalEmployee"
+          class="input-number input-left"
+          type="number"
+          placeholder="10"
+        >
+        </el-input>
+        <span class="unit-font">人</span>
       </div>
       <div class="search-item">
         <div class="search-label">資本金で探す</div>
-        <el-input-number v-model="state.capital"> </el-input-number>
+        <el-input
+          v-model="state.capitalMan"
+          class="input-number input-left"
+          type="number"
+          placeholder="100,000"
+          @change="capitalChanged()"
+        >
+        </el-input>
+        <span class="unit-font">万円</span>
+      </div>
+      <div class="search-item">
+        <el-checkbox v-model="state.inApplicationPeriod">
+          募集期間中のみに絞る
+        </el-checkbox>
       </div>
       <el-button class="search-button" type="primary" @click="search">
         以上の条件で検索
@@ -83,6 +98,7 @@ import {
   useRoute,
   useRouter,
   reactive,
+  ref,
 } from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button, Checkbox, InputNumber} from 'element-ui'
 import {optionsModule, subsidiesModule} from '@/store'
@@ -125,6 +141,10 @@ export default defineComponent({
       totalEmployee: null,
       capital: null,
     })
+    const capitalMan = ref(1)
+    const capitalChanged = () => {
+      state.capital = capitalMan.value * 10000
+    }
 
     const setStateFromQuery = () => {
       const prefectureIdQuery = Number(query.prefectureId)
@@ -190,6 +210,8 @@ export default defineComponent({
       cities,
       state,
       search,
+      capitalMan,
+      capitalChanged,
     }
   },
 })
@@ -216,5 +238,13 @@ export default defineComponent({
 
 .search-button {
   width: 100%;
+}
+
+.input-left {
+  width: 80%;
+}
+
+.unit-font {
+  font-size: 14px;
 }
 </style>
