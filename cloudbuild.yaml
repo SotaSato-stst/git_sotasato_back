@@ -1,6 +1,7 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'deploy', 'api_server/app.yaml']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'gcloud config set app/cloud_build_timeout 1200 && cd api_server && gcloud app deploy']
   env:
     - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
     - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
@@ -9,4 +10,12 @@ steps:
     - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
     - PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}
     - SLACK_API_TOKEN=${_SLACK_API_TOKEN}
-timeout: '1200s'
+- name: "gcr.io/google-appengine/exec-wrapper"
+  args: ["-i", "gcr.io/macro-market-336309/appengine/default.20220223t045116@sha256:0d63abca6977677a9859195efb2985eba77270aabf18db9707b512b883bc7fb6",
+         "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
+         "--", "bundle", "exec", "rake", "db:migrate"]
+  env:
+    - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
+    - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
+    - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
+timeout: '1800s'
