@@ -130,13 +130,7 @@ export default defineComponent({
           )
           break
         case 'published':
-          notifySuccess(
-            '情報を公開しました',
-            `${subsidyDraftsModule.subsidyDraft?.title}
-            <br/><a href="
-            ${routingService.SubsidyDetail(subsidyId)}
-            " target="_blank">公開ページを確認する</a>`,
-          )
+          notifySuccess('情報を公開しました', subsidyParams.title)
           break
       }
       router.replace(routingService.AdminSubsidyDetail(subsidyId))

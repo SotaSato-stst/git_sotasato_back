@@ -136,7 +136,7 @@ export default defineComponent({
       })
     }
 
-    const showMessage = (subsidyId: number) => {
+    const showMessage = (_: number) => {
       switch (subsidyParams.publishingCode) {
         case 'editing':
           notifySuccess(
@@ -145,13 +145,7 @@ export default defineComponent({
           )
           break
         case 'published':
-          notifySuccess(
-            '情報を公開しました',
-            `${adminSubsidiesModule.subsidy?.title}
-            <br/><a href="
-            ${routingService.SubsidyDetail(subsidyId)}
-            " target="_blank">公開ページを確認する</a>`,
-          )
+          notifySuccess('情報を公開しました', subsidyParams.title)
           break
       }
       adminSubsidiesModule.getSubsidy(pageId)

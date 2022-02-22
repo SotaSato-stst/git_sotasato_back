@@ -21,7 +21,7 @@
       </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
-          <a class="detail-link" :href="detailPath(scope.row.id)">{{
+          <a class="detail-link" @click="handleEdit(scope.row)">{{
             scope.row.title
           }}</a>
         </template>
@@ -112,11 +112,8 @@ export default defineComponent({
       adminSubsidiesModule.getSubsidies(page)
     }
 
-    const detailPath = (id: number) => {
-      return routingService.AdminSubsidyDetail(id)
-    }
     const handleEdit = (subsidy: Subsidy) => {
-      router.push(detailPath(subsidy.id))
+      router.push(routingService.AdminSubsidyDetail(subsidy.id))
     }
     const newSubsidyPage = () => {
       router.push(routingService.AdminNewSubsidy())
@@ -135,7 +132,6 @@ export default defineComponent({
       subsidies,
       pagination,
       getPage,
-      detailPath,
       handleEdit,
       newSubsidyPage,
       convertToShortJPY,
@@ -157,6 +153,7 @@ export default defineComponent({
 
 .detail-link {
   color: var(--primary-color);
+  cursor: pointer;
 }
 
 .title {

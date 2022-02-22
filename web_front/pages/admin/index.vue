@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
-          <a class="detail-link" :href="detailPath(scope.row.id)">{{
+          <a class="detail-link" @click="handleEdit(scope.row)">{{
             scope.row.title
           }}</a>
         </template>
@@ -127,12 +127,8 @@ export default defineComponent({
       subsidyDraftsModule.getSubsidyDrafts(page)
     }
 
-    const detailPath = (id: number) => {
-      return routingService.AdminSubsidyDraftDetail(id)
-    }
-
     const handleEdit = (subsidyDraft: SubsidyDraft) => {
-      router.push(detailPath(subsidyDraft.id))
+      router.push(routingService.AdminSubsidyDraftDetail(subsidyDraft.id))
     }
 
     const handleSelectionChange = (selections: SubsidyDraft[]) => {
@@ -210,7 +206,6 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       selectedSubsidyDrafts,
       pagination,
       getPage,
-      detailPath,
       handleEdit,
       handleSelectionChange,
       archive,
@@ -234,6 +229,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
 
 .detail-link {
   color: var(--primary-color);
+  cursor: pointer;
 }
 
 .title {
