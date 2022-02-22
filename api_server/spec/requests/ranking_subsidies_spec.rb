@@ -28,10 +28,14 @@ RSpec.describe 'ranking_subsidies API', type: :request do
         target_detail: '対象の説明文',
         subsidy_category: 'hojo',
         supplier_type: 'ministry',
-        ranking_score: 40
+        ranking_score: 40,
+        total_employee_max: 10,
+        total_employee_min: 1,
+        capital_max: 100,
+        capital_min: 20
       )
     end
-  
+
     # it 'returns correct response' do
     #   subject
     #   assert_response_schema_confirm(200)
@@ -52,6 +56,10 @@ RSpec.describe 'ranking_subsidies API', type: :request do
       expect(json['subsidies'][0]['target_detail']).to eq '対象の説明文'
       expect(json['subsidies'][0]['subsidy_category']).to eq 'hojo'
       expect(json['subsidies'][0]['supplier_type']).to eq 'ministry'
+      expect(json['subsidies'][0]['total_employee_max']).to eq 10
+      expect(json['subsidies'][0]['total_employee_min']).to eq 1
+      expect(json['subsidies'][0]['capital_max']).to eq 100
+      expect(json['subsidies'][0]['capital_min']).to eq 20
     end
   end
 

@@ -237,6 +237,46 @@
       />
       点
     </el-form-item>
+    <el-form-item label="最低資本金" prop="capitalMin">
+      <el-input
+        v-model="state.capitalMin"
+        class="input-number"
+        type="number"
+        placeholder="1000"
+        :disabled="loading"
+      />
+      円
+    </el-form-item>
+    <el-form-item label="最大資本金" prop="capitalMax">
+      <el-input
+        v-model="state.capitalMax"
+        class="input-number"
+        type="number"
+        placeholder="1000000"
+        :disabled="loading"
+      />
+      円
+    </el-form-item>
+    <el-form-item label="最小従業員数" prop="totalEmployeeMin">
+      <el-input
+        v-model="state.totalEmployeeMin"
+        class="input-number"
+        type="number"
+        placeholder="100"
+        :disabled="loading"
+      />
+      人
+    </el-form-item>
+    <el-form-item label="最大従業員数" prop="totalEmployeeMax">
+      <el-input
+        v-model="state.totalEmployeeMax"
+        class="input-number"
+        type="number"
+        placeholder="100"
+        :disabled="loading"
+      />
+      人
+    </el-form-item>
   </el-form>
 </template>
 

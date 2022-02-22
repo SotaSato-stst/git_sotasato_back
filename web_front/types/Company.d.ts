@@ -6,9 +6,9 @@ import {Pagination} from './Pagination'
 export type Company = {
   id: number
   name: string
-  adress: string
-  capital: number
-  totalEmployee: number
+  adress: string | null
+  capital: number | null
+  totalEmployee: number | null
   businessCategories: BusiessCategory[]
   prefecture: Prefecture
   city: City

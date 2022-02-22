@@ -33,6 +33,8 @@ export default class SubsidiesModule extends VuexModule {
     cityIds: '',
     inApplicationPeriod: true,
     businessCategoryKeys: '',
+    totalEmployee: null,
+    capital: null,
     keyword: '',
   }
 
@@ -59,6 +61,8 @@ export default class SubsidiesModule extends VuexModule {
       cityIds: state.cityIds?.join('|') || null,
       inApplicationPeriod: state.inApplicationPeriod,
       businessCategoryKeys: state.businessCategoryKeys?.join('|') || null,
+      totalEmployee: state.totalEmployee || null,
+      capital: state.capital || null,
       keyword: state.keyword,
     }
   }

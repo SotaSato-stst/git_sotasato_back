@@ -30,6 +30,10 @@ export type Subsidy = {
   keywords: string[]
   favorite: boolean
   rankingScore: number | null
+  capitalMax: number | null
+  capitalMin: number | null
+  totalEmployeeMax: number | null
+  totalEmployeeMin: number | null
 }
 
 export type SubsidiesResponse = {
@@ -42,6 +46,8 @@ export type SubsidySearchQuery = {
   cityIds: string | null // 1|2|3のような形
   inApplicationPeriod: boolean
   businessCategoryKeys: string | null
+  totalEmployee: number | null
+  capital: number | null
   keyword: string
 }
 // フォームで取り扱うフォーマット
@@ -50,6 +56,8 @@ export type SubsidySearchForm = {
   cityIds: number[]
   inApplicationPeriod: boolean
   businessCategoryKeys: string[]
+  totalEmployee: number | null
+  capital: number | null
   keyword: string
 }
 
@@ -73,4 +81,8 @@ export type UpdateSubsidyParams = {
   businessCategories: string[]
   keywords: string
   rankingScore: number | null
+  capitalMax: number | null
+  capitalMin: number | null
+  totalEmployeeMax: number | null
+  totalEmployeeMin: number | null
 }

@@ -63,6 +63,29 @@
         </el-select>
       </div>
       <div class="search-item">
+        <div class="search-label">従業員数</div>
+        <el-input
+          v-model="state.totalEmployee"
+          class="input-number input-left"
+          type="number"
+          placeholder="10"
+        >
+        </el-input>
+        <span class="unit-font">人</span>
+      </div>
+      <div class="search-item">
+        <div class="search-label">資本金</div>
+        <el-input
+          v-model="capitalMan"
+          class="input-number input-left"
+          type="number"
+          placeholder="100,000"
+          @change="capitalChanged()"
+        >
+        </el-input>
+        <span class="unit-font">万円</span>
+      </div>
+      <div class="search-item">
         <el-checkbox v-model="state.inApplicationPeriod">
           募集期間中のみに絞る
         </el-checkbox>
@@ -83,8 +106,9 @@ import {
   useRoute,
   useRouter,
   reactive,
+  ref,
 } from '@nuxtjs/composition-api'
-import {Form, FormItem, Input, Button, Checkbox} from 'element-ui'
+import {Form, FormItem, Input, Button, Checkbox, InputNumber} from 'element-ui'
 import {optionsModule, subsidiesModule, accountModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
@@ -98,6 +122,7 @@ export default defineComponent({
     [`${Input.name}`]: Input,
     [`${Button.name}`]: Button,
     [`${Checkbox.name}`]: Checkbox,
+    [`${InputNumber.name}`]: InputNumber,
   },
   setup(_props) {
     const route = useRoute()
@@ -120,10 +145,18 @@ export default defineComponent({
       cityIds: [],
       inApplicationPeriod: true,
       businessCategoryKeys: [],
+      totalEmployee: null,
+      capital: null,
       keyword: '',
     })
+    const capitalMan = ref<number | null>(null)
+    const capitalChanged = () => {
+      if (capitalMan.value) {
+        state.capital = capitalMan.value * 10000
+      }
+    }
 
-    const paramsFromCurrentCompany = () => {
+    const paramsFromCurrentCompany = (): Partial<SubsidySearchForm> => {
       const company = accountModule.currentCompany
       if (!company) {
         return {}
@@ -132,6 +165,8 @@ export default defineComponent({
         prefectureId: company.prefectureId,
         cityIds: [company.cityId],
         businessCategoryKeys: company.businessCategories,
+        capital: company.capital,
+        totalEmployee: company.totalEmployee,
       }
     }
 
@@ -149,11 +184,15 @@ export default defineComponent({
         .split('|')
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
       const keyword = query.keyword?.toString()
+      const capital = query.capital?.toString()
+      const totalEmployee = query.totalEmployee?.toString()
       return removeEmpty({
         cityIds,
         prefectureId,
         inApplicationPeriod,
         businessCategoryKeys,
+        capital,
+        totalEmployee,
         keyword,
       })
     }
@@ -183,6 +222,12 @@ export default defineComponent({
       ) {
         params.businessCategoryKeys = []
       }
+      if (params.capital === company?.capital) {
+        params.capital = undefined
+      }
+      if (params.totalEmployee === company?.totalEmployee) {
+        params.totalEmployee = undefined
+      }
       return params
     }
 
@@ -201,6 +246,9 @@ export default defineComponent({
         }
         if (state.prefectureId !== accountModule.currentCompany?.prefectureId) {
           state.cityIds = []
+        }
+        if (state.capital) {
+          capitalMan.value = state.capital / 10000
         }
         subsidiesModule.setSearchParams(state)
         const pageQuery = route.value.query.page?.toString() || null
@@ -222,6 +270,8 @@ export default defineComponent({
       cities,
       state,
       search,
+      capitalMan,
+      capitalChanged,
     }
   },
 })
@@ -248,5 +298,13 @@ export default defineComponent({
 
 .search-button {
   width: 100%;
+}
+
+.input-left {
+  width: 80%;
+}
+
+.unit-font {
+  font-size: 14px;
 }
 </style>

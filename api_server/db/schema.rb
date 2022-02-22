@@ -98,6 +98,10 @@ ActiveRecord::Schema.define(version: 2022_02_21_153513) do
     t.integer "ranking_score"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "total_employee_max"
+    t.integer "total_employee_min"
+    t.integer "capital_max"
+    t.integer "capital_min"
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
   end
 

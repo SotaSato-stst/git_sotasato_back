@@ -116,8 +116,12 @@ export default defineComponent({
       cityId: null,
       supplierType: 'ministry',
       businessCategories: [],
-      keywords: '',
       rankingScore: null,
+      capitalMax: 0,
+      capitalMin: 0,
+      totalEmployeeMin: 0,
+      totalEmployeeMax: 0,
+      keywords: '',
     })
 
     const submit = (publishingCode: PublishingCode) => {

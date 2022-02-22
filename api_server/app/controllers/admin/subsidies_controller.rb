@@ -57,7 +57,11 @@ module Admin
         :level,
         :detail,
         :target_detail,
-        :ranking_score
+        :ranking_score,
+        :total_employee_max,
+        :total_employee_min,
+        :capital_max,
+        :capital_min,
       )
     end
 

@@ -13,7 +13,11 @@ json.call(
   :target_detail,
   :subsidy_category,
   :supplier_type,
-  :business_categories
+  :business_categories,
+  :capital_max,
+  :capital_min,
+  :total_employee_max,
+  :total_employee_min
 )
 
 json.ministry do

@@ -2,23 +2,27 @@
 #
 # Table name: subsidies
 #
-#  id                :bigint           not null, primary key
-#  detail            :text(65535)      not null
-#  end_to            :date
-#  level             :integer
-#  price_max         :integer
-#  publishing_code   :string(255)      not null
-#  ranking_score     :integer
-#  start_from        :date             not null
-#  subsidy_category  :string(255)
-#  supplier_type     :string(255)
-#  support_ratio_max :string(255)
-#  support_ratio_min :string(255)
-#  target_detail     :text(65535)      not null
-#  title             :string(255)      not null
-#  url               :text(65535)      not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                 :bigint           not null, primary key
+#  capital_max        :integer
+#  capital_min        :integer
+#  detail             :text(65535)      not null
+#  end_to             :date
+#  level              :integer
+#  price_max          :integer
+#  publishing_code    :string(255)      not null
+#  ranking_score      :integer
+#  start_from         :date             not null
+#  subsidy_category   :string(255)
+#  supplier_type      :string(255)
+#  support_ratio_max  :string(255)
+#  support_ratio_min  :string(255)
+#  target_detail      :text(65535)      not null
+#  title              :string(255)      not null
+#  total_employee_max :integer
+#  total_employee_min :integer
+#  url                :text(65535)      not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 # Indexes
 #
@@ -53,6 +57,8 @@ class Subsidy < ApplicationRecord
       .search_with_business_category(search_params[:business_category_keys])
       .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])
+      .search_with_employee(search_params[:total_employee])
+      .search_with_capital(search_params[:capital])
   }
   scope :search_by_keyword, ->(keyword) {
     return if keyword.blank?
@@ -86,6 +92,34 @@ class Subsidy < ApplicationRecord
     scope = left_joins(:subsidy_business_categories)
     categories = SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))
     scope.merge(categories).or(scope.where(subsidy_business_categories: { id: nil }))
+  }
+  scope :search_with_employee, ->(total_employee) {
+    return if total_employee.blank?
+
+    merge(
+      Subsidy.where('? between total_employee_min and total_employee_max', total_employee)
+      .or(
+        Subsidy.where(total_employee_min: ..total_employee).where(total_employee_max: nil)
+      ).or(
+        Subsidy.where(total_employee_min: nil).where(total_employee_max: total_employee..)
+      ).or(
+        Subsidy.where(total_employee_min: nil).where(total_employee_max: nil)
+      )
+    )
+  }
+  scope :search_with_capital, ->(capital) {
+    return if capital.blank?
+
+    merge(
+      Subsidy.where('? between capital_min and capital_max', capital)
+      .or(
+        Subsidy.where(capital_min: ..capital).where(capital_max: nil)
+      ).or(
+        Subsidy.where(capital_min: nil).where(capital_max: capital..)
+      ).or(
+        Subsidy.where(capital_min: nil).where(capital_max: nil)
+      )
+    )
   }
   enum publishing_code: { published: 'published', editing: 'editing' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
