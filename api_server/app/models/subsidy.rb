@@ -87,22 +87,30 @@ class Subsidy < ApplicationRecord
   scope :search_with_employee, ->(total_employee) {
     return if total_employee.blank?
 
-    merge(Subsidy.where('total_employee_min < ?', total_employee).where(
-      'total_employee_max > ?', total_employee).or(
-        Subsidy.where('total_employee_min < ?', total_employee).where(
-          total_employee_max: [nil, ''])).or(Subsidy.where(
-            'total_employee_max > ?', total_employee).where(
-              total_employee_min: [nil, ''])))
+    merge(
+      Subsidy.where('? between total_employee_min and total_employee_max', total_employee)
+      .or(
+        Subsidy.where(total_employee_min: ..total_employee).where(total_employee_max: nil)
+      ).or(
+        Subsidy.where(total_employee_min: nil).where(total_employee_max: total_employee..)
+      ).or(
+        Subsidy.where(total_employee_min: nil).where(total_employee_max: nil)
+      )
+    )
   }
   scope :search_with_capital, ->(capital) {
     return if capital.blank?
 
-    merge(Subsidy.where('capital_min < ?', capital).where(
-      'capital_max > ?', capital).or(
-        Subsidy.where('capital_min < ?', capital).where(
-          capital_max: [nil, ''])).or(Subsidy.where(
-            'capital_max > ?', capital).where(
-              capital_min: [nil, ''])))
+    merge(
+      Subsidy.where('? between capital_min and capital_max', capital)
+      .or(
+        Subsidy.where(capital_min: ..capital).where(capital_max: nil)
+      ).or(
+        Subsidy.where(capital_min: nil).where(capital_max: capital..)
+      ).or(
+        Subsidy.where(capital_min: nil).where(capital_max: nil)
+      )
+    )
   }
   enum publishing_code: { published: 'published', editing: 'editing' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei' }

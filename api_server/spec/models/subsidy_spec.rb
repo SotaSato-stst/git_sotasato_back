@@ -197,7 +197,8 @@ RSpec.describe Subsidy, type: :model do
 
   describe 'search_with_capital' do
     subject { Subsidy.search_with_capital(capital) }
-    context '一致するデータが存在するとき' do
+
+    context 'capital_minとcapital_maxが両方とも指定されている場合' do
       let(:capital) { 140 }
       let!(:target_record) { create(:subsidy, capital_max: 200, capital_min: 50) }
       let!(:not_target_record) { create(:subsidy, capital_max: 2000, capital_min: 500) }
@@ -209,9 +210,54 @@ RSpec.describe Subsidy, type: :model do
         expect(subject).not_to include(not_target_record)
       end
     end
+
+    context 'capital_maxのみ指定されている場合' do
+      let!(:target_record) { create(:subsidy, capital_max: 200, capital_min: nil) }
+
+      context '範囲内である場合' do
+        let(:capital) { 140 }
+
+        it '資本金が範囲内のsubsidyが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:capital) { 500 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'capital_minのみ指定されている場合' do
+      let!(:target_record) { create(:subsidy, capital_max: nil, capital_min: 200) }
+
+      context '範囲内である場合' do
+        let(:capital) { 300 }
+
+        it '資本金が範囲内のsubsidyが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:capital) { 100 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'いずれの指定もない場合' do
+      let!(:target_record) { create(:subsidy, capital_max: nil, capital_min: nil) }
+      let(:capital) { 300 }
+
+      it '抽出される' do
+        expect(subject).to include(target_record)
+      end
+    end
   end
 
-  describe 'search_with_capital' do
+  describe 'search_with_employee' do
     subject { Subsidy.search_with_employee(total_employee) }
     context '一致するデータが存在するとき' do
       let(:total_employee) { 10 }
