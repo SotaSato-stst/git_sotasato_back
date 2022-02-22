@@ -21,7 +21,7 @@
       </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
-          <a class="detail-link" :href="detailPath(scope.row.id)">{{
+          <a class="detail-link" @click="handleEdit(scope.row)">{{
             scope.row.title
           }}</a>
         </template>
@@ -65,15 +65,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+    <pagination
       v-if="subsidies.length > 0 && !loading"
-      background
-      layout="prev, pager, next"
-      :page-count="pagination.totalPages"
-      :total="pagination.itemsTotal"
-      :page-size="pagination.itemsPerPage"
-      :current-page="pagination.currentPage"
-      @current-change="getPage"
+      :pagination="pagination"
+      :request-page="getPage"
     />
   </div>
 </template>
@@ -83,10 +78,12 @@ import {
   computed,
   defineComponent,
   onMounted,
+  useRoute,
   useRouter,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Pagination, Tag} from 'element-ui'
+import {Table, TableColumn, Tag} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
+import Pagination from '@/components/Pagination.vue'
 import {adminSubsidiesModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {Subsidy} from '@/types/Subsidy'
@@ -98,13 +95,14 @@ export default defineComponent({
   components: {
     [`${Table.name}`]: Table,
     [`${TableColumn.name}`]: TableColumn,
-    [`${Pagination.name}`]: Pagination,
     [`${Tag.name}`]: Tag,
+    Pagination,
     CardLoading,
   },
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
+    const route = useRoute()
     const {loading, load} = adminSubsidiesModule.loader
     const subsidies = computed(() => adminSubsidiesModule.subsidies)
     const pagination = computed(() => adminSubsidiesModule.pagination)
@@ -114,11 +112,8 @@ export default defineComponent({
       adminSubsidiesModule.getSubsidies(page)
     }
 
-    const detailPath = (id: number) => {
-      return routingService.AdminSubsidyDetail(id)
-    }
     const handleEdit = (subsidy: Subsidy) => {
-      router.push(detailPath(subsidy.id))
+      router.push(routingService.AdminSubsidyDetail(subsidy.id))
     }
     const newSubsidyPage = () => {
       router.push(routingService.AdminNewSubsidy())
@@ -126,7 +121,9 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        adminSubsidiesModule.getSubsidies()
+        const pageQuery = route.value.query.page?.toString() || null
+        const page = pageQuery ? Number(pageQuery) : 1
+        adminSubsidiesModule.getSubsidies(page)
       })
     })
 
@@ -135,7 +132,6 @@ export default defineComponent({
       subsidies,
       pagination,
       getPage,
-      detailPath,
       handleEdit,
       newSubsidyPage,
       convertToShortJPY,
@@ -157,6 +153,7 @@ export default defineComponent({
 
 .detail-link {
   color: var(--primary-color);
+  cursor: pointer;
 }
 
 .title {

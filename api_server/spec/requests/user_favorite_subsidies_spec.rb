@@ -43,7 +43,6 @@ RSpec.describe 'user_favorite_subsidies API', type: :request do
       expect(json['subsidies'][0]['ministry']['name']).to eq '経済産業省'
       expect(json['subsidies'][0]['start_from']).to eq '2022-01-12'
       expect(json['subsidies'][0]['end_to']).to eq '2023-01-15'
-      expect(json['subsidies'][0]['publishing_code']).to eq 'published'
       expect(json['subsidies'][0]['price_max']).to eq 30
       expect(json['subsidies'][0]['support_ratio_min']).to eq '20'
       expect(json['subsidies'][0]['support_ratio_max']).to eq '40'

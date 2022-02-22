@@ -17,9 +17,18 @@
             class="submit-button"
             size="small"
             :disabled="loading"
-            @click="preview(subsidy.id)"
+            @click="show(subsidy.id)"
           >
             掲載中のページを確認
+          </el-button>
+          <el-button
+            v-if="subsidy.publishingCode == 'editing'"
+            class="submit-button"
+            size="small"
+            :disabled="loading"
+            @click="preview(subsidy.id)"
+          >
+            プレビュー
           </el-button>
           <el-button
             class="submit-button"
@@ -107,11 +116,12 @@ export default defineComponent({
       cityId: null,
       supplierType: 'ministry',
       businessCategories: [],
-      rankingScore: 0,
+      rankingScore: null,
       capitalMax: 0,
       capitalMin: 0,
       totalEmployeeMin: 0,
       totalEmployeeMax: 0,
+      keywords: '',
     })
 
     const submit = (publishingCode: PublishingCode) => {
@@ -130,7 +140,7 @@ export default defineComponent({
       })
     }
 
-    const showMessage = (subsidyId: number) => {
+    const showMessage = (_: number) => {
       switch (subsidyParams.publishingCode) {
         case 'editing':
           notifySuccess(
@@ -139,20 +149,21 @@ export default defineComponent({
           )
           break
         case 'published':
-          notifySuccess(
-            '情報を公開しました',
-            `${adminSubsidiesModule.subsidy?.title}
-            <br/><a href="
-            ${routingService.SubsidyDetail(subsidyId)}
-            " target="_blank">公開ページを確認する</a>`,
-          )
+          notifySuccess('情報を公開しました', subsidyParams.title)
           break
       }
       adminSubsidiesModule.getSubsidy(pageId)
     }
 
-    const preview = (subsidyId: number) => {
+    const show = (subsidyId: number) => {
       router.push(routingService.SubsidyDetail(subsidyId))
+    }
+
+    const preview = (subsidyId: number) => {
+      router.push({
+        path: routingService.SubsidyDetail(subsidyId),
+        query: {preview: 'true'},
+      })
     }
 
     onMounted(() => {
@@ -170,6 +181,7 @@ export default defineComponent({
           prefectureId: subsidy.prefecture?.id,
           cityId: subsidy.city?.id,
           businessCategories: subsidy.businessCategories.map(b => b.key),
+          keywords: subsidy.keywords.join(' '),
         })
       })
     })
@@ -185,6 +197,7 @@ export default defineComponent({
       subsidy,
       subsidyParams,
       submit,
+      show,
       preview,
       publishingCodeLabel,
     }

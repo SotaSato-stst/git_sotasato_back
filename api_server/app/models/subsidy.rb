@@ -37,6 +37,7 @@ class Subsidy < ApplicationRecord
   has_one :city, through: :subsidy_city
   has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidy_business_categories, dependent: :destroy
+  has_many :subsidy_keywords, dependent: :destroy
   has_many :users, through: :user_favorite_subsidies
   validates :title, presence: { message: 'は必須項目です' }
   validates :url, presence: { message: 'は必須項目です' }
@@ -52,11 +53,19 @@ class Subsidy < ApplicationRecord
   scope :search_by_user, ->(search_params) {
     published
       .in_application_period(search_params[:in_application_period])
+      .search_by_keyword(search_params[:keyword])
       .search_with_business_category(search_params[:business_category_keys])
       .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])
       .search_with_employee(search_params[:total_employee])
       .search_with_capital(search_params[:capital])
+  }
+  scope :search_by_keyword, ->(keyword) {
+    return if keyword.blank?
+
+    keywords = Keyword.where(content: keyword.split(/[[:space:]]/))
+    subsidy_ids = SubsidyKeyword.where(keyword: keywords).pluck(:subsidy_id)
+    where(id: subsidy_ids)
   }
   scope :search_with_prefecture, ->(prefecture_id) {
     return if prefecture_id.blank?
@@ -120,6 +129,10 @@ class Subsidy < ApplicationRecord
     subsidy_business_categories.map do |subsidy_business_category|
       BusinessCategory.to_option(subsidy_business_category.business_category)
     end
+  end
+
+  def keywords
+    subsidy_keywords.map { |sk| sk.keyword.content }
   end
 
   def start_from_cannot_be_greater_than_end_to

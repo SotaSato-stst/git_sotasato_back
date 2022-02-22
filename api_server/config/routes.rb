@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   get 'health_check', to: 'health_check#index'
-  resources :subsidies, only: %i[index show]
+  resources :subsidies, only: %i[index show] do
+    member do
+      get :preview
+    end
+  end
   resources :ministries, only: %i[index]
   resources :ranking_subsidies, only: %i[index]
   resources :user_favorite_subsidies, only: %i[index create destroy]
@@ -15,6 +19,8 @@ Rails.application.routes.draw do
     resources :users, only: %i[index show create update]
     resources :subsidies, only: %i[index show create update]
     resources :subsidy_drafts, only: %i[index show destroy]
+    resources :top_keywords, only: :index
+    resources :searched_keywords, only: :index
     get :new_subsidy, to: 'new_subsidy#show'
   end
 

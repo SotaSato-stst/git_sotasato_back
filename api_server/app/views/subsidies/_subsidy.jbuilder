@@ -5,7 +5,6 @@ json.call(
   :url,
   :start_from,
   :end_to,
-  :publishing_code,
   :price_max,
   :support_ratio_min,
   :support_ratio_max,
@@ -15,11 +14,10 @@ json.call(
   :subsidy_category,
   :supplier_type,
   :business_categories,
-  :ranking_score,
   :capital_max,
   :capital_min,
   :total_employee_max,
-  :total_employee_min,
+  :total_employee_min
 )
 
 json.ministry do

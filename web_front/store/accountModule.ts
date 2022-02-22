@@ -1,6 +1,7 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
 import {UpdateCurrentUserParams, CurrentUser} from '@/types/User'
+import {CurrentCompany} from '@/types/Company'
 import {useLoader} from '@/services/useLoader'
 import CookieStore from '@/services/cookieStore'
 
@@ -12,6 +13,7 @@ import CookieStore from '@/services/cookieStore'
 export default class AccountModule extends VuexModule {
   loader = useLoader()
   currentUser: CurrentUser | null = null
+  currentCompany: CurrentCompany | null = null
 
   get isAdmin() {
     return this.currentUser?.accountRole === 'admin'
@@ -24,6 +26,7 @@ export default class AccountModule extends VuexModule {
   @Mutation
   setCurrentUser(currentUser: CurrentUser | null) {
     this.currentUser = currentUser
+    this.currentCompany = currentUser?.company || null
     if (currentUser && currentUser.accountRole !== 'user') {
       CookieStore.setAccountRole(currentUser.accountRole)
     }

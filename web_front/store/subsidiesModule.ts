@@ -35,6 +35,7 @@ export default class SubsidiesModule extends VuexModule {
     businessCategoryKeys: '',
     totalEmployee: null,
     capital: null,
+    keyword: '',
   }
 
   @Mutation
@@ -62,6 +63,7 @@ export default class SubsidiesModule extends VuexModule {
       businessCategoryKeys: state.businessCategoryKeys?.join('|') || null,
       totalEmployee: state.totalEmployee || null,
       capital: state.capital || null,
+      keyword: state.keyword,
     }
   }
 
@@ -85,6 +87,12 @@ export default class SubsidiesModule extends VuexModule {
   @Action({rawError: true})
   async getSubsidy(id: number) {
     const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}`)
+    this.setSubsidy(subsidy)
+  }
+
+  @Action({rawError: true})
+  async getSubsidyPreview(id: number) {
+    const subsidy = await $axios.$get<Subsidy>(`/subsidies/${id}/preview`)
     this.setSubsidy(subsidy)
   }
 }

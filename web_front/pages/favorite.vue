@@ -14,15 +14,10 @@
           v-if="!loading && userFavoriteSubsidies.length == 0"
           description="データがありません"
         />
-        <el-pagination
+        <pagination
           v-if="userFavoriteSubsidies.length > 0 && !loading"
-          background
-          layout="prev, pager, next"
-          :page-count="pagination.totalPages"
-          :total="pagination.itemsTotal"
-          :page-size="pagination.itemsPerPage"
-          :current-page="pagination.currentPage"
-          @current-change="getPage"
+          :pagination="pagination"
+          :request-page="getPage"
         />
       </div>
     </el-main>
@@ -33,11 +28,17 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
-import {Container, Aside, Main, Pagination, Empty} from 'element-ui'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  useRoute,
+} from '@nuxtjs/composition-api'
+import {Container, Aside, Main, Empty} from 'element-ui'
 import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
+import Pagination from '@/components/Pagination.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
 import {favoriteSubsidiesModule} from '@/store'
 
@@ -47,14 +48,15 @@ export default defineComponent({
     [`${Container.name}`]: Container,
     [`${Aside.name}`]: Aside,
     [`${Main.name}`]: Main,
-    [`${Pagination.name}`]: Pagination,
     [`${Empty.name}`]: Empty,
     SearchMenu,
     SideRightMenu,
     SubsidyCard,
+    Pagination,
     CardLoading,
   },
   setup(_props) {
+    const route = useRoute()
     const {loading, load} = favoriteSubsidiesModule.loader
     const userFavoriteSubsidies = computed(
       () => favoriteSubsidiesModule.userFavoriteSubsidies,
@@ -67,7 +69,9 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        favoriteSubsidiesModule.getUserFavoriteSubsidies()
+        const pageQuery = route.value.query.page?.toString() || null
+        const page = pageQuery ? Number(pageQuery) : 1
+        favoriteSubsidiesModule.getUserFavoriteSubsidies(page)
       })
     })
 

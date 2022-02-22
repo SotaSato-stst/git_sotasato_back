@@ -1,5 +1,7 @@
 class CurrentUsersController < ApplicationController
-  def show; end
+  def show
+    @company = current_user.company
+  end
 
   def update
     if @current_user.update(update_params)

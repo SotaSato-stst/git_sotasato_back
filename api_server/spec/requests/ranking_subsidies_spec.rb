@@ -48,7 +48,6 @@ RSpec.describe 'ranking_subsidies API', type: :request do
       expect(json['subsidies'][0]['ministry']['name']).to eq '経済産業省'
       expect(json['subsidies'][0]['start_from']).to eq '2022-01-12'
       expect(json['subsidies'][0]['end_to']).to eq '2023-01-15'
-      expect(json['subsidies'][0]['publishing_code']).to eq 'published'
       expect(json['subsidies'][0]['price_max']).to eq 30
       expect(json['subsidies'][0]['support_ratio_min']).to eq '20'
       expect(json['subsidies'][0]['support_ratio_max']).to eq '40'
@@ -57,7 +56,6 @@ RSpec.describe 'ranking_subsidies API', type: :request do
       expect(json['subsidies'][0]['target_detail']).to eq '対象の説明文'
       expect(json['subsidies'][0]['subsidy_category']).to eq 'hojo'
       expect(json['subsidies'][0]['supplier_type']).to eq 'ministry'
-      expect(json['subsidies'][0]['ranking_score']).to eq 40
       expect(json['subsidies'][0]['total_employee_max']).to eq 10
       expect(json['subsidies'][0]['total_employee_min']).to eq 1
       expect(json['subsidies'][0]['capital_max']).to eq 100

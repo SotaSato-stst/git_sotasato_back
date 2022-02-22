@@ -7,28 +7,13 @@
           <el-tag type="info" effect="plain" class="subsidy-type">
             {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
           </el-tag>
-          <span v-if="subsidy.priceMax" class="header-info">
+          <span v-if="subsidy.priceMax" class="feature-label">
             <span class="label">
               上限金額:
               {{ convertToShortJPY(subsidy.priceMax) }}円
             </span>
           </span>
-          <span v-if="subsidy.supportRatioMax" class="header-info">
-            <span class="label">
-              最大支援割合:
-              {{ subsidy.supportRatioMax }}
-            </span>
-          </span>
-          <span v-if="subsidy.supportRatioMin" class="header-info">
-            <span class="label">
-              最小支援割合:
-              {{ subsidy.supportRatioMin }}
-            </span>
-          </span>
-          <span v-if="subsidy.level" class="header-info">
-            <span class="label">申請難易度:{{ starView(subsidy.level) }}</span>
-          </span>
-          <span class="header-info">
+          <span class="feature-label">
             募集期間:
             <span class="label">
               {{ convertToJpDate(subsidy.startFrom) }}
@@ -46,6 +31,25 @@
             <span class="label target">対象</span>
             <span class="target">
               {{ subsidy.targetDetail }}
+            </span>
+          </div>
+          <div class="feature-labels">
+            <span v-if="subsidy.level" class="feature-label">
+              <span class="label">
+                申請難易度:{{ starView(subsidy.level) }}
+              </span>
+            </span>
+            <span v-if="subsidy.supportRatioMax" class="feature-label">
+              <span class="label">
+                最大支援割合:
+                {{ subsidy.supportRatioMax }}
+              </span>
+            </span>
+            <span v-if="subsidy.supportRatioMin" class="feature-label">
+              <span class="label">
+                最小支援割合:
+                {{ subsidy.supportRatioMin }}
+              </span>
             </span>
           </div>
         </el-main>
@@ -135,8 +139,9 @@ export default defineComponent({
   margin-left: var(--spacing-1);
 }
 
-.header-info {
+.feature-label {
   font-size: 14px;
+  margin-right: var(--spacing-2);
 }
 
 .card-container {
@@ -150,6 +155,7 @@ export default defineComponent({
 .card-content {
   margin-top: var(--spacing-4);
   padding: 0;
+  overflow: visible;
 }
 
 .title {
@@ -170,11 +176,16 @@ export default defineComponent({
 .target {
   font-size: 12px;
   width: 100%;
+  margin: auto;
 }
 
 .target-container > .label {
   width: var(--spacing-16);
   text-align: center;
   margin-top: var(--spacing-3);
+}
+
+.feature-labels {
+  margin-top: var(--spacing-4);
 }
 </style>

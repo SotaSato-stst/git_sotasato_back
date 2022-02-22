@@ -195,6 +195,28 @@
         :disabled="loading"
       />
     </el-form-item>
+    <el-form-item label="検索キーワード" prop="keywords">
+      <el-input
+        v-model="state.keywords"
+        type="textarea"
+        class="input-text"
+        placeholder="スペースまたは改行で単語ごとに登録"
+        :autosize="{minRows: 2}"
+        :disabled="loading"
+      />
+      <div>トップ検索ワード一覧</div>
+      <div class="inline">
+        <div v-for="keyword in topKeywords" :key="keyword">
+          <el-button
+            size="mini"
+            class="keyword-button"
+            @click="addKeyword(keyword)"
+          >
+            +{{ keyword }}
+          </el-button>
+        </div>
+      </div>
+    </el-form-item>
     <el-form-item label="申請難易度" prop="level">
       <el-rate
         v-model="level"
@@ -213,6 +235,7 @@
         class="input-number input-number-text-align-center"
         :disabled="loading"
       />
+      点
     </el-form-item>
     <el-form-item label="最低資本金" prop="capitalMin">
       <el-input
@@ -276,7 +299,7 @@ import {
   RadioButton,
   Rate,
 } from 'element-ui'
-import {optionsModule} from '@/store'
+import {optionsModule, keywordsModule} from '@/store'
 import {Loader} from '@/services/useLoader'
 import {UpdateSubsidyParams} from '@/types/Subsidy'
 import {Validate} from '@/types/Validate'
@@ -352,6 +375,11 @@ export default defineComponent({
       }
     }
 
+    const topKeywords = computed(() => keywordsModule.topKeywords)
+    const addKeyword = (word: string) => {
+      state.keywords = state.keywords + ' ' + word
+    }
+
     const validate: Validate = (result: (valid: boolean) => void) => {
       form.value?.validate(valid => result(valid))
     }
@@ -415,6 +443,7 @@ export default defineComponent({
         if (state.prefectureId) {
           await optionsModule.getCities(state.prefectureId)
         }
+        keywordsModule.getTopKeywords()
         optionsModule.getBusinessCategories()
         priceMaxMan.value = (state.priceMax || 1000) / 10000
         startFrom.value = state.startFrom ? new Date(state.startFrom) : null
@@ -445,6 +474,8 @@ export default defineComponent({
       endToChanged,
       level,
       levelChanged,
+      topKeywords,
+      addKeyword,
       validate,
       rules,
     }
@@ -496,6 +527,10 @@ export default defineComponent({
   height: 40px;
   display: flex;
   align-items: center;
+}
+
+.keyword-button {
+  margin-right: var(--spacing-2);
 }
 </style>
 

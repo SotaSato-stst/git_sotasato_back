@@ -3,6 +3,14 @@
     <div class="search-title">補助金情報検索</div>
     <el-form class="form" :model="state" label-width="120px">
       <div class="search-item">
+        <div class="search-label">検索</div>
+        <el-input
+          v-model="state.keyword"
+          placeholder="フリーワード"
+          clearable
+        />
+      </div>
+      <div class="search-item">
         <div class="search-label">都道府県</div>
         <el-select
           v-if="prefectures.length > 0"
@@ -68,7 +76,7 @@
       <div class="search-item">
         <div class="search-label">資本金</div>
         <el-input
-          v-model="state.capitalMan"
+          v-model="capitalMan"
           class="input-number input-left"
           type="number"
           placeholder="100,000"
@@ -101,7 +109,7 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 import {Form, FormItem, Input, Button, Checkbox, InputNumber} from 'element-ui'
-import {optionsModule, subsidiesModule} from '@/store'
+import {optionsModule, subsidiesModule, accountModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
 import {removeEmpty} from '@/utils/objectUtil'
@@ -116,7 +124,6 @@ export default defineComponent({
     [`${Checkbox.name}`]: Checkbox,
     [`${InputNumber.name}`]: InputNumber,
   },
-  layout: 'admin',
   setup(_props) {
     const route = useRoute()
     const query = route.value.query
@@ -140,6 +147,7 @@ export default defineComponent({
       businessCategoryKeys: [],
       totalEmployee: null,
       capital: null,
+      keyword: '',
     })
     const capitalMan = ref<number | null>(null)
     const capitalChanged = () => {
@@ -148,7 +156,21 @@ export default defineComponent({
       }
     }
 
-    const setStateFromQuery = () => {
+    const paramsFromCurrentCompany = (): Partial<SubsidySearchForm> => {
+      const company = accountModule.currentCompany
+      if (!company) {
+        return {}
+      }
+      return {
+        prefectureId: company.prefectureId,
+        cityIds: [company.cityId],
+        businessCategoryKeys: company.businessCategories,
+        capital: company.capital,
+        totalEmployee: company.totalEmployee,
+      }
+    }
+
+    const paramsFromUrlQuery = () => {
       const prefectureIdQuery = Number(query.prefectureId)
       const prefectureId =
         isNaN(prefectureIdQuery) ||
@@ -161,41 +183,77 @@ export default defineComponent({
         ?.toString()
         .split('|')
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
-      const totalEmployee = query.totalEmployee
-      const capital = query.capital
-      Object.assign(state, {
+      const keyword = query.keyword?.toString()
+      const capital = query.capital?.toString()
+      const totalEmployee = query.totalEmployee?.toString()
+      return removeEmpty({
         cityIds,
         prefectureId,
         inApplicationPeriod,
         businessCategoryKeys,
-        totalEmployee,
         capital,
+        totalEmployee,
+        keyword,
       })
     }
 
     const search = () => {
       subsidiesModule.setSearchParams(state)
-      const query = removeEmpty(subsidiesModule.searchParams)
-      if (query.inApplicationPeriod === true) {
-        query.inApplicationPeriod = undefined
-      }
       load(loading, () => {
-        router.push({path: routingService.Top(), query})
+        router.push({path: routingService.Top(), query: urlQueryFromParams()})
         subsidiesModule.getSubsidies()
       })
+    }
+
+    const urlQueryFromParams = () => {
+      const params = removeEmpty(subsidiesModule.searchParams)
+      if (params.inApplicationPeriod === true) {
+        params.inApplicationPeriod = undefined
+      }
+      const company = accountModule.currentCompany
+      if (params.prefectureId === company?.prefectureId.toString()) {
+        params.prefectureId = undefined
+      }
+      if (params.cityIds === company?.cityId.toString()) {
+        params.cityIds = []
+      }
+      if (
+        params.businessCategoryKeys === company?.businessCategories.join('|')
+      ) {
+        params.businessCategoryKeys = []
+      }
+      if (params.capital === company?.capital) {
+        params.capital = undefined
+      }
+      if (params.totalEmployee === company?.totalEmployee) {
+        params.totalEmployee = undefined
+      }
+      return params
     }
 
     onMounted(() => {
       load(loading, async () => {
         await optionsModule.getBusinessCategories()
         await optionsModule.getPrefectures()
-        if (route.value.path === routingService.Top()) {
-          setStateFromQuery()
-          if (state.prefectureId) {
-            optionsModule.getCities(state.prefectureId)
-          }
-          search()
+        if (route.value.path !== routingService.Top()) {
+          return
         }
+        await accountModule.getCurrentUser()
+        Object.assign(state, paramsFromCurrentCompany())
+        Object.assign(state, paramsFromUrlQuery())
+        if (state.prefectureId) {
+          optionsModule.getCities(state.prefectureId)
+        }
+        if (state.prefectureId !== accountModule.currentCompany?.prefectureId) {
+          state.cityIds = []
+        }
+        if (state.capital) {
+          capitalMan.value = state.capital / 10000
+        }
+        subsidiesModule.setSearchParams(state)
+        const pageQuery = route.value.query.page?.toString() || null
+        const page = pageQuery ? Number(pageQuery) : 1
+        subsidiesModule.getSubsidies(page)
       })
     })
 

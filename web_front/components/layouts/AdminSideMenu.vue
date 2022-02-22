@@ -16,6 +16,10 @@
       <i class="el-icon-user"></i>
       <span>ユーザー管理</span>
     </el-menu-item>
+    <el-menu-item index="searched_keywords">
+      <i class="el-icon-search"></i>
+      <span>検索ワード分析</span>
+    </el-menu-item>
   </el-menu>
 </template>
 
@@ -31,7 +35,12 @@ import {
 import {routingService} from '@/services/routingService'
 import {subsidyDraftsModule} from '@/store'
 
-type menuType = 'new_urls' | 'subsidies' | 'companies' | 'users'
+type menuType =
+  | 'new_urls'
+  | 'subsidies'
+  | 'companies'
+  | 'users'
+  | 'searched_keywords'
 
 export default defineComponent({
   name: 'AdminSideMenu',
@@ -41,7 +50,8 @@ export default defineComponent({
   },
   setup(_props) {
     const router = useRouter()
-    const path = useRoute().value.path
+    const route = useRoute()
+    const path = route.value.path
     const totalCount = computed(() => subsidyDraftsModule.pagination.itemsTotal)
     const selectedPage = computed(() => {
       if (path.startsWith(routingService.AdminSubsidies())) {
@@ -50,6 +60,8 @@ export default defineComponent({
         return 'companies'
       } else if (path.startsWith(routingService.AdminUsers())) {
         return 'users'
+      } else if (path.startsWith(routingService.AdminSearchedKeywords())) {
+        return 'searched_keywords'
       } else {
         return 'new_urls'
       }
@@ -68,10 +80,19 @@ export default defineComponent({
         case 'users':
           router.push(routingService.AdminUsers())
           break
+        case 'searched_keywords':
+          router.push(routingService.AdminSearchedKeywords())
+          break
       }
     }
 
     onMounted(() => {
+      if (
+        subsidyDraftsModule.loader.loading ||
+        subsidyDraftsModule.pagination
+      ) {
+        return
+      }
       subsidyDraftsModule.getSubsidyDrafts()
     })
 

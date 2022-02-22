@@ -15,6 +15,7 @@ gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'google-cloud-storage'
 gem 'appengine', '~> 0.6.0'
+gem 'slack-ruby-client'
 
 group :development, :test do
   gem 'rspec-rails'

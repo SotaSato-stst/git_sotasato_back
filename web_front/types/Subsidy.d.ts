@@ -27,6 +27,7 @@ export type Subsidy = {
   prefecture: Prefecture | null
   city: City | null
   businessCategories: BusiessCategory[]
+  keywords: string[]
   favorite: boolean
   rankingScore: number | null
   capitalMax: number | null
@@ -47,6 +48,7 @@ export type SubsidySearchQuery = {
   businessCategoryKeys: string | null
   totalEmployee: number | null
   capital: number | null
+  keyword: string
 }
 // フォームで取り扱うフォーマット
 export type SubsidySearchForm = {
@@ -56,6 +58,7 @@ export type SubsidySearchForm = {
   businessCategoryKeys: string[]
   totalEmployee: number | null
   capital: number | null
+  keyword: string
 }
 
 export type UpdateSubsidyParams = {
@@ -76,6 +79,7 @@ export type UpdateSubsidyParams = {
   cityId: number | null
   supplierType: SupplierType
   businessCategories: string[]
+  keywords: string
   rankingScore: number | null
   capitalMax: number | null
   capitalMin: number | null

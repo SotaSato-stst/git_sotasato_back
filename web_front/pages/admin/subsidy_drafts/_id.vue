@@ -101,11 +101,12 @@ export default defineComponent({
       cityId: null,
       supplierType: 'ministry',
       businessCategories: [],
-      rankingScore: 50,
+      rankingScore: null,
       capitalMax: 0,
       capitalMin: 0,
       totalEmployeeMin: 0,
       totalEmployeeMax: 0,
+      keywords: '',
     })
 
     const submit = (publishingCode: PublishingCode) => {
@@ -133,13 +134,7 @@ export default defineComponent({
           )
           break
         case 'published':
-          notifySuccess(
-            '情報を公開しました',
-            `${subsidyDraftsModule.subsidyDraft?.title}
-            <br/><a href="
-            ${routingService.SubsidyDetail(subsidyId)}
-            " target="_blank">公開ページを確認する</a>`,
-          )
+          notifySuccess('情報を公開しました', subsidyParams.title)
           break
       }
       router.replace(routingService.AdminSubsidyDetail(subsidyId))

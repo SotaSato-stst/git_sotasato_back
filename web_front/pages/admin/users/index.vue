@@ -20,21 +20,22 @@
           {{ accountRoleLabel(scope.row.accountRole) }}
         </template>
       </el-table-column>
+      <el-table-column prop="disabled" label="利用可否">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.disabled" type="danger">停止中</el-tag>
+          <el-tag v-if="!scope.row.disabled" type="success">利用可能</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row)">編集</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+    <pagination
       v-if="users.length > 0 && !loading"
-      background
-      layout="prev, pager, next"
-      :page-count="pagination.totalPages"
-      :total="pagination.itemsTotal"
-      :page-size="pagination.itemsPerPage"
-      :current-page="pagination.currentPage"
-      @current-change="getPage"
+      :pagination="pagination"
+      :request-page="getPage"
     />
   </div>
 </template>
@@ -45,9 +46,11 @@ import {
   defineComponent,
   onMounted,
   useRouter,
+  useRoute,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Pagination} from 'element-ui'
+import {Table, TableColumn, Tag} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
+import Pagination from '@/components/Pagination.vue'
 import {usersModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {User} from '@/types/User'
@@ -58,12 +61,14 @@ export default defineComponent({
   components: {
     [`${Table.name}`]: Table,
     [`${TableColumn.name}`]: TableColumn,
-    [`${Pagination.name}`]: Pagination,
+    [`${Tag.name}`]: Tag,
     CardLoading,
+    Pagination,
   },
   layout: 'admin',
   setup(_props) {
     const router = useRouter()
+    const route = useRoute()
     const {loading, load} = usersModule.loader
     const users = computed(() => usersModule.users)
     const pagination = computed(() => usersModule.pagination)
@@ -80,7 +85,9 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        usersModule.getUsers()
+        const pageQuery = route.value.query.page?.toString() || null
+        const page = pageQuery ? Number(pageQuery) : 1
+        usersModule.getUsers(page)
       })
     })
 

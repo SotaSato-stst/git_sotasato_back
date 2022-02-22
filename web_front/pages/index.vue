@@ -12,17 +12,12 @@
         </div>
         <el-empty
           v-if="!loading && subsidies.length == 0"
-          description="データがありません"
+          description="条件に当てはまるデータがありません"
         />
-        <el-pagination
-          v-if="!loading && subsidies.length > 0 && !loading"
-          background
-          layout="prev, pager, next"
-          :page-count="pagination.totalPages"
-          :total="pagination.itemsTotal"
-          :page-size="pagination.itemsPerPage"
-          :current-page="pagination.currentPage"
-          @current-change="getPage"
+        <pagination
+          v-if="subsidies.length > 0 && !loading"
+          :pagination="pagination"
+          :request-page="getPage"
         />
       </div>
     </el-main>
@@ -34,10 +29,11 @@
 
 <script lang="ts">
 import {computed, defineComponent} from '@nuxtjs/composition-api'
-import {Container, Aside, Main, Pagination, Empty} from 'element-ui'
+import {Container, Aside, Main, Empty} from 'element-ui'
 import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
+import Pagination from '@/components/Pagination.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
 import {subsidiesModule} from '@/store'
 
@@ -47,11 +43,11 @@ export default defineComponent({
     [`${Container.name}`]: Container,
     [`${Aside.name}`]: Aside,
     [`${Main.name}`]: Main,
-    [`${Pagination.name}`]: Pagination,
     [`${Empty.name}`]: Empty,
     SearchMenu,
     SideRightMenu,
     SubsidyCard,
+    Pagination,
     CardLoading,
   },
   setup(_props) {

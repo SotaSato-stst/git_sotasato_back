@@ -273,6 +273,33 @@ RSpec.describe Subsidy, type: :model do
     end
   end
 
+  describe 'search_by_keyword' do
+    subject { Subsidy.search_by_keyword(keyword) }
+
+    let(:subsidy) { create(:subsidy) }
+
+    context 'when keyword exists' do
+      before do
+        keyword = create(:keyword, content: '検索単語')
+        create(:subsidy_keyword, subsidy: subsidy, keyword: keyword)
+      end
+
+      let(:keyword) { '検索単語' }
+
+      it 'returns target' do
+        expect(subject).to include subsidy
+      end
+    end
+
+    context 'when keyword does not exist' do
+      let(:keyword) { '検索単語' }
+
+      it 'returns none' do
+        expect(subject).not_to include subsidy
+      end
+    end
+  end
+
   describe 'search_by_user' do
     subject { Subsidy.search_by_user(params) }
 
