@@ -41,6 +41,8 @@ export default defineComponent({
       prefectureId: null,
       cityId: null,
       businessCategories: [],
+      foundingDate: null,
+      annualSales: null,
     })
 
     const submit = async () => {
@@ -71,6 +73,8 @@ export default defineComponent({
           totalEmployee: company.totalEmployee,
           prefectureId: company.prefecture.id,
           cityId: company.city.id,
+          foundingDate: company.foundingDate,
+          annualSales: company.annualSales,
           businessCategories: company.businessCategories.map(c => c.key),
         })
       })

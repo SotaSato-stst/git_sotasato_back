@@ -100,6 +100,26 @@
         />
         人
       </el-form-item>
+      <el-form-item label="年商" prop="annualSales">
+        <el-input
+          v-model="state.annualSales"
+          class="input-number"
+          type="number"
+          placeholder="10000000"
+          :disabled="loading"
+        />
+        円
+      </el-form-item>
+      <el-form-item label="設立日" prop="foundingDate">
+        <el-date-picker
+          v-model="foundingDate"
+          class="input-date"
+          type="date"
+          placeholder=""
+          :disabled="loading"
+          @change="foundingDateChanged()"
+        />
+      </el-form-item>
     </el-form>
   </el-card>
 </template>
@@ -141,6 +161,10 @@ export default defineComponent({
     const {loading, load} = optionsModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
     const businessCategories = computed(() => optionsModule.businessCategories)
+    const foundingDate = ref<Date | null>(null)
+    const foundingDateChanged = () => {
+      state.foundingDate = foundingDate.value?.toISOString() || null
+    }
     const selectPrefectureId = async (prefectureId: number | null) => {
       if (!prefectureId) {
         return
@@ -220,6 +244,8 @@ export default defineComponent({
       state,
       rules,
       submit,
+      foundingDateChanged,
+      foundingDate,
     }
   },
 })

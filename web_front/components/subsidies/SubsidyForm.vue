@@ -257,6 +257,26 @@
       />
       円
     </el-form-item>
+    <el-form-item label="最低年商" prop="annualSalesMin">
+      <el-input
+        v-model="state.annualSalesMin"
+        class="input-number"
+        type="number"
+        placeholder="1000"
+        :disabled="loading"
+      />
+      円
+    </el-form-item>
+    <el-form-item label="最大年商" prop="annualSalesMax">
+      <el-input
+        v-model="state.annualSalesMax"
+        class="input-number"
+        type="number"
+        placeholder="1000"
+        :disabled="loading"
+      />
+      円
+    </el-form-item>
     <el-form-item label="最小従業員数" prop="totalEmployeeMin">
       <el-input
         v-model="state.totalEmployeeMin"
@@ -276,6 +296,26 @@
         :disabled="loading"
       />
       人
+    </el-form-item>
+    <el-form-item label="最大設立日" prop="foundingDateMax">
+      <el-date-picker
+        v-model="foundingDateMax"
+        type="date"
+        placeholder="選択"
+        class="input-number"
+        :disabled="loading"
+        @change="foundingDateMaxChanged()"
+      />
+    </el-form-item>
+    <el-form-item label="最小設立日" prop="foundingDateMin">
+      <el-date-picker
+        v-model="foundingDateMin"
+        type="date"
+        placeholder="選択"
+        class="input-number"
+        :disabled="loading"
+        @change="foundingDateMinChanged()"
+      />
     </el-form-item>
   </el-form>
 </template>
@@ -365,6 +405,14 @@ export default defineComponent({
     const endTo = ref<Date | null>(null)
     const endToChanged = () => {
       state.endTo = endTo.value?.toISOString() || null
+    }
+    const foundingDateMax = ref<Date | null>(null)
+    const foundingDateMaxChanged = () => {
+      state.foundingDateMax = foundingDateMax.value?.toISOString() || null
+    }
+    const foundingDateMin = ref<Date | null>(null)
+    const foundingDateMinChanged = () => {
+      state.foundingDateMin = foundingDateMin.value?.toISOString() || null
     }
     const level = ref<number | null>(null)
     const levelChanged = () => {
@@ -478,6 +526,10 @@ export default defineComponent({
       addKeyword,
       validate,
       rules,
+      foundingDateMax,
+      foundingDateMin,
+      foundingDateMaxChanged,
+      foundingDateMinChanged,
     }
   },
 })

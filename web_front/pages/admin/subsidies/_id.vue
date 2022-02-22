@@ -122,6 +122,10 @@ export default defineComponent({
       totalEmployeeMin: 0,
       totalEmployeeMax: 0,
       keywords: '',
+      foundingDateMin: null,
+      foundingDateMax: null,
+      annualSalesMax: null,
+      annualSalesMin: null,
     })
 
     const submit = (publishingCode: PublishingCode) => {

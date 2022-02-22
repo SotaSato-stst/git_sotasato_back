@@ -3,10 +3,14 @@
 # Table name: subsidies
 #
 #  id                 :bigint           not null, primary key
+#  annual_sales_max   :bigint
+#  annual_sales_min   :bigint
 #  capital_max        :integer
 #  capital_min        :integer
 #  detail             :text(65535)      not null
 #  end_to             :date
+#  founding_date_max  :date
+#  founding_date_min  :date
 #  level              :integer
 #  price_max          :integer
 #  publishing_code    :string(255)      not null
