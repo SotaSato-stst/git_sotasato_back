@@ -1,10 +1,6 @@
 steps:
-- name: 'ubuntu'
-  entrypoint: 'bash'
-  args: ['cd api_server']
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  args: ['app', 'deploy']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: ['-c', 'gcloud config set app/cloud_build_timeout 1000 && cd api_server && gcloud app deploy']
   env:
     - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
     - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
@@ -13,5 +9,4 @@ steps:
     - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
     - PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}
     - SLACK_API_TOKEN=${_SLACK_API_TOKEN}
-  timeout: '1200s'
 timeout: '1200s'
