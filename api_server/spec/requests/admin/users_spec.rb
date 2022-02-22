@@ -19,9 +19,9 @@ RSpec.describe 'Admin::Users', type: :request do
     it 'returns object' do
       create(:user, display_name: 'テスト太郎', email: 'taro@test.com', firebase_uid: 'test')
       subject
-      expect(json['users'][1]['display_name']).to eq 'テスト太郎'
-      expect(json['users'][1]['email']).to eq 'taro@test.com'
-      expect(json['users'][1]['firebase_uid']).to eq 'test'
+      expect(json['users'][0]['display_name']).to eq 'テスト太郎'
+      expect(json['users'][0]['email']).to eq 'taro@test.com'
+      expect(json['users'][0]['firebase_uid']).to eq 'test'
     end
 
     context 'sign_in_user is not admin' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin Companies', type: :request do
-  let(:sign_in_user) { create(:user, :admin) }
+  let(:sign_in_user) { create(:user, :admin, company: company) }
   let(:prefecture) { create(:prefecture, name: '大阪府') }
   let(:city) { create(:city, id: 1) }
   let!(:company) do

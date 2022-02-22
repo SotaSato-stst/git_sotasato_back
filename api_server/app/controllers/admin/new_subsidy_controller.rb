@@ -1,7 +1,7 @@
 module Admin
   class NewSubsidyController < ApplicationController
     def show
-      next_id = SubsidyDraft.last.id + 1
+      next_id = SubsidyDraft.last&.id.to_i + 1
       NewSubsidyService.new(params[:date].to_date).execute!
       slack = SlackService.new
       SubsidyDraft.where(id: next_id..).each do |subsidy_draft|
