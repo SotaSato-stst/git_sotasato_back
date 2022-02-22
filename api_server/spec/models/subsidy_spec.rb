@@ -195,8 +195,8 @@ RSpec.describe Subsidy, type: :model do
     end
   end
 
-  describe 'search_apply_capital' do
-    subject { Subsidy.search_apply_capital(capital) }
+  describe 'search_with_capital' do
+    subject { Subsidy.search_with_capital(capital) }
     context '一致するデータが存在するとき' do
       let(:capital) { 140 }
       let!(:target_record) { create(:subsidy, capital_max: 200, capital_min: 50) }
@@ -211,8 +211,8 @@ RSpec.describe Subsidy, type: :model do
     end
   end
 
-  describe 'search_apply_capital' do
-    subject { Subsidy.search_apply_employee(total_employee) }
+  describe 'search_with_capital' do
+    subject { Subsidy.search_with_employee(total_employee) }
     context '一致するデータが存在するとき' do
       let(:total_employee) { 10 }
       let!(:target_record) { create(:subsidy, total_employee_max: 20, total_employee_min: 5) }

@@ -55,7 +55,7 @@
         </el-select>
       </div>
       <div class="search-item">
-        <div class="search-label">従業員数で探す</div>
+        <div class="search-label">従業員数</div>
         <el-input
           v-model="state.totalEmployee"
           class="input-number input-left"
@@ -66,7 +66,7 @@
         <span class="unit-font">人</span>
       </div>
       <div class="search-item">
-        <div class="search-label">資本金で探す</div>
+        <div class="search-label">資本金</div>
         <el-input
           v-model="state.capitalMan"
           class="input-number input-left"
@@ -141,9 +141,11 @@ export default defineComponent({
       totalEmployee: null,
       capital: null,
     })
-    const capitalMan = ref(1)
+    const capitalMan = ref<number | null>(null)
     const capitalChanged = () => {
-      state.capital = capitalMan.value * 10000
+      if (capitalMan.value) {
+        state.capital = capitalMan.value * 10000
+      }
     }
 
     const setStateFromQuery = () => {

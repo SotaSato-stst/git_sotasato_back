@@ -15,8 +15,6 @@ class CreateSubsidies < ActiveRecord::Migration[6.1]
       t.string :subsidy_category
       t.string :supplier_type
       t.integer :ranking_score
-      t.integer :capital
-      t.integer :total_employee 
       t.timestamps
     end
   end
