@@ -87,8 +87,14 @@
       </el-table-column>
       <el-table-column label="操作" width="120">
         <template slot-scope="scope">
-          <el-button type="danger" size="mini" @click="archive(scope.row)">
-            アーカイブ
+          <el-button
+            type="danger"
+            size="mini"
+            :disabled="scope.row.archived"
+            @click="archive(scope.row)"
+          >
+            <div v-if="!scope.row.archived">アーカイブ</div>
+            <div v-if="scope.row.archived">アーカイブ済み</div>
           </el-button>
         </template>
       </el-table-column>
@@ -132,6 +138,7 @@ import {
 } from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
+import {removeEmpty} from '@/utils/objectUtil'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 
 export default defineComponent({
@@ -161,20 +168,21 @@ export default defineComponent({
     const completedCount = computed(() => subsidyDraftsModule.completedCount)
 
     const getPage = (page: number) => {
-      Object.assign(filter, {page})
       subsidyDraftsModule.setSubsidyDrafts([])
-      subsidyDraftsModule.getSubsidyDrafts(filter)
+      handleSegue({page})
     }
 
     const selectAssignFilter = (assignFilter: FilterAssignType) => {
-      Object.assign(filter, {assignFilter})
-      router.push({query: {assignFilter}})
-      subsidyDraftsModule.getSubsidyDrafts(filter)
+      handleSegue({assignFilter, page: 1})
     }
 
     const selectCompleteFilter = (completeFilter: FilterCompleteType) => {
-      Object.assign(filter, {completeFilter})
-      router.push({query: {completeFilter}})
+      handleSegue({completeFilter, page: 1})
+    }
+
+    const handleSegue = (segueFilter: Partial<SubsidyDraftIndexParams>) => {
+      Object.assign(filter, segueFilter)
+      router.push({query: {...removeEmpty(filter)}})
       subsidyDraftsModule.getSubsidyDrafts(filter)
     }
 
@@ -222,7 +230,7 @@ export default defineComponent({
 
     const handleSuccess = (message: string) => {
       notifySuccess('アーカイブしました', message)
-      subsidyDraftsModule.getSubsidyDrafts(filter)
+      handleSegue({})
     }
 
     const requestNewSubsidy = () => {
@@ -236,7 +244,8 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       )
         .then(async (date: any) => {
           await subsidyDraftsModule.getNewSubsidy(date.value)
-          subsidyDraftsModule.getSubsidyDrafts(filter)
+          Object.assign(filter, {page: 1})
+          handleSegue({})
         })
         .catch(_ => {})
     }
@@ -251,8 +260,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
         const completeFilter =
           (route.value.query.completeFilter?.toString() as FilterCompleteType) ||
           'notCompleted'
-        Object.assign(filter, {page, assignFilter, completeFilter})
-        subsidyDraftsModule.getSubsidyDrafts(filter)
+        handleSegue({page, assignFilter, completeFilter})
       })
     })
 
