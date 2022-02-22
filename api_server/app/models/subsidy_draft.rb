@@ -33,7 +33,7 @@ class SubsidyDraft < ApplicationRecord
   belongs_to :ministry, optional: true
   belongs_to :prefecture, optional: true
   belongs_to :city, optional: true
-  belongs_to :assignee, class_name: 'User'
+  belongs_to :assignee, class_name: 'User', optional: true
 
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
