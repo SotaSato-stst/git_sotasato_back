@@ -25,8 +25,10 @@ class User < ApplicationRecord
   belongs_to :company
   has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidies, through: :user_favorite_subsidies
+  has_many :subsidy_draft_assngins, foreign_key: :assignee_id, class_name: 'SubsidyDraft'
 
   enum account_role: { user: 'user', editor: 'editor', admin: 'admin' } # editor: 補助金情報の入力者, admin: 社内の管理者
 
   scope :activated, -> { where(disabled: false) }
+  scope :operators, -> { where(account_role: %w[editor admin]) }
 end

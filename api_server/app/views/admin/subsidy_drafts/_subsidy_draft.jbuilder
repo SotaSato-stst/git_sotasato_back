@@ -1,5 +1,12 @@
 json.call(subsidy_draft, :id, :title, :url, :supplier_type, :archived, :created_at)
 
+json.assignee do
+  if subsidy_draft.assignee.present?
+    json.call(subsidy_draft.assignee, :id, :display_name, :email, :firebase_uid, :account_role, :disabled)
+  else
+    json.null!
+  end
+end
 json.ministry do
   json.partial! 'ministries/ministry', ministry: subsidy_draft.ministry
 end

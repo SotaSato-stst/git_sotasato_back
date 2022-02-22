@@ -2,7 +2,11 @@
   <el-menu class="menu" :default-active="selectedPage" @select="handleSelect">
     <el-menu-item index="new_urls">
       <i class="el-icon-news"></i>
-      <span>未対応の新着 ({{ totalCount }}件)</span>
+      <span>未対応の新着</span>
+    </el-menu-item>
+    <el-menu-item index="assignees">
+      <i class="el-icon-user"></i>
+      <span>編集担当者管理</span>
     </el-menu-item>
     <el-menu-item index="subsidies">
       <i class="el-icon-s-order"></i>
@@ -28,15 +32,14 @@ import {Menu, MenuItem} from 'element-ui'
 import {
   defineComponent,
   computed,
-  onMounted,
   useRouter,
   useRoute,
 } from '@nuxtjs/composition-api'
 import {routingService} from '@/services/routingService'
-import {subsidyDraftsModule} from '@/store'
 
 type menuType =
   | 'new_urls'
+  | 'assignees'
   | 'subsidies'
   | 'companies'
   | 'users'
@@ -52,7 +55,6 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const path = route.value.path
-    const totalCount = computed(() => subsidyDraftsModule.pagination.itemsTotal)
     const selectedPage = computed(() => {
       if (path.startsWith(routingService.AdminSubsidies())) {
         return 'subsidies'
@@ -62,6 +64,8 @@ export default defineComponent({
         return 'users'
       } else if (path.startsWith(routingService.AdminSearchedKeywords())) {
         return 'searched_keywords'
+      } else if (path.startsWith(routingService.AdminAssignees())) {
+        return 'assignees'
       } else {
         return 'new_urls'
       }
@@ -70,6 +74,9 @@ export default defineComponent({
       switch (value) {
         case 'new_urls':
           router.push(routingService.AdminTop())
+          break
+        case 'assignees':
+          router.push(routingService.AdminAssignees())
           break
         case 'subsidies':
           router.push(routingService.AdminSubsidies())
@@ -86,17 +93,7 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      if (
-        subsidyDraftsModule.loader.loading ||
-        subsidyDraftsModule.pagination
-      ) {
-        return
-      }
-      subsidyDraftsModule.getSubsidyDrafts()
-    })
-
-    return {totalCount, selectedPage, handleSelect}
+    return {selectedPage, handleSelect}
   },
 })
 </script>

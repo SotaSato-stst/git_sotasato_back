@@ -2,7 +2,7 @@
   <el-menu class="menu" :default-active="selectedPage" @select="handleSelect">
     <el-menu-item index="new_urls">
       <i class="el-icon-news"></i>
-      <span>未対応の新着 ({{ totalCount }}件)</span>
+      <span>未対応の新着</span>
     </el-menu-item>
     <el-menu-item index="subsidies">
       <i class="el-icon-s-order"></i>
@@ -16,12 +16,10 @@ import {Menu, MenuItem} from 'element-ui'
 import {
   defineComponent,
   computed,
-  onMounted,
   useRouter,
   useRoute,
 } from '@nuxtjs/composition-api'
 import {routingService} from '@/services/routingService'
-import {subsidyDraftsModule} from '@/store'
 
 type menuType = 'new_urls' | 'subsidies'
 
@@ -34,7 +32,6 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const path = useRoute().value.path
-    const totalCount = computed(() => subsidyDraftsModule.pagination.itemsTotal)
     const selectedPage = computed(() => {
       if (path.startsWith(routingService.AdminSubsidies())) {
         return 'subsidies'
@@ -53,11 +50,7 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      subsidyDraftsModule.getSubsidyDrafts()
-    })
-
-    return {totalCount, selectedPage, handleSelect}
+    return {selectedPage, handleSelect}
   },
 })
 </script>

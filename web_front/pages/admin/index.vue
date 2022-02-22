@@ -21,6 +21,27 @@
         </el-button>
       </div>
     </div>
+    <div class="filter">
+      <el-radio-group
+        v-model="filter.assignFilter"
+        size="mini"
+        @change="selectAssignFilter"
+      >
+        <el-radio-button label="assignedMe">自分が担当</el-radio-button>
+        <el-radio-button label="noAssign">担当者なし</el-radio-button>
+        <el-radio-button label="all">すべて</el-radio-button>
+      </el-radio-group>
+      <el-radio-group
+        v-model="filter.completeFilter"
+        size="mini"
+        @change="selectCompleteFilter"
+      >
+        <el-radio-button label="completed">完了</el-radio-button>
+        <el-radio-button label="notCompleted">未完了</el-radio-button>
+        <el-radio-button label="all">すべて</el-radio-button>
+      </el-radio-group>
+      <div class="total-count">{{ pagination.itemsTotal }}件</div>
+    </div>
     <card-loading :loading="loading" />
     <el-table
       v-if="!loading"
@@ -71,6 +92,11 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column label="担当者" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.assignee && scope.row.assignee.displayName }}
+        </template>
+      </el-table-column>
       <el-table-column label="更新日" width="120">
         <template slot-scope="scope">
           {{ convertToJpDate(scope.row.createdAt) }}
@@ -92,12 +118,18 @@ import {
   onMounted,
   useRouter,
   useRoute,
+  reactive,
 } from '@nuxtjs/composition-api'
 import {Table, TableColumn, MessageBox} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import {subsidyDraftsModule, accountModule} from '@/store'
-import {SubsidyDraft} from '@/types/SubsidyDraft'
+import {
+  SubsidyDraft,
+  SubsidyDraftIndexParams,
+  FilterAssignType,
+  FilterCompleteType,
+} from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
@@ -115,16 +147,35 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const {loading, load} = subsidyDraftsModule.loader
+    const filter = reactive<SubsidyDraftIndexParams>({
+      page: 1,
+      assignFilter: 'assignedMe',
+      completeFilter: 'notCompleted',
+    })
     const isAdmin = computed(() => accountModule.isAdmin)
     const subsidyDrafts = computed(() => subsidyDraftsModule.subsidyDrafts)
     const selectedSubsidyDrafts = computed(
       () => subsidyDraftsModule.selectedSubsidyDrafts,
     )
     const pagination = computed(() => subsidyDraftsModule.pagination)
+    const completedCount = computed(() => subsidyDraftsModule.completedCount)
 
     const getPage = (page: number) => {
+      Object.assign(filter, {page})
       subsidyDraftsModule.setSubsidyDrafts([])
-      subsidyDraftsModule.getSubsidyDrafts(page)
+      subsidyDraftsModule.getSubsidyDrafts(filter)
+    }
+
+    const selectAssignFilter = (assignFilter: FilterAssignType) => {
+      Object.assign(filter, {assignFilter})
+      router.push({query: {assignFilter}})
+      subsidyDraftsModule.getSubsidyDrafts(filter)
+    }
+
+    const selectCompleteFilter = (completeFilter: FilterCompleteType) => {
+      Object.assign(filter, {completeFilter})
+      router.push({query: {completeFilter}})
+      subsidyDraftsModule.getSubsidyDrafts(filter)
     }
 
     const handleEdit = (subsidyDraft: SubsidyDraft) => {
@@ -147,11 +198,13 @@ export default defineComponent({
         .map(d => `「${d.title}」`)
         .join('<br/>')
       confirmArchive(titles)
-        .then(() => {
-          subsidyDraftsModule.selectedSubsidyDrafts.forEach(d => {
-            subsidyDraftsModule.deleteSubsidyDraft(d.id)
-          })
-          handleSuccess()
+        .then(async () => {
+          await Promise.all(
+            subsidyDraftsModule.selectedSubsidyDrafts.map(d => {
+              return subsidyDraftsModule.deleteSubsidyDraft(d.id)
+            }),
+          )
+          handleSuccess(`${subsidyDraftsModule.selectedSubsidyDrafts.length}件`)
         })
         .catch(_ => {})
     }
@@ -161,18 +214,15 @@ export default defineComponent({
         .then(() => {
           subsidyDraftsModule
             .deleteSubsidyDraft(subsidyDraft.id)
-            .then(handleSuccess)
+            .then(() => handleSuccess(subsidyDraft.title))
             .catch(showApiErrorMessage)
         })
         .catch(_ => {})
     }
 
-    const handleSuccess = () => {
-      notifySuccess(
-        'アーカイブしました',
-        `${subsidyDraftsModule.subsidyDraft?.title || ''}`,
-      )
-      subsidyDraftsModule.getSubsidyDrafts()
+    const handleSuccess = (message: string) => {
+      notifySuccess('アーカイブしました', message)
+      subsidyDraftsModule.getSubsidyDrafts(filter)
     }
 
     const requestNewSubsidy = () => {
@@ -186,7 +236,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       )
         .then(async (date: any) => {
           await subsidyDraftsModule.getNewSubsidy(date.value)
-          subsidyDraftsModule.getSubsidyDrafts()
+          subsidyDraftsModule.getSubsidyDrafts(filter)
         })
         .catch(_ => {})
     }
@@ -195,16 +245,27 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       load(loading, () => {
         const pageQuery = route.value.query.page?.toString() || null
         const page = pageQuery ? Number(pageQuery) : 1
-        subsidyDraftsModule.getSubsidyDrafts(page)
+        const assignFilter =
+          (route.value.query.assignFilter?.toString() as FilterAssignType) ||
+          'assignedMe'
+        const completeFilter =
+          (route.value.query.completeFilter?.toString() as FilterCompleteType) ||
+          'notCompleted'
+        Object.assign(filter, {page, assignFilter, completeFilter})
+        subsidyDraftsModule.getSubsidyDrafts(filter)
       })
     })
 
     return {
       loading,
+      filter,
+      selectAssignFilter,
+      selectCompleteFilter,
       isAdmin,
       subsidyDrafts,
       selectedSubsidyDrafts,
       pagination,
+      completedCount,
       getPage,
       handleEdit,
       handleSelectionChange,
@@ -241,6 +302,15 @@ Slackに新着通知が来ているのに、この画面に表示されてない
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+}
+
+.filter > * {
+  margin-right: var(--spacing-4);
 }
 </style>
 
