@@ -1,6 +1,6 @@
 steps:
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: ['gcloud config set app/cloud_build_timeout 1000 && cd api_server && gcloud app deploy']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', 'api_server/app.yaml']
   env:
     - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
     - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
