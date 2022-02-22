@@ -1,7 +1,7 @@
 <template>
   <el-container class="center-container">
     <el-aside class="left-side-menu" width="var(--header-width)">
-      <search-menu />
+      <viewed-subsidies />
     </el-aside>
     <el-main>
       <div class="container">
@@ -35,7 +35,7 @@ import {
   useRoute,
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Empty} from 'element-ui'
-import SearchMenu from '@/components/subsidies/SearchMenu.vue'
+import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
@@ -49,7 +49,7 @@ export default defineComponent({
     [`${Aside.name}`]: Aside,
     [`${Main.name}`]: Main,
     [`${Empty.name}`]: Empty,
-    SearchMenu,
+    ViewedSubsidies,
     SideRightMenu,
     SubsidyCard,
     Pagination,
