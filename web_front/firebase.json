@@ -5,6 +5,39 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "redirects": [
+      {
+        "regex": "/subsidies/(\\d+)",
+        "destination": "/redirect?id=:1&resource=subsidies",
+        "type": 301
+      },
+      {
+        "regex": "/admin/subsidies/(\\d+)",
+        "destination": "/redirect?id=:1&resource=admin_subsidies",
+        "type": 301
+      },
+      {
+        "regex": "/admin/subsidy_drafts/(\\d+)",
+        "destination": "/redirect?id=:1&resource=admin_subsidy_drafts",
+        "type": 301
+      },
+      {
+        "regex": "/admin/users/(\\d+)",
+        "destination": "/redirect?id=:1&resource=admin_users",
+        "type": 301
+      },
+      {
+        "regex": "/admin/companies/(\\d+)",
+        "destination": "/redirect?id=:1&resource=admin_companies",
+        "type": 301
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "404.html",
+        "destination": "/not_found"
+      }
     ]
   }
 }
