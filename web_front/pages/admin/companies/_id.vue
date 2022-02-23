@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <company-form
-      v-if="!loading"
+      v-if="!loading && company"
       :company-params="companyParams"
       @submit="submit"
     />
