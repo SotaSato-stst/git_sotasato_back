@@ -63,7 +63,7 @@ class Subsidy < ApplicationRecord
       .search_with_employee(search_params[:total_employee])
       .search_with_capital(search_params[:capital])
       .search_with_annual_sales(search_params[:annual_sales])
-      .in_application_establishment(search_params[:founding_date])
+      .in_years_of_establishment(search_params[:founding_date])
   }
   scope :search_by_keyword, ->(keyword) {
     return if keyword.blank?
@@ -112,12 +112,10 @@ class Subsidy < ApplicationRecord
       )
     )
   }
-  scope :in_application_establishment, ->(founding_date) {
+  scope :in_years_of_establishment, ->(founding_date) {
     return if founding_date.blank?
 
-    merge(
-      Subsidy.where('(start_from-?)>years_of_establishment', founding_date)
-    )
+    where('start_from > date_add(?, interval years_of_establishment year)', founding_date)
   }
   scope :search_with_capital, ->(capital) {
     return if capital.blank?
