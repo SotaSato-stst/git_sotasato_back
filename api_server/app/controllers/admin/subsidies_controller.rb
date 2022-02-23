@@ -62,8 +62,7 @@ module Admin
         :total_employee_min,
         :capital_max,
         :capital_min,
-        :founding_date_max,
-        :founding_date_min,
+        :years_of_establishment,
         :annual_sales_max,
         :annual_sales_min,
       )

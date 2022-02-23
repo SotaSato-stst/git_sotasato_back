@@ -29,7 +29,6 @@ class SubsidiesController < ApplicationController
       :business_category_keys,
       :total_employee,
       :capital,
-      :founding_date,
       :annual_sales,
     )
   end

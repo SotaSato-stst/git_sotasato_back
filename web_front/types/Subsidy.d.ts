@@ -34,8 +34,6 @@ export type Subsidy = {
   capitalMin: number | null
   totalEmployeeMax: number | null
   totalEmployeeMin: number | null
-  foundingDateMin: Date | null
-  foundingDateMax: Date | null
   annualSalesMax: number | null
   annualSalesMin: number | null
 }
@@ -93,8 +91,6 @@ export type UpdateSubsidyParams = {
   capitalMin: number | null
   totalEmployeeMax: number | null
   totalEmployeeMin: number | null
-  foundingDateMin: string | null
-  foundingDateMax: string | null
   annualSalesMax: number | null
   annualSalesMin: number | null
 }

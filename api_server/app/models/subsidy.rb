@@ -2,31 +2,30 @@
 #
 # Table name: subsidies
 #
-#  id                 :bigint           not null, primary key
-#  annual_sales_max   :bigint
-#  annual_sales_min   :bigint
-#  capital_max        :integer
-#  capital_min        :integer
-#  detail             :text(65535)      not null
-#  end_to             :date
-#  founding_date_max  :date
-#  founding_date_min  :date
-#  level              :integer
-#  price_max          :integer
-#  publishing_code    :string(255)      not null
-#  ranking_score      :integer
-#  start_from         :date             not null
-#  subsidy_category   :string(255)
-#  supplier_type      :string(255)
-#  support_ratio_max  :string(255)
-#  support_ratio_min  :string(255)
-#  target_detail      :text(65535)      not null
-#  title              :string(255)      not null
-#  total_employee_max :integer
-#  total_employee_min :integer
-#  url                :text(65535)      not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id                     :bigint           not null, primary key
+#  annual_sales_max       :bigint
+#  annual_sales_min       :bigint
+#  capital_max            :bigint
+#  capital_min            :integer
+#  detail                 :text(65535)      not null
+#  end_to                 :date
+#  level                  :integer
+#  price_max              :bigint
+#  publishing_code        :string(255)      not null
+#  ranking_score          :integer
+#  start_from             :date             not null
+#  subsidy_category       :string(255)
+#  supplier_type          :string(255)
+#  support_ratio_max      :string(255)
+#  support_ratio_min      :string(255)
+#  target_detail          :text(65535)      not null
+#  title                  :string(255)      not null
+#  total_employee_max     :integer
+#  total_employee_min     :integer
+#  url                    :text(65535)      not null
+#  years_of_establishment :date
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 # Indexes
 #
@@ -63,7 +62,6 @@ class Subsidy < ApplicationRecord
       .search_with_city(search_params[:city_ids])
       .search_with_employee(search_params[:total_employee])
       .search_with_capital(search_params[:capital])
-      .search_with_founding_date(search_params[:founding_date])
       .search_with_annual_sales(search_params[:annual_sales])
   }
   scope :search_by_keyword, ->(keyword) {
@@ -124,20 +122,6 @@ class Subsidy < ApplicationRecord
         Subsidy.where(capital_min: nil).where(capital_max: capital..)
       ).or(
         Subsidy.where(capital_min: nil).where(capital_max: nil)
-      )
-    )
-  }
-  scope :search_with_founding_date, ->(founding_date) {
-    return if founding_date.blank?
-
-    merge(
-      Subsidy.where('? between founding_date_min and founding_date_max', founding_date)
-      .or(
-        Subsidy.where(founding_date_min: ..founding_date).where(founding_date_max: nil)
-      ).or(
-        Subsidy.where(founding_date_min: nil).where(founding_date_max: founding_date..)
-      ).or(
-        Subsidy.where(founding_date_min: nil).where(founding_date_max: nil)
       )
     )
   }
