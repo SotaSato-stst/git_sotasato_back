@@ -54,7 +54,7 @@ class Subsidy < ApplicationRecord
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }, message: 'は1から5の間にしてください'
 
   enum publishing_code: { published: 'published', editing: 'editing' }
-  enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
+  enum subsidy_category: { hojo: 'hojo', josei: 'josei', kyufu: 'kyufu' }
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
   scope :published, -> { where(publishing_code: 'published') }

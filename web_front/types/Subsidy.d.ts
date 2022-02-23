@@ -5,7 +5,7 @@ import {Pagination} from './Pagination'
 import {BusiessCategory} from './BusiessCategory'
 import {OrganizationType} from './OrganizationType'
 
-export type SubsidyCategory = 'hojo' | 'josei'
+export type SubsidyCategory = 'hojo' | 'josei' | 'kyufu'
 export type SupplierType = 'ministry' | 'prefecture' | 'city'
 export type PublishingCode = 'editing' | 'published'
 

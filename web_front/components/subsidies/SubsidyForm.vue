@@ -17,6 +17,7 @@
       <el-radio-group v-model="state.subsidyCategory" size="medium">
         <el-radio-button label="hojo">補助金</el-radio-button>
         <el-radio-button label="josei">助成金</el-radio-button>
+        <el-radio-button label="kyufu">給付金</el-radio-button>
       </el-radio-group>
     </el-form-item>
     <el-form-item label="タイトル" prop="title">

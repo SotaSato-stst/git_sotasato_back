@@ -7,6 +7,8 @@ export const subsidyCategoryLabel = (category: SubsidyCategory) => {
       return '補助金'
     case 'josei':
       return '助成金'
+    case 'kyufu':
+      return '給付金'
   }
 }
 
