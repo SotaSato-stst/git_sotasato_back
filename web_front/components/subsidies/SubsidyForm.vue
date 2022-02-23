@@ -3,7 +3,7 @@
     ref="form"
     class="form"
     :model="state"
-    label-width="120px"
+    label-width="180px"
     :rules="rules"
   >
     <el-form-item label="参照元URL" prop="url">
@@ -120,33 +120,35 @@
       </el-button>
     </el-form-item>
     <el-form-item label="最大支援金額" prop="priceMax">
-      <el-input
-        v-model="priceMaxMan"
-        type="number"
-        class="input-number input-number-text-align-center"
-        :disabled="loading"
-        @change="priceMaxChanged()"
-      />
-      万円
-    </el-form-item>
-    <el-form-item label="支援割合">
       <div class="inline">
-        <el-form-item prop="supportRatioMin">
-          <el-input
-            v-model="state.supportRatioMin"
-            placeholder="1/2, 30%など"
-            class="input-range"
-            :disabled="loading"
-          />
-        </el-form-item>
-        <span class="range-between">~</span>
-        <el-form-item prop="supportRatioMax">
-          <el-input
-            v-model="state.supportRatioMax"
-            placeholder="2/3, 60%など"
-            class="input-range"
-            :disabled="loading"
-          />
+        <el-input
+          v-model="priceMaxMan"
+          type="number"
+          class="input-number input-number-text-align-center"
+          :disabled="loading"
+          @change="priceMaxChanged()"
+        />
+        万円
+        <el-form-item label="支援割合" label-width="120px">
+          <div class="inline">
+            <el-form-item prop="supportRatioMin">
+              <el-input
+                v-model="state.supportRatioMin"
+                placeholder="1/2, 30%など"
+                class="input-range"
+                :disabled="loading"
+              />
+            </el-form-item>
+            <span class="range-between">~</span>
+            <el-form-item prop="supportRatioMax">
+              <el-input
+                v-model="state.supportRatioMax"
+                placeholder="2/3, 60%など"
+                class="input-range"
+                :disabled="loading"
+              />
+            </el-form-item>
+          </div>
         </el-form-item>
       </div>
     </el-form-item>
@@ -185,7 +187,7 @@
         :disabled="loading"
       />
     </el-form-item>
-    <el-form-item label="従業員数">
+    <el-form-item label="対象となる従業員数">
       <div class="inline">
         <el-form-item prop="totalEmployeeMin">
           <el-input
@@ -209,8 +211,9 @@
           人
         </el-form-item>
       </div>
+      <div class="sub-description">※以上、以下の場合は片方を空にする</div>
     </el-form-item>
-    <el-form-item label="資本金">
+    <el-form-item label="対象となる資本金">
       <div class="inline">
         <el-form-item prop="capitalMin">
           <el-input
@@ -236,8 +239,9 @@
           万円
         </el-form-item>
       </div>
+      <div class="sub-description">※以上、以下の場合は片方を空にする</div>
     </el-form-item>
-    <el-form-item label="年商">
+    <el-form-item label="対象となる年商(年間売上)">
       <div class="inline">
         <el-form-item prop="annualSalesMin">
           <el-input
@@ -263,8 +267,9 @@
           万円
         </el-form-item>
       </div>
+      <div class="sub-description">※以上、以下の場合は片方を空にする</div>
     </el-form-item>
-    <el-form-item label="設立年数" prop="yearsOfEstablishment">
+    <el-form-item label="対象となる会社設立年数" prop="yearsOfEstablishment">
       <el-input
         v-model="state.yearsOfEstablishment"
         class="input-number"
@@ -625,6 +630,12 @@ export default defineComponent({
 
 .keyword-button {
   margin-right: var(--spacing-2);
+}
+
+.sub-description {
+  color: var(--text-color);
+  font-size: 12px;
+  height: fit-content;
 }
 </style>
 
