@@ -110,7 +110,7 @@
         />
         円
       </el-form-item>
-      <el-form-item label="設立日" prop="foundingDate">
+      <el-form-item label="創業日" prop="foundingDate">
         <el-date-picker
           v-model="foundingDate"
           class="input-date"

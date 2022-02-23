@@ -86,7 +86,7 @@
         <span class="unit-font">万円</span>
       </div>
       <div class="search-item">
-        <div class="search-label">設立日</div>
+        <div class="search-label">創業日</div>
         <el-date-picker
           v-model="state.foundingDate"
           class="input-number input-left"
@@ -94,7 +94,6 @@
           placeholder="日付"
         >
         </el-date-picker>
-        <span class="unit-font">万円</span>
       </div>
       <div class="search-item">
         <div class="search-label">年商</div>
