@@ -11,7 +11,7 @@ steps:
     - PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}
     - SLACK_API_TOKEN=${_SLACK_API_TOKEN}
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/macro-market-336309/appengine/default,
+  args: ["-i", "gcr.io/macro-market-336309/appengine/default",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
