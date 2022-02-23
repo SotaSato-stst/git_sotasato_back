@@ -24,7 +24,7 @@ module Admin
 
     def destroy
       @subsidy_draft = SubsidyDraft.find(params[:id])
-      @subsidy_draft.update!(archived: true)
+      @subsidy_draft.update!(archived: true, assignee: current_user)
       render json: { success: true }, status: 200
     rescue StandardError => e
       render json: { message: e.message }, status: 400

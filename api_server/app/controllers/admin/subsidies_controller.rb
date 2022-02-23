@@ -21,7 +21,7 @@ module Admin
       set_association
 
       if @subsidy.save
-        SubsidyDraft.find_by(url: params[:url])&.update(archived: true)
+        SubsidyDraft.find_by(url: params[:url])&.update(archived: true, assignee: current_user)
         render :show, status: 201
       else
         render json: { message: '入力内容を確認してください', errors: @subsidy.errors.full_messages }, status: 400
