@@ -75,7 +75,7 @@ module Admin
       @subsidy.subsidy_business_categories = params[:business_categories].to_a.map do |category|
         @subsidy.subsidy_business_categories.build(business_category: category)
       end
-      keywords = params.permit(:keywords)[:keywords].split(/[[:space:]]/)
+      keywords = params.permit(:keywords)[:keywords].to_s.split(/[[:space:]]/)
       @subsidy.subsidy_keywords = keywords.to_a.map do |content|
         keyword = Keyword.create_or_find_by(content: content)
         @subsidy.subsidy_keywords.build(keyword: keyword)
