@@ -7,7 +7,7 @@ module Admin
         :city,
         :subsidy_business_categories,
         { subsidy_keywords: :keyword }
-      )
+      ).order(updated_at: :desc)
       @items_total = scope.count
       @subsidies = scope.page(params[:page]).per(20)
     end

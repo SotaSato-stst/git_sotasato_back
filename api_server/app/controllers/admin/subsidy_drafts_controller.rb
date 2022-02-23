@@ -1,7 +1,7 @@
 module Admin
   class SubsidyDraftsController < ApplicationController
     def index
-      scope = SubsidyDraft.includes(:ministry, :prefecture, :city, :assignee).order(id: :desc)
+      scope = SubsidyDraft.includes(:ministry, :prefecture, :city, :assignee).order(updated_at: :desc)
       case params[:assign_filter]
       when 'assignedMe'
         scope = scope.assigned_to(current_user)
