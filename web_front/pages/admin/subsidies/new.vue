@@ -91,6 +91,7 @@ export default defineComponent({
       totalEmployeeMin: 0,
       totalEmployeeMax: 0,
       keywords: '',
+      yearsOfEstablishment: null,
       annualSalesMax: null,
       annualSalesMin: null,
     })

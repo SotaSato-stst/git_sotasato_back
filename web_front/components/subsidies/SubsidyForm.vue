@@ -277,6 +277,16 @@
       />
       円
     </el-form-item>
+    <el-form-item label="設立年数" prop="yearsOfEstablishment">
+      <el-input
+        v-model="state.yearsOfEstablishment"
+        class="input-number"
+        type="number"
+        placeholder="3"
+        :disabled="loading"
+      />
+      年
+    </el-form-item>
     <el-form-item label="最小従業員数" prop="totalEmployeeMin">
       <el-input
         v-model="state.totalEmployeeMin"

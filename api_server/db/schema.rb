@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2022_02_23_084811) do
     t.integer "total_employee_min"
     t.bigint "capital_max"
     t.integer "capital_min"
-    t.date "years_of_establishment"
+    t.integer "years_of_establishment"
     t.bigint "annual_sales_max"
     t.bigint "annual_sales_min"
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256

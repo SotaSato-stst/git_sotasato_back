@@ -23,7 +23,7 @@
 #  total_employee_max     :integer
 #  total_employee_min     :integer
 #  url                    :text(65535)      not null
-#  years_of_establishment :date
+#  years_of_establishment :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
