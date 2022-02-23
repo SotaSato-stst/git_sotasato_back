@@ -50,7 +50,7 @@ export type SubsidySearchQuery = {
   prefectureId: string | null
   cityIds: string | null // 1|2|3のような形
   inApplicationPeriod: boolean
-  organizationType: string
+  organizationType: string | null
   businessCategoryKeys: string | null
   totalEmployee: number | null
   capital: number | null
@@ -63,7 +63,7 @@ export type SubsidySearchForm = {
   prefectureId: number | null
   cityIds: number[]
   inApplicationPeriod: boolean
-  organizationType: string
+  organizationType: string | null
   businessCategoryKeys: string[]
   totalEmployee: number | null
   capital: number | null

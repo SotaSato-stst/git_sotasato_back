@@ -462,40 +462,45 @@ export default defineComponent({
 
     const priceMaxMan = ref<number | null>(null)
     const priceMaxChanged = () => {
-      if (!priceMaxMan.value) {
-        return
+      if (priceMaxMan.value) {
+        state.priceMax = priceMaxMan.value * 10000
+      } else {
+        state.priceMax = null
       }
-      state.priceMax = priceMaxMan.value * 10000
     }
 
     const capitalMinMan = ref<number | null>(null)
     const capitalMinChanged = () => {
-      if (!capitalMinMan.value) {
-        return
+      if (capitalMinMan.value) {
+        state.capitalMin = capitalMinMan.value * 10000
+      } else {
+        state.capitalMin = null
       }
-      state.capitalMin = capitalMinMan.value * 10000
     }
     const capitalMaxMan = ref<number | null>(null)
     const capitalMaxChanged = () => {
-      if (!capitalMaxMan.value) {
-        return
+      if (capitalMaxMan.value) {
+        state.capitalMax = capitalMaxMan.value * 10000
+      } else {
+        state.capitalMax = null
       }
-      state.capitalMax = capitalMaxMan.value * 10000
     }
 
     const annualSalesMinMan = ref<number | null>(null)
     const annualSalesMinChanged = () => {
-      if (!annualSalesMinMan.value) {
-        return
+      if (annualSalesMinMan.value) {
+        state.annualSalesMin = annualSalesMinMan.value * 10000
+      } else {
+        state.annualSalesMin = null
       }
-      state.annualSalesMin = annualSalesMinMan.value * 10000
     }
     const annualSalesMaxMan = ref<number | null>(null)
     const annualSalesMaxChanged = () => {
-      if (!annualSalesMaxMan.value) {
-        return
+      if (annualSalesMaxMan.value) {
+        state.annualSalesMax = annualSalesMaxMan.value * 10000
+      } else {
+        state.annualSalesMax = null
       }
-      state.annualSalesMax = annualSalesMaxMan.value * 10000
     }
 
     const startFrom = ref<Date | null>(null)

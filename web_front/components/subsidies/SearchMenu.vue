@@ -46,6 +46,22 @@
         </el-select>
       </div>
       <div class="search-item">
+        <div class="search-label">法人格</div>
+        <el-select
+          v-if="organizationTypes.length > 0"
+          v-model="state.organizationType"
+          placeholder="法人格"
+          clearable
+        >
+          <el-option
+            v-for="organizationType in organizationTypes"
+            :key="organizationType.key"
+            :label="organizationType.name"
+            :value="organizationType.key"
+          />
+        </el-select>
+      </div>
+      <div class="search-item">
         <div class="search-label">業種</div>
         <el-select
           v-model="state.businessCategoryKeys"
@@ -152,6 +168,7 @@ export default defineComponent({
     const router = useRouter()
     const {loading, load} = subsidiesModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
+    const organizationTypes = computed(() => optionsModule.organizationTypes)
     const businessCategoryKeys = computed(
       () => optionsModule.businessCategories,
     )
@@ -166,6 +183,7 @@ export default defineComponent({
       prefectureId: null,
       cityIds: [],
       inApplicationPeriod: true,
+      organizationType: null,
       businessCategoryKeys: [],
       totalEmployee: null,
       capital: null,
@@ -193,6 +211,7 @@ export default defineComponent({
       }
       return {
         prefectureId: company.prefectureId,
+        organizationType: company.organizationType,
         cityIds: [company.cityId],
         businessCategoryKeys: company.businessCategories,
         capital: company.capital,
@@ -205,6 +224,7 @@ export default defineComponent({
     }
 
     const paramsFromUrlQuery = (): Partial<SubsidySearchForm> => {
+      const organizationType = query.organizationType?.toString()
       const prefectureIdQuery = Number(query.prefectureId)
       const prefectureId =
         isNaN(prefectureIdQuery) ||
@@ -228,6 +248,7 @@ export default defineComponent({
       const annualSales = query.annualSales ? Number(query.annualSales) : null
 
       return removeEmpty({
+        organizationType,
         cityIds,
         prefectureId,
         inApplicationPeriod,
@@ -254,27 +275,33 @@ export default defineComponent({
         params.inApplicationPeriod = undefined
       }
       const company = accountModule.currentCompany
-      if (params.prefectureId === company?.prefectureId.toString()) {
+      if (!company) {
+        return params
+      }
+      if (params.organizationType === company.organizationType) {
+        params.organizationType = undefined
+      }
+      if (params.prefectureId === company.prefectureId.toString()) {
         params.prefectureId = undefined
       }
-      if (params.cityIds === company?.cityId.toString()) {
+      if (params.cityIds === company.cityId.toString()) {
         params.cityIds = []
       }
       if (
-        params.businessCategoryKeys === company?.businessCategories.join('|')
+        params.businessCategoryKeys === company.businessCategories.join('|')
       ) {
         params.businessCategoryKeys = []
       }
-      if (params.capital === company?.capital) {
+      if (params.capital === company.capital) {
         params.capital = undefined
       }
-      if (params.totalEmployee === company?.totalEmployee) {
+      if (params.totalEmployee === company.totalEmployee) {
         params.totalEmployee = undefined
       }
-      if (params.foundingDate === company?.foundingDate) {
+      if (params.foundingDate === company.foundingDate) {
         params.foundingDate = undefined
       }
-      if (params.annualSales === company?.annualSales) {
+      if (params.annualSales === company.annualSales) {
         params.annualSales = undefined
       }
       return params
@@ -282,6 +309,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, async () => {
+        await optionsModule.getOrganizationTypes()
         await optionsModule.getBusinessCategories()
         await optionsModule.getPrefectures()
         await accountModule.getCurrentUser()
@@ -315,6 +343,7 @@ export default defineComponent({
       loading,
       prefectures,
       selectPrefectureId,
+      organizationTypes,
       businessCategoryKeys,
       cities,
       state,

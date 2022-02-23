@@ -31,6 +31,7 @@ export default class SubsidiesModule extends VuexModule {
   searchParams: SubsidySearchQuery = {
     prefectureId: null,
     cityIds: '',
+    organizationType: null,
     inApplicationPeriod: true,
     businessCategoryKeys: '',
     totalEmployee: null,
@@ -61,6 +62,7 @@ export default class SubsidiesModule extends VuexModule {
     this.searchParams = {
       prefectureId: state.prefectureId?.toString() || null,
       cityIds: state.cityIds?.join('|') || null,
+      organizationType: state.organizationType,
       inApplicationPeriod: state.inApplicationPeriod,
       businessCategoryKeys: state.businessCategoryKeys?.join('|') || null,
       totalEmployee: state.totalEmployee || null,

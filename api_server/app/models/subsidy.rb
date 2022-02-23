@@ -128,7 +128,10 @@ class Subsidy < ApplicationRecord
   scope :in_years_of_establishment, ->(founding_date) {
     return if founding_date.blank?
 
-    where('start_from > date_add(?, interval years_of_establishment year)', founding_date)
+    merge(
+      where('start_from > date_add(?, interval years_of_establishment year)', founding_date.to_date)
+      .or(Subsidy.where(years_of_establishment: nil))
+    )
   }
   scope :search_with_capital, ->(capital) {
     return if capital.blank?
