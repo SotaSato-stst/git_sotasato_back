@@ -140,6 +140,8 @@ ActiveRecord::Schema.define(version: 2022_02_23_084811) do
     t.boolean "archived", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "assignee_id"
+    t.index ["assignee_id"], name: "index_subsidy_drafts_on_assignee_id"
     t.index ["city_id"], name: "index_subsidy_drafts_on_city_id"
     t.index ["ministry_id"], name: "index_subsidy_drafts_on_ministry_id"
     t.index ["prefecture_id"], name: "index_subsidy_drafts_on_prefecture_id"
@@ -209,6 +211,7 @@ ActiveRecord::Schema.define(version: 2022_02_23_084811) do
   add_foreign_key "subsidy_drafts", "cities"
   add_foreign_key "subsidy_drafts", "ministries"
   add_foreign_key "subsidy_drafts", "prefectures"
+  add_foreign_key "subsidy_drafts", "users", column: "assignee_id"
   add_foreign_key "subsidy_keywords", "subsidies"
   add_foreign_key "subsidy_ministries", "ministries"
   add_foreign_key "subsidy_ministries", "subsidies"

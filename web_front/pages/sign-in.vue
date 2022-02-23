@@ -13,9 +13,9 @@
       </el-form-item>
       <el-button @click="signIn">ログイン</el-button>
     </el-form>
-    <a class="password-reset" :href="passwordResetPath"
-      >パスワードをお忘れの方はこちら</a
-    >
+    <a class="password-reset" @click="goToPasswordReset()">
+      パスワードをお忘れの方はこちら
+    </a>
   </div>
 </template>
 
@@ -92,9 +92,11 @@ export default defineComponent({
       CookieStore.clear()
     })
 
-    const passwordResetPath = routingService.PasswordReset()
+    const goToPasswordReset = () => {
+      router.push(routingService.PasswordReset())
+    }
 
-    return {state, signIn, passwordResetPath}
+    return {state, signIn, goToPasswordReset}
   },
   head(): object {
     return {
@@ -127,5 +129,7 @@ export default defineComponent({
   margin-top: var(--spacing-6);
   color: var(--text-color);
   font-size: 12px;
+  cursor: pointer;
+  text-decoration-line: underline;
 }
 </style>

@@ -4,6 +4,7 @@
     <div v-for="subsidy in subsidies" :key="subsidy.id">
       <mini-subsidy-card :subsidy="subsidy" />
     </div>
+    <div v-if="subsidies.length === 0">まだ閲覧がありません</div>
   </div>
 </template>
 <script lang="ts">

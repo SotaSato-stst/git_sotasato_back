@@ -10,18 +10,21 @@
 #  url               :text(65535)      not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  assignee_id       :bigint
 #  city_id           :bigint
 #  ministry_id       :bigint
 #  prefecture_id     :bigint
 #
 # Indexes
 #
+#  index_subsidy_drafts_on_assignee_id    (assignee_id)
 #  index_subsidy_drafts_on_city_id        (city_id)
 #  index_subsidy_drafts_on_ministry_id    (ministry_id)
 #  index_subsidy_drafts_on_prefecture_id  (prefecture_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (assignee_id => users.id)
 #  fk_rails_...  (city_id => cities.id)
 #  fk_rails_...  (ministry_id => ministries.id)
 #  fk_rails_...  (prefecture_id => prefectures.id)

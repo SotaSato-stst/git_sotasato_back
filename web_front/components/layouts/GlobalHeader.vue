@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <div class="title-container">補助金ドック</div>
+    <div class="title-container" @click="goToTop()">補助金ドック</div>
     <div class="menu-container">
       <el-menu
         :default-active="selectedPage"
@@ -70,8 +70,9 @@ export default defineComponent({
           break
       }
     }
+    const goToTop = () => router.push('/')
 
-    return {selectedPage, handleSelect}
+    return {selectedPage, handleSelect, goToTop}
   },
 })
 </script>
@@ -90,6 +91,7 @@ export default defineComponent({
   font-size: 27px;
   font-family: 'Open Sans', sans-serif;
   color: var(--primary-color);
+  cursor: pointer;
 }
 
 .menu-container {

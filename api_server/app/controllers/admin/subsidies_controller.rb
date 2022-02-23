@@ -21,7 +21,7 @@ module Admin
       set_association
 
       if @subsidy.save
-        SubsidyDraft.find_by(url: params[:url])&.destroy
+        SubsidyDraft.find_by(url: params[:url])&.update(archived: true)
         render :show, status: 201
       else
         render json: { message: '入力内容を確認してください', errors: @subsidy.errors.full_messages }, status: 400
@@ -72,8 +72,7 @@ module Admin
       @subsidy.ministry = Ministry.where(id: params[:ministry_id]).first
       @subsidy.prefecture = Prefecture.where(id: params[:prefecture_id]).first
       @subsidy.city = City.where(id: params[:city_id]).first
-      business_category_keys = params.permit(:business_categories)[:business_categories]
-      @subsidy.subsidy_business_categories = business_category_keys.to_a.map do |category|
+      @subsidy.subsidy_business_categories = params[:business_categories].to_a.map do |category|
         @subsidy.subsidy_business_categories.build(business_category: category)
       end
       keywords = params.permit(:keywords)[:keywords].split(/[[:space:]]/)

@@ -10,6 +10,7 @@ export const routingService: {
   Ranking: () => '/ranking',
   Favorite: () => '/favorite',
   Account: () => '/account',
+  NotFound: () => '/not_found',
   AdminTop: () => '/admin',
   AdminSubsidyDraftDetail: (id: number) => `/admin/subsidy_drafts/${id}`,
   AdminSubsidies: () => '/admin/subsidies',
@@ -22,4 +23,5 @@ export const routingService: {
   AdminNewUser: () => '/admin/users/new',
   AdminUserDetail: (id: number) => `/admin/users/${id}`,
   AdminSearchedKeywords: () => '/admin/searched_keywords',
+  AdminAssignees: () => '/admin/assignees',
 } as const

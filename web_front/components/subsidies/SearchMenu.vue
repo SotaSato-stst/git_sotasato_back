@@ -272,9 +272,6 @@ export default defineComponent({
       load(loading, async () => {
         await optionsModule.getBusinessCategories()
         await optionsModule.getPrefectures()
-        if (route.value.path !== routingService.Top()) {
-          return
-        }
         await accountModule.getCurrentUser()
         Object.assign(state, paramsFromCurrentCompany())
         Object.assign(state, paramsFromUrlQuery())
