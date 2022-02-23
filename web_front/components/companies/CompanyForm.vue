@@ -143,7 +143,6 @@ import {
   computed,
   defineComponent,
   onMounted,
-  onUpdated,
   onUnmounted,
   reactive,
   PropType,
@@ -242,17 +241,14 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      load(loading, () => {
-        optionsModule.getBusinessCategories()
-        optionsModule.getPrefectures()
+      load(loading, async () => {
         optionsModule.getOrganizationTypes()
+        optionsModule.getBusinessCategories()
+        await optionsModule.getPrefectures()
+        if (state.prefectureId) {
+          optionsModule.getCities(state.prefectureId)
+        }
       })
-    })
-
-    onUpdated(() => {
-      if (state.prefectureId && optionsModule.cities.length === 0) {
-        optionsModule.getCities(state.prefectureId)
-      }
     })
 
     onUnmounted(() => {
