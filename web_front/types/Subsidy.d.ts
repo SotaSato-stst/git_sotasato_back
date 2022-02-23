@@ -3,6 +3,7 @@ import {Prefecture} from './Prefecture'
 import {City} from './City'
 import {Pagination} from './Pagination'
 import {BusiessCategory} from './BusiessCategory'
+import {OrganizationType} from './OrganizationType'
 
 export type SubsidyCategory = 'hojo' | 'josei'
 export type SupplierType = 'ministry' | 'prefecture' | 'city'
@@ -26,6 +27,7 @@ export type Subsidy = {
   ministry: Ministry | null
   prefecture: Prefecture | null
   city: City | null
+  organizationTypes: OrganizationType[]
   businessCategories: BusiessCategory[]
   keywords: string[]
   favorite: boolean
@@ -48,6 +50,7 @@ export type SubsidySearchQuery = {
   prefectureId: string | null
   cityIds: string | null // 1|2|3のような形
   inApplicationPeriod: boolean
+  organizationType: string
   businessCategoryKeys: string | null
   totalEmployee: number | null
   capital: number | null
@@ -60,6 +63,7 @@ export type SubsidySearchForm = {
   prefectureId: number | null
   cityIds: number[]
   inApplicationPeriod: boolean
+  organizationType: string
   businessCategoryKeys: string[]
   totalEmployee: number | null
   capital: number | null
@@ -85,6 +89,7 @@ export type UpdateSubsidyParams = {
   prefectureId: number | null
   cityId: number | null
   supplierType: SupplierType
+  organizationTypes: string[]
   businessCategories: string[]
   keywords: string
   rankingScore: number | null

@@ -55,3 +55,6 @@ Style/EmptyCaseCondition:
 
 Style/ConditionalAssignment:
   Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false

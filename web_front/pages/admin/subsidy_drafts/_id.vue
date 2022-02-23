@@ -36,6 +36,7 @@
         </div>
       </div>
       <subsidy-form
+        v-if="!loading"
         ref="form"
         :subsidy-params="subsidyParams"
         :loading="loading"
@@ -100,6 +101,7 @@ export default defineComponent({
       prefectureId: null,
       cityId: null,
       supplierType: 'ministry',
+      organizationTypes: [],
       businessCategories: [],
       rankingScore: null,
       capitalMax: null,

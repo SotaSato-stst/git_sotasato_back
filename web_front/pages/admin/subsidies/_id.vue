@@ -115,6 +115,7 @@ export default defineComponent({
       prefectureId: null,
       cityId: null,
       supplierType: 'ministry',
+      organizationTypes: [],
       businessCategories: [],
       rankingScore: null,
       capitalMax: 0,
@@ -183,6 +184,7 @@ export default defineComponent({
           ministryId: subsidy.ministry?.id,
           prefectureId: subsidy.prefecture?.id,
           cityId: subsidy.city?.id,
+          organizationTypes: subsidy.organizationTypes.map(b => b.key),
           businessCategories: subsidy.businessCategories.map(b => b.key),
           keywords: subsidy.keywords.join(' '),
         })

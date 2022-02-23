@@ -2,7 +2,8 @@ class SubsidiesController < ApplicationController
   after_action :save_search_keyword, only: :index
 
   def index
-    scope = Subsidy.search_by_user(search_params).includes(:ministry, :prefecture, :city, :subsidy_business_categories)
+    scope = Subsidy.search_by_user(search_params)
+    scope = scope.includes(:ministry, :prefecture, :city, :subsidy_organization_types, :subsidy_business_categories)
     @items_total = scope.count
     @subsidies = scope.page(params[:page]).per(20)
     @current_user_favorite_ids = current_user.user_favorite_subsidies.pluck(:subsidy_id) & @subsidies.map(&:id)
@@ -23,6 +24,7 @@ class SubsidiesController < ApplicationController
   def search_params
     params.slice(
       :keyword,
+      :organization_type,
       :prefecture_id,
       :city_ids,
       :in_application_period,
@@ -30,7 +32,7 @@ class SubsidiesController < ApplicationController
       :total_employee,
       :capital,
       :founding_date,
-      :annual_sales,
+      :annual_sales
     )
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_23_124006) do
+ActiveRecord::Schema.define(version: 2022_02_23_145347) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -168,6 +168,14 @@ ActiveRecord::Schema.define(version: 2022_02_23_124006) do
     t.index ["subsidy_id"], name: "index_subsidy_ministries_on_subsidy_id"
   end
 
+  create_table "subsidy_organization_types", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "subsidy_id", null: false
+    t.string "organization_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subsidy_id"], name: "index_subsidy_organization_types_on_subsidy_id"
+  end
+
   create_table "subsidy_prefectures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "subsidy_id", null: false
     t.bigint "prefecture_id", null: false
@@ -216,6 +224,7 @@ ActiveRecord::Schema.define(version: 2022_02_23_124006) do
   add_foreign_key "subsidy_keywords", "subsidies"
   add_foreign_key "subsidy_ministries", "ministries"
   add_foreign_key "subsidy_ministries", "subsidies"
+  add_foreign_key "subsidy_organization_types", "subsidies"
   add_foreign_key "subsidy_prefectures", "prefectures"
   add_foreign_key "subsidy_prefectures", "subsidies"
   add_foreign_key "user_favorite_subsidies", "subsidies"

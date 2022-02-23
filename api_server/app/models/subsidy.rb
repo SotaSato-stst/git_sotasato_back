@@ -40,6 +40,7 @@ class Subsidy < ApplicationRecord
   has_one :city, through: :subsidy_city
   has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidy_business_categories, dependent: :destroy
+  has_many :subsidy_organization_types, dependent: :destroy
   has_many :subsidy_keywords, dependent: :destroy
   has_many :users, through: :user_favorite_subsidies
   validates :title, presence: { message: 'は必須項目です' }
@@ -52,11 +53,16 @@ class Subsidy < ApplicationRecord
   validate :start_from_cannot_be_greater_than_end_to
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }, message: 'は1から5の間にしてください'
 
+  enum publishing_code: { published: 'published', editing: 'editing' }
+  enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
+  enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
+
   scope :published, -> { where(publishing_code: 'published') }
   scope :search_by_user, ->(search_params) {
     published
       .in_application_period(search_params[:in_application_period])
       .search_by_keyword(search_params[:keyword])
+      .search_by_organization_type(search_params[:organization_type])
       .search_with_business_category(search_params[:business_category_keys])
       .search_with_prefecture(search_params[:prefecture_id])
       .search_with_city(search_params[:city_ids])
@@ -71,6 +77,13 @@ class Subsidy < ApplicationRecord
     keywords = Keyword.where(content: keyword.split(/[[:space:]]/))
     subsidy_ids = SubsidyKeyword.where(keyword: keywords).pluck(:subsidy_id)
     where(id: subsidy_ids)
+  }
+  scope :search_by_organization_type, ->(organization_type) {
+    return if organization_type.blank?
+
+    scope = left_joins(:subsidy_organization_types)
+    types = SubsidyOrganizationType.where(organization_type: organization_type)
+    scope.merge(types).or(scope.where(subsidy_organization_types: { id: nil }))
   }
   scope :search_with_prefecture, ->(prefecture_id) {
     return if prefecture_id.blank?
@@ -145,9 +158,12 @@ class Subsidy < ApplicationRecord
       )
     )
   }
-  enum publishing_code: { published: 'published', editing: 'editing' }
-  enum subsidy_category: { hojo: 'hojo', josei: 'josei' }
-  enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
+
+  def organization_types
+    subsidy_organization_types.map do |subsidy_organization_type|
+      OrganizationType.to_option(subsidy_organization_type.organization_type)
+    end
+  end
 
   def business_categories
     subsidy_business_categories.map do |subsidy_business_category|

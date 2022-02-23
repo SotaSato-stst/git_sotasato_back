@@ -72,6 +72,9 @@ module Admin
       @subsidy.ministry = Ministry.where(id: params[:ministry_id]).first
       @subsidy.prefecture = Prefecture.where(id: params[:prefecture_id]).first
       @subsidy.city = City.where(id: params[:city_id]).first
+      @subsidy.subsidy_organization_types = params[:organization_types].to_a.map do |organization_type|
+        @subsidy.subsidy_organization_types.build(organization_type: organization_type)
+      end
       @subsidy.subsidy_business_categories = params[:business_categories].to_a.map do |category|
         @subsidy.subsidy_business_categories.build(business_category: category)
       end

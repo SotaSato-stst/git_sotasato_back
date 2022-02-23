@@ -24,6 +24,7 @@
         </div>
       </div>
       <subsidy-form
+        v-if="!loading"
         ref="form"
         :subsidy-params="subsidyParams"
         :loading="loading"
@@ -84,6 +85,7 @@ export default defineComponent({
       prefectureId: null,
       cityId: null,
       supplierType: 'ministry',
+      organizationTypes: [],
       businessCategories: [],
       rankingScore: null,
       capitalMax: null,
@@ -104,12 +106,10 @@ export default defineComponent({
             notifyError('更新に失敗しました', '入力項目を確認してください')
             return
           }
-          load(loading, async () => {
-            await adminSubsidiesModule
-              .postSubsidy(removeEmpty(subsidyParams))
-              .then(showMessage)
-              .catch(showApiErrorMessage)
-          })
+          adminSubsidiesModule
+            .postSubsidy(removeEmpty(subsidyParams))
+            .then(showMessage)
+            .catch(showApiErrorMessage)
         })
       })
     }

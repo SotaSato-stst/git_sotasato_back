@@ -96,28 +96,30 @@
         </el-select>
       </el-form-item>
     </div>
-    <el-form-item label="業種" prop="businessCategories">
-      <el-select
-        v-model="state.businessCategories"
-        multiple
-        placeholder="対応可能な業種"
-        class="category-select"
-        clearable
-        :disabled="loading"
-      >
-        <el-option
-          v-for="businessCategory in businessCategories"
-          :key="businessCategory.key"
-          :label="businessCategory.name"
-          :value="businessCategory.key"
-        />
-      </el-select>
-      <el-button class="select-all" @click="selectAllBusinessCategories">
-        すべての業種を選択
-      </el-button>
-      <el-button class="select-all" @click="clearBusinessCategories">
-        クリア
-      </el-button>
+    <el-form-item label="募集期間" required>
+      <div class="inline">
+        <el-form-item prop="startFrom">
+          <el-date-picker
+            v-model="startFrom"
+            type="date"
+            placeholder="選択"
+            class="input-range"
+            :disabled="loading"
+            @change="startFromChanged()"
+          />
+        </el-form-item>
+        <span class="range-between">~</span>
+        <el-form-item prop="endTo">
+          <el-date-picker
+            v-model="endTo"
+            type="date"
+            placeholder="選択"
+            class="input-range"
+            :disabled="loading"
+            @change="endToChanged()"
+          />
+        </el-form-item>
+      </div>
     </el-form-item>
     <el-form-item label="最大支援金額" prop="priceMax">
       <div class="inline">
@@ -152,30 +154,15 @@
         </el-form-item>
       </div>
     </el-form-item>
-    <el-form-item label="募集期間" required>
-      <div class="inline">
-        <el-form-item prop="startFrom">
-          <el-date-picker
-            v-model="startFrom"
-            type="date"
-            placeholder="選択"
-            class="input-range"
-            :disabled="loading"
-            @change="startFromChanged()"
-          />
-        </el-form-item>
-        <span class="range-between">~</span>
-        <el-form-item prop="endTo">
-          <el-date-picker
-            v-model="endTo"
-            type="date"
-            placeholder="選択"
-            class="input-range"
-            :disabled="loading"
-            @change="endToChanged()"
-          />
-        </el-form-item>
-      </div>
+    <el-form-item label="詳細" prop="detail">
+      <el-input
+        v-model="state.detail"
+        type="textarea"
+        class="input-text"
+        :autosize="{minRows: 4}"
+        placeholder="URLに記載されている内容"
+        :disabled="loading"
+      />
     </el-form-item>
     <el-form-item label="対象者の条件" prop="targetDetail">
       <el-input
@@ -186,6 +173,72 @@
         placeholder="受け取れることのできる条件"
         :disabled="loading"
       />
+    </el-form-item>
+    <el-form-item label="法人格" required>
+      <div class="inline">
+        <div class="two-column">
+          <div>対象となる法人格</div>
+          <el-select
+            v-model="state.organizationTypes"
+            multiple
+            clearable
+            class="organization-type-select"
+            :disabled="loading"
+            placeholder="対象となる法人格"
+            prop="organizationTypes"
+            @change="selectOrganizationTypes"
+          >
+            <el-option
+              v-for="organizationType in organizationTypes"
+              :key="organizationType.key"
+              :label="organizationType.name"
+              :value="organizationType.key"
+            />
+          </el-select>
+        </div>
+        <div class="two-column">
+          <div>対象とならない法人格</div>
+          <el-select
+            v-model="noneOrganizationTypes"
+            multiple
+            clearable
+            class="organization-type-select"
+            :disabled="loading"
+            placeholder="対象とならない法人格"
+            @change="selectNoneOrganizationTypes"
+          >
+            <el-option
+              v-for="organizationType in organizationTypes"
+              :key="organizationType.key"
+              :label="organizationType.name"
+              :value="organizationType.key"
+            />
+          </el-select>
+        </div>
+      </div>
+    </el-form-item>
+    <el-form-item label="業種" prop="businessCategories">
+      <el-select
+        v-model="state.businessCategories"
+        multiple
+        placeholder="対応可能な業種"
+        class="business-category-select"
+        clearable
+        :disabled="loading"
+      >
+        <el-option
+          v-for="businessCategory in businessCategories"
+          :key="businessCategory.key"
+          :label="businessCategory.name"
+          :value="businessCategory.key"
+        />
+      </el-select>
+      <el-button class="select-all" @click="selectAllBusinessCategories">
+        すべての業種を選択
+      </el-button>
+      <el-button class="select-all" @click="clearBusinessCategories">
+        クリア
+      </el-button>
     </el-form-item>
     <el-form-item label="対象となる従業員数">
       <div class="inline">
@@ -278,16 +331,6 @@
         :disabled="loading"
       />
       年
-    </el-form-item>
-    <el-form-item label="詳細" prop="detail">
-      <el-input
-        v-model="state.detail"
-        type="textarea"
-        class="input-text"
-        :autosize="{minRows: 4}"
-        placeholder="URLに記載されている内容"
-        :disabled="loading"
-      />
     </el-form-item>
     <el-form-item label="申請難易度" prop="level">
       <el-rate
@@ -395,6 +438,18 @@ export default defineComponent({
       await optionsModule.getCities(prefectureId)
     }
 
+    const organizationTypes = computed(() => optionsModule.organizationTypes)
+    const noneOrganizationTypes = ref<string[]>([])
+    const selectOrganizationTypes = () => {
+      noneOrganizationTypes.value = optionsModule.organizationTypes
+        .map(o => o.key)
+        .filter(key => !state.organizationTypes.includes(key))
+    }
+    const selectNoneOrganizationTypes = () => {
+      state.organizationTypes = optionsModule.organizationTypes
+        .map(o => o.key)
+        .filter(key => !noneOrganizationTypes.value.includes(key))
+    }
     const businessCategories = computed(() => optionsModule.businessCategories)
     const selectAllBusinessCategories = () => {
       state.businessCategories = optionsModule.businessCategories.map(
@@ -519,6 +574,13 @@ export default defineComponent({
           trigger: 'change',
         },
       ],
+      organizationTypes: [
+        {
+          required: true,
+          message: '詳細は必須です',
+          trigger: 'change',
+        },
+      ],
     }
 
     onMounted(async () => {
@@ -527,8 +589,9 @@ export default defineComponent({
       if (state.prefectureId) {
         await optionsModule.getCities(state.prefectureId)
       }
-      keywordsModule.getTopKeywords()
+      await optionsModule.getOrganizationTypes()
       optionsModule.getBusinessCategories()
+      keywordsModule.getTopKeywords()
       priceMaxMan.value = state.priceMax ? state.priceMax / 10000 : null
       capitalMinMan.value = state.capitalMin ? state.capitalMin / 10000 : null
       capitalMaxMan.value = state.capitalMax ? state.capitalMax / 10000 : null
@@ -541,6 +604,11 @@ export default defineComponent({
       startFrom.value = state.startFrom ? new Date(state.startFrom) : null
       endTo.value = state.endTo ? new Date(state.endTo) : null
       level.value = state.level
+      if (state.organizationTypes.length === 0) {
+        selectNoneOrganizationTypes()
+      } else {
+        selectOrganizationTypes()
+      }
     })
 
     onUnmounted(() => {
@@ -554,6 +622,10 @@ export default defineComponent({
       prefectures,
       cities,
       selectPrefectureId,
+      organizationTypes,
+      noneOrganizationTypes,
+      selectOrganizationTypes,
+      selectNoneOrganizationTypes,
       businessCategories,
       selectAllBusinessCategories,
       clearBusinessCategories,
@@ -592,7 +664,7 @@ export default defineComponent({
 }
 
 .input-text {
-  width: 100%;
+  width: 640px;
 }
 
 .input-range {
@@ -607,13 +679,21 @@ export default defineComponent({
   width: 160px;
 }
 
-.category-select {
+.organization-type-select {
+  width: 420px;
+}
+
+.business-category-select {
   width: 640px;
 }
 
 .select-all {
   border: none;
   color: var(--primary-color);
+}
+
+.two-column {
+  width: 80%;
 }
 
 .external-link {
