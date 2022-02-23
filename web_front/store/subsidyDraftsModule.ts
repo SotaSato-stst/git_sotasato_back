@@ -25,10 +25,10 @@ type AssignParams = {
 export default class SubsidyDraftsModule extends VuexModule {
   loader = useLoader()
   subsidyDrafts: SubsidyDraft[] = []
-  completedCount: number = 0
   assignees: SubsidyDraftAssignee[] = []
   subsidyDraftTotal: number = 0
   noAssignTotal: number = 0
+  completedTotal: number = 0
   selectedSubsidyDrafts: SubsidyDraft[] = []
   subsidyDraft: SubsidyDraft | null = null
 
@@ -45,11 +45,6 @@ export default class SubsidyDraftsModule extends VuexModule {
   }
 
   @Mutation
-  setCompletedCount(completedCount: number) {
-    this.completedCount = completedCount
-  }
-
-  @Mutation
   setSubsidyDraftAssignees(assignees: SubsidyDraftAssignee[]) {
     this.assignees = assignees
   }
@@ -57,6 +52,11 @@ export default class SubsidyDraftsModule extends VuexModule {
   @Mutation
   setNoAssignTotal(noAssignTotal: number) {
     this.noAssignTotal = noAssignTotal
+  }
+
+  @Mutation
+  setCompletedTotal(completedTotal: number) {
+    this.completedTotal = completedTotal
   }
 
   @Mutation
@@ -93,7 +93,6 @@ export default class SubsidyDraftsModule extends VuexModule {
     )
     this.setSubsidyDrafts(res.subsidyDrafts)
     this.setPagination(res.pagination)
-    this.setCompletedCount(res.completedCount)
   }
 
   @Action({rawError: true})
@@ -128,6 +127,7 @@ export default class SubsidyDraftsModule extends VuexModule {
     this.setSubsidyDraftAssignees(res.assignees)
     this.setNoAssignTotal(res.noAssignTotal)
     this.setSubsidyDraftTotal(res.subsidyDraftTotal)
+    this.setCompletedTotal(res.completedTotal)
   }
 
   @Action({rawError: true})

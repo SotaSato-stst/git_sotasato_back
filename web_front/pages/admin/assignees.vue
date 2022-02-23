@@ -8,6 +8,7 @@
         <el-table-column prop="subsidyDraftTotal" label="未対応件数" />
         <el-table-column prop="assignedTotal" label="振り分け済み" />
         <el-table-column prop="noAssignTotal" label="未振り分け" />
+        <el-table-column prop="completedTotal" label="完了件数" />
       </el-table>
     </div>
     <card-loading :loading="loading" />
@@ -53,6 +54,7 @@ export default defineComponent({
       subsidyDraftTotal: 0,
       assignedTotal: 0,
       noAssignTotal: 0,
+      completedTotal: 0,
     })
 
     onMounted(() => {
@@ -64,6 +66,7 @@ export default defineComponent({
             subsidyDraftsModule.subsidyDraftTotal -
             subsidyDraftsModule.noAssignTotal,
           noAssignTotal: subsidyDraftsModule.noAssignTotal,
+          completedTotal: subsidyDraftsModule.completedTotal,
         }
       })
     })

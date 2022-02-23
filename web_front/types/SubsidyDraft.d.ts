@@ -38,6 +38,7 @@ export type SubsidyDraftAssignee = {
 export type SubsidyDraftAssigneesResponse = {
   subsidyDraftTotal: number
   noAssignTotal: number
+  completedTotal: number
   assignees: SubsidyDraftAssignee[]
 }
 

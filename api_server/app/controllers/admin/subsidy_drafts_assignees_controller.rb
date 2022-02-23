@@ -5,6 +5,7 @@ module Admin
       @no_assign_total = SubsidyDraft.not_archived.not_assigned.count
       assign_count = SubsidyDraft.assigned.group(:assignee_id).count
       completed_count = SubsidyDraft.assigned.archived.group(:assignee_id).count
+      @completed_total = SubsidyDraft.archived.count
       @assignees = User.operators.map do |user|
         {
           user_id: user.id,
