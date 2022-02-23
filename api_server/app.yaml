@@ -5,7 +5,7 @@ resources:
   cpu: 2
   memory_gb: 4
   disk_size_gb: 10
-entrypoint: bundle exec rails server Puma -p $PORT
+entrypoint: bundle exec rails server -p $PORT
 
 automatic_scaling:
   min_num_instances: 1
