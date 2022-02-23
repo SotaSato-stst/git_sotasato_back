@@ -66,7 +66,7 @@
         <div class="search-label">従業員数</div>
         <el-input
           v-model="state.totalEmployee"
-          class="input-number input-left"
+          class="input-left"
           type="number"
           placeholder="10"
         >
@@ -77,13 +77,35 @@
         <div class="search-label">資本金</div>
         <el-input
           v-model="capitalMan"
-          class="input-number input-left"
+          class="input-left"
           type="number"
           placeholder="100,000"
           @change="capitalChanged()"
         >
         </el-input>
         <span class="unit-font">万円</span>
+      </div>
+      <div class="search-item">
+        <div class="search-label">年商</div>
+        <el-input
+          v-model="annualSalesMan"
+          class="input-left"
+          type="number"
+          placeholder="1,000"
+          @change="annualSalesChanged()"
+        >
+        </el-input>
+        <span class="unit-font">万円</span>
+      </div>
+      <div class="search-item">
+        <div class="search-label">創業日</div>
+        <el-date-picker
+          v-model="state.foundingDate"
+          class="input-date"
+          type="date"
+          placeholder="日付"
+        >
+        </el-date-picker>
       </div>
       <div class="search-item">
         <el-checkbox v-model="state.inApplicationPeriod">
@@ -148,11 +170,19 @@ export default defineComponent({
       totalEmployee: null,
       capital: null,
       keyword: '',
+      foundingDate: null,
+      annualSales: null,
     })
     const capitalMan = ref<number | null>(null)
     const capitalChanged = () => {
       if (capitalMan.value) {
         state.capital = capitalMan.value * 10000
+      }
+    }
+    const annualSalesMan = ref<number | null>(null)
+    const annualSalesChanged = () => {
+      if (annualSalesMan.value) {
+        state.annualSales = annualSalesMan.value * 10000
       }
     }
 
@@ -167,10 +197,14 @@ export default defineComponent({
         businessCategoryKeys: company.businessCategories,
         capital: company.capital,
         totalEmployee: company.totalEmployee,
+        foundingDate: company.foundingDate
+          ? new Date(company.foundingDate)
+          : null,
+        annualSales: company.annualSales,
       }
     }
 
-    const paramsFromUrlQuery = () => {
+    const paramsFromUrlQuery = (): Partial<SubsidySearchForm> => {
       const prefectureIdQuery = Number(query.prefectureId)
       const prefectureId =
         isNaN(prefectureIdQuery) ||
@@ -184,8 +218,15 @@ export default defineComponent({
         .split('|')
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
       const keyword = query.keyword?.toString()
-      const capital = query.capital?.toString()
-      const totalEmployee = query.totalEmployee?.toString()
+      const capital = query.capital ? Number(query.capital) : null
+      const totalEmployee = query.totalEmployee
+        ? Number(query.totalEmployee)
+        : null
+      const foundingDate = query.foundingDate
+        ? new Date(query.foundingDate.toString())
+        : null
+      const annualSales = query.annualSales ? Number(query.annualSales) : null
+
       return removeEmpty({
         cityIds,
         prefectureId,
@@ -194,6 +235,8 @@ export default defineComponent({
         capital,
         totalEmployee,
         keyword,
+        foundingDate,
+        annualSales,
       })
     }
 
@@ -228,6 +271,12 @@ export default defineComponent({
       if (params.totalEmployee === company?.totalEmployee) {
         params.totalEmployee = undefined
       }
+      if (params.foundingDate === company?.foundingDate) {
+        params.foundingDate = undefined
+      }
+      if (params.annualSales === company?.annualSales) {
+        params.annualSales = undefined
+      }
       return params
     }
 
@@ -246,6 +295,9 @@ export default defineComponent({
         }
         if (state.capital) {
           capitalMan.value = state.capital / 10000
+        }
+        if (state.annualSales) {
+          annualSalesMan.value = state.annualSales / 10000
         }
         subsidiesModule.setSearchParams(state)
         const pageQuery = route.value.query.page?.toString() || null
@@ -269,6 +321,8 @@ export default defineComponent({
       search,
       capitalMan,
       capitalChanged,
+      annualSalesMan,
+      annualSalesChanged,
     }
   },
 })
@@ -294,6 +348,10 @@ export default defineComponent({
 }
 
 .search-button {
+  width: 100%;
+}
+
+.input-date {
   width: 100%;
 }
 

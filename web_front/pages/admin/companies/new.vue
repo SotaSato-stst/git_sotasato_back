@@ -33,6 +33,8 @@ export default defineComponent({
       prefectureId: null,
       cityId: null,
       businessCategories: [],
+      foundingDate: null,
+      annualSales: null,
     })
 
     const submit = () => {

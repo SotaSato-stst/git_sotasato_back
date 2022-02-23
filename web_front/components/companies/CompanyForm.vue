@@ -80,6 +80,16 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="従業員数" prop="totalEmployee">
+        <el-input
+          v-model="state.totalEmployee"
+          class="input-number"
+          type="number"
+          placeholder="100"
+          :disabled="loading"
+        />
+        人
+      </el-form-item>
       <el-form-item label="資本金" prop="capital">
         <el-input
           v-model="state.capital"
@@ -90,15 +100,24 @@
         />
         円
       </el-form-item>
-      <el-form-item label="従業員数" prop="totalEmployee">
+      <el-form-item label="年商" prop="annualSales">
         <el-input
-          v-model="state.totalEmployee"
+          v-model="state.annualSales"
           class="input-number"
           type="number"
-          placeholder="100"
+          placeholder="10000000"
           :disabled="loading"
         />
-        人
+        円
+      </el-form-item>
+      <el-form-item label="創業日" prop="foundingDate">
+        <el-date-picker
+          v-model="foundingDate"
+          class="input-date"
+          type="date"
+          :disabled="loading"
+          @change="foundingDateChanged()"
+        />
       </el-form-item>
     </el-form>
   </el-card>
@@ -150,6 +169,12 @@ export default defineComponent({
     }
     const cities = computed(() => optionsModule.cities)
     const state: CompanyParams = reactive(props.companyParams)
+    const foundingDate = ref<Date | null>(
+      state.foundingDate ? new Date(state.foundingDate) : null,
+    )
+    const foundingDateChanged = () => {
+      state.foundingDate = foundingDate.value?.toLocaleDateString() || null
+    }
 
     const submit = () => {
       load(loading, () => {
@@ -220,6 +245,8 @@ export default defineComponent({
       state,
       rules,
       submit,
+      foundingDateChanged,
+      foundingDate,
     }
   },
 })

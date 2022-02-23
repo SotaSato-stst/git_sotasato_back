@@ -4,8 +4,10 @@
 #
 #  id             :bigint           not null, primary key
 #  adress         :string(255)
+#  annual_sales   :bigint
 #  business_scale :string(255)
 #  capital        :integer
+#  founding_date  :date
 #  name           :string(255)      not null
 #  total_employee :integer
 #  created_at     :datetime         not null

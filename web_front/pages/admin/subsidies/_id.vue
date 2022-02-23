@@ -52,7 +52,7 @@
       <subsidy-form
         ref="form"
         :subsidy-params="subsidyParams"
-        :loader="loader"
+        :loading="loading"
       />
     </el-card>
   </div>
@@ -122,6 +122,9 @@ export default defineComponent({
       totalEmployeeMin: 0,
       totalEmployeeMax: 0,
       keywords: '',
+      yearsOfEstablishment: null,
+      annualSalesMax: null,
+      annualSalesMin: null,
     })
 
     const submit = (publishingCode: PublishingCode) => {

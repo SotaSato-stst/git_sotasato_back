@@ -2,27 +2,30 @@
 #
 # Table name: subsidies
 #
-#  id                 :bigint           not null, primary key
-#  capital_max        :integer
-#  capital_min        :integer
-#  detail             :text(65535)      not null
-#  end_to             :date
-#  level              :integer
-#  price_max          :integer
-#  publishing_code    :string(255)      not null
-#  ranking_score      :integer
-#  start_from         :date             not null
-#  subsidy_category   :string(255)
-#  supplier_type      :string(255)
-#  support_ratio_max  :string(255)
-#  support_ratio_min  :string(255)
-#  target_detail      :text(65535)      not null
-#  title              :string(255)      not null
-#  total_employee_max :integer
-#  total_employee_min :integer
-#  url                :text(65535)      not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id                     :bigint           not null, primary key
+#  annual_sales_max       :bigint
+#  annual_sales_min       :bigint
+#  capital_max            :bigint
+#  capital_min            :integer
+#  detail                 :text(65535)      not null
+#  end_to                 :date
+#  level                  :integer
+#  price_max              :bigint
+#  publishing_code        :string(255)      not null
+#  ranking_score          :integer
+#  start_from             :date             not null
+#  subsidy_category       :string(255)
+#  supplier_type          :string(255)
+#  support_ratio_max      :string(255)
+#  support_ratio_min      :string(255)
+#  target_detail          :text(65535)      not null
+#  title                  :string(255)      not null
+#  total_employee_max     :integer
+#  total_employee_min     :integer
+#  url                    :text(65535)      not null
+#  years_of_establishment :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 # Indexes
 #
@@ -59,6 +62,8 @@ class Subsidy < ApplicationRecord
       .search_with_city(search_params[:city_ids])
       .search_with_employee(search_params[:total_employee])
       .search_with_capital(search_params[:capital])
+      .search_with_annual_sales(search_params[:annual_sales])
+      .in_years_of_establishment(search_params[:founding_date])
   }
   scope :search_by_keyword, ->(keyword) {
     return if keyword.blank?
@@ -107,6 +112,11 @@ class Subsidy < ApplicationRecord
       )
     )
   }
+  scope :in_years_of_establishment, ->(founding_date) {
+    return if founding_date.blank?
+
+    where('start_from > date_add(?, interval years_of_establishment year)', founding_date)
+  }
   scope :search_with_capital, ->(capital) {
     return if capital.blank?
 
@@ -118,6 +128,20 @@ class Subsidy < ApplicationRecord
         Subsidy.where(capital_min: nil).where(capital_max: capital..)
       ).or(
         Subsidy.where(capital_min: nil).where(capital_max: nil)
+      )
+    )
+  }
+  scope :search_with_annual_sales, ->(annual_sales) {
+    return if annual_sales.blank?
+
+    merge(
+      Subsidy.where('? between annual_sales_min and annual_sales_max', annual_sales)
+      .or(
+        Subsidy.where(annual_sales_min: ..annual_sales).where(annual_sales_max: nil)
+      ).or(
+        Subsidy.where(annual_sales_min: nil).where(annual_sales_max: annual_sales..)
+      ).or(
+        Subsidy.where(annual_sales_min: nil).where(annual_sales_max: nil)
       )
     )
   }

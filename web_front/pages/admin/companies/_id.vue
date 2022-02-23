@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <company-form
-      v-if="companyParams"
+      v-if="!loading"
       :company-params="companyParams"
       @submit="submit"
     />
@@ -41,6 +41,8 @@ export default defineComponent({
       prefectureId: null,
       cityId: null,
       businessCategories: [],
+      foundingDate: null,
+      annualSales: null,
     })
 
     const submit = async () => {
@@ -64,11 +66,8 @@ export default defineComponent({
         if (!company) {
           return
         }
+        Object.assign(companyParams, company)
         Object.assign(companyParams, {
-          name: company.name,
-          adress: company.adress,
-          capital: company.capital,
-          totalEmployee: company.totalEmployee,
           prefectureId: company.prefecture.id,
           cityId: company.city.id,
           businessCategories: company.businessCategories.map(c => c.key),

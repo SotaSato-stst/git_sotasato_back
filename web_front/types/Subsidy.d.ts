@@ -34,6 +34,9 @@ export type Subsidy = {
   capitalMin: number | null
   totalEmployeeMax: number | null
   totalEmployeeMin: number | null
+  yearsOfEstablishment: number | null
+  annualSalesMax: number | null
+  annualSalesMin: number | null
 }
 
 export type SubsidiesResponse = {
@@ -49,6 +52,8 @@ export type SubsidySearchQuery = {
   totalEmployee: number | null
   capital: number | null
   keyword: string
+  foundingDate: string | null
+  annualSales: number | null
 }
 // フォームで取り扱うフォーマット
 export type SubsidySearchForm = {
@@ -59,6 +64,8 @@ export type SubsidySearchForm = {
   totalEmployee: number | null
   capital: number | null
   keyword: string
+  foundingDate: Date | null
+  annualSales: number | null
 }
 
 export type UpdateSubsidyParams = {
@@ -85,4 +92,7 @@ export type UpdateSubsidyParams = {
   capitalMin: number | null
   totalEmployeeMax: number | null
   totalEmployeeMin: number | null
+  yearsOfEstablishment: number | null
+  annualSalesMax: number | null
+  annualSalesMin: number | null
 }

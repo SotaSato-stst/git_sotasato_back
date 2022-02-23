@@ -6,7 +6,9 @@ export const removeEmpty = (obj: any): any => {
       .filter(([_, v]) => v != null && v !== '')
       .map(([k, v]) => [
         k,
-        v === Object(v) && !Array.isArray(v) ? removeEmpty(v) : v,
+        v === Object(v) && !Array.isArray(v) && !(v instanceof Date)
+          ? removeEmpty(v)
+          : v,
       ]),
   )
 }

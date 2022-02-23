@@ -20,7 +20,10 @@ json.call(
   :capital_max,
   :capital_min,
   :total_employee_max,
-  :total_employee_min
+  :total_employee_min,
+  :years_of_establishment,
+  :annual_sales_max,
+  :annual_sales_min,
 )
 
 json.ministry do

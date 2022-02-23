@@ -3,7 +3,7 @@
     ref="form"
     class="form"
     :model="state"
-    label-width="120px"
+    label-width="180px"
     :rules="rules"
   >
     <el-form-item label="参照元URL" prop="url">
@@ -120,33 +120,35 @@
       </el-button>
     </el-form-item>
     <el-form-item label="最大支援金額" prop="priceMax">
-      <el-input
-        v-model="priceMaxMan"
-        type="number"
-        class="input-number input-number-text-align-center"
-        :disabled="loading"
-        @change="priceMaxChanged()"
-      />
-      万円
-    </el-form-item>
-    <el-form-item label="支援割合">
       <div class="inline">
-        <el-form-item prop="supportRatioMin">
-          <el-input
-            v-model="state.supportRatioMin"
-            placeholder="1/2, 30%など"
-            class="input-range"
-            :disabled="loading"
-          />
-        </el-form-item>
-        <span class="range-between">~</span>
-        <el-form-item prop="supportRatioMax">
-          <el-input
-            v-model="state.supportRatioMax"
-            placeholder="2/3, 60%など"
-            class="input-range"
-            :disabled="loading"
-          />
+        <el-input
+          v-model="priceMaxMan"
+          type="number"
+          class="input-number input-number-text-align-center"
+          :disabled="loading"
+          @change="priceMaxChanged()"
+        />
+        万円
+        <el-form-item label="支援割合" label-width="120px">
+          <div class="inline">
+            <el-form-item prop="supportRatioMin">
+              <el-input
+                v-model="state.supportRatioMin"
+                placeholder="1/2, 30%など"
+                class="input-range"
+                :disabled="loading"
+              />
+            </el-form-item>
+            <span class="range-between">~</span>
+            <el-form-item prop="supportRatioMax">
+              <el-input
+                v-model="state.supportRatioMax"
+                placeholder="2/3, 60%など"
+                class="input-range"
+                :disabled="loading"
+              />
+            </el-form-item>
+          </div>
         </el-form-item>
       </div>
     </el-form-item>
@@ -185,6 +187,98 @@
         :disabled="loading"
       />
     </el-form-item>
+    <el-form-item label="対象となる従業員数">
+      <div class="inline">
+        <el-form-item prop="totalEmployeeMin">
+          <el-input
+            v-model="state.totalEmployeeMin"
+            class="input-number"
+            type="number"
+            placeholder="100"
+            :disabled="loading"
+          />
+          人
+        </el-form-item>
+        <span class="range-between">~</span>
+        <el-form-item prop="totalEmployeeMax">
+          <el-input
+            v-model="state.totalEmployeeMax"
+            class="input-number"
+            type="number"
+            placeholder="100"
+            :disabled="loading"
+          />
+          人
+        </el-form-item>
+      </div>
+      <div class="sub-description">※以上、以下の場合は片方を空にする</div>
+    </el-form-item>
+    <el-form-item label="対象となる資本金">
+      <div class="inline">
+        <el-form-item prop="capitalMin">
+          <el-input
+            v-model="capitalMinMan"
+            class="input-number"
+            type="number"
+            placeholder="1000"
+            :disabled="loading"
+            @change="capitalMinChanged()"
+          />
+          万円
+        </el-form-item>
+        <span class="range-between">~</span>
+        <el-form-item prop="capitalMax">
+          <el-input
+            v-model="capitalMaxMan"
+            class="input-number"
+            type="number"
+            placeholder="1000000"
+            :disabled="loading"
+            @change="capitalMaxChanged()"
+          />
+          万円
+        </el-form-item>
+      </div>
+      <div class="sub-description">※以上、以下の場合は片方を空にする</div>
+    </el-form-item>
+    <el-form-item label="対象となる年商(年間売上)">
+      <div class="inline">
+        <el-form-item prop="annualSalesMin">
+          <el-input
+            v-model="annualSalesMinMan"
+            class="input-number"
+            type="number"
+            placeholder="1000"
+            :disabled="loading"
+            @change="annualSalesMinChanged()"
+          />
+          万円
+        </el-form-item>
+        <span class="range-between">~</span>
+        <el-form-item prop="annualSalesMax">
+          <el-input
+            v-model="annualSalesMaxMan"
+            class="input-number"
+            type="number"
+            placeholder="1000"
+            :disabled="loading"
+            @change="annualSalesMaxChanged()"
+          />
+          万円
+        </el-form-item>
+      </div>
+      <div class="sub-description">※以上、以下の場合は片方を空にする</div>
+    </el-form-item>
+    <el-form-item label="対象となる会社設立年数" prop="yearsOfEstablishment">
+      <el-input
+        v-model="state.yearsOfEstablishment"
+        class="input-number"
+        type="number"
+        placeholder="3"
+        :disabled="loading"
+      />
+      年
+    </el-form-item>
     <el-form-item label="詳細" prop="detail">
       <el-input
         v-model="state.detail"
@@ -194,6 +288,26 @@
         placeholder="URLに記載されている内容"
         :disabled="loading"
       />
+    </el-form-item>
+    <el-form-item label="申請難易度" prop="level">
+      <el-rate
+        v-model="level"
+        :colors="['var(--text-color)']"
+        :texts="['低い', 'やや低め', '普通', 'やや高め', '高い']"
+        show-text
+        class="level"
+        :disabled="loading"
+        @change="levelChanged()"
+      />
+    </el-form-item>
+    <el-form-item label="ランキング点数" prop="rankingScore">
+      <el-input
+        v-model="state.rankingScore"
+        type="number"
+        class="input-number input-number-text-align-center"
+        :disabled="loading"
+      />
+      点
     </el-form-item>
     <el-form-item label="検索キーワード" prop="keywords">
       <el-input
@@ -216,66 +330,6 @@
           </el-button>
         </div>
       </div>
-    </el-form-item>
-    <el-form-item label="申請難易度" prop="level">
-      <el-rate
-        v-model="level"
-        :colors="['var(--text-color)']"
-        :texts="['低い', 'やや低め', '普通', 'やや高め', '高い']"
-        show-text
-        class="level"
-        :disabled="loading"
-        @change="levelChanged()"
-      />
-    </el-form-item>
-    <el-form-item label="ランキング点数" prop="rankingScore">
-      <el-input
-        v-model="state.rankingScore"
-        type="number"
-        class="input-number input-number-text-align-center"
-        :disabled="loading"
-      />
-      点
-    </el-form-item>
-    <el-form-item label="最低資本金" prop="capitalMin">
-      <el-input
-        v-model="state.capitalMin"
-        class="input-number"
-        type="number"
-        placeholder="1000"
-        :disabled="loading"
-      />
-      円
-    </el-form-item>
-    <el-form-item label="最大資本金" prop="capitalMax">
-      <el-input
-        v-model="state.capitalMax"
-        class="input-number"
-        type="number"
-        placeholder="1000000"
-        :disabled="loading"
-      />
-      円
-    </el-form-item>
-    <el-form-item label="最小従業員数" prop="totalEmployeeMin">
-      <el-input
-        v-model="state.totalEmployeeMin"
-        class="input-number"
-        type="number"
-        placeholder="100"
-        :disabled="loading"
-      />
-      人
-    </el-form-item>
-    <el-form-item label="最大従業員数" prop="totalEmployeeMax">
-      <el-input
-        v-model="state.totalEmployeeMax"
-        class="input-number"
-        type="number"
-        placeholder="100"
-        :disabled="loading"
-      />
-      人
     </el-form-item>
   </el-form>
 </template>
@@ -300,7 +354,6 @@ import {
   Rate,
 } from 'element-ui'
 import {optionsModule, keywordsModule} from '@/store'
-import {Loader} from '@/services/useLoader'
 import {UpdateSubsidyParams} from '@/types/Subsidy'
 import {Validate} from '@/types/Validate'
 import IconExternal from '@/components/icons/IconExternal.vue'
@@ -323,15 +376,14 @@ export default defineComponent({
       type: Object as PropType<UpdateSubsidyParams>,
       required: true,
     },
-    loader: {
-      type: Loader,
+    loading: {
+      type: Boolean as PropType<boolean>,
       required: true,
     },
   },
   setup(props) {
     const form = ref<Form | null>(null)
     const state: UpdateSubsidyParams = reactive(props.subsidyParams)
-    const {loading, load} = props.loader
     const ministries = computed(() => optionsModule.ministries)
     const prefectures = computed(() => optionsModule.prefectures)
     const cities = computed(() => optionsModule.cities)
@@ -353,18 +405,51 @@ export default defineComponent({
       state.businessCategories = []
     }
 
-    const priceMaxMan = ref(1)
+    const priceMaxMan = ref<number | null>(null)
     const priceMaxChanged = () => {
+      if (!priceMaxMan.value) {
+        return
+      }
       state.priceMax = priceMaxMan.value * 10000
+    }
+
+    const capitalMinMan = ref<number | null>(null)
+    const capitalMinChanged = () => {
+      if (!capitalMinMan.value) {
+        return
+      }
+      state.capitalMin = capitalMinMan.value * 10000
+    }
+    const capitalMaxMan = ref<number | null>(null)
+    const capitalMaxChanged = () => {
+      if (!capitalMaxMan.value) {
+        return
+      }
+      state.capitalMax = capitalMaxMan.value * 10000
+    }
+
+    const annualSalesMinMan = ref<number | null>(null)
+    const annualSalesMinChanged = () => {
+      if (!annualSalesMinMan.value) {
+        return
+      }
+      state.annualSalesMin = annualSalesMinMan.value * 10000
+    }
+    const annualSalesMaxMan = ref<number | null>(null)
+    const annualSalesMaxChanged = () => {
+      if (!annualSalesMaxMan.value) {
+        return
+      }
+      state.annualSalesMax = annualSalesMaxMan.value * 10000
     }
 
     const startFrom = ref<Date | null>(null)
     const startFromChanged = () => {
-      state.startFrom = startFrom.value?.toISOString() || null
+      state.startFrom = startFrom.value?.toLocaleDateString() || null
     }
     const endTo = ref<Date | null>(null)
     const endToChanged = () => {
-      state.endTo = endTo.value?.toISOString() || null
+      state.endTo = endTo.value?.toLocaleDateString() || null
     }
     const level = ref<number | null>(null)
     const levelChanged = () => {
@@ -436,19 +521,26 @@ export default defineComponent({
       ],
     }
 
-    onMounted(() => {
-      load(loading, async () => {
-        optionsModule.getMinistries()
-        await optionsModule.getPrefectures()
-        if (state.prefectureId) {
-          await optionsModule.getCities(state.prefectureId)
-        }
-        keywordsModule.getTopKeywords()
-        optionsModule.getBusinessCategories()
-        priceMaxMan.value = (state.priceMax || 1000) / 10000
-        startFrom.value = state.startFrom ? new Date(state.startFrom) : null
-        endTo.value = state.endTo ? new Date(state.endTo) : null
-      })
+    onMounted(async () => {
+      optionsModule.getMinistries()
+      await optionsModule.getPrefectures()
+      if (state.prefectureId) {
+        await optionsModule.getCities(state.prefectureId)
+      }
+      keywordsModule.getTopKeywords()
+      optionsModule.getBusinessCategories()
+      priceMaxMan.value = state.priceMax ? state.priceMax / 10000 : null
+      capitalMinMan.value = state.capitalMin ? state.capitalMin / 10000 : null
+      capitalMaxMan.value = state.capitalMax ? state.capitalMax / 10000 : null
+      annualSalesMinMan.value = state.annualSalesMin
+        ? state.annualSalesMin / 10000
+        : null
+      annualSalesMaxMan.value = state.annualSalesMax
+        ? state.annualSalesMax / 10000
+        : null
+      startFrom.value = state.startFrom ? new Date(state.startFrom) : null
+      endTo.value = state.endTo ? new Date(state.endTo) : null
+      level.value = state.level
     })
 
     onUnmounted(() => {
@@ -457,7 +549,6 @@ export default defineComponent({
 
     return {
       form,
-      loading,
       state,
       ministries,
       prefectures,
@@ -468,6 +559,14 @@ export default defineComponent({
       clearBusinessCategories,
       priceMaxMan,
       priceMaxChanged,
+      capitalMinMan,
+      capitalMinChanged,
+      capitalMaxMan,
+      capitalMaxChanged,
+      annualSalesMinMan,
+      annualSalesMinChanged,
+      annualSalesMaxMan,
+      annualSalesMaxChanged,
       startFrom,
       startFromChanged,
       endTo,
@@ -531,6 +630,12 @@ export default defineComponent({
 
 .keyword-button {
   margin-right: var(--spacing-2);
+}
+
+.sub-description {
+  color: var(--text-color);
+  font-size: 12px;
+  height: fit-content;
 }
 </style>
 

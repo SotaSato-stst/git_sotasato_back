@@ -12,6 +12,8 @@ export type Company = {
   businessCategories: BusiessCategory[]
   prefecture: Prefecture
   city: City
+  foundingDate: Date | null
+  annualSales: number | null
 }
 
 export type CompaniesResponse = {
@@ -27,14 +29,18 @@ export type CompanyParams = {
   prefectureId: number | null
   cityId: number | null
   businessCategories: string[]
+  foundingDate: string | null
+  annualSales: number | null
 }
 
 export type CurrentCompany = {
   name: string
   adress: string
-  capital: number
-  totalEmployee: number
+  capital: number | null
+  totalEmployee: number | null
   businessCategories: string[]
   prefectureId: number
   cityId: number
+  foundingDate: string | null
+  annualSales: number | null
 }

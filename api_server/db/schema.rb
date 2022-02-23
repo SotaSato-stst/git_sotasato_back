@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_22_113830) do
+ActiveRecord::Schema.define(version: 2022_02_23_084811) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_113830) do
     t.string "business_scale"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "founding_date"
+    t.bigint "annual_sales"
     t.index ["city_id"], name: "index_companies_on_city_id"
     t.index ["prefecture_id"], name: "index_companies_on_prefecture_id"
   end
@@ -87,7 +89,7 @@ ActiveRecord::Schema.define(version: 2022_02_22_113830) do
     t.date "start_from", null: false
     t.date "end_to"
     t.string "publishing_code", null: false
-    t.integer "price_max"
+    t.bigint "price_max"
     t.string "support_ratio_min"
     t.string "support_ratio_max"
     t.integer "level"
@@ -100,8 +102,11 @@ ActiveRecord::Schema.define(version: 2022_02_22_113830) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "total_employee_max"
     t.integer "total_employee_min"
-    t.integer "capital_max"
+    t.bigint "capital_max"
     t.integer "capital_min"
+    t.integer "years_of_establishment"
+    t.bigint "annual_sales_max"
+    t.bigint "annual_sales_min"
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256
   end
 

@@ -90,7 +90,7 @@ export default defineComponent({
       subsidyCategory: 'hojo',
       startFrom: null,
       endTo: null,
-      priceMax: 10000,
+      priceMax: null,
       supportRatioMin: '',
       supportRatioMax: '',
       level: null,
@@ -102,11 +102,14 @@ export default defineComponent({
       supplierType: 'ministry',
       businessCategories: [],
       rankingScore: null,
-      capitalMax: 0,
-      capitalMin: 0,
-      totalEmployeeMin: 0,
-      totalEmployeeMax: 0,
+      capitalMax: null,
+      capitalMin: null,
+      totalEmployeeMin: null,
+      totalEmployeeMax: null,
       keywords: '',
+      yearsOfEstablishment: null,
+      annualSalesMax: null,
+      annualSalesMin: null,
     })
 
     const submit = (publishingCode: PublishingCode) => {
