@@ -8,7 +8,7 @@ module Admin
     private
 
     def controller_action_authrized?
-      current_user.admin?
+      current_user.admin? || current_user.editor?
     end
   end
 end
