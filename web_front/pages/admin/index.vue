@@ -23,6 +23,7 @@
     </div>
     <div class="filter">
       <el-radio-group
+        v-if="isAdmin"
         v-model="filter.assignFilter"
         size="mini"
         @change="selectAssignFilter"
@@ -98,7 +99,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="担当者" width="120">
+      <el-table-column v-if="isAdmin" label="担当者" width="120">
         <template slot-scope="scope">
           {{ scope.row.assignee && scope.row.assignee.displayName }}
         </template>
@@ -237,7 +238,7 @@ export default defineComponent({
       MessageBox.prompt(
         `
 Slackに新着通知が来ているのに、この画面に表示されてない場合にだけ使ってください。
-この場でスクレイピングが走るわけではなく、スクレイピング済みのデータをこの画面へ同期します。'
+この場でスクレイピングが走るわけではなく、スクレイピング済みのデータをこの画面へ同期します。
 `,
         '最新情報を取得しますか？',
         {inputType: 'date'},
