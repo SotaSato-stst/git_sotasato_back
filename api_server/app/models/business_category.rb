@@ -1,6 +1,6 @@
 class BusinessCategory
   class << self
-    def all # rubocop:disable Metrics/MethodLength
+    def all
       {
         seizo: '製造業',
         hotel_insyoku: '宿泊業, 飲食サービス業',
@@ -20,8 +20,7 @@ class BusinessCategory
         kinnyu: '金融業, 保険業',
         iryo: '医療, 福祉',
         fukugo: '複合サービス事業',
-        koumu: '公務（他に分類されるものを除く）',
-        other: '分類不能の産業'
+        koumu: '公務（他に分類されるものを除く）'
       }
     end
 
