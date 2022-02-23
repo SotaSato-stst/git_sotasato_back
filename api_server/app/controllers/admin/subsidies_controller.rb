@@ -64,7 +64,7 @@ module Admin
         :capital_min,
         :years_of_establishment,
         :annual_sales_max,
-        :annual_sales_min,
+        :annual_sales_min
       )
     end
 

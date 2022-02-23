@@ -33,7 +33,7 @@ Metrics/BlockLength:
     - "config/routes.rb"
 
 Metrics/MethodLength:
-  Max: 20
+  Max: 25
 
 Metrics/AbcSize:
   Enabled: false
