@@ -34,6 +34,7 @@ class SubsidyDraft < ApplicationRecord
   belongs_to :prefecture, optional: true
   belongs_to :city, optional: true
   belongs_to :assignee, class_name: 'User', optional: true
+  has_one :subsidy, foreign_key: :url, primary_key: :url
 
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 

@@ -86,16 +86,21 @@
           <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="120">
+      <el-table-column label="操作" width="140">
         <template slot-scope="scope">
           <el-button
-            type="danger"
+            :type="scope.row.subsidyId ? 'success' : 'danger'"
             size="mini"
-            :disabled="scope.row.archived"
-            @click="archive(scope.row)"
+            :disabled="scope.row.archived && !scope.row.subsidyId"
+            @click="handleArchived(scope.row, scope.row.subsidyId)"
           >
             <div v-if="!scope.row.archived">アーカイブ</div>
-            <div v-if="scope.row.archived">アーカイブ済み</div>
+            <div v-if="scope.row.archived && !scope.row.subsidyId">
+              アーカイブ済み
+            </div>
+            <div v-if="scope.row.archived && scope.row.subsidyId">
+              情報作成済み
+            </div>
           </el-button>
         </template>
       </el-table-column>
@@ -166,7 +171,6 @@ export default defineComponent({
       () => subsidyDraftsModule.selectedSubsidyDrafts,
     )
     const pagination = computed(() => subsidyDraftsModule.pagination)
-    const completedCount = computed(() => subsidyDraftsModule.completedCount)
 
     const getPage = (page: number) => {
       subsidyDraftsModule.setSubsidyDrafts([])
@@ -193,6 +197,17 @@ export default defineComponent({
 
     const handleSelectionChange = (selections: SubsidyDraft[]) => {
       subsidyDraftsModule.setSelectedSubsidyDrafts(selections)
+    }
+
+    const handleArchived = (
+      subsidyDraft: SubsidyDraft,
+      subsidyId: number | null,
+    ) => {
+      if (subsidyId) {
+        router.push(routingService.AdminSubsidyDetail(subsidyId))
+      } else {
+        archive(subsidyDraft)
+      }
     }
 
     const confirmArchive = (text: string) => {
@@ -274,10 +289,10 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       subsidyDrafts,
       selectedSubsidyDrafts,
       pagination,
-      completedCount,
       getPage,
       handleEdit,
       handleSelectionChange,
+      handleArchived,
       archive,
       archiveAll,
       requestNewSubsidy,

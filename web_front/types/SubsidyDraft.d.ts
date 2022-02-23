@@ -16,6 +16,7 @@ export type SubsidyDraft = {
   archived: boolean
   createdAt: Date
   assignee: User | null
+  subsidyId: number | null
 }
 
 export type SubsidyDraftsResponse = {
