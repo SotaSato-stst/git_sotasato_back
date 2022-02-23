@@ -36,6 +36,8 @@ export default class SubsidiesModule extends VuexModule {
     totalEmployee: null,
     capital: null,
     keyword: '',
+    foundingDate: null,
+    annualSales: null,
   }
 
   @Mutation
@@ -64,6 +66,8 @@ export default class SubsidiesModule extends VuexModule {
       totalEmployee: state.totalEmployee || null,
       capital: state.capital || null,
       keyword: state.keyword,
+      foundingDate: state.foundingDate || null,
+      annualSales: state.annualSales || null,
     }
   }
 

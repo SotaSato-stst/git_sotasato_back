@@ -63,6 +63,8 @@ class Subsidy < ApplicationRecord
       .search_with_city(search_params[:city_ids])
       .search_with_employee(search_params[:total_employee])
       .search_with_capital(search_params[:capital])
+      .search_with_founding_date(search_params[:founding_date])
+      .search_with_annual_sales(search_params[:annual_sales])
   }
   scope :search_by_keyword, ->(keyword) {
     return if keyword.blank?
@@ -122,6 +124,34 @@ class Subsidy < ApplicationRecord
         Subsidy.where(capital_min: nil).where(capital_max: capital..)
       ).or(
         Subsidy.where(capital_min: nil).where(capital_max: nil)
+      )
+    )
+  }
+  scope :search_with_founding_date, ->(founding_date) {
+    return if founding_date.blank?
+
+    merge(
+      Subsidy.where('? between founding_date_min and founding_date_max', founding_date)
+      .or(
+        Subsidy.where(founding_date_min: ..founding_date).where(founding_date_max: nil)
+      ).or(
+        Subsidy.where(founding_date_min: nil).where(founding_date_max: founding_date..)
+      ).or(
+        Subsidy.where(founding_date_min: nil).where(founding_date_max: nil)
+      )
+    )
+  }
+  scope :search_with_annual_sales, ->(annual_sales) {
+    return if annual_sales.blank?
+
+    merge(
+      Subsidy.where('? between annual_sales_min and annual_sales_max', annual_sales)
+      .or(
+        Subsidy.where(annual_sales_min: ..annual_sales).where(annual_sales_max: nil)
+      ).or(
+        Subsidy.where(annual_sales_min: nil).where(annual_sales_max: annual_sales..)
+      ).or(
+        Subsidy.where(annual_sales_min: nil).where(annual_sales_max: nil)
       )
     )
   }

@@ -86,6 +86,28 @@
         <span class="unit-font">万円</span>
       </div>
       <div class="search-item">
+        <div class="search-label">設立日</div>
+        <el-date-picker
+          v-model="state.foundingDate"
+          class="input-number input-left"
+          type="date"
+          placeholder="日付"
+        >
+        </el-date-picker>
+        <span class="unit-font">万円</span>
+      </div>
+      <div class="search-item">
+        <div class="search-label">年商</div>
+        <el-input
+          v-model="state.annualSales"
+          class="input-number input-left"
+          type="number"
+          placeholder="10,000,000"
+        >
+        </el-input>
+        <span class="unit-font">万円</span>
+      </div>
+      <div class="search-item">
         <el-checkbox v-model="state.inApplicationPeriod">
           募集期間中のみに絞る
         </el-checkbox>
@@ -148,6 +170,8 @@ export default defineComponent({
       totalEmployee: null,
       capital: null,
       keyword: '',
+      foundingDate: null,
+      annualSales: null,
     })
     const capitalMan = ref<number | null>(null)
     const capitalChanged = () => {
@@ -167,6 +191,8 @@ export default defineComponent({
         businessCategoryKeys: company.businessCategories,
         capital: company.capital,
         totalEmployee: company.totalEmployee,
+        foundingDate: company.foundingDate,
+        annualSales: company.annualSales,
       }
     }
 
@@ -186,6 +212,9 @@ export default defineComponent({
       const keyword = query.keyword?.toString()
       const capital = query.capital?.toString()
       const totalEmployee = query.totalEmployee?.toString()
+      const foundingDate = query.foundingDate?.toString()
+      const annualSales = query.annualSales?.toString()
+
       return removeEmpty({
         cityIds,
         prefectureId,
@@ -194,6 +223,8 @@ export default defineComponent({
         capital,
         totalEmployee,
         keyword,
+        foundingDate,
+        annualSales,
       })
     }
 
@@ -227,6 +258,12 @@ export default defineComponent({
       }
       if (params.totalEmployee === company?.totalEmployee) {
         params.totalEmployee = undefined
+      }
+      if (params.foundingDate === company?.foundingDate) {
+        params.foundingDate = undefined
+      }
+      if (params.annualSales === company?.annualSales) {
+        params.annualSales = undefined
       }
       return params
     }
