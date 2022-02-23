@@ -1,4 +1,5 @@
 import requests
+import ssl
 from requests import Response
 from bs4 import BeautifulSoup
 from logging import getLogger
@@ -21,6 +22,7 @@ def get_soup(url: str) -> BeautifulSoup:
 
 
 def request_response(url: str) -> Response:
+    ssl._create_default_https_context = ssl._create_unverified_context
     header = {'User-Agent': USER_AGENT}
 
     try:
