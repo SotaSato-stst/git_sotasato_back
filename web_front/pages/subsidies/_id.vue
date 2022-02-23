@@ -77,15 +77,11 @@
         <div class="divider" />
         <div class="detail">
           <span class="label">対象</span>
-          <div class="content">
-            {{ subsidy.targetDetail }}
-          </div>
+          <div class="content" v-html="parseMarkdown(subsidy.targetDetail)" />
         </div>
         <div class="detail">
           <span class="label">支援内容</span>
-          <div class="content">
-            {{ subsidy.detail }}
-          </div>
+          <div class="content" v-html="parseMarkdown(subsidy.detail)" />
         </div>
       </el-card>
     </el-main>
@@ -105,6 +101,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Card} from 'element-ui'
+import {marked} from 'marked'
 import {subsidiesModule} from '@/store'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
@@ -133,6 +130,7 @@ export default defineComponent({
     const router = useRouter()
     const pageId = Number(route.value.params.id)
     const subsidy = computed(() => subsidiesModule.subsidy)
+    const parseMarkdown = marked.parse
 
     onMounted(async () => {
       if (route.value.query.preview === 'true') {
@@ -155,6 +153,7 @@ export default defineComponent({
       starView,
       subsidyCategoryLabel,
       subsidy,
+      parseMarkdown,
     }
   },
   head(): object {
@@ -254,5 +253,11 @@ export default defineComponent({
 .detail .content {
   font-size: 14px;
   white-space: pre-line;
+}
+</style>
+
+<style>
+em {
+  font-style: normal;
 }
 </style>
