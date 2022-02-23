@@ -371,7 +371,7 @@ selector_name,url
 #main_a,"https://www.city.uwajima.ehime.jp/soshiki/list1-1.html"
 #contentBody,"http://www.city.yawatahama.ehime.jp/shinchaku/"
 .section_information_list,"https://www.city.niihama.lg.jp/life/2/index-2.html"
-..typesquare_option,"https://www.city.saijo.ehime.jp/soshiki/list1-1.html"
+.typesquare_option,"https://www.city.saijo.ehime.jp/soshiki/list1-1.html"
 #main_a,"https://www.city.ozu.ehime.jp/soshiki/list1-1.html"
 .list_table,"https://www.city.iyo.lg.jp/new/index.html"
 #main_a,"https://www.city.shikokuchuo.ehime.jp/soshiki/list1-1.html"
