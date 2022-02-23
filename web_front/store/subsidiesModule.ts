@@ -66,7 +66,7 @@ export default class SubsidiesModule extends VuexModule {
       totalEmployee: state.totalEmployee || null,
       capital: state.capital || null,
       keyword: state.keyword,
-      foundingDate: state.foundingDate || null,
+      foundingDate: state.foundingDate?.toLocaleDateString() || null,
       annualSales: state.annualSales || null,
     }
   }

@@ -115,7 +115,6 @@
           v-model="foundingDate"
           class="input-date"
           type="date"
-          placeholder=""
           :disabled="loading"
           @change="foundingDateChanged()"
         />
@@ -161,10 +160,6 @@ export default defineComponent({
     const {loading, load} = optionsModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
     const businessCategories = computed(() => optionsModule.businessCategories)
-    const foundingDate = ref<Date | null>(null)
-    const foundingDateChanged = () => {
-      state.foundingDate = foundingDate.value?.toISOString() || null
-    }
     const selectPrefectureId = async (prefectureId: number | null) => {
       if (!prefectureId) {
         return
@@ -174,6 +169,12 @@ export default defineComponent({
     }
     const cities = computed(() => optionsModule.cities)
     const state: CompanyParams = reactive(props.companyParams)
+    const foundingDate = ref<Date | null>(
+      state.foundingDate ? new Date(state.foundingDate) : null,
+    )
+    const foundingDateChanged = () => {
+      state.foundingDate = foundingDate.value?.toLocaleDateString() || null
+    }
 
     const submit = () => {
       load(loading, () => {

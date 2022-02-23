@@ -52,7 +52,7 @@ export type SubsidySearchQuery = {
   totalEmployee: number | null
   capital: number | null
   keyword: string
-  foundingDate: Date | null
+  foundingDate: string | null
   annualSales: number | null
 }
 // フォームで取り扱うフォーマット

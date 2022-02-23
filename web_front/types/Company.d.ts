@@ -36,11 +36,11 @@ export type CompanyParams = {
 export type CurrentCompany = {
   name: string
   adress: string
-  capital: number
-  totalEmployee: number
+  capital: number | null
+  totalEmployee: number | null
   businessCategories: string[]
   prefectureId: number
   cityId: number
-  foundingDate: Date
-  annualSales: number
+  foundingDate: string | null
+  annualSales: number | null
 }

@@ -190,12 +190,14 @@ export default defineComponent({
         businessCategoryKeys: company.businessCategories,
         capital: company.capital,
         totalEmployee: company.totalEmployee,
-        foundingDate: company.foundingDate,
+        foundingDate: company.foundingDate
+          ? new Date(company.foundingDate)
+          : null,
         annualSales: company.annualSales,
       }
     }
 
-    const paramsFromUrlQuery = () => {
+    const paramsFromUrlQuery = (): Partial<SubsidySearchForm> => {
       const prefectureIdQuery = Number(query.prefectureId)
       const prefectureId =
         isNaN(prefectureIdQuery) ||
@@ -209,10 +211,14 @@ export default defineComponent({
         .split('|')
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
       const keyword = query.keyword?.toString()
-      const capital = query.capital?.toString()
-      const totalEmployee = query.totalEmployee?.toString()
-      const foundingDate = query.foundingDate?.toString()
-      const annualSales = query.annualSales?.toString()
+      const capital = query.capital ? Number(query.capital) : null
+      const totalEmployee = query.totalEmployee
+        ? Number(query.totalEmployee)
+        : null
+      const foundingDate = query.foundingDate
+        ? new Date(query.foundingDate.toString())
+        : null
+      const annualSales = query.annualSales ? Number(query.annualSales) : null
 
       return removeEmpty({
         cityIds,
