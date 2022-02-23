@@ -27,6 +27,21 @@
           :disabled="loading"
         />
       </el-form-item>
+      <el-form-item label="法人格" prop="organizationType">
+        <el-select
+          v-model="state.organizationType"
+          placeholder="法人格"
+          :disabled="loading"
+          class="category-select"
+        >
+          <el-option
+            v-for="organizationType in organizationTypes"
+            :key="organizationType.key"
+            :label="organizationType.name"
+            :value="organizationType.key"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="都道府県" prop="prefectureId">
         <el-select
           v-model="state.prefectureId"
@@ -159,6 +174,7 @@ export default defineComponent({
     const form = ref<Form | null>(null)
     const {loading, load} = optionsModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
+    const organizationTypes = computed(() => optionsModule.organizationTypes)
     const businessCategories = computed(() => optionsModule.businessCategories)
     const selectPrefectureId = async (prefectureId: number | null) => {
       if (!prefectureId) {
@@ -195,6 +211,13 @@ export default defineComponent({
           trigger: 'change',
         },
       ],
+      organizationType: [
+        {
+          required: true,
+          message: '法人格は必須です',
+          trigger: 'change',
+        },
+      ],
       prefectureId: [
         {
           required: true,
@@ -222,6 +245,7 @@ export default defineComponent({
       load(loading, () => {
         optionsModule.getBusinessCategories()
         optionsModule.getPrefectures()
+        optionsModule.getOrganizationTypes()
       })
     })
 
@@ -241,6 +265,7 @@ export default defineComponent({
       prefectures,
       selectPrefectureId,
       cities,
+      organizationTypes,
       businessCategories,
       state,
       rules,

@@ -35,6 +35,7 @@ export default defineComponent({
     const company = computed(() => companiesModule.company)
     const companyParams: CompanyParams = reactive({
       name: '',
+      organizationType: '',
       adress: '',
       capital: null,
       totalEmployee: null,

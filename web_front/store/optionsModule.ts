@@ -3,6 +3,10 @@ import {$axios} from '@/store/api'
 import {Prefecture, PrefectureResponse} from '@/types/Prefecture'
 import {City, CityResponse} from '@/types/City'
 import {BusiessCategory, BusiessCategoryResponse} from '@/types/BusiessCategory'
+import {
+  OrganizationType,
+  OrganizationTypeResponse,
+} from '@/types/OrganizationType'
 import {Ministry, MinistryResponse} from '@/types/Ministry'
 import {useLoader} from '@/services/useLoader'
 
@@ -17,6 +21,7 @@ export default class OptionsModule extends VuexModule {
   prefectures: Prefecture[] = []
   cities: Prefecture[] = []
   businessCategories: BusiessCategory[] = []
+  organizationTypes: OrganizationType[] = []
 
   @Mutation
   setMinistries(ministries: Ministry[]) {
@@ -36,6 +41,11 @@ export default class OptionsModule extends VuexModule {
   @Mutation
   setBusinessCategories(businessCategories: BusiessCategory[]) {
     this.businessCategories = businessCategories
+  }
+
+  @Mutation
+  setOrganizationTypes(organizationTypes: OrganizationType[]) {
+    this.organizationTypes = organizationTypes
   }
 
   @Action({rawError: true})
@@ -64,5 +74,13 @@ export default class OptionsModule extends VuexModule {
       '/business_categories',
     )
     this.setBusinessCategories(res.businessCategories)
+  }
+
+  @Action({rawError: true})
+  async getOrganizationTypes() {
+    const res = await $axios.$get<OrganizationTypeResponse>(
+      '/organization_types',
+    )
+    this.setOrganizationTypes(res.organizationTypes)
   }
 }

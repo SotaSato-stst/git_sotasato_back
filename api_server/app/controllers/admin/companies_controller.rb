@@ -35,7 +35,7 @@ module Admin
     private
 
     def company_params
-      params.permit(:name, :adress, :total_employee, :capital, :founding_date, :annual_sales)
+      params.permit(:name, :organization_type, :adress, :total_employee, :capital, :founding_date, :annual_sales)
     end
 
     def set_association

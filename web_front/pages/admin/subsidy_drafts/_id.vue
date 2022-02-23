@@ -38,7 +38,7 @@
       <subsidy-form
         ref="form"
         :subsidy-params="subsidyParams"
-        :loader="loader"
+        :loading="loading"
       />
     </el-card>
   </div>

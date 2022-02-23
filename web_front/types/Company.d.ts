@@ -2,10 +2,12 @@ import {Prefecture} from './Prefecture'
 import {City} from './City'
 import {BusiessCategory} from './BusiessCategory'
 import {Pagination} from './Pagination'
+import {OrganizationType} from './OrganizationType'
 
 export type Company = {
   id: number
   name: string
+  organizationType: OrganizationType
   adress: string | null
   capital: number | null
   totalEmployee: number | null
@@ -23,6 +25,7 @@ export type CompaniesResponse = {
 
 export type CompanyParams = {
   name: string
+  organizationType: string
   adress: string
   capital: number | null
   totalEmployee: number | null
@@ -35,6 +38,7 @@ export type CompanyParams = {
 
 export type CurrentCompany = {
   name: string
+  organizationType: string
   adress: string
   capital: number | null
   totalEmployee: number | null

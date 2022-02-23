@@ -2,18 +2,19 @@
 #
 # Table name: companies
 #
-#  id             :bigint           not null, primary key
-#  adress         :string(255)
-#  annual_sales   :bigint
-#  business_scale :string(255)
-#  capital        :integer
-#  founding_date  :date
-#  name           :string(255)      not null
-#  total_employee :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  city_id        :bigint           not null
-#  prefecture_id  :bigint           not null
+#  id                :bigint           not null, primary key
+#  adress            :string(255)
+#  annual_sales      :bigint
+#  business_scale    :string(255)
+#  capital           :integer
+#  founding_date     :date
+#  name              :string(255)      not null
+#  organization_type :string(255)      default(NULL), not null
+#  total_employee    :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  city_id           :bigint           not null
+#  prefecture_id     :bigint           not null
 #
 # Indexes
 #
@@ -31,6 +32,7 @@ class Company < ApplicationRecord
   has_many :company_business_categories, dependent: :destroy
   has_many :users, dependent: :destroy
 
+  enum organization_type: OrganizationType.enum_hash
   enum business_scale: { small_business: 'small_business', small_and_medium: 'small_and_medium', large: 'large' }
 
   def business_categories

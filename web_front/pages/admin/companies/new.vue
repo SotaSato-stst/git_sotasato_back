@@ -26,7 +26,8 @@ export default defineComponent({
     const router = useRouter()
     const {loading} = companiesModule.loader
     const companyParams: CompanyParams = reactive({
-      name: '株式会社',
+      name: '',
+      organizationType: '',
       adress: '',
       capital: null,
       totalEmployee: null,

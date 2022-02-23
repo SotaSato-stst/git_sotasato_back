@@ -1,4 +1,16 @@
-json.call(company, :id, :name, :prefecture_id, :city_id, :adress, :capital, :total_employee, :founding_date, :annual_sales)
+json.call(
+  company,
+  :id,
+  :name,
+  :organization_type,
+  :prefecture_id,
+  :city_id,
+  :adress,
+  :capital,
+  :total_employee,
+  :founding_date,
+  :annual_sales
+)
 
 json.prefecture do
   json.partial! 'prefectures/prefecture', prefecture: company.prefecture
