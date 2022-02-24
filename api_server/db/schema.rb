@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_101830) do
+ActiveRecord::Schema.define(version: 2022_02_24_134610) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_101830) do
     t.bigint "prefecture_id", null: false
     t.bigint "city_id", null: false
     t.string "adress"
-    t.integer "capital"
+    t.bigint "capital"
     t.integer "total_employee"
     t.string "business_scale"
     t.datetime "created_at", precision: 6, null: false
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_101830) do
     t.integer "total_employee_max"
     t.integer "total_employee_min"
     t.bigint "capital_max"
-    t.integer "capital_min"
+    t.bigint "capital_min"
     t.integer "years_of_establishment"
     t.bigint "annual_sales_max"
     t.bigint "annual_sales_min"

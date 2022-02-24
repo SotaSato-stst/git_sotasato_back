@@ -6,7 +6,7 @@
 #  adress            :string(255)
 #  annual_sales      :bigint
 #  business_scale    :string(255)
-#  capital           :integer
+#  capital           :bigint
 #  founding_date     :date
 #  name              :string(255)      not null
 #  organization_type :string(255)      default(NULL), not null

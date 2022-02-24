@@ -6,7 +6,7 @@
 #  annual_sales_max       :bigint
 #  annual_sales_min       :bigint
 #  capital_max            :bigint
-#  capital_min            :integer
+#  capital_min            :bigint
 #  detail                 :text(65535)      not null
 #  end_to                 :date
 #  level                  :integer
