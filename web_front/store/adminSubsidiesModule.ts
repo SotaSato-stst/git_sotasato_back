@@ -59,11 +59,6 @@ export default class AdminSubsidiesModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async deleteSubsidyDraft(id: number) {
-    await $axios.$delete(`/admin/subsidy_drafts/${id}`)
-  }
-
-  @Action({rawError: true})
   async postSubsidy(params: UpdateSubsidyParams): Promise<number> {
     const res = await $axios.$post<Subsidy>('/admin/subsidies', params)
     return res.id

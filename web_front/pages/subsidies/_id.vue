@@ -51,7 +51,7 @@
               <div class="title">{{ subsidy.title }}</div>
               <div class="header-info">
                 <span class="label">募集期間: </span>
-                {{ convertToJpDate(subsidy.startFrom) }}
+                {{ subsidy.startFrom && convertToJpDate(subsidy.startFrom) }}
                 ~
                 {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
               </div>

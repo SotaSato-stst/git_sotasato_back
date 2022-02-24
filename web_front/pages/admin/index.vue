@@ -225,7 +225,10 @@ export default defineComponent({
         .then(async () => {
           await Promise.all(
             subsidyDraftsModule.selectedSubsidyDrafts.map(d => {
-              return subsidyDraftsModule.deleteSubsidyDraft(d.id)
+              return subsidyDraftsModule.updateSubsidyDraft({
+                id: d.id,
+                archive: true,
+              })
             }),
           )
           handleSuccess(`${subsidyDraftsModule.selectedSubsidyDrafts.length}件`)
@@ -237,7 +240,7 @@ export default defineComponent({
       confirmArchive(`「${subsidyDraft.title}」`)
         .then(() => {
           subsidyDraftsModule
-            .deleteSubsidyDraft(subsidyDraft.id)
+            .updateSubsidyDraft({id: subsidyDraft.id, archive: true})
             .then(() => handleSuccess(subsidyDraft.title))
             .catch(showApiErrorMessage)
         })
