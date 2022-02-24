@@ -16,6 +16,7 @@
             下書き保存
           </el-button>
           <el-button
+            v-if="!subsidyCreated"
             type="success"
             class="submit-button"
             size="small"
@@ -23,6 +24,15 @@
             @click="submit('published')"
           >
             保存して公開
+          </el-button>
+          <el-button
+            v-if="subsidyCreated"
+            type="success"
+            class="submit-button"
+            size="small"
+            @click="segueSubsidyDetail(subsidyDraft.subsidyId)"
+          >
+            作成した情報を確認する
           </el-button>
           <el-button
             type="danger"
@@ -84,6 +94,9 @@ export default defineComponent({
     const {loading, load} = loader
     const pageId = Number(route.value.params.id)
     const subsidyDraft = computed(() => subsidyDraftsModule.subsidyDraft)
+    const subsidyCreated = computed(
+      () => !!subsidyDraftsModule.subsidyDraft?.subsidyId,
+    )
     const subsidyParams: UpdateSubsidyParams = reactive({
       title: '',
       url: '',
@@ -167,6 +180,10 @@ export default defineComponent({
         .catch(_ => {})
     }
 
+    const segueSubsidyDetail = (subsidyId: number) => {
+      router.push(routingService.AdminSubsidyDetail(subsidyId))
+    }
+
     onMounted(() => {
       load(loading, async () => {
         await subsidyDraftsModule
@@ -199,6 +216,8 @@ export default defineComponent({
       subsidyParams,
       submit,
       archive,
+      segueSubsidyDetail,
+      subsidyCreated,
     }
   },
   head(): object {
