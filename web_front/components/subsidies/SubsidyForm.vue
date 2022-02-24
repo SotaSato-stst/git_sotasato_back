@@ -604,7 +604,8 @@ export default defineComponent({
       endTo.value = state.endTo ? new Date(state.endTo) : null
       level.value = state.level
       if (state.organizationTypes.length === 0) {
-        selectNoneOrganizationTypes()
+        state.organizationTypes = ['kabu', 'godo', 'kojin']
+        selectOrganizationTypes()
       } else {
         selectOrganizationTypes()
       }
