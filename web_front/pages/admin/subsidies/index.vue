@@ -160,7 +160,7 @@ export default defineComponent({
         const page = pageQuery ? Number(pageQuery) : 1
         const publishingFilter =
           (route.value.query.publishingFilter?.toString() as FilterPublishingType) ||
-          'assignedMe'
+          'all'
         handleSegue({page, publishingFilter})
       })
     })
