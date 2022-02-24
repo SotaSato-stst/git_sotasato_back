@@ -7,6 +7,7 @@ import {
   SubsidyDraftAssigneesResponse,
   UpdateSubsidyDraftAssigneesResponse,
   SubsidyDraftIndexParams,
+  UpdateSubsidyDraftParams,
 } from '@/types/SubsidyDraft'
 import {Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
@@ -104,8 +105,10 @@ export default class SubsidyDraftsModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async deleteSubsidyDraft(id: number) {
-    await $axios.$delete(`/admin/subsidy_drafts/${id}`)
+  async updateSubsidyDraft(params: UpdateSubsidyDraftParams) {
+    await $axios.$put(`/admin/subsidy_drafts/${params.id}`, {
+      archived: params.archive,
+    })
   }
 
   @Action({rawError: true})

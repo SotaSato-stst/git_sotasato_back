@@ -38,10 +38,11 @@
             type="danger"
             class="submit-button"
             size="small"
-            :disabled="subsidyDraft.archived || loading"
-            @click="archive"
+            :disabled="loading"
+            @click="toggleArchive(!subsidyDraft.archived)"
           >
-            アーカイブ
+            <div v-if="!subsidyDraft.archived">アーカイブ</div>
+            <div v-if="subsidyDraft.archived">アーカイブを戻す</div>
           </el-button>
         </div>
       </div>
@@ -92,7 +93,7 @@ export default defineComponent({
     const router = useRouter()
     const loader = subsidyDraftsModule.loader
     const {loading, load} = loader
-    const pageId = Number(route.value.params.id)
+    const id = Number(route.value.params.id)
     const subsidyDraft = computed(() => subsidyDraftsModule.subsidyDraft)
     const subsidyCreated = computed(
       () => !!subsidyDraftsModule.subsidyDraft?.subsidyId,
@@ -158,26 +159,24 @@ export default defineComponent({
       router.replace(routingService.AdminSubsidyDetail(subsidyId))
     }
 
-    const archive = () => {
-      MessageBox.confirm(subsidyParams.title, 'この情報をアーカイブしますか？')
+    const toggleArchive = (archive: boolean) => {
+      const target = archive ? 'アーカイブ' : 'アーカイブを戻'
+      MessageBox.confirm(subsidyParams.title, `この情報を${target}しますか？`)
         .then(() => {
           subsidyDraftsModule
-            .deleteSubsidyDraft(pageId)
-            .then(() => {
-              notifySuccess(
-                'アーカイブしました',
-                `${subsidyDraftsModule.subsidyDraft?.title}`,
-              )
-              router.push(routingService.AdminTop())
-            })
-            .catch(error =>
-              notifyError(
-                'アーカイブに失敗しました',
-                error.response.data.message,
-              ),
-            )
+            .updateSubsidyDraft({id, archive})
+            .then(handleSuccess)
+            .catch(showApiErrorMessage)
         })
         .catch(_ => {})
+    }
+
+    const handleSuccess = () => {
+      notifySuccess(
+        '更新しました',
+        `${subsidyDraftsModule.subsidyDraft?.title}`,
+      )
+      subsidyDraftsModule.getSubsidyDraft(id)
     }
 
     const segueSubsidyDetail = (subsidyId: number) => {
@@ -187,7 +186,7 @@ export default defineComponent({
     onMounted(() => {
       load(loading, async () => {
         await subsidyDraftsModule
-          .getSubsidyDraft(pageId)
+          .getSubsidyDraft(id)
           .catch(_ => router.push(routingService.AdminTop()))
         const subsidyDraft = subsidyDraftsModule.subsidyDraft
         if (!subsidyDraft) {
@@ -215,7 +214,7 @@ export default defineComponent({
       subsidyDraft,
       subsidyParams,
       submit,
-      archive,
+      toggleArchive,
       segueSubsidyDetail,
       subsidyCreated,
     }

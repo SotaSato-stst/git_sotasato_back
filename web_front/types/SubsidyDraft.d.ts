@@ -51,3 +51,8 @@ export type SubsidyDraftIndexParams = {
   assignFilter: FilterAssignType
   completeFilter: FilterCompleteType
 }
+
+export type UpdateSubsidyDraftParams = {
+  id: number
+  archive: boolean
+}

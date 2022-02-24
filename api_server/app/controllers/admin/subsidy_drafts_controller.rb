@@ -11,9 +11,10 @@ module Admin
       @subsidy_draft = SubsidyDraft.find(params[:id])
     end
 
-    def destroy
+    def update
       @subsidy_draft = SubsidyDraft.find(params[:id])
-      @subsidy_draft.update!(archived: true, assignee: current_user)
+      archived = ActiveModel::Type::Boolean.new.cast(params[:archived])
+      @subsidy_draft.update!(archived: archived, assignee: current_user)
       render json: { success: true }, status: 200
     rescue StandardError => e
       render json: { message: e.message }, status: 400
