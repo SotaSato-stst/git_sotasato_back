@@ -19,16 +19,15 @@
                     {{ convertToShortJPY(subsidy.priceMax) }}円
                   </span>
                 </span>
-                <span v-if="subsidy.supportRatioMax" class="header-info">
+                <span
+                  v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
+                  class="header-info"
+                >
                   <span class="label">
-                    最大支援割合:
-                    {{ subsidy.supportRatioMax }}
-                  </span>
-                </span>
-                <span v-if="subsidy.supportRatioMin" class="header-info">
-                  <span class="label">
-                    最小支援割合:
+                    支援割合:
                     {{ subsidy.supportRatioMin }}
+                    ~
+                    {{ subsidy.supportRatioMax }}
                   </span>
                 </span>
                 <span v-if="subsidy.level" class="header-info">
