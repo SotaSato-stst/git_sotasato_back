@@ -2,18 +2,7 @@ module Admin
   class SubsidyDraftsController < ApplicationController
     def index
       scope = SubsidyDraft.includes(:ministry, :prefecture, :city, :assignee, :subsidy).order(updated_at: :desc)
-      case params[:assign_filter]
-      when 'assignedMe'
-        scope = scope.assigned_to(current_user)
-      when 'noAssign'
-        scope = scope.not_assigned
-      end
-      case params[:complete_filter]
-      when 'completed'
-        scope = scope.archived
-      when 'notCompleted'
-        scope = scope.not_archived
-      end
+      scope = scope.assign_filter(params[:assign_filter], current_user).complete_filter(params[:complete_filter])
       @items_total = scope.count
       @subsidy_drafts = scope.page(params[:page]).per(30)
     end

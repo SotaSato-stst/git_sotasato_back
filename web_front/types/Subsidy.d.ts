@@ -7,7 +7,7 @@ import {OrganizationType} from './OrganizationType'
 
 export type SubsidyCategory = 'hojo' | 'josei' | 'kyufu'
 export type SupplierType = 'ministry' | 'prefecture' | 'city'
-export type PublishingCode = 'editing' | 'published'
+export type PublishingCode = 'editing' | 'published' | 'archived'
 
 export type Subsidy = {
   id: number
@@ -100,4 +100,11 @@ export type UpdateSubsidyParams = {
   yearsOfEstablishment: number | null
   annualSalesMax: number | null
   annualSalesMin: number | null
+}
+
+export type FilterPublishingType = 'published' | 'editing' | 'archived' | 'all'
+
+export type AdminSubsidyIndexParams = {
+  page?: number
+  publishingFilter: FilterPublishingType
 }

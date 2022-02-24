@@ -17,7 +17,20 @@ export const publishingCodeLabel = (code: PublishingCode) => {
     case 'published':
       return '公開中'
     case 'editing':
-      return '非公開中'
+      return '編集中'
+    case 'archived':
+      return 'アーカイブ'
+  }
+}
+
+export const publishingCodeType = (code: PublishingCode) => {
+  switch (code) {
+    case 'published':
+      return 'success'
+    case 'editing':
+      return 'warning'
+    case 'archived':
+      return 'danger'
   }
 }
 

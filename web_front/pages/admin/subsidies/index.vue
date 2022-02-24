@@ -6,12 +6,25 @@
         新規補助金情報追加
       </el-button>
     </div>
+    <div class="filter">
+      <el-radio-group
+        v-model="filter.publishingFilter"
+        size="mini"
+        @change="selectPublishingFilter"
+      >
+        <el-radio-button label="all">すべて</el-radio-button>
+        <el-radio-button label="published">公開済</el-radio-button>
+        <el-radio-button label="editing">編集中</el-radio-button>
+        <el-radio-button label="archived">アーカイブ</el-radio-button>
+      </el-radio-group>
+      <div class="total-count">{{ pagination.itemsTotal }}件</div>
+    </div>
     <card-loading :loading="loading" />
     <el-table v-if="!loading" :data="subsidies" stripe style="width: 100%">
-      <el-table-column label="公開状況" width="90" align="center">
+      <el-table-column label="公開状況" width="100" align="center">
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.publishingCode == 'published' ? 'success' : 'info'"
+            :type="publishingCodeType(scope.row.publishingCode)"
             effect="dark"
             size="mini"
           >
@@ -80,15 +93,21 @@ import {
   onMounted,
   useRoute,
   useRouter,
+  reactive,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Tag} from 'element-ui'
+import {Table, TableColumn, Tag, RadioGroup, RadioButton} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import {adminSubsidiesModule} from '@/store'
 import {routingService} from '@/services/routingService'
-import {Subsidy} from '@/types/Subsidy'
+import {
+  Subsidy,
+  AdminSubsidyIndexParams,
+  FilterPublishingType,
+} from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
-import {publishingCodeLabel} from '@/utils/enumKeyToName'
+import {publishingCodeLabel, publishingCodeType} from '@/utils/enumKeyToName'
+import {removeEmpty} from '@/utils/objectUtil'
 
 export default defineComponent({
   name: 'AdminSubsidyIndex',
@@ -96,6 +115,8 @@ export default defineComponent({
     [`${Table.name}`]: Table,
     [`${TableColumn.name}`]: TableColumn,
     [`${Tag.name}`]: Tag,
+    [`${RadioGroup.name}`]: RadioGroup,
+    [`${RadioButton.name}`]: RadioButton,
     Pagination,
     CardLoading,
   },
@@ -106,10 +127,24 @@ export default defineComponent({
     const {loading, load} = adminSubsidiesModule.loader
     const subsidies = computed(() => adminSubsidiesModule.subsidies)
     const pagination = computed(() => adminSubsidiesModule.pagination)
+    const filter = reactive<AdminSubsidyIndexParams>({
+      page: 1,
+      publishingFilter: 'all',
+    })
 
     const getPage = (page: number) => {
       adminSubsidiesModule.setSubsidies([])
-      adminSubsidiesModule.getSubsidies(page)
+      handleSegue({page})
+    }
+
+    const selectPublishingFilter = (publishingFilter: FilterPublishingType) => {
+      handleSegue({publishingFilter, page: 1})
+    }
+
+    const handleSegue = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
+      Object.assign(filter, segueFilter)
+      router.push({query: {...removeEmpty(filter)}})
+      adminSubsidiesModule.getSubsidies(filter)
     }
 
     const handleEdit = (subsidy: Subsidy) => {
@@ -123,7 +158,10 @@ export default defineComponent({
       load(loading, () => {
         const pageQuery = route.value.query.page?.toString() || null
         const page = pageQuery ? Number(pageQuery) : 1
-        adminSubsidiesModule.getSubsidies(page)
+        const publishingFilter =
+          (route.value.query.publishingFilter?.toString() as FilterPublishingType) ||
+          'assignedMe'
+        handleSegue({page, publishingFilter})
       })
     })
 
@@ -131,11 +169,14 @@ export default defineComponent({
       loading,
       subsidies,
       pagination,
+      filter,
       getPage,
       handleEdit,
       newSubsidyPage,
       convertToShortJPY,
       publishingCodeLabel,
+      publishingCodeType,
+      selectPublishingFilter,
     }
   },
   head(): object {
@@ -165,5 +206,14 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+}
+
+.filter > * {
+  margin-right: var(--spacing-4);
 }
 </style>

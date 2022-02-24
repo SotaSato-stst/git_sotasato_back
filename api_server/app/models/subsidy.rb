@@ -54,11 +54,21 @@ class Subsidy < ApplicationRecord
   validate :start_from_cannot_be_greater_than_end_to
   validates_inclusion_of :level, in: 1..5, if: -> { level.present? }, message: 'は1から5の間にしてください'
 
-  enum publishing_code: { published: 'published', editing: 'editing' }
+  enum publishing_code: { published: 'published', editing: 'editing', archived: 'archived' }
   enum subsidy_category: { hojo: 'hojo', josei: 'josei', kyufu: 'kyufu' }
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
   scope :published, -> { where(publishing_code: 'published') }
+  scope :publishing_filter, ->(code) {
+    case code
+    when 'published'
+      where(publishing_code: 'published')
+    when 'editing'
+      where(publishing_code: 'editing')
+    when 'archived'
+      where(publishing_code: 'archived')
+    end
+  }
   scope :search_by_user, ->(search_params) {
     published
       .in_application_period(search_params[:in_application_period])

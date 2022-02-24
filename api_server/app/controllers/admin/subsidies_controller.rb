@@ -8,6 +8,7 @@ module Admin
         :subsidy_business_categories,
         { subsidy_keywords: :keyword }
       ).order(updated_at: :desc)
+      scope = scope.publishing_filter(params[:publishing_filter])
       @items_total = scope.count
       @subsidies = scope.page(params[:page]).per(20)
     end

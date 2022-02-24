@@ -4,7 +4,7 @@
       <div slot="header" class="form-header">
         <div class="inline">
           <el-tag
-            :type="subsidy.publishingCode == 'published' ? 'success' : 'info'"
+            :type="publishingCodeType(subsidy.publishingCode)"
             effect="dark"
           >
             {{ publishingCodeLabel(subsidy.publishingCode) }}
@@ -54,6 +54,15 @@
         :subsidy-params="subsidyParams"
         :loading="loading"
       />
+      <el-button
+        type="danger"
+        class="submit-button archive-button"
+        size="small"
+        :disabled="loading"
+        @click="submit('archived')"
+      >
+        この情報をアーカイブする
+      </el-button>
     </el-card>
   </div>
 </template>
@@ -80,7 +89,7 @@ import {PublishingCode, UpdateSubsidyParams} from '@/types/Subsidy'
 import {ValidationForm} from '@/types/Validate'
 import SubsidyForm from '@/components/subsidies/SubsidyForm.vue'
 import {routingService} from '@/services/routingService'
-import {publishingCodeLabel} from '@/utils/enumKeyToName'
+import {publishingCodeLabel, publishingCodeType} from '@/utils/enumKeyToName'
 
 export default defineComponent({
   name: 'AdminSubsidyDetail',
@@ -205,6 +214,7 @@ export default defineComponent({
       show,
       preview,
       publishingCodeLabel,
+      publishingCodeType,
     }
   },
   head(): object {
@@ -235,5 +245,9 @@ export default defineComponent({
 
 .submit-button {
   height: fit-content;
+}
+
+.archive-button {
+  margin-left: 180px;
 }
 </style>

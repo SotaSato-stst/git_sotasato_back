@@ -1,6 +1,11 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {SubsidiesResponse, Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
+import {
+  SubsidiesResponse,
+  Subsidy,
+  UpdateSubsidyParams,
+  AdminSubsidyIndexParams,
+} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
 import {useLoader} from '@/services/useLoader'
 
@@ -36,9 +41,12 @@ export default class AdminSubsidiesModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async getSubsidies(page?: number) {
+  async getSubsidies(params: AdminSubsidyIndexParams) {
     const res = await $axios.$get<SubsidiesResponse>('/admin/subsidies', {
-      params: {page: page || 1},
+      params: {
+        page: params.page || 1,
+        publishingFilter: params.publishingFilter,
+      },
     })
     this.setSubsidies(res.subsidies)
     this.setPagination(res.pagination)

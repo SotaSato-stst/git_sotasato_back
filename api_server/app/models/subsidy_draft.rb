@@ -43,4 +43,20 @@ class SubsidyDraft < ApplicationRecord
   scope :assigned, -> { where.not(assignee_id: nil) }
   scope :assigned_to, ->(user) { where(assignee_id: user.id) }
   scope :not_assigned, -> { where(assignee_id: nil) }
+  scope :assign_filter, ->(assign_category, user) {
+    case assign_category
+    when 'assignedMe'
+      assigned_to(user)
+    when 'noAssign'
+      not_assigned
+    end
+  }
+  scope :complete_filter, ->(complete_category) {
+    case complete_category
+    when 'completed'
+      archived
+    when 'notCompleted'
+      not_archived
+    end
+  }
 end
