@@ -9,68 +9,57 @@
           <supplier-information :subsidy="subsidy" />
           <el-container class="card-container">
             <el-header height="32px" class="card-header">
-              <el-tag type="info" effect="plain" class="subsidy-type">
-                {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
-              </el-tag>
-              <span v-if="subsidy.priceMax" class="header-info">
-                <span class="label">
-                  上限金額:
-                  {{ convertToShortJPY(subsidy.priceMax) }}円
+              <div>
+                <el-tag type="info" effect="plain" class="subsidy-type">
+                  {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
+                </el-tag>
+                <span v-if="subsidy.priceMax" class="header-info">
+                  <span class="label">
+                    上限金額:
+                    {{ convertToShortJPY(subsidy.priceMax) }}円
+                  </span>
                 </span>
-              </span>
-              <span v-if="subsidy.supportRatioMax" class="header-info">
-                <span class="label">
-                  最大支援割合:
-                  {{ subsidy.supportRatioMax }}
+                <span v-if="subsidy.supportRatioMax" class="header-info">
+                  <span class="label">
+                    最大支援割合:
+                    {{ subsidy.supportRatioMax }}
+                  </span>
                 </span>
-              </span>
-              <span v-if="subsidy.supportRatioMin" class="header-info">
-                <span class="label">
-                  最小支援割合:
-                  {{ subsidy.supportRatioMin }}
+                <span v-if="subsidy.supportRatioMin" class="header-info">
+                  <span class="label">
+                    最小支援割合:
+                    {{ subsidy.supportRatioMin }}
+                  </span>
                 </span>
-              </span>
-              <span v-if="subsidy.level" class="header-info">
-                <span class="label">
-                  申請難易度:{{ starView(subsidy.level) }}
+                <span v-if="subsidy.level" class="header-info">
+                  <span class="label">
+                    申請難易度:{{ starView(subsidy.level) }}
+                  </span>
                 </span>
-              </span>
-              <span v-if="subsidy.capital" class="header-info">
-                <span class="label">
-                  資本金:
-                  {{ convertToShortJPY(subsidy.capital) }}
-                  円
-                </span>
-              </span>
-              <span v-if="subsidy.totalEmployee" class="header-info">
-                <span class="label">
-                  従業員数:
-                  {{ subsidy.totalEmployee }}
-                  人
-                </span>
-              </span>
-              <favorite-button :subsidy="subsidy" />
+              </div>
+              <div>
+                <el-button
+                  v-if="isAdmin"
+                  size="mini"
+                  @click="showAdmin(subsidy.id)"
+                >
+                  管理画面で編集する
+                </el-button>
+                <favorite-button :subsidy="subsidy" />
+              </div>
             </el-header>
             <el-main class="card-content">
-              <div class="title">
-                {{ subsidy.title }}
+              <div class="title">{{ subsidy.title }}</div>
+              <div class="header-info">
+                <span class="label">募集期間: </span>
+                {{ convertToJpDate(subsidy.startFrom) }}
+                ~
+                {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
               </div>
-              <span class="header-info">
-                <span class="label block">
-                  募集期間:
-                  {{ convertToJpDate(subsidy.startFrom) }}
-                  ~
-                  {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
-                </span>
-              </span>
-              <span class="header-info">
-                <span class="label block">
-                  URL:
-                  <a :href="subsidy.url" target="_blank">
-                    {{ subsidy.url }}
-                  </a>
-                </span>
-              </span>
+              <div class="header-info">
+                <span class="label">URL: </span>
+                <a :href="subsidy.url" target="_blank">{{ subsidy.url }}</a>
+              </div>
             </el-main>
           </el-container>
         </el-container>
@@ -102,7 +91,7 @@ import {
 } from '@nuxtjs/composition-api'
 import {Container, Aside, Main, Card} from 'element-ui'
 import {marked} from 'marked'
-import {subsidiesModule} from '@/store'
+import {subsidiesModule, accountModule} from '@/store'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
@@ -111,6 +100,7 @@ import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
 import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
+import {routingService} from '~/services/routingService'
 
 export default defineComponent({
   name: 'SubsidyDetailPage',
@@ -131,6 +121,11 @@ export default defineComponent({
     const pageId = Number(route.value.params.id)
     const subsidy = computed(() => subsidiesModule.subsidy)
     const parseMarkdown = marked.parse
+    const isAdmin = computed(() => accountModule.isAdmin)
+    const isEditor = computed(() => accountModule.isEditor)
+    const showAdmin = (subsidyId: number) => {
+      router.push(routingService.AdminSubsidyDetail(subsidyId))
+    }
 
     onMounted(async () => {
       if (route.value.query.preview === 'true') {
@@ -154,6 +149,9 @@ export default defineComponent({
       subsidyCategoryLabel,
       subsidy,
       parseMarkdown,
+      isAdmin,
+      isEditor,
+      showAdmin,
     }
   },
   head(): object {
@@ -196,14 +194,13 @@ export default defineComponent({
 
 .card-header {
   padding: 0;
-}
-
-.card-header > * {
-  margin-left: var(--spacing-1);
+  display: flex;
+  justify-content: space-between;
 }
 
 .header-info {
   font-size: 14px;
+  margin-right: var(--spacing-1);
 }
 
 .card-container {
@@ -217,6 +214,10 @@ export default defineComponent({
 .card-content {
   margin-top: var(--spacing-4);
   padding: 0;
+}
+
+.card-content > * {
+  margin-bottom: var(--spacing-3);
 }
 
 .title {
