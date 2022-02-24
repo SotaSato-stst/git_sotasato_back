@@ -13,7 +13,7 @@
 #  price_max              :bigint
 #  publishing_code        :string(255)      not null
 #  ranking_score          :integer
-#  start_from             :date             not null
+#  start_from             :date
 #  subsidy_category       :string(255)
 #  supplier_type          :string(255)
 #  support_ratio_max      :string(255)

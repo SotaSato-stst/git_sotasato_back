@@ -13,7 +13,7 @@
 #  price_max              :bigint
 #  publishing_code        :string(255)      not null
 #  ranking_score          :integer
-#  start_from             :date             not null
+#  start_from             :date
 #  subsidy_category       :string(255)
 #  supplier_type          :string(255)
 #  support_ratio_max      :string(255)
@@ -49,7 +49,6 @@ class Subsidy < ApplicationRecord
   validates :url, presence: { message: 'は必須項目です' }
   validates :detail, presence: { message: 'は必須項目です' }
   validates :target_detail, presence: { message: 'は必須項目です' }
-  validates :start_from, presence: { message: 'は必須項目です' }
   validates :publishing_code, presence: { message: 'は必須項目です' }
   validate :supplier_type_must_have_association
   validate :start_from_cannot_be_greater_than_end_to

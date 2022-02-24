@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_23_202817) do
+ActiveRecord::Schema.define(version: 2022_02_24_101830) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2022_02_23_202817) do
   create_table "subsidies", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "title", null: false
     t.text "url", null: false
-    t.date "start_from", null: false
+    t.date "start_from"
     t.date "end_to"
     t.string "publishing_code", null: false
     t.bigint "price_max"

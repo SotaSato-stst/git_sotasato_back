@@ -97,7 +97,7 @@
         </el-select>
       </el-form-item>
     </div>
-    <el-form-item label="募集期間" required>
+    <el-form-item label="募集期間">
       <div class="inline">
         <el-form-item prop="startFrom">
           <el-date-picker
@@ -556,13 +556,6 @@ export default defineComponent({
         {
           required: true,
           message: '発行機関は必須です',
-          trigger: 'change',
-        },
-      ],
-      startFrom: [
-        {
-          required: true,
-          message: '募集開始日は必須です',
           trigger: 'change',
         },
       ],
