@@ -13,12 +13,10 @@
               {{ convertToShortJPY(subsidy.priceMax) }}円
             </span>
           </span>
-          <span class="feature-label">
+          <span v-if="dateRange()" class="feature-label">
             募集期間:
             <span class="label">
-              {{ convertToJpDate(subsidy.startFrom) }}
-              ~
-              {{ subsidy.endTo && convertToJpDate(subsidy.endTo, false) }}
+              {{ dateRange() }}
             </span>
           </span>
           <favorite-button :subsidy="subsidy" />
@@ -96,10 +94,31 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(_props) {
+  setup(props) {
     const router = useRouter()
+    const subsidy = props.subsidy
     const clickSubsidy = (subsidyId: number) => {
       router.push('/subsidies/' + subsidyId)
+    }
+
+    const dateRange = (): string | null => {
+      if (subsidy.startFrom && subsidy.endTo) {
+        const startFrom = new Date(subsidy.startFrom)
+        const endTo = new Date(subsidy.endTo)
+        const diffYear = startFrom.getFullYear() !== endTo.getFullYear()
+        return `${convertToJpDate(startFrom)} ~ ${convertToJpDate(
+          endTo,
+          diffYear,
+        )}`
+      } else if (subsidy.startFrom && !subsidy.endTo) {
+        const startFrom = new Date(subsidy.startFrom)
+        return `${convertToJpDate(startFrom)} ~`
+      } else if (!subsidy.startFrom && subsidy.endTo) {
+        const endTo = new Date(subsidy.endTo)
+        return `~ ${convertToJpDate(endTo)}`
+      } else {
+        return null
+      }
     }
 
     return {
@@ -108,6 +127,7 @@ export default defineComponent({
       convertToJpDate,
       starView,
       subsidyCategoryLabel,
+      dateRange,
     }
   },
 })

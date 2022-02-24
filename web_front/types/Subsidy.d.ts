@@ -13,8 +13,8 @@ export type Subsidy = {
   id: number
   title: string
   url: string
-  startFrom: Date
-  endTo: Date | null
+  startFrom: string | null
+  endTo: string | null
   publishingCode: PublishingCode
   priceMax: number | null
   supportRatioMin: string | null
