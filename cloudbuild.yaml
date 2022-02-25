@@ -10,8 +10,11 @@ steps:
     - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
     - PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}
     - SLACK_API_TOKEN=${_SLACK_API_TOKEN}
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'for version_id in `gcloud app versions list --filter="traffic_split!=0" --format="table(version.id)"| tail -n +2`; do echo  $version_id; done']
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/macro-market-336309/appengine/default",
+  args: ["-i", "gcr.io/macro-market-336309/appengine/default.$version_id",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
