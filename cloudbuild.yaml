@@ -1,4 +1,4 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
-  args: ['-c', 'PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER} && echo $PRODUCTION_DATABASE_USER']
+  args: ['-c', 'echo $_PRODUCTION_DATABASE_USER']
