@@ -3,13 +3,15 @@ steps:
   entrypoint: 'bash'
   args: ['-c', 'for _VERSION_ID in `gcloud app versions list --filter="traffic_split!=0" --format="table(version.id)"| tail -n +2`; do echo $_VERSION_ID; done']
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "asia.gcr.io/macro-market-336309/appengine/default.${_VERSION_ID}",
+  args: ["-i", "${_IMAGE_NAME}",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
     - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
     - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
     - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
+  substitutions:
+    _IMAGE_NAME: "asia.gcr.io/macro-market-336309/appengine/default.${_VERSION_ID}"
 options:
     dynamic_substitutions: true
 timeout: '1800s'
