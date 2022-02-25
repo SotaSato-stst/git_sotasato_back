@@ -40,4 +40,8 @@ class Company < ApplicationRecord
       BusinessCategory.to_option(company_business_category.business_category)
     end
   end
+
+  def business_category_keys
+    company_business_categories.map(&:business_category)
+  end
 end

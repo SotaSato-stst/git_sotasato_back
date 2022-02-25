@@ -69,6 +69,22 @@ class Subsidy < ApplicationRecord
       where(publishing_code: 'archived')
     end
   }
+  scope :index_loading, -> {
+    includes(:ministry, :prefecture, :city, :subsidy_organization_types, :subsidy_business_categories)
+  }
+  scope :scope_by_user, ->(user) {
+    company = user.company
+    published
+      .in_application_period(true)
+      .search_by_organization_type(company.organization_type)
+      .search_with_business_category(company.business_category_keys)
+      .search_with_prefecture(company.prefecture_id)
+      .search_with_city(company.city_id)
+      .search_with_employee(company.total_employee)
+      .search_with_capital(company.capital)
+      .search_with_annual_sales(company.annual_sales)
+      .in_years_of_establishment(company.founding_date)
+  }
   scope :search_by_user, ->(search_params) {
     published
       .in_application_period(search_params[:in_application_period])
