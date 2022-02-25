@@ -1,14 +1,15 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
-  args: ['-c', 'gcloud config set app/cloud_build_timeout 1200',
-         '-c', 'PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}',
-         '-c', 'PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}',
-         '-c', 'PRODUCTION_FIREBASE_PROJECT_ID=${_PRODUCTION_FIREBASE_PROJECT_ID}',
-         '-c', 'PRODUCTION_FIREBASE_API_KEY=${_PRODUCTION_FIREBASE_API_KEY}',
-         '-c', 'PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}',
-         '-c', 'SLACK_API_TOKEN=${_SLACK_API_TOKEN}',
-         '-c', 'cd api_server && gcloud app deploy --version $COMMIT_SHA']
+  args: ['-c', 'gcloud config set app/cloud_build_timeout 1200
+         && PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
+         && PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
+         && PRODUCTION_FIREBASE_PROJECT_ID=${_PRODUCTION_FIREBASE_PROJECT_ID}
+         && PRODUCTION_FIREBASE_API_KEY=${_PRODUCTION_FIREBASE_API_KEY}
+         && PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}
+         && SLACK_API_TOKEN=${_SLACK_API_TOKEN}
+         && cd api_server
+         && gcloud app deploy --version $COMMIT_SHA']
 - name: "gcr.io/google-appengine/exec-wrapper"
   args: ["-i", "asia.gcr.io/macro-market-336309/appengine/default.$COMMIT_SHA",
          "-e", "CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}",
