@@ -188,6 +188,11 @@ class Subsidy < ApplicationRecord
       )
     )
   }
+  scope :favorite_by, ->(user) {
+    joins(:user_favorite_subsidies).where(
+      user_favorite_subsidies: { user_id: user.id }
+    )
+  }
 
   def organization_types
     subsidy_organization_types.map do |subsidy_organization_type|

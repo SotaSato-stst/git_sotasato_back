@@ -1,10 +1,6 @@
 class UserFavoriteSubsidiesController < ApplicationController
   def index
-    scope = Subsidy.joins(:user_favorite_subsidies).where(
-      user_favorite_subsidies: { user_id: current_user.id }
-    ).includes(
-      :ministry, :prefecture, :city
-    )
+    scope = Subsidy.index_loading.published.favorite_by(current_user)
     @items_total = scope.count
     @favorite_subsidies = scope.page(params[:page]).per(20)
     @current_user_favorite_ids = current_user.user_favorite_subsidies.pluck(:subsidy_id) & @favorite_subsidies.map(&:id)
