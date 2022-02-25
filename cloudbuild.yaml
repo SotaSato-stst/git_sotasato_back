@@ -2,5 +2,7 @@ steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   args: ['-c', 'echo $PRODUCTION_DATABASE_USER']
+  env:
+    - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
 substitutions:
-  PRODUCTION_DATABASE_USER: ${_PRODUCTION_DATABASE_USER}
+  _PRODUCTION_DATABASE_USER: ${_PRODUCTION_DATABASE_USER}
