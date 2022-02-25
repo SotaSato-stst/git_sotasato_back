@@ -4,9 +4,6 @@ steps:
   args: ['-c', 'gcloud config set app/cloud_build_timeout 1200 && cd api_server && gcloud app deploy --version $COMMIT_SHA']
 - name: "gcr.io/google-appengine/exec-wrapper"
   args: ["-i", "asia.gcr.io/${PROJECT_ID}/appengine/default.$COMMIT_SHA",
-         "-e", "CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}",
-         "-e", "PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}",
-         "-e", "PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}",
          "-s", "${_CLOUD_SQL_CONNECTION_NAME}",
          "--", "bundle", "exec", "rake", "db:migrate"]
 timeout: '1800s'
