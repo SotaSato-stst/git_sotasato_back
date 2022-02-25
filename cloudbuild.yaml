@@ -4,10 +4,6 @@ steps:
   args: ['-c', 'for VERSION_ID in `gcloud app versions list --filter="traffic_split!=0" --format="table(version.id)"| tail -n +2`; do echo $VERSION_ID; done']
 - name: "gcr.io/google-appengine/exec-wrapper"
   args: ["-i", "gcr.io/macro-market-336309/appengine/default.$VERSION_ID:latest",
-         "-e", "VERSION_ID=$VERSION_ID",
-         "-e", "PRODUCTION_DATABASE_USER=$PRODUCTION_DATABASE_USER",
-         "-e", "PRODUCTION_DATABASE_PASSWORD=$PRODUCTION_DATABASE_PASSWORD",
-         "-e", "CLOUD_SQL_CONNECTION_NAME=$CLOUD_SQL_CONNECTION_NAME",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
