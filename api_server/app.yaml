@@ -18,4 +18,4 @@ env_variables:
   RAILS_LOG_TO_STDOUT: "1"
 
 beta_settings:
-  cloud_sql_instances: <%= ENV["_CLOUD_SQL_CONNECTION_NAME"] %>
+  cloud_sql_instances: macro-market-336309:asia-northeast1:hojokin-dock-production
