@@ -16,6 +16,7 @@ automatic_scaling:
 env_variables:
   TZ: "Asia/Tokyo"
   RAILS_LOG_TO_STDOUT: "1"
+  SECRET_KEY_BASE: 6589eb9fe5a436aa6ff9ea1a851373203e6727bec3176827ce37d2b0cebd31b53d1af29e0caec532d4f7d13634cc9a55258021145c4f6c887cbdf335591003c1
 
 beta_settings:
   cloud_sql_instances: macro-market-336309:asia-northeast1:hojokin-dock-production
