@@ -1,13 +1,14 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
-  args: ['-c', 'for _VERSION_ID in `gcloud app versions list --filter="traffic_split!=0" --format="table(version.id)"| tail -n +2`; do echo  $_VERSION_ID; done']
+  args: ['-c', 'for _VERSION_ID in `gcloud app versions list --filter="traffic_split!=0" --format="table(version.id)"| tail -n +2`; do echo $_VERSION_ID; done']
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/macro-market-336309/appengine/default.$_VERSION_ID:latest",
+  args: ["-i", "gcr.io/macro-market-336309/appengine/default.$VERSION_ID:latest",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
     - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
     - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
     - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
+    - VERSION_ID=${_VERSION_ID}
 timeout: '1800s'
