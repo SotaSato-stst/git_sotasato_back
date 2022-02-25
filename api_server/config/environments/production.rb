@@ -119,8 +119,8 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   config.action_dispatch.default_headers = {
-    'Access-Control-Allow-Origin' => 'https://macro-market-336309.web.app'
+    'Access-Control-Allow-Origin' => 'https://app.hojokin-dock.com'
   }
 
-  config.hosts = ['macro-market-336309.an.r.appspot.com', 'macro-market-336309.web.app']
+  config.hosts = ['api.hojokin-dock.com', 'app.hojokin-dock.com']
 end

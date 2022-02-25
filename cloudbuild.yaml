@@ -17,4 +17,6 @@ steps:
          "-e", "PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
+- name: 'gcr.io/macro-market-336309/firebase'
+  args: ['deploy', '--project=macro-market-336309', '--only=hosting']
 timeout: '1800s'

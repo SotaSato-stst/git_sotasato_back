@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 module.exports = {
-  apiBaseUrl: 'https://macro-market-336309.an.r.appspot.com',
+  apiBaseUrl: 'https://api.hojokin-dock.com',
   apiKey: process.env.PRODUCTION_API_KEY,
   authDomain: process.env.PRODUCTION_AUTH_DOMAIN,
   projectId: process.env.PRODUCTION_PROJECT_ID,
