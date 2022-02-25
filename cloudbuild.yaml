@@ -10,6 +10,6 @@ steps:
     - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
     - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
     - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
-  options:
-      dynamic_substitutions: true
+options:
+    dynamic_substitutions: true
 timeout: '1800s'
