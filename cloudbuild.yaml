@@ -1,20 +1,6 @@
 steps:
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'bash'
-  args: ['-c', 'gcloud config set app/cloud_build_timeout 1200 && cd api_server && gcloud app deploy']
-  env:
-    - PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}
-    - PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}
-    - PRODUCTION_FIREBASE_PROJECT_ID=${_PRODUCTION_FIREBASE_PROJECT_ID}
-    - PRODUCTION_FIREBASE_API_KEY=${_PRODUCTION_FIREBASE_API_KEY}
-    - CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}
-    - PRODUCTION_SCRAPING_BUCKET=${_PRODUCTION_SCRAPING_BUCKET}
-    - SLACK_API_TOKEN=${_SLACK_API_TOKEN}
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'bash'
-  args: ['-c', 'for version_id in `gcloud app versions list --filter="traffic_split!=0" --format="table(version.id)"| tail -n +2`; do echo  $version_id; done']
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/macro-market-336309/appengine/default.$version_id",
+  args: ["-i", "gcr.io/macro-market-336309/appengine/default:latest",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
