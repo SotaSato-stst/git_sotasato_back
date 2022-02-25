@@ -1,6 +1,9 @@
 steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'for _VERSION_ID in `gcloud app versions list --filter="traffic_split!=0" --format="table(version.id)"| tail -n +2`; do echo  $_VERSION_ID; done']
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/macro-market-336309/default",
+  args: ["-i", "gcr.io/macro-market-336309/appengine/default.$_VERSION_ID:latest",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
