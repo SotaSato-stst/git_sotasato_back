@@ -1,6 +1,6 @@
 steps:
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/macro-market-336309/appengine/default:latest",
+  args: ["-i", "gcr.io/macro-market-336309/default",
          "-s", "macro-market-336309:asia-northeast1:hojokin-dock-production",
          "--", "bundle", "exec", "rake", "db:migrate"]
   env:
