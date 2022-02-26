@@ -69,7 +69,10 @@
         </div>
         <div class="detail">
           <span class="label">支援内容</span>
-          <div class="content" v-html="parseMarkdown(subsidy.detail)" />
+          <div
+            class="subsidy-detail-markdown-content"
+            v-html="parseMarkdown(subsidy.detail)"
+          />
         </div>
       </el-card>
     </el-main>
@@ -251,8 +254,44 @@ export default defineComponent({
 }
 </style>
 
-<style>
-em {
-  font-style: normal;
+<style lang="scss">
+.subsidy-detail-markdown-content {
+  white-space: pre-line;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block-start: var(--spacing-3);
+  }
+
+  * {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+
+  em {
+    font-style: normal;
+  }
+
+  ul {
+    list-style-type: initial;
+    line-height: 1;
+    margin-inline-start: 24px;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: solid 1px #adb5bd;
+    padding: var(--spacing-2);
+  }
 }
 </style>
