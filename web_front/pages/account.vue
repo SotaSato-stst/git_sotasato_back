@@ -56,7 +56,7 @@ import {
   ref,
   useRouter,
 } from '@nuxtjs/composition-api'
-import {Container, Aside, Card, Form, FormItem, Input, Button} from 'element-ui'
+import {Form} from 'element-ui'
 import {updateEmail} from 'firebase/auth'
 import {accountModule} from '@/store'
 import {
@@ -73,13 +73,6 @@ import {routingService} from '@/services/routingService'
 export default defineComponent({
   name: 'AccountPage',
   components: {
-    [`${Container.name}`]: Container,
-    [`${Aside.name}`]: Aside,
-    [`${Card.name}`]: Card,
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
     AccountMenu,
   },
   setup(_props) {

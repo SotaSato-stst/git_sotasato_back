@@ -77,7 +77,7 @@ import {
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
-import {Card, Form, FormItem, Input, Button} from 'element-ui'
+import {Form} from 'element-ui'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 import {NewUserParams} from '@/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
@@ -86,13 +86,6 @@ import {usersModule, companiesModule} from '@/store'
 
 export default defineComponent({
   name: 'NewUser',
-  components: {
-    [`${Card.name}`]: Card,
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
-  },
   layout: 'admin',
   setup(_props) {
     const form = ref<Form | null>(null)

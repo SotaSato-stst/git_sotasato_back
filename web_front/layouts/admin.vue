@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import {computed, defineComponent} from '@nuxtjs/composition-api'
-import {Container, Header, Aside, Main} from 'element-ui'
 import AdminHeader from '@/components/layouts/AdminHeader.vue'
 import AdminSideMenu from '@/components/layouts/AdminSideMenu.vue'
 import EditorSideMenu from '@/components/layouts/EditorSideMenu.vue'
@@ -28,10 +27,6 @@ import {accountModule} from '@/store'
 export default defineComponent({
   name: 'AdminLayout',
   components: {
-    [`${Container.name}`]: Container,
-    [`${Header.name}`]: Header,
-    [`${Aside.name}`]: Aside,
-    [`${Main.name}`]: Main,
     AdminHeader,
     AdminSideMenu,
     EditorSideMenu,

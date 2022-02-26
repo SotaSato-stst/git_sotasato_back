@@ -95,7 +95,6 @@ import {
   useRouter,
   reactive,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Tag, RadioGroup, RadioButton} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import {adminSubsidiesModule} from '@/store'
@@ -112,11 +111,6 @@ import {removeEmpty} from '@/utils/objectUtil'
 export default defineComponent({
   name: 'AdminSubsidyIndex',
   components: {
-    [`${Table.name}`]: Table,
-    [`${TableColumn.name}`]: TableColumn,
-    [`${Tag.name}`]: Tag,
-    [`${RadioGroup.name}`]: RadioGroup,
-    [`${RadioButton.name}`]: RadioButton,
     Pagination,
     CardLoading,
   },

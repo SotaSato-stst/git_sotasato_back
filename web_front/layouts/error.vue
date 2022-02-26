@@ -8,14 +8,9 @@
 
 <script lang="ts">
 import {defineComponent, useRouter} from '@nuxtjs/composition-api'
-import {Empty, Button} from 'element-ui'
 
 export default defineComponent({
   name: 'ErrorLayout',
-  components: {
-    [`${Empty.name}`]: Empty,
-    [`${Button.name}`]: Button,
-  },
   props: {
     error: {
       type: Object,

@@ -34,7 +34,6 @@ import {
   onMounted,
   useRoute,
 } from '@nuxtjs/composition-api'
-import {Container, Aside, Main, Empty} from 'element-ui'
 import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
@@ -45,10 +44,6 @@ import {favoriteSubsidiesModule} from '@/store'
 export default defineComponent({
   name: 'FavoritePage',
   components: {
-    [`${Container.name}`]: Container,
-    [`${Aside.name}`]: Aside,
-    [`${Main.name}`]: Main,
-    [`${Empty.name}`]: Empty,
     ViewedSubsidies,
     SideRightMenu,
     SubsidyCard,

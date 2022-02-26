@@ -6,13 +6,9 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from '@nuxtjs/composition-api'
-import {Card} from 'element-ui'
 
 export default defineComponent({
   name: 'SmallBanner',
-  components: {
-    [`${Card.name}`]: Card,
-  },
   props: {
     href: {
       type: String as PropType<string>,

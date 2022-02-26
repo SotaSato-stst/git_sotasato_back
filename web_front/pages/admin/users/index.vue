@@ -48,7 +48,6 @@ import {
   useRouter,
   useRoute,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, Tag} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import {usersModule} from '@/store'
@@ -59,9 +58,6 @@ import {accountRoleLabel} from '@/utils/enumKeyToName'
 export default defineComponent({
   name: 'UserIndex',
   components: {
-    [`${Table.name}`]: Table,
-    [`${TableColumn.name}`]: TableColumn,
-    [`${Tag.name}`]: Tag,
     CardLoading,
     Pagination,
   },

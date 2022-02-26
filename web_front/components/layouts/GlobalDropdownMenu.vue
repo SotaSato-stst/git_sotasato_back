@@ -21,7 +21,6 @@
 </template>
 
 <script lang="ts">
-import {Dropdown, DropdownItem, Button} from 'element-ui'
 import {
   computed,
   defineComponent,
@@ -38,11 +37,6 @@ type menuType = 'account' | 'admin' | 'sign_out' | 'top'
 
 export default defineComponent({
   name: 'GlobalDropdownMenu',
-  components: {
-    [`${Dropdown.name}`]: Dropdown,
-    [`${DropdownItem.name}`]: DropdownItem,
-    [`${Button.name}`]: Button,
-  },
   setup(_props) {
     const isAdmin = computed(() => accountModule.isAdmin)
     const isEditor = computed(() => accountModule.isEditor)

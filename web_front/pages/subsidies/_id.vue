@@ -88,7 +88,6 @@ import {
   useRouter,
   computed,
 } from '@nuxtjs/composition-api'
-import {Container, Aside, Main, Card} from 'element-ui'
 import {marked} from 'marked'
 import {subsidiesModule, accountModule} from '@/store'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -104,10 +103,6 @@ import {routingService} from '~/services/routingService'
 export default defineComponent({
   name: 'SubsidyDetailPage',
   components: {
-    [`${Container.name}`]: Container,
-    [`${Aside.name}`]: Aside,
-    [`${Main.name}`]: Main,
-    [`${Card.name}`]: Card,
     SupplierInformation,
     FavoriteButton,
     SideRightMenu,

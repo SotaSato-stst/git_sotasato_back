@@ -388,15 +388,7 @@ import {
   ref,
   PropType,
 } from '@nuxtjs/composition-api'
-import {
-  Form,
-  FormItem,
-  Input,
-  Button,
-  RadioGroup,
-  RadioButton,
-  Rate,
-} from 'element-ui'
+import {Form} from 'element-ui'
 import {optionsModule, keywordsModule} from '@/store'
 import {UpdateSubsidyParams} from '@/types/Subsidy'
 import {Validate} from '@/types/Validate'
@@ -405,13 +397,6 @@ import IconExternal from '@/components/icons/IconExternal.vue'
 export default defineComponent({
   name: 'SubsidyForm',
   components: {
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
-    [`${RadioGroup.name}`]: RadioGroup,
-    [`${RadioButton.name}`]: RadioButton,
-    [`${Rate.name}`]: Rate,
     IconExternal,
   },
   layout: 'admin',

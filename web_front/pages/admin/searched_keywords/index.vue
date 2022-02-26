@@ -13,15 +13,12 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
-import {Table, TableColumn} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import {keywordsModule} from '@/store'
 
 export default defineComponent({
   name: 'IndexPage',
   components: {
-    [`${Table.name}`]: Table,
-    [`${TableColumn.name}`]: TableColumn,
     CardLoading,
   },
   layout: 'admin',

@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-import {Menu, MenuItem} from 'element-ui'
 import {
   defineComponent,
   computed,
@@ -25,10 +24,6 @@ type menuType = 'new_urls' | 'subsidies'
 
 export default defineComponent({
   name: 'EditorSideMenu',
-  components: {
-    [`${Menu.name}`]: Menu,
-    [`${MenuItem.name}`]: MenuItem,
-  },
   setup(_props) {
     const router = useRouter()
     const path = useRoute().value.path

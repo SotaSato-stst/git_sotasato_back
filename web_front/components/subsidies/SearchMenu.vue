@@ -146,7 +146,6 @@ import {
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {Form, FormItem, Input, Button, Checkbox, InputNumber} from 'element-ui'
 import {optionsModule, subsidiesModule, accountModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
@@ -154,14 +153,6 @@ import {removeEmpty} from '@/utils/objectUtil'
 
 export default defineComponent({
   name: 'SearchMenu',
-  components: {
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
-    [`${Checkbox.name}`]: Checkbox,
-    [`${InputNumber.name}`]: InputNumber,
-  },
   setup(_props) {
     const route = useRoute()
     const query = route.value.query

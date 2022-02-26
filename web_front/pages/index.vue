@@ -29,7 +29,6 @@
 
 <script lang="ts">
 import {computed, defineComponent} from '@nuxtjs/composition-api'
-import {Container, Aside, Main, Empty} from 'element-ui'
 import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
@@ -40,10 +39,6 @@ import {subsidiesModule} from '@/store'
 export default defineComponent({
   name: 'IndexPage',
   components: {
-    [`${Container.name}`]: Container,
-    [`${Aside.name}`]: Aside,
-    [`${Main.name}`]: Main,
-    [`${Empty.name}`]: Empty,
     SearchMenu,
     SideRightMenu,
     SubsidyCard,

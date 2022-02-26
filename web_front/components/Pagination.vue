@@ -12,16 +12,12 @@
 
 <script lang="ts">
 import {defineComponent, useRouter, PropType} from '@nuxtjs/composition-api'
-import {Pagination as ElPagination} from 'element-ui'
 import {Pagination} from 'types/Pagination'
 
 type RequestPage = (page: number) => void
 
 export default defineComponent({
   name: 'PaginationComponent',
-  components: {
-    [`${ElPagination.name}`]: ElPagination,
-  },
   props: {
     pagination: {
       type: Object as PropType<Pagination>,

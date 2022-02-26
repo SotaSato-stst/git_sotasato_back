@@ -24,17 +24,12 @@
 
 <script lang="ts">
 import {defineComponent, PropType, ref} from '@nuxtjs/composition-api'
-import {Button, Input} from 'element-ui'
 import {subsidyDraftsModule} from '@/store'
 import {SubsidyDraftAssignee} from '@/types/SubsidyDraft'
 import {notifySuccess, showApiErrorMessage} from '~/services/notify'
 
 export default defineComponent({
   name: 'AssignForm',
-  components: {
-    [`${Button.name}`]: Button,
-    [`${Input.name}`]: Input,
-  },
   props: {
     assignee: {
       type: Object as PropType<SubsidyDraftAssignee>,

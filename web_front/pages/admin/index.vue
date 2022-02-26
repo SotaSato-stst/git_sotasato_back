@@ -132,7 +132,7 @@ import {
   useRoute,
   reactive,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn, MessageBox} from 'element-ui'
+import {MessageBox} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import {subsidyDraftsModule, accountModule} from '@/store'
@@ -150,8 +150,6 @@ import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 export default defineComponent({
   name: 'IndexPage',
   components: {
-    [`${Table.name}`]: Table,
-    [`${TableColumn.name}`]: TableColumn,
     Pagination,
     CardLoading,
   },

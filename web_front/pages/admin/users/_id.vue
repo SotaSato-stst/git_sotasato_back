@@ -87,15 +87,7 @@ import {
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {
-  Card,
-  Form,
-  FormItem,
-  Input,
-  Button,
-  MessageBox,
-  Alert,
-} from 'element-ui'
+import {Form, MessageBox} from 'element-ui'
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import {usersModule, companiesModule} from '@/store'
 import {
@@ -108,14 +100,6 @@ import {accountRoleOptions} from '@/utils/enumKeyToName'
 
 export default defineComponent({
   name: 'UserDetail',
-  components: {
-    [`${Card.name}`]: Card,
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
-    [`${Alert.name}`]: Alert,
-  },
   layout: 'admin',
   setup(_props) {
     const form = ref<Form | null>(null)

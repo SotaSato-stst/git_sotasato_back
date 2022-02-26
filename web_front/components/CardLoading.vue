@@ -14,11 +14,9 @@
 
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
-import {Card, Skeleton} from 'element-ui'
 
 export default defineComponent({
   name: 'CardLoading',
-  components: {[`${Skeleton.name}`]: Skeleton, [`${Card.name}`]: Card},
   props: {
     loading: {
       type: Boolean,

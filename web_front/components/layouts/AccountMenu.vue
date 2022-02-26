@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts">
-import {Menu, MenuItem} from 'element-ui'
 import {
   defineComponent,
   computed,
@@ -21,10 +20,6 @@ type menuType = 'account'
 
 export default defineComponent({
   name: 'AccountMenu',
-  components: {
-    [`${Menu.name}`]: Menu,
-    [`${MenuItem.name}`]: MenuItem,
-  },
   setup(_props) {
     const router = useRouter()
     const path = useRoute().value.path

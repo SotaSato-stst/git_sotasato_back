@@ -49,7 +49,6 @@ import {
   useRoute,
   useRouter,
 } from '@nuxtjs/composition-api'
-import {Table, TableColumn} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import {companiesModule} from '@/store'
@@ -60,8 +59,6 @@ import {convertToShortJPY} from '@/utils/numberFormatter'
 export default defineComponent({
   name: 'IndexPage',
   components: {
-    [`${Table.name}`]: Table,
-    [`${TableColumn.name}`]: TableColumn,
     Pagination,
     CardLoading,
   },

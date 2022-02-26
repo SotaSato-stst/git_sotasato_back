@@ -17,15 +17,10 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from '@nuxtjs/composition-api'
-import {Aside, Avatar} from 'element-ui'
 import {Subsidy, SupplierType} from '@/types/Subsidy'
 
 export default defineComponent({
   name: 'SupplierInformation',
-  components: {
-    [`${Aside.name}`]: Aside,
-    [`${Avatar.name}`]: Avatar,
-  },
   props: {
     subsidy: {
       type: Object as PropType<Subsidy>,

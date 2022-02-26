@@ -22,7 +22,6 @@
 </template>
 
 <script lang="ts">
-import {Menu, MenuItem} from 'element-ui'
 import {defineComponent, useRouter} from '@nuxtjs/composition-api'
 import GlobalDropdownMenu from '@/components/layouts/GlobalDropdownMenu.vue'
 
@@ -31,8 +30,6 @@ type menuType = 'admin' | 'user'
 export default defineComponent({
   name: 'AdminHeader',
   components: {
-    [`${Menu.name}`]: Menu,
-    [`${MenuItem.name}`]: MenuItem,
     GlobalDropdownMenu,
   },
   setup(_props) {

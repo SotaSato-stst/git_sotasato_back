@@ -27,7 +27,6 @@ import {
   useRoute,
   onMounted,
 } from '@nuxtjs/composition-api'
-import {Form, FormItem, Input, Button} from 'element-ui'
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -39,12 +38,6 @@ import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'SignInPage',
-  components: {
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
-  },
   layout: 'plain-layout',
   setup(_props) {
     const router = useRouter()

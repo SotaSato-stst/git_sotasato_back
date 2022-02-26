@@ -28,7 +28,6 @@
 </template>
 
 <script lang="ts">
-import {Menu, MenuItem} from 'element-ui'
 import {
   defineComponent,
   computed,
@@ -46,11 +45,7 @@ type menuType =
   | 'searched_keywords'
 
 export default defineComponent({
-  name: 'AdminSideMenu',
-  components: {
-    [`${Menu.name}`]: Menu,
-    [`${MenuItem.name}`]: MenuItem,
-  },
+  name: 'EditorSideMenu',
   setup(_props) {
     const router = useRouter()
     const route = useRoute()

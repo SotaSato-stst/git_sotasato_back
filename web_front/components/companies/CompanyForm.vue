@@ -148,20 +148,13 @@ import {
   PropType,
   ref,
 } from '@nuxtjs/composition-api'
-import {Card, Form, FormItem, Input, Button} from 'element-ui'
+import {Form} from 'element-ui'
 import {optionsModule} from '@/store'
 import {CompanyParams} from '@/types/Company'
 import {notifyError} from '@/services/notify'
 
 export default defineComponent({
   name: 'CompanyForm',
-  components: {
-    [`${Card.name}`]: Card,
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
-  },
   layout: 'admin',
   props: {
     companyParams: {

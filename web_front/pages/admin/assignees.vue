@@ -34,7 +34,6 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
-import {Table, TableColumn, Tag} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import AssignForm from '@/components/assignees/AssignForm.vue'
 import {subsidyDraftsModule} from '@/store'
@@ -42,9 +41,6 @@ import {subsidyDraftsModule} from '@/store'
 export default defineComponent({
   name: 'EditorsPage',
   components: {
-    [`${Table.name}`]: Table,
-    [`${TableColumn.name}`]: TableColumn,
-    [`${Tag.name}`]: Tag,
     AssignForm,
     CardLoading,
   },

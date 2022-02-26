@@ -8,14 +8,9 @@
 
 <script lang="ts">
 import {defineComponent, useRouter} from '@nuxtjs/composition-api'
-import {Empty, Button} from 'element-ui'
 
 export default defineComponent({
   name: 'NotFoundPage',
-  components: {
-    [`${Empty.name}`]: Empty,
-    [`${Button.name}`]: Button,
-  },
   layout: 'error',
   props: {
     error: {

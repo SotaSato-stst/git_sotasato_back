@@ -25,7 +25,6 @@
 </template>
 
 <script lang="ts">
-import {Menu, MenuItem} from 'element-ui'
 import {
   computed,
   defineComponent,
@@ -40,8 +39,6 @@ type menuType = 'new' | 'ranking' | 'favorite'
 export default defineComponent({
   name: 'GlobalHeader',
   components: {
-    [`${Menu.name}`]: Menu,
-    [`${MenuItem.name}`]: MenuItem,
     GlobalDropdownMenu,
   },
   setup(_props) {

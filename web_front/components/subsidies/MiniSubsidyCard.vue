@@ -19,16 +19,11 @@
 </template>
 <script lang="ts">
 import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
-import {Card, Tag} from 'element-ui'
 import {Subsidy} from '@/types/Subsidy'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 
 export default defineComponent({
-  components: {
-    [`${Card.name}`]: Card,
-    [`${Tag.name}`]: Tag,
-  },
   props: {
     subsidy: {
       type: Object as PropType<Subsidy>,

@@ -67,7 +67,7 @@ import {
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {Card, Alert, MessageBox} from 'element-ui'
+import {MessageBox} from 'element-ui'
 import {subsidyDraftsModule} from '@/store'
 import {
   notifyError,
@@ -82,8 +82,6 @@ import {routingService} from '@/services/routingService'
 export default defineComponent({
   name: 'SubsidyDraftPage',
   components: {
-    [`${Card.name}`]: Card,
-    [`${Alert.name}`]: Alert,
     SubsidyForm,
   },
   layout: 'admin',

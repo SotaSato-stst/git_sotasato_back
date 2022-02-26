@@ -15,19 +15,12 @@
 
 <script lang="ts">
 import {defineComponent, reactive, useRouter} from '@nuxtjs/composition-api'
-import {Form, FormItem, Input, Button} from 'element-ui'
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import {notifyError, notifySuccess} from '@/services/notify'
 import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'PasswordResetPage',
-  components: {
-    [`${Form.name}`]: Form,
-    [`${FormItem.name}`]: FormItem,
-    [`${Input.name}`]: Input,
-    [`${Button.name}`]: Button,
-  },
   layout: 'plain-layout',
   setup(_props) {
     const router = useRouter()

@@ -57,16 +57,6 @@
 </template>
 <script lang="ts">
 import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
-import {
-  Container,
-  Header,
-  Aside,
-  Main,
-  Card,
-  Button,
-  Avatar,
-  Tag,
-} from 'element-ui'
 import {Subsidy} from '@/types/Subsidy'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
@@ -77,14 +67,6 @@ import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 
 export default defineComponent({
   components: {
-    [`${Container.name}`]: Container,
-    [`${Header.name}`]: Header,
-    [`${Aside.name}`]: Aside,
-    [`${Main.name}`]: Main,
-    [`${Card.name}`]: Card,
-    [`${Button.name}`]: Button,
-    [`${Avatar.name}`]: Avatar,
-    [`${Tag.name}`]: Tag,
     SupplierInformation,
     FavoriteButton,
   },

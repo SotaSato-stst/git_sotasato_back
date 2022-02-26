@@ -13,14 +13,10 @@
 
 <script lang="ts">
 import {defineComponent, PropType, ref} from '@nuxtjs/composition-api'
-import {Button} from 'element-ui'
 import {Subsidy} from '@/types/Subsidy'
 import {favoriteSubsidiesModule} from '@/store'
 export default defineComponent({
   name: 'FavoriteButton',
-  components: {
-    [`${Button.name}`]: Button,
-  },
   props: {
     subsidy: {
       type: Object as PropType<Subsidy>,

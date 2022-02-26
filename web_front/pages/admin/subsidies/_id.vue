@@ -78,7 +78,6 @@ import {
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {Card, Tag} from 'element-ui'
 import {adminSubsidiesModule} from '@/store'
 import {
   notifyError,
@@ -94,8 +93,6 @@ import {publishingCodeLabel, publishingCodeType} from '@/utils/enumKeyToName'
 export default defineComponent({
   name: 'AdminSubsidyDetail',
   components: {
-    [`${Card.name}`]: Card,
-    [`${Tag.name}`]: Tag,
     SubsidyForm,
   },
   layout: 'admin',
