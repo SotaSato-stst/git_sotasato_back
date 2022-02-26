@@ -17,22 +17,9 @@ RSpec.describe 'ranking_subsidies API', type: :request do
         title: 'ものづくり補助金',
         url: 'https://portal.monodukuri-hojo.jp/',
         ministry: ministry,
-        start_from: '2022-01-12',
-        end_to: '2023-01-15',
-        publishing_code: 'published',
-        price_max: 30,
-        support_ratio_min: '20',
-        support_ratio_max: '40',
-        level: 4,
-        detail: '詳細文章',
-        target_detail: '対象の説明文',
-        subsidy_category: 'hojo',
-        supplier_type: 'ministry',
-        ranking_score: 40,
-        total_employee_max: 10,
-        total_employee_min: 1,
-        capital_max: 100,
-        capital_min: 20
+        start_from: Date.yesterday,
+        end_to: 1.year.from_now,
+        publishing_code: 'published'
       )
     end
 
@@ -45,21 +32,6 @@ RSpec.describe 'ranking_subsidies API', type: :request do
       subject
       expect(json['subsidies'][0]['title']).to eq 'ものづくり補助金'
       expect(json['subsidies'][0]['url']).to eq 'https://portal.monodukuri-hojo.jp/'
-      expect(json['subsidies'][0]['ministry']['name']).to eq '経済産業省'
-      expect(json['subsidies'][0]['start_from']).to eq '2022-01-12'
-      expect(json['subsidies'][0]['end_to']).to eq '2023-01-15'
-      expect(json['subsidies'][0]['price_max']).to eq 30
-      expect(json['subsidies'][0]['support_ratio_min']).to eq '20'
-      expect(json['subsidies'][0]['support_ratio_max']).to eq '40'
-      expect(json['subsidies'][0]['level']).to eq 4
-      expect(json['subsidies'][0]['detail']).to eq '詳細文章'
-      expect(json['subsidies'][0]['target_detail']).to eq '対象の説明文'
-      expect(json['subsidies'][0]['subsidy_category']).to eq 'hojo'
-      expect(json['subsidies'][0]['supplier_type']).to eq 'ministry'
-      expect(json['subsidies'][0]['total_employee_max']).to eq 10
-      expect(json['subsidies'][0]['total_employee_min']).to eq 1
-      expect(json['subsidies'][0]['capital_max']).to eq 100
-      expect(json['subsidies'][0]['capital_min']).to eq 20
     end
   end
 
@@ -67,9 +39,9 @@ RSpec.describe 'ranking_subsidies API', type: :request do
     subject { get '/ranking_subsidies' }
 
     before do
-      create(:subsidy, title: '2nd', ranking_score: 50)
-      create(:subsidy, title: '1st', ranking_score: 80)
-      create(:subsidy, title: '3rd', ranking_score: 30)
+      create(:subsidy, title: '2nd', ranking_score: 50, start_from: Date.yesterday, end_to: 1.year.from_now, publishing_code: 'published')
+      create(:subsidy, title: '1st', ranking_score: 80, start_from: Date.yesterday, end_to: 1.year.from_now, publishing_code: 'published')
+      create(:subsidy, title: '3rd', ranking_score: 30, start_from: Date.yesterday, end_to: 1.year.from_now, publishing_code: 'published')
     end
 
     it 'returns object' do

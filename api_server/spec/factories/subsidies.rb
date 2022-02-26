@@ -46,10 +46,10 @@ FactoryBot.define do
     price_max { 10_000_000 }
     subsidy_category { 'hojo' }
     ranking_score { 30 }
-    total_employee_max { 100 }
-    total_employee_min { 30 }
-    capital_max { 3000 }
-    capital_min { 30 }
+    total_employee_max { nil }
+    total_employee_min { nil }
+    capital_max { nil }
+    capital_min { nil }
 
     transient do
       ministry { nil }

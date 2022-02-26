@@ -9,8 +9,8 @@ RSpec.describe 'Subsidies API', type: :request do
       title: 'ものづくり補助金',
       url: 'https://portal.monodukuri-hojo.jp/',
       ministry: ministry,
-      start_from: '2022-01-12',
-      end_to: '2023-01-15',
+      start_from: Date.yesterday,
+      end_to: 1.year.from_now,
       publishing_code: 'published',
       price_max: 30,
       support_ratio_min: '20',
@@ -40,8 +40,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['subsidies'][0]['title']).to eq 'ものづくり補助金'
       expect(json['subsidies'][0]['url']).to eq 'https://portal.monodukuri-hojo.jp/'
       expect(json['subsidies'][0]['ministry']['name']).to eq '経済産業省'
-      expect(json['subsidies'][0]['start_from']).to eq '2022-01-12'
-      expect(json['subsidies'][0]['end_to']).to eq '2023-01-15'
+      expect(json['subsidies'][0]['start_from']).to eq Date.yesterday.to_s
+      expect(json['subsidies'][0]['end_to']).to eq 1.year.from_now.to_date.to_s
       expect(json['subsidies'][0]['price_max']).to eq 30
       expect(json['subsidies'][0]['support_ratio_min']).to eq '20'
       expect(json['subsidies'][0]['support_ratio_max']).to eq '40'
@@ -66,8 +66,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['title']).to eq 'ものづくり補助金'
       expect(json['url']).to eq 'https://portal.monodukuri-hojo.jp/'
       expect(json['ministry']['name']).to eq '経済産業省'
-      expect(json['start_from']).to eq '2022-01-12'
-      expect(json['end_to']).to eq '2023-01-15'
+      expect(json['start_from']).to eq Date.yesterday.to_s
+      expect(json['end_to']).to eq 1.year.from_now.to_date.to_s
       expect(json['price_max']).to eq 30
       expect(json['support_ratio_min']).to eq '20'
       expect(json['support_ratio_max']).to eq '40'
