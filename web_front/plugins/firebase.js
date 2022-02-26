@@ -13,7 +13,7 @@ const firebaseConfig = {
   measurementId: envSet.measurementId,
 }
 
-initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 if (environment === 'production') {
   getAnalytics(app)
 }
