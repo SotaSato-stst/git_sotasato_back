@@ -416,12 +416,13 @@ export default defineComponent({
     const ministries = computed(() => optionsModule.ministries)
     const prefectures = computed(() => optionsModule.prefectures)
     const cities = computed(() => optionsModule.cities)
-    const selectPrefectureId = async (prefectureId: number | null) => {
-      if (!prefectureId) {
-        return
+    const selectPrefectureId = (prefectureId: number | null) => {
+      if (prefectureId) {
+        state.cityId = null
+        optionsModule.getCities(prefectureId)
+      } else {
+        state.prefectureId = null
       }
-      state.cityId = null
-      await optionsModule.getCities(prefectureId)
     }
 
     const organizationTypes = computed(() => optionsModule.organizationTypes)

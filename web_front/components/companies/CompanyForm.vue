@@ -168,12 +168,13 @@ export default defineComponent({
     const prefectures = computed(() => optionsModule.prefectures)
     const organizationTypes = computed(() => optionsModule.organizationTypes)
     const businessCategories = computed(() => optionsModule.businessCategories)
-    const selectPrefectureId = async (prefectureId: number | null) => {
-      if (!prefectureId) {
-        return
+    const selectPrefectureId = (prefectureId: number | null) => {
+      if (prefectureId) {
+        state.cityId = null
+        optionsModule.getCities(prefectureId)
+      } else {
+        state.prefectureId = null
       }
-      state.cityId = null
-      await optionsModule.getCities(prefectureId)
     }
     const cities = computed(() => optionsModule.cities)
     const state: CompanyParams = reactive(props.companyParams)

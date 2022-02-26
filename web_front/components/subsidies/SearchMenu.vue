@@ -165,7 +165,10 @@ export default defineComponent({
     )
     const selectPrefectureId = (prefectureId: number | null) => {
       if (prefectureId) {
+        state.cityIds = []
         optionsModule.getCities(prefectureId)
+      } else {
+        state.prefectureId = null
       }
     }
     const cities = computed(() => optionsModule.cities)
@@ -186,12 +189,16 @@ export default defineComponent({
     const capitalChanged = () => {
       if (capitalMan.value) {
         state.capital = capitalMan.value * 10000
+      } else {
+        state.capital = null
       }
     }
     const annualSalesMan = ref<number | null>(null)
     const annualSalesChanged = () => {
       if (annualSalesMan.value) {
         state.annualSales = annualSalesMan.value * 10000
+      } else {
+        state.annualSales = null
       }
     }
 
