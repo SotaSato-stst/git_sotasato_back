@@ -28,7 +28,7 @@ class SlackService
       }
     ]
     attachments = [{ color: '#3a86ff', blocks: blocks }]
-    @client.chat_postMessage(channel: '#新着支援情報', text: '新着情報', attachments: attachments.to_json)
+    post('新着情報', attachments)
   end
 
   def post_new_subsidies_count
@@ -53,6 +53,14 @@ class SlackService
       }
     ]
     attachments = [{ color: '#3a86ff', blocks: blocks }]
-    @client.chat_postMessage(channel: '#新着支援情報', text: '対応が必要です', attachments: attachments.to_json)
+    post('対応が必要です', attachments)
+  end
+
+  private
+
+  def post(text, attachments)
+    return unless Rails.env.production?
+
+    @client.chat_postMessage(channel: '#新着支援情報', text: text, attachments: attachments.to_json)
   end
 end
