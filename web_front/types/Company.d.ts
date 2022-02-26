@@ -44,7 +44,9 @@ export type CurrentCompany = {
   totalEmployee: number | null
   businessCategories: string[]
   prefectureId: number
+  prefectureName: string
   cityId: number
+  cityName: string
   foundingDate: string | null
   annualSales: number | null
 }

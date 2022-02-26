@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import {defineComponent, PropType, ref} from '@nuxtjs/composition-api'
+import {getAnalytics, logEvent} from 'firebase/analytics'
 import {Subsidy} from '@/types/Subsidy'
 import {favoriteSubsidiesModule} from '@/store'
 export default defineComponent({
@@ -25,11 +26,18 @@ export default defineComponent({
   },
   setup(props) {
     const favorite = ref(props.subsidy.favorite)
+    const analytics = getAnalytics()
+
     const clickButton = (subsidy: Subsidy) => {
       if (favorite.value) {
         favoriteSubsidiesModule.destroyUserFavoriteSubsidy(subsidy.id)
       } else {
         favoriteSubsidiesModule.postUserFavoriteSubsidy(subsidy.id)
+        logEvent(analytics, 'add_favorite', {
+          content_type: 'subsidy',
+          content_id: subsidy.id,
+          subsidy_title: subsidy.title,
+        })
       }
       favorite.value = !favorite.value
     }

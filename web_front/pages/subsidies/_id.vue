@@ -91,6 +91,7 @@ import {
   useRouter,
   computed,
 } from '@nuxtjs/composition-api'
+import {getAnalytics, logEvent} from 'firebase/analytics'
 import {marked} from 'marked'
 import {subsidiesModule, accountModule} from '@/store'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -117,6 +118,7 @@ export default defineComponent({
     const router = useRouter()
     const pageId = Number(route.value.params.id)
     const subsidy = computed(() => subsidiesModule.subsidy)
+    const analytics = getAnalytics()
     const parseMarkdown = marked.parse
     const isAdmin = computed(() => accountModule.isAdmin)
     const isEditor = computed(() => accountModule.isEditor)
@@ -132,6 +134,11 @@ export default defineComponent({
       }
       if (subsidiesModule.subsidy) {
         subsidiesModule.addViewedSubsidies(subsidiesModule.subsidy)
+        logEvent(analytics, 'subsidy_view', {
+          content_type: 'subsidy',
+          content_id: pageId,
+          subsidy_title: subsidiesModule.subsidy.title,
+        })
       }
     })
 

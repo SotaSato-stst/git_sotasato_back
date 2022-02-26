@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
+import {getAnalytics, logEvent} from 'firebase/analytics'
 import Banner from '@/components/banners/Banner.vue'
 
 export default defineComponent({
@@ -37,7 +38,9 @@ export default defineComponent({
     Banner,
   },
   setup(_props) {
+    const analytics = getAnalytics()
     const clickedAskButton = () => {
+      logEvent(analytics, 'click_ask_button')
       window.open(
         'https://costcut.co.jp/%e3%81%8a%e5%95%8f%e3%81%84%e5%90%88%e3%82%8f%e3%81%9b/',
       )

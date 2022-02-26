@@ -1,4 +1,5 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
+import {getAnalytics, setUserProperties} from 'firebase/analytics'
 import {$axios} from '@/store/api'
 import {UpdateCurrentUserParams, CurrentUser} from '@/types/User'
 import {CurrentCompany} from '@/types/Company'
@@ -14,6 +15,7 @@ export default class AccountModule extends VuexModule {
   loader = useLoader()
   currentUser: CurrentUser | null = null
   currentCompany: CurrentCompany | null = null
+  analytics = getAnalytics()
 
   get isAdmin() {
     return this.currentUser?.accountRole === 'admin'
@@ -29,6 +31,14 @@ export default class AccountModule extends VuexModule {
     this.currentCompany = currentUser?.company || null
     if (currentUser && currentUser.accountRole !== 'user') {
       CookieStore.setAccountRole(currentUser.accountRole)
+    }
+    if (currentUser) {
+      setUserProperties(this.analytics, {
+        company_name: currentUser.company.name,
+        prefecture: currentUser.company.prefectureName,
+        city: currentUser.company.cityName,
+        business_categories: currentUser.company.businessCategories,
+      })
     }
   }
 

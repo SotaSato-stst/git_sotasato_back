@@ -1,11 +1,17 @@
 <template>
-  <el-card class="card" shadow="never" :body-style="{padding: '0px'}">
+  <el-card
+    class="card"
+    shadow="never"
+    :body-style="{padding: '0px'}"
+    @click="click"
+  >
     <a :href="href" target="_blank"><img :src="src" class="image" /></a>
   </el-card>
 </template>
 
 <script lang="ts">
 import {defineComponent, PropType} from '@nuxtjs/composition-api'
+import {getAnalytics, logEvent} from 'firebase/analytics'
 
 export default defineComponent({
   name: 'SmallBanner',
@@ -20,7 +26,12 @@ export default defineComponent({
     },
   },
   setup(_props) {
-    return {}
+    const analytics = getAnalytics()
+    const click = () => {
+      logEvent(analytics, 'click_banner')
+    }
+
+    return {click}
   },
 })
 </script>

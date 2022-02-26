@@ -13,5 +13,7 @@ json.company do
     :founding_date,
     :annual_sales
   )
+  json.prefecture_name @company.prefecture.name
+  json.city_name @company.city.name
   json.business_categories @company.company_business_categories.map(&:business_category)
 end

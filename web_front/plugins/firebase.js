@@ -1,4 +1,5 @@
 import {initializeApp} from 'firebase/app'
+import {getAnalytics} from 'firebase/analytics'
 const environment = process.env.NODE_ENV || 'development'
 const envSet = require(`./../environments/${environment}.ts`)
 
@@ -9,6 +10,10 @@ const firebaseConfig = {
   storageBucket: envSet.storageBucket,
   messagingSenderId: envSet.messagingSenderId,
   appId: envSet.appId,
+  measurementId: envSet.measurementId,
 }
 
 initializeApp(firebaseConfig)
+if (environment === 'production') {
+  getAnalytics(app)
+}

@@ -8,4 +8,5 @@ module.exports = {
   storageBucket: process.env.PRODUCTION_STORAGE_BUCKET,
   messagingSenderId: process.env.PRODUCTION_MESSAGING_SNDER_ID,
   appId: process.env.PRODUCTION_APP_ID,
+  measurementId: process.env.PRODUCTION_MEASUREMENT_ID,
 }
