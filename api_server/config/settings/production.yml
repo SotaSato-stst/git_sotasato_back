@@ -1,4 +1,4 @@
-firebase_project_id: <%= ENV["_PRODUCTION_FIREBASE_PROJECT_ID"] %>
-firebaes_api_key: <%= ENV["_PRODUCTION_FIREBASE_API_KEY"] %>
-scraping_bucket: <%= ENV["_PRODUCTION_SCRAPING_BUCKET"] %>
+firebase_project_id: <%= ENV["PRODUCTION_FIREBASE_PROJECT_ID"] %>
+firebaes_api_key: <%= ENV["PRODUCTION_FIREBASE_API_KEY"] %>
+scraping_bucket: <%= ENV["PRODUCTION_SCRAPING_BUCKET"] %>
 front_base_url: https://app.hojokin-dock.com

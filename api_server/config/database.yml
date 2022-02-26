@@ -18,6 +18,6 @@ test:
 production:
   <<: *default
   database: hojokin_dock_production
-  username: <%= ENV["_PRODUCTION_DATABASE_USER"] %>
-  password: <%= ENV['_PRODUCTION_DATABASE_PASSWORD'] %>
-  socket: "/cloudsql/<%= ENV["_CLOUD_SQL_CONNECTION_NAME"] %>"
+  username: <%= ENV["PRODUCTION_DATABASE_USER"] %>
+  password: <%= ENV['PRODUCTION_DATABASE_PASSWORD'] %>
+  socket: "/cloudsql/<%= ENV["CLOUD_SQL_CONNECTION_NAME"] %>"
