@@ -8,6 +8,7 @@ import {
   UpdateSubsidyDraftAssigneesResponse,
   SubsidyDraftIndexParams,
   UpdateSubsidyDraftParams,
+  SubsidyDraftAssignStat,
 } from '@/types/SubsidyDraft'
 import {Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
@@ -27,9 +28,7 @@ export default class SubsidyDraftsModule extends VuexModule {
   loader = useLoader()
   subsidyDrafts: SubsidyDraft[] = []
   assignees: SubsidyDraftAssignee[] = []
-  subsidyDraftTotal: number = 0
-  noAssignTotal: number = 0
-  completedTotal: number = 0
+  assignStat: SubsidyDraftAssignStat | null = null
   selectedSubsidyDrafts: SubsidyDraft[] = []
   subsidyDraft: SubsidyDraft | null = null
 
@@ -51,18 +50,8 @@ export default class SubsidyDraftsModule extends VuexModule {
   }
 
   @Mutation
-  setNoAssignTotal(noAssignTotal: number) {
-    this.noAssignTotal = noAssignTotal
-  }
-
-  @Mutation
-  setCompletedTotal(completedTotal: number) {
-    this.completedTotal = completedTotal
-  }
-
-  @Mutation
-  setSubsidyDraftTotal(subsidyDraftTotal: number) {
-    this.subsidyDraftTotal = subsidyDraftTotal
+  setAssignStat(assignStat: SubsidyDraftAssignStat) {
+    this.assignStat = assignStat
   }
 
   @Mutation
@@ -128,9 +117,7 @@ export default class SubsidyDraftsModule extends VuexModule {
       '/admin/subsidy_drafts_assignees',
     )
     this.setSubsidyDraftAssignees(res.assignees)
-    this.setNoAssignTotal(res.noAssignTotal)
-    this.setSubsidyDraftTotal(res.subsidyDraftTotal)
-    this.setCompletedTotal(res.completedTotal)
+    this.setAssignStat(res.assignStat)
   }
 
   @Action({rawError: true})

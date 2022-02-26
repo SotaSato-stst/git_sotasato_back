@@ -36,11 +36,17 @@ export type SubsidyDraftAssignee = {
   completedCount: number
 }
 
-export type SubsidyDraftAssigneesResponse = {
+export type SubsidyDraftAssignStat = {
   subsidyDraftTotal: number
+  assignedTotal: number
   noAssignTotal: number
-  completedTotal: number
+  assignedCompletedTotal: number
+  noAssignCompletedTotal: number
+}
+
+export type SubsidyDraftAssigneesResponse = {
   assignees: SubsidyDraftAssignee[]
+  assignStat: SubsidyDraftAssignStat
 }
 
 export type FilterAssignType = 'assignedMe' | 'noAssign' | 'all'

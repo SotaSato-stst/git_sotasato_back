@@ -2,10 +2,12 @@ module Admin
   class SubsidyDraftsAssigneesController < ApplicationController
     def index
       @subsidy_draft_total = SubsidyDraft.not_archived.count
+      @assigned_total = SubsidyDraft.not_archived.assigned.count
       @no_assign_total = SubsidyDraft.not_archived.not_assigned.count
       assign_count = SubsidyDraft.assigned.group(:assignee_id).count
       completed_count = SubsidyDraft.assigned.archived.group(:assignee_id).count
-      @completed_total = SubsidyDraft.archived.count
+      @assigned_completed_total = SubsidyDraft.archived.assigned.count
+      @no_assign_completed_total = SubsidyDraft.archived.not_assigned.count
       @assignees = User.operators.map do |user|
         {
           user_id: user.id,
@@ -30,7 +32,7 @@ module Admin
 
     def destroy
       assignee = User.operators.find(params[:assignee_id])
-      scope = assignee.subsidy_draft_assngins.limit(params[:assign_count].to_i)
+      scope = assignee.subsidy_draft_assngins.not_archived.limit(params[:assign_count].to_i)
       assign_count = scope.update_all(assignee_id: nil)
       render json: { message: '担当数を減らしました', assign_count: assign_count }, status: 200
     rescue StandardError => e

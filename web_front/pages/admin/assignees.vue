@@ -4,11 +4,18 @@
       <div class="title">編集担当者管理</div>
     </div>
     <div class="no-assign-total">
-      <el-table v-if="!loading" :data="[total]" stripe style="width: 100%">
+      <el-table v-if="!loading" :data="[assignStat]" stripe style="width: 100%">
         <el-table-column prop="subsidyDraftTotal" label="未対応件数" />
         <el-table-column prop="assignedTotal" label="振り分け済み" />
         <el-table-column prop="noAssignTotal" label="未振り分け" />
-        <el-table-column prop="completedTotal" label="完了件数" />
+        <el-table-column
+          prop="assignedCompletedTotal"
+          label="完了件数(振り分け済)"
+        />
+        <el-table-column
+          prop="noAssignCompletedTotal"
+          label="完了件数(振り分けなし)"
+        />
       </el-table>
     </div>
     <card-loading :loading="loading" />
@@ -26,12 +33,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-} from '@nuxtjs/composition-api'
+import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
 import {Table, TableColumn, Tag} from 'element-ui'
 import CardLoading from '@/components/CardLoading.vue'
 import AssignForm from '@/components/assignees/AssignForm.vue'
@@ -50,28 +52,15 @@ export default defineComponent({
   setup(_props) {
     const {loading, load} = subsidyDraftsModule.loader
     const assignees = computed(() => subsidyDraftsModule.assignees)
-    const total = ref({
-      subsidyDraftTotal: 0,
-      assignedTotal: 0,
-      noAssignTotal: 0,
-      completedTotal: 0,
-    })
+    const assignStat = computed(() => subsidyDraftsModule.assignStat)
 
     onMounted(() => {
       load(loading, async () => {
         await subsidyDraftsModule.getAssignees()
-        total.value = {
-          subsidyDraftTotal: subsidyDraftsModule.subsidyDraftTotal,
-          assignedTotal:
-            subsidyDraftsModule.subsidyDraftTotal -
-            subsidyDraftsModule.noAssignTotal,
-          noAssignTotal: subsidyDraftsModule.noAssignTotal,
-          completedTotal: subsidyDraftsModule.completedTotal,
-        }
       })
     })
 
-    return {loading, assignees, total}
+    return {loading, assignees, assignStat}
   },
   head(): object {
     return {
