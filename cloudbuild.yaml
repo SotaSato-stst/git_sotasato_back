@@ -1,20 +1,4 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
-  args: ['-c', 'gcloud config set app/cloud_build_timeout 1200 && cd api_server && gcloud app deploy --version $COMMIT_SHA']
-- name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "asia.gcr.io/${PROJECT_ID}/appengine/default.$COMMIT_SHA",
-         "-e", "_CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}",
-         "-e", "_PRODUCTION_DATABASE_USER=${_PRODUCTION_DATABASE_USER}",
-         "-e", "_PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}",
-         "-s", "${_CLOUD_SQL_CONNECTION_NAME}",
-         "--", "bundle", "exec", "rake", "db:migrate"]
-substitutions:
-  _PRODUCTION_DATABASE_USER: ${_PRODUCTION_DATABASE_USER}
-  _PRODUCTION_DATABASE_PASSWORD: ${_PRODUCTION_DATABASE_PASSWORD}
-  _PRODUCTION_FIREBASE_PROJECT_ID: ${_PRODUCTION_FIREBASE_PROJECT_ID}
-  _PRODUCTION_FIREBASE_API_KEY: ${_PRODUCTION_FIREBASE_API_KEY}
-  _CLOUD_SQL_CONNECTION_NAME: ${_CLOUD_SQL_CONNECTION_NAME}
-  _PRODUCTION_SCRAPING_BUCKET: ${_PRODUCTION_SCRAPING_BUCKET}
-  _SLACK_API_TOKEN: ${_SLACK_API_TOKEN}
-timeout: '1800s'
+  args: ['-c', 'echo $_PRODUCTION_SCRAPING_BUCKET']
