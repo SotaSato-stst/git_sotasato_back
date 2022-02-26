@@ -56,6 +56,7 @@ export type SubsidyDraftIndexParams = {
   page?: number
   assignFilter: FilterAssignType
   completeFilter: FilterCompleteType
+  keyword: string
 }
 
 export type UpdateSubsidyDraftParams = {

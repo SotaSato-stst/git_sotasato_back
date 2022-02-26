@@ -59,4 +59,9 @@ class SubsidyDraft < ApplicationRecord
       not_archived
     end
   }
+  scope :search_title, ->(keyword) {
+    return if keyword.blank?
+
+    where('title like ?', "%#{keyword}%")
+  }
 end

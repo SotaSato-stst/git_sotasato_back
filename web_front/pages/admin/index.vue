@@ -41,6 +41,8 @@
         <el-radio-button label="notCompleted">未完了</el-radio-button>
         <el-radio-button label="all">すべて</el-radio-button>
       </el-radio-group>
+      <el-input v-model="filter.keyword" size="mini" class="search-input" />
+      <el-button class="search-button" @click="search">検索</el-button>
       <div class="total-count">{{ pagination.itemsTotal }}件</div>
     </div>
     <card-loading :loading="loading" />
@@ -162,6 +164,7 @@ export default defineComponent({
       page: 1,
       assignFilter: 'assignedMe',
       completeFilter: 'notCompleted',
+      keyword: '',
     })
     const isAdmin = computed(() => accountModule.isAdmin)
     const subsidyDrafts = computed(() => subsidyDraftsModule.subsidyDrafts)
@@ -181,6 +184,10 @@ export default defineComponent({
 
     const selectCompleteFilter = (completeFilter: FilterCompleteType) => {
       handleSegue({completeFilter, page: 1})
+    }
+
+    const search = () => {
+      handleSegue({keyword: filter.keyword, page: 1})
     }
 
     const handleSegue = (segueFilter: Partial<SubsidyDraftIndexParams>) => {
@@ -277,7 +284,8 @@ Slackに新着通知が来ているのに、この画面に表示されてない
         const completeFilter =
           (route.value.query.completeFilter?.toString() as FilterCompleteType) ||
           'notCompleted'
-        handleSegue({page, assignFilter, completeFilter})
+        const keyword = route.value.query.keyword?.toString() || ''
+        handleSegue({page, assignFilter, completeFilter, keyword})
       })
     })
 
@@ -286,6 +294,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       filter,
       selectAssignFilter,
       selectCompleteFilter,
+      search,
       isAdmin,
       subsidyDrafts,
       selectedSubsidyDrafts,
@@ -336,6 +345,15 @@ Slackに新着通知が来ているのに、この画面に表示されてない
 
 .filter > * {
   margin-right: var(--spacing-4);
+}
+
+.search-input {
+  width: 120px;
+}
+
+.search-button {
+  height: 28px;
+  padding: var(--spacing-1) var(--spacing-4);
 }
 </style>
 

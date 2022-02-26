@@ -2,7 +2,11 @@ module Admin
   class SubsidyDraftsController < ApplicationController
     def index
       scope = SubsidyDraft.includes(:ministry, :prefecture, :city, :assignee, :subsidy).order(updated_at: :desc)
-      scope = scope.assign_filter(params[:assign_filter], current_user).complete_filter(params[:complete_filter])
+      scope =
+        scope
+        .assign_filter(params[:assign_filter], current_user)
+        .complete_filter(params[:complete_filter])
+        .search_title(params[:keyword])
       @items_total = scope.count
       @subsidy_drafts = scope.page(params[:page]).per(30)
     end
