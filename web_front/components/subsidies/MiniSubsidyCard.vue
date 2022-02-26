@@ -4,13 +4,13 @@
       {{ subsidy.title }}
     </a>
     <div class="body">
-      <div class="label">募集期間</div>
-      <div class="content">
-        {{ convertToJpDate(subsidy.startFrom) }}
-        ~
-        {{ subsidy.endTo && convertToJpDate(subsidy.endTo, false) }}
+      <div v-if="subsidy.startFrom || subsidy.endTo">
+        <div class="label">募集期間</div>
+        <div class="content">
+          {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
+        </div>
       </div>
-      <div>
+      <div v-if="subsidy.priceMax">
         <span class="label">上限金額</span>
         <span class="content">{{ convertToShortJPY(subsidy.priceMax) }}円</span>
       </div>
@@ -20,7 +20,7 @@
 <script lang="ts">
 import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
 import {Subsidy} from '@/types/Subsidy'
-import {convertToJpDate} from '@/utils/dateFormatter'
+import {convertDateRange} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 
 export default defineComponent({
@@ -39,7 +39,7 @@ export default defineComponent({
     return {
       clickSubsidy,
       convertToShortJPY,
-      convertToJpDate,
+      convertDateRange,
     }
   },
 })

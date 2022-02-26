@@ -13,10 +13,10 @@
               {{ convertToShortJPY(subsidy.priceMax) }}円
             </span>
           </span>
-          <span v-if="dateRange()" class="feature-label">
+          <span v-if="subsidy.startFrom || subsidy.endTo" class="feature-label">
             募集期間:
             <span class="label">
-              {{ dateRange() }}
+              {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
             </span>
           </span>
           <favorite-button :subsidy="subsidy" />
@@ -58,7 +58,7 @@
 <script lang="ts">
 import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
 import {Subsidy} from '@/types/Subsidy'
-import {convertToJpDate} from '@/utils/dateFormatter'
+import {convertDateRange} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
@@ -76,40 +76,18 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(_props) {
     const router = useRouter()
-    const subsidy = props.subsidy
     const clickSubsidy = (subsidyId: number) => {
       router.push('/subsidies/' + subsidyId)
-    }
-
-    const dateRange = (): string | null => {
-      if (subsidy.startFrom && subsidy.endTo) {
-        const startFrom = new Date(subsidy.startFrom)
-        const endTo = new Date(subsidy.endTo)
-        const diffYear = startFrom.getFullYear() !== endTo.getFullYear()
-        return `${convertToJpDate(startFrom)} ~ ${convertToJpDate(
-          endTo,
-          diffYear,
-        )}`
-      } else if (subsidy.startFrom && !subsidy.endTo) {
-        const startFrom = new Date(subsidy.startFrom)
-        return `${convertToJpDate(startFrom)} ~`
-      } else if (!subsidy.startFrom && subsidy.endTo) {
-        const endTo = new Date(subsidy.endTo)
-        return `~ ${convertToJpDate(endTo)}`
-      } else {
-        return null
-      }
     }
 
     return {
       clickSubsidy,
       convertToShortJPY,
-      convertToJpDate,
+      convertDateRange,
       starView,
       subsidyCategoryLabel,
-      dateRange,
     }
   },
 })
