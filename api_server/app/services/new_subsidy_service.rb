@@ -9,19 +9,20 @@ class NewSubsidyService
   end
 
   def execute!
-    ministry_ids = Ministry.index_by_url_domain
-    prefecture_ids = Prefecture.index_by_url_domain
-    city_ids = City.index_by_url_domain
+    ministry_ids = Ministry.index_by_url_host
+    prefecture_ids = Prefecture.index_by_url_host
+    city_ids = City.index_by_url_host
     cities = City.all.includes(:prefecture).index_by(&:id)
     instances = new_url_hashes.map do |hash|
-      hash[:ministry_id] = ministry_ids[hash[:source_url_domain]]
-      hash[:prefecture_id] = prefecture_ids[hash[:source_url_domain]]
-      city_id = city_ids[hash[:source_url_domain]]
+      hash[:ministry_id] = ministry_ids[hash[:source_url_host]]
+      hash[:prefecture_id] = prefecture_ids[hash[:source_url_host]]
+      city_id = city_ids[hash[:source_url_host]]
       hash[:city_id] = city_id
       hash[:prefecture_id] = cities[city_id].prefecture.id if city_id.present?
       hash[:supplier_type] = detect_supplier_type(hash)
       hash[:created_at] = @scraping_date.to_time
       hash[:updated_at] = Time.now
+      hash.delete(:source_url_host)
       hash
     end
     SubsidyDraft.insert_all instances if instances.present?
@@ -49,6 +50,7 @@ class NewSubsidyService
 
         uri = URI.parse(url)
         {
+          source_url_host: uri.host,
           source_url_domain: "#{uri.scheme}://#{uri.host}",
           title: table['text'].gsub(/[[:space:]]/, ''),
           url: url
