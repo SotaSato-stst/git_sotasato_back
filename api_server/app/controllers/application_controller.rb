@@ -30,10 +30,6 @@ class ApplicationController < ActionController::API
     return false unless params[:controller].start_with?('tasks/')
 
     cron = request.headers['X-Appengine-Cron']
-    if ActiveModel::Type::Boolean.new.cast(cron)
-      true
-    else
-      false
-    end
+    ActiveModel::Type::Boolean.new.cast(cron)
   end
 end
