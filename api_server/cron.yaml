@@ -1,9 +1,17 @@
 cron:
 - description: '新着情報の更新'
   url: /tasks/new_subsidy
-  schedule: every day 06:40
+  schedule: every day 06:30
   timezone: Asia/Tokyo
 - description: '新着情報の更新'
   url: /tasks/new_subsidy
-  schedule: every day 18:40
+  schedule: every day 12:30
+  timezone: Asia/Tokyo
+- description: '新着情報の更新'
+  url: /tasks/new_subsidy
+  schedule: every day 17:30
+  timezone: Asia/Tokyo
+- description: '新着情報の更新'
+  url: /tasks/new_subsidy
+  schedule: every day 21:30
   timezone: Asia/Tokyo
