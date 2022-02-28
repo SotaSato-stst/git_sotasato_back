@@ -33,7 +33,7 @@ class ApplicationController < ActionController::API
     if ActiveModel::Type::Boolean.new.cast(cron)
       true
     else
-      render json: {}, status: 401
+      false
     end
   end
 end
