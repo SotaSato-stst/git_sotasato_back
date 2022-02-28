@@ -2,15 +2,15 @@ steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   args: ['-c', 'gcloud config set app/cloud_build_timeout 1200
-         && export PRODUCTION_DATABASE_USER=$_PRODUCTION_DATABASE_USER
-         && export PRODUCTION_DATABASE_PASSWORD=$_PRODUCTION_DATABASE_PASSWORD
-         && export PRODUCTION_FIREBASE_PROJECT_ID=$_PRODUCTION_FIREBASE_PROJECT_ID
-         && export PRODUCTION_FIREBASE_API_KEY=$_PRODUCTION_FIREBASE_API_KEY
-         && export CLOUD_SQL_CONNECTION_NAME=$_CLOUD_SQL_CONNECTION_NAME
-         && export PRODUCTION_SCRAPING_BUCKET=$_PRODUCTION_SCRAPING_BUCKET
-         && export SLACK_API_TOKEN=$_SLACK_API_TOKEN
-         && export SECRET_KEY_BASE=$_SECRET_KEY_BASE
          && cd api_server
+         && touch .env
+         && echo "PRODUCTION_DATABASE_USER=$_PRODUCTION_DATABASE_USER" >> .env
+         && echo "PRODUCTION_DATABASE_PASSWORD=$_PRODUCTION_DATABASE_PASSWORD" >> .env
+         && echo "PRODUCTION_FIREBASE_PROJECT_ID=$_PRODUCTION_FIREBASE_PROJECT_ID" >> .env
+         && echo "PRODUCTION_FIREBASE_API_KEY=$_PRODUCTION_FIREBASE_API_KEY" >> .env
+         && echo "CLOUD_SQL_CONNECTION_NAME=$_CLOUD_SQL_CONNECTION_NAME" >> .env
+         && echo "PRODUCTION_SCRAPING_BUCKET=$_PRODUCTION_SCRAPING_BUCKET" >> .env
+         && echo "SLACK_API_TOKEN=$_SLACK_API_TOKEN" >> .env
          && gcloud app deploy --version $COMMIT_SHA']
 - name: "gcr.io/google-appengine/exec-wrapper"
   args: ["-i", "asia.gcr.io/${PROJECT_ID}/appengine/default.$COMMIT_SHA",
