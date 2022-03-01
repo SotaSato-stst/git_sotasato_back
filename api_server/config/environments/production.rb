@@ -122,5 +122,5 @@ Rails.application.configure do
     'Access-Control-Allow-Origin' => 'https://app.hojokin-dock.com'
   }
 
-  config.hosts = ['api.hojokin-dock.com', 'app.hojokin-dock.com']
+  config.hosts = ['api.hojokin-dock.com', 'app.hojokin-dock.com', 'macro-market-336309.an.r.appspot.com']
 end
