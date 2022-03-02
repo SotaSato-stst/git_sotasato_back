@@ -367,7 +367,7 @@ selector_name,url
 .list_ccc,"https://www.pref.fukushima.lg.jp/life/6/index-2.html"
 .list_table,"https://www.city.fukushima.fukushima.jp/shigoto/index.html"
 .entries,"https://www.city.aizuwakamatsu.fukushima.jp/group-portal/new-info-list-jigyosha/"
-.list,"https://www.city.koriyama.lg.jp/sangyo_business/index.html"
+#main_body,"https://www.city.koriyama.lg.jp/soshiki/list1-1.html"
 .news,"http://www.city.iwaki.lg.jp/www/genre/1000100000263/index.html"
 #dirNewsList,"http://www.city.shirakawa.fukushima.jp/page/dir000008.html"
 .news,"https://www.city.sukagawa.fukushima.jp/shigoto_sangyo/index.html"
