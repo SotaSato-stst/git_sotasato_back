@@ -5,7 +5,8 @@ steps:
          && cd scraping
          && touch .env
          && echo "SLACK_TOKEN=$_SLACK_TOKEN" >> .env
-         && gcloud functions deploy scraping-subsidy-selector --entry-point cloud_function_for_selector --trigger-topic scraping-subsidy-selector --runtime python38']
+         && echo "RUNNING_ENV=production" >> .env
+         && gcloud functions deploy scraping-subsidy-selector --entry-point cloud_function_for_selector --trigger-topic scraping-subsidy-selector --runtime python38 --region asia-northeast1']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   args: ['-c', 'gcloud config set app/cloud_build_timeout 1200
@@ -13,5 +14,5 @@ steps:
          && touch .env
          && echo "SLACK_TOKEN=$_SLACK_TOKEN" >> .env
          && echo "RUNNING_ENV=production" >> .env
-         && gcloud functions deploy scraping-subsidy-curation --entry-point cloud_function_for_curation --trigger-topic scraping-subsidy-curation --runtime python38']
+         && gcloud functions deploy scraping-subsidy-curation --entry-point cloud_function_for_curation --trigger-topic scraping-subsidy-curation --runtime python38 --region asia-northeast1']
 timeout: '1800s'
