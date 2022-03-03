@@ -1,4 +1,8 @@
 steps:
+- name: 'curlimages/curl'
+  args: ['-X','POST',
+         '--data-urlencode', '"payload={\"text\": \"*[hojokin_dock/api_server]*\nBuild Started :gear: $BUILD_ID\"}"',
+         '${_SLACK_WEBHOOK_URL}']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   args: ['-c', 'gcloud config set app/cloud_build_timeout 1200
@@ -19,4 +23,8 @@ steps:
          "-e", "_PRODUCTION_DATABASE_PASSWORD=${_PRODUCTION_DATABASE_PASSWORD}",
          "-s", "${_CLOUD_SQL_CONNECTION_NAME}",
          "--", "bundle", "exec", "rake", "db:migrate"]
+- name: 'curlimages/curl'
+  args: ['-X','POST',
+         '--data-urlencode', '"payload={\"text\": \"*[hojokin_dock/api_server]*\nBuild Completed $BUILD_ID\"}"',
+         '${_SLACK_WEBHOOK_URL}']
 timeout: '1800s'
