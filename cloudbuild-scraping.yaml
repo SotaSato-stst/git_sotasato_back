@@ -12,5 +12,6 @@ steps:
          && cd scraping
          && touch .env
          && echo "SLACK_TOKEN=$_SLACK_TOKEN" >> .env
+         && echo "RUNNING_ENV=production" >> .env
          && gcloud functions deploy scraping-subsidy-curation --entry-point cloud_function_for_curation --trigger-topic scraping-subsidy-curation --runtime python38']
 timeout: '1800s'
