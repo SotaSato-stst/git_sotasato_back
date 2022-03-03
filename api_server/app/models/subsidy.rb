@@ -103,7 +103,7 @@ class Subsidy < ApplicationRecord
 
     keywords = Keyword.where(content: keyword.split(/[[:space:]]/))
     subsidy_ids = SubsidyKeyword.where(keyword: keywords).pluck(:subsidy_id)
-    merge(Subsidy.where(id: subsidy_ids)).or(Subsidy.where('title like ?', "%#{keyword}%"))
+    merge(where(id: subsidy_ids)).or(where('title like ?', "%#{keyword}%"))
   }
   scope :search_by_organization_type, ->(organization_type) {
     return if organization_type.blank?
@@ -129,7 +129,7 @@ class Subsidy < ApplicationRecord
   scope :in_application_period, ->(checked) {
     return unless ActiveModel::Type::Boolean.new.cast(checked)
 
-    merge(Subsidy.where(end_to: Date.today..).or(Subsidy.where(end_to: nil)))
+    merge(where(end_to: Date.today..).or(where(end_to: nil)))
   }
   scope :search_with_business_category, ->(business_category_keys) { # "seizo|kensetsu" のような形で受け取る
     return if business_category_keys.blank?
@@ -142,13 +142,13 @@ class Subsidy < ApplicationRecord
     return if total_employee.blank?
 
     merge(
-      Subsidy.where('? between total_employee_min and total_employee_max', total_employee)
+      where('? between total_employee_min and total_employee_max', total_employee)
       .or(
-        Subsidy.where(total_employee_min: ..total_employee).where(total_employee_max: nil)
+        where(total_employee_min: ..total_employee).where(total_employee_max: nil)
       ).or(
-        Subsidy.where(total_employee_min: nil).where(total_employee_max: total_employee..)
+        where(total_employee_min: nil).where(total_employee_max: total_employee..)
       ).or(
-        Subsidy.where(total_employee_min: nil).where(total_employee_max: nil)
+        where(total_employee_min: nil).where(total_employee_max: nil)
       )
     )
   }
@@ -157,20 +157,20 @@ class Subsidy < ApplicationRecord
 
     merge(
       where('start_from > date_add(?, interval years_of_establishment year)', founding_date.to_date)
-      .or(Subsidy.where(years_of_establishment: nil))
+      .or(where(years_of_establishment: nil))
     )
   }
   scope :search_with_capital, ->(capital) {
     return if capital.blank?
 
     merge(
-      Subsidy.where('? between capital_min and capital_max', capital)
+      where('? between capital_min and capital_max', capital)
       .or(
-        Subsidy.where(capital_min: ..capital).where(capital_max: nil)
+        where(capital_min: ..capital).where(capital_max: nil)
       ).or(
-        Subsidy.where(capital_min: nil).where(capital_max: capital..)
+        where(capital_min: nil).where(capital_max: capital..)
       ).or(
-        Subsidy.where(capital_min: nil).where(capital_max: nil)
+        where(capital_min: nil).where(capital_max: nil)
       )
     )
   }
@@ -178,13 +178,13 @@ class Subsidy < ApplicationRecord
     return if annual_sales.blank?
 
     merge(
-      Subsidy.where('? between annual_sales_min and annual_sales_max', annual_sales)
+      where('? between annual_sales_min and annual_sales_max', annual_sales)
       .or(
-        Subsidy.where(annual_sales_min: ..annual_sales).where(annual_sales_max: nil)
+        where(annual_sales_min: ..annual_sales).where(annual_sales_max: nil)
       ).or(
-        Subsidy.where(annual_sales_min: nil).where(annual_sales_max: annual_sales..)
+        where(annual_sales_min: nil).where(annual_sales_max: annual_sales..)
       ).or(
-        Subsidy.where(annual_sales_min: nil).where(annual_sales_max: nil)
+        where(annual_sales_min: nil).where(annual_sales_max: nil)
       )
     )
   }
