@@ -1,18 +1,24 @@
 steps:
-- name: node
+- name: node:14.17.0
   entrypoint: yarn
+  dir: 'web_front'
   args: ['install']
-- name: node
+- name: 'bash'
+  entrypoint: bash
+  dir: 'web_front'
+  args: ['-c', 'touch .env
+         && echo "PRODUCTION_API_KEY=$_PRODUCTION_API_KEY" >> .env
+         && echo "PRODUCTION_AUTH_DOMAIN=$_PRODUCTION_AUTH_DOMAIN" >> .env
+         && echo "PRODUCTION_PROJECT_ID=$_PRODUCTION_PROJECT_ID" >> .env
+         && echo "PRODUCTION_STORAGE_BUCKET=$_PRODUCTION_STORAGE_BUCKET" >> .env
+         && echo "PRODUCTION_MESSAGING_SNDER_ID=$_PRODUCTION_MESSAGING_SNDER_ID" >> .env
+         && echo "PRODUCTION_APP_ID=$_PRODUCTION_APP_ID" >> .env
+         && echo "PRODUCTION_MEASUREMENT_ID=$_PRODUCTION_MEASUREMENT_ID" >> .env']
+- name: node:14.17.0
   entrypoint: yarn
+  dir: 'web_front'
   args: ['generate']
-  env:
-    - 'PRODUCTION_API_KEY=${_PRODUCTION_API_KEY}'
-    - 'PRODUCTION_AUTH_DOMAIN=${_PRODUCTION_AUTH_DOMAIN}'
-    - 'PRODUCTION_PROJECT_ID=${_PRODUCTION_PROJECT_ID}'
-    - 'PRODUCTION_STORAGE_BUCKET=${_PRODUCTION_STORAGE_BUCKET}'
-    - 'PRODUCTION_MESSAGING_SNDER_ID=${_PRODUCTION_MESSAGING_SNDER_ID}'
-    - 'PRODUCTION_APP_ID=${_PRODUCTION_APP_ID}'
-    - 'PRODUCTION_MEASUREMENT_ID=${_PRODUCTION_MEASUREMENT_ID}'
-- name: gcr.io/macro-market-336309/firebase
-  args: ['deploy', '--project=macro-market-336309', '--only=hosting']
+- name: gcr.io/${PROJECT_ID}/firebase
+  dir: 'web_front'
+  args: ['deploy', '--project=${PROJECT_ID}', '--only=hosting']
 timeout: '1800s'
