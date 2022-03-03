@@ -132,6 +132,7 @@ export default defineComponent({
       yearsOfEstablishment: null,
       annualSalesMax: null,
       annualSalesMin: null,
+      catchCopy: '',
     })
 
     const submit = (publishingCode: PublishingCode) => {

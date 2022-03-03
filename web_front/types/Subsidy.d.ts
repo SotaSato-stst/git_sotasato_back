@@ -39,6 +39,7 @@ export type Subsidy = {
   yearsOfEstablishment: number | null
   annualSalesMax: number | null
   annualSalesMin: number | null
+  catchCopy: string | null
 }
 
 export type SubsidiesResponse = {
@@ -100,6 +101,7 @@ export type UpdateSubsidyParams = {
   yearsOfEstablishment: number | null
   annualSalesMax: number | null
   annualSalesMin: number | null
+  catchCopy: string | null
 }
 
 export type FilterPublishingType = 'published' | 'editing' | 'archived' | 'all'

@@ -22,6 +22,9 @@
           <favorite-button :subsidy="subsidy" />
         </el-header>
         <el-main class="card-content">
+          <div v-if="subsidy.catchCopy" class="target">
+            {{ subsidy.catchCopy }}
+          </div>
           <a class="title" @click="clickSubsidy(subsidy.id)">
             {{ subsidy.title }}
           </a>
@@ -47,6 +50,15 @@
               <span class="label">
                 最小支援割合:
                 {{ subsidy.supportRatioMin }}
+              </span>
+            </span>
+            <span class="feature-label">
+              <span
+                v-for="keyword in subsidy.keywords"
+                :key="keyword.id"
+                class="label"
+              >
+                {{ keyword }}
               </span>
             </span>
           </div>
