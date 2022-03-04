@@ -54,7 +54,7 @@
           <div class="tag-wrapper">
             <span
               v-for="keyword in subsidy.keywords"
-              :key="keyword.id"
+              :key="keyword"
               class="tag-card"
             >
               {{ keyword }}
@@ -152,10 +152,6 @@ export default defineComponent({
   vertical-align: middle;
 }
 
-.label {
-  font-weight: bold;
-}
-
 .card-header {
   padding: 0;
 }
@@ -181,10 +177,6 @@ export default defineComponent({
 .card-content {
   padding: 0;
   overflow: visible;
-}
-
-.feature-labels {
-  margin-top: var(--spacing-4);
 }
 
 .flex-box {
@@ -224,6 +216,11 @@ export default defineComponent({
 
 .detail-width {
   width: 70%;
+}
+
+.detail-wrapper {
+  border-top: solid 1px #cfcfcf;
+  padding-top: var(--spacing-4);
 }
 
 p {
