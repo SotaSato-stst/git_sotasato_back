@@ -194,6 +194,11 @@ class Subsidy < ApplicationRecord
       user_favorite_subsidies: { user_id: user.id }
     )
   }
+  scope :end_after, ->(date) {
+    return if date.blank?
+
+    where('end_to >= ?', date.to_date)
+  }
 
   def organization_types
     subsidy_organization_types.map do |subsidy_organization_type|

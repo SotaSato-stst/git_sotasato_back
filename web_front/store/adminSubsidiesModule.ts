@@ -46,6 +46,7 @@ export default class AdminSubsidiesModule extends VuexModule {
       params: {
         page: params.page || 1,
         publishingCode: params.publishingCode,
+        endAfter: params.endAfter,
       },
     })
     this.setSubsidies(res.subsidies)

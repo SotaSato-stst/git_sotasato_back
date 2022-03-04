@@ -17,6 +17,17 @@
         <el-radio-button label="editing">編集中</el-radio-button>
         <el-radio-button label="archived">アーカイブ</el-radio-button>
       </el-radio-group>
+      <div>
+        <el-date-picker
+          v-model="endAfter"
+          type="date"
+          size="mini"
+          class="search-input"
+          @change="selectEndAfter"
+        />
+        <span class="input-caption">以降に締切</span>
+      </div>
+      <el-button class="search-button" @click="search">検索</el-button>
       <div class="total-count">{{ pagination.itemsTotal }}件</div>
     </div>
     <card-loading :loading="loading" />
@@ -90,6 +101,7 @@ import {
   useRoute,
   useRouter,
   reactive,
+  ref,
 } from '@nuxtjs/composition-api'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
@@ -125,7 +137,9 @@ export default defineComponent({
     const filter = reactive<AdminSubsidyIndexParams>({
       page: 1,
       publishingCode: 'all',
+      endAfter: null,
     })
+    const endAfter = ref<Date | null>(null)
 
     const getPage = (page: number) => {
       adminSubsidiesModule.setSubsidies([])
@@ -134,6 +148,14 @@ export default defineComponent({
 
     const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
       handleSegue({publishingCode, page: 1})
+    }
+
+    const selectEndAfter = (date: Date | null) => {
+      filter.endAfter = date?.toLocaleDateString() || null
+    }
+
+    const search = () => {
+      handleSegue({endAfter: filter.endAfter, page: 1})
     }
 
     const handleSegue = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
@@ -156,7 +178,10 @@ export default defineComponent({
         const publishingCode =
           (route.value.query.publishingCode?.toString() as FilterPublishingType) ||
           'all'
-        handleSegue({page, publishingCode})
+        const endAfterStr = route.value.query.endAfter?.toString()
+        const endAfterDate = endAfterStr ? new Date(endAfterStr) : null
+        endAfter.value = endAfterDate
+        handleSegue({page, publishingCode, endAfter: endAfterStr})
       })
     })
 
@@ -165,6 +190,8 @@ export default defineComponent({
       subsidies,
       pagination,
       filter,
+      endAfter,
+      search,
       getPage,
       handleEdit,
       newSubsidyPage,
@@ -174,6 +201,7 @@ export default defineComponent({
       publishingCodeType,
       subsidyCategoryLabel,
       selectPublishingFilter,
+      selectEndAfter,
     }
   },
   head(): object {
@@ -212,6 +240,20 @@ export default defineComponent({
 
 .filter > * {
   margin-right: var(--spacing-4);
+}
+
+.search-input {
+  width: 130px;
+}
+
+.search-button {
+  height: 28px;
+  padding: var(--spacing-1) var(--spacing-4);
+}
+
+.input-caption {
+  font-size: 12px;
+  color: var(--primary-font-color);
 }
 </style>
 
