@@ -8,7 +8,7 @@
     </div>
     <div class="filter">
       <el-radio-group
-        v-model="filter.publishingFilter"
+        v-model="filter.publishingCode"
         size="mini"
         @change="selectPublishingFilter"
       >
@@ -32,6 +32,11 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="subsidyCategory" label="種類" width="70">
+        <template slot-scope="scope">
+          <span>{{ subsidyCategoryLabel(scope.row.subsidyCategory) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
           <a class="detail-link" @click="handleEdit(scope.row)">{{
@@ -39,7 +44,19 @@
           }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="URL" width="160">
+      <el-table-column label="発行機関" width="120">
+        <template slot-scope="scope">
+          <div v-if="scope.row.ministry">{{ scope.row.ministry.name }}</div>
+          <div v-if="scope.row.prefecture">{{ scope.row.prefecture.name }}</div>
+          <div v-if="scope.row.city">{{ scope.row.city.name }}</div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="startFrom" label="申請期限" width="100">
+        <template slot-scope="scope">
+          {{ scope.row.endTo }}
+        </template>
+      </el-table-column>
+      <el-table-column label="URL" width="180">
         <template slot-scope="scope">
           <a
             class="detail-link"
@@ -49,27 +66,6 @@
           >
             {{ scope.row.url }}
           </a>
-        </template>
-      </el-table-column>
-      <el-table-column label="発行機関" width="110">
-        <template slot-scope="scope">
-          <span v-if="scope.row.ministry">{{ scope.row.ministry.name }}</span>
-          <span v-if="scope.row.prefecture">{{
-            scope.row.prefecture.name
-          }}</span>
-          <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="businessCategories" label="業種" width="210">
-        <template slot-scope="scope">
-          <span>{{
-            scope.row.businessCategories.map(c => c.name).join(',')
-          }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="priceMax" label="最大支援金額" width="120">
-        <template slot-scope="scope">
-          {{ convertToShortJPY(scope.row.priceMax) }}
         </template>
       </el-table-column>
       <el-table-column label="操作" width="90" align="center">
@@ -105,7 +101,12 @@ import {
   FilterPublishingType,
 } from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
-import {publishingCodeLabel, publishingCodeType} from '@/utils/enumKeyToName'
+import {convertToJpDate} from '@/utils/dateFormatter'
+import {
+  publishingCodeLabel,
+  publishingCodeType,
+  subsidyCategoryLabel,
+} from '@/utils/enumKeyToName'
 import {removeEmpty} from '@/utils/objectUtil'
 
 export default defineComponent({
@@ -123,7 +124,7 @@ export default defineComponent({
     const pagination = computed(() => adminSubsidiesModule.pagination)
     const filter = reactive<AdminSubsidyIndexParams>({
       page: 1,
-      publishingFilter: 'all',
+      publishingCode: 'all',
     })
 
     const getPage = (page: number) => {
@@ -131,8 +132,8 @@ export default defineComponent({
       handleSegue({page})
     }
 
-    const selectPublishingFilter = (publishingFilter: FilterPublishingType) => {
-      handleSegue({publishingFilter, page: 1})
+    const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
+      handleSegue({publishingCode, page: 1})
     }
 
     const handleSegue = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
@@ -152,10 +153,10 @@ export default defineComponent({
       load(loading, () => {
         const pageQuery = route.value.query.page?.toString() || null
         const page = pageQuery ? Number(pageQuery) : 1
-        const publishingFilter =
-          (route.value.query.publishingFilter?.toString() as FilterPublishingType) ||
+        const publishingCode =
+          (route.value.query.publishingCode?.toString() as FilterPublishingType) ||
           'all'
-        handleSegue({page, publishingFilter})
+        handleSegue({page, publishingCode})
       })
     })
 
@@ -168,8 +169,10 @@ export default defineComponent({
       handleEdit,
       newSubsidyPage,
       convertToShortJPY,
+      convertToJpDate,
       publishingCodeLabel,
       publishingCodeType,
+      subsidyCategoryLabel,
       selectPublishingFilter,
     }
   },
@@ -209,5 +212,11 @@ export default defineComponent({
 
 .filter > * {
   margin-right: var(--spacing-4);
+}
+</style>
+
+<style>
+.el-table table {
+  width: 100%;
 }
 </style>

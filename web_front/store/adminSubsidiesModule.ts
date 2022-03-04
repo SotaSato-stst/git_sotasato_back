@@ -45,7 +45,7 @@ export default class AdminSubsidiesModule extends VuexModule {
     const res = await $axios.$get<SubsidiesResponse>('/admin/subsidies', {
       params: {
         page: params.page || 1,
-        publishingFilter: params.publishingFilter,
+        publishingCode: params.publishingCode,
       },
     })
     this.setSubsidies(res.subsidies)
