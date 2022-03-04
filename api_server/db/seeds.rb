@@ -166,7 +166,7 @@ if Rails.env.development?
       capital_min:10000000,
       total_employee_max: 20000,
       total_employee_min: 500,
-      business_categories: ['seizo', 'hotel_insyoku'],
+      business_categories: ['seizo'],
     },
     {
       title: 'start & category & tsukuba & prefecture',
@@ -447,7 +447,7 @@ if Rails.env.development?
       adress: '千歳市30-2',
       capital: '5040404',
       total_employee: '30',
-      business_categories: ['seizo', 'hotel_insyoku']
+      business_categories: ['seizo']
     }
   ]
   company_hashes.each do |hash|
