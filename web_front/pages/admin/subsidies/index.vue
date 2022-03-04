@@ -23,6 +23,7 @@
           type="date"
           size="mini"
           class="search-input"
+          placeholder="締切日"
           @change="selectEndAfter"
         />
         <span class="input-caption">以降に締切</span>

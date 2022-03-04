@@ -41,7 +41,12 @@
         <el-radio-button label="notCompleted">未完了</el-radio-button>
         <el-radio-button label="all">すべて</el-radio-button>
       </el-radio-group>
-      <el-input v-model="filter.keyword" size="mini" class="search-input" />
+      <el-input
+        v-model="filter.keyword"
+        placeholder="タイトル"
+        size="mini"
+        class="search-input"
+      />
       <el-button class="search-button" @click="search">検索</el-button>
       <div class="total-count">{{ pagination.itemsTotal }}件</div>
     </div>
