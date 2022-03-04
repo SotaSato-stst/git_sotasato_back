@@ -7,60 +7,65 @@
           <el-tag type="info" effect="plain" class="subsidy-type">
             {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
           </el-tag>
-          <span v-if="subsidy.priceMax" class="feature-label">
-            <span class="label">
-              上限金額:
-              {{ convertToShortJPY(subsidy.priceMax) }}円
-            </span>
-          </span>
-          <span v-if="subsidy.startFrom || subsidy.endTo" class="feature-label">
-            募集期間:
-            <span class="label">
+          <span
+            v-if="subsidy.startFrom || subsidy.endTo"
+            class="vertical-align"
+          >
+            <span class="common-font"> 募集期間: </span>
+            <span>
               {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
             </span>
           </span>
           <favorite-button :subsidy="subsidy" />
         </el-header>
         <el-main class="card-content">
-          <div v-if="subsidy.catchCopy" class="target">
+          <div v-if="subsidy.catchCopy" class="catch-copy-font common-font">
             {{ subsidy.catchCopy }}
           </div>
-          <a class="title" @click="clickSubsidy(subsidy.id)">
-            {{ subsidy.title }}
-          </a>
-          <div class="target-container">
-            <span class="label target">対象</span>
-            <span class="target">
-              {{ subsidy.targetDetail }}
+          <div class="title-font">
+            <a class="title common-font" @click="clickSubsidy(subsidy.id)">
+              {{ subsidy.title }}
+            </a>
+          </div>
+          <div class="flex-box">
+            <div class="flex-child-first">
+              <div v-if="subsidy.priceMax">
+                <span class="feature-label common-font"> 上限金額: </span>
+                <span class="accent-part common-font">
+                  {{ convertToShortJPY(subsidy.priceMax) }}円</span
+                >
+              </div>
+            </div>
+            <div class="flex-child-second">
+              <div v-if="subsidy.supportRatioMax">
+                <span class="feature-label common-font"> 最大支援割合: </span>
+                <span class="accent-part common-font margin-right-4">
+                  {{ subsidy.supportRatioMax }}
+                </span>
+              </div>
+              <div v-if="subsidy.supportRatioMin">
+                <span class="feature-label common-font"> 最小支援割合: </span>
+                <span class="accent-part common-font">
+                  {{ subsidy.supportRatioMin }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="tag-wrapper">
+            <span
+              v-for="keyword in subsidy.keywords"
+              :key="keyword.id"
+              class="tag-card"
+            >
+              {{ keyword }}
             </span>
           </div>
-          <div class="feature-labels">
-            <span v-if="subsidy.level" class="feature-label">
-              <span class="label">
-                申請難易度:{{ starView(subsidy.level) }}
+          <div class="detail-width">
+            <p v-if="subsidy.keywords.length == 0" class="detail-wrapper">
+              <span class="detail-wrapper-span">
+                {{ subsidy.detail }}
               </span>
-            </span>
-            <span v-if="subsidy.supportRatioMax" class="feature-label">
-              <span class="label">
-                最大支援割合:
-                {{ subsidy.supportRatioMax }}
-              </span>
-            </span>
-            <span v-if="subsidy.supportRatioMin" class="feature-label">
-              <span class="label">
-                最小支援割合:
-                {{ subsidy.supportRatioMin }}
-              </span>
-            </span>
-            <span class="feature-label">
-              <span
-                v-for="keyword in subsidy.keywords"
-                :key="keyword.id"
-                class="label"
-              >
-                {{ keyword }}
-              </span>
-            </span>
+            </p>
           </div>
         </el-main>
       </el-container>
@@ -104,9 +109,33 @@ export default defineComponent({
   },
 })
 </script>
+
 <style lang="postcss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&family=Poppins:wght@700&display=swap');
+
 .card {
   overflow: auto;
+}
+
+.common-font {
+  font-family: Poppins, sans-serif;
+}
+
+.catch-copy-font {
+  font-weight: bold;
+  font-size: var(--spacing-4);
+  margin: var(--spacing-4) 0;
+}
+
+.title-font {
+  margin: var(--spacing-4) 0;
+}
+
+.title {
+  font-size: var(--spacing-6);
+  font-weight: bold;
+  color: #005dba;
+  cursor: pointer;
 }
 
 .clearfix::before,
@@ -117,6 +146,10 @@ export default defineComponent({
 
 .clearfix::after {
   clear: both;
+}
+
+.vertical-align {
+  vertical-align: middle;
 }
 
 .label {
@@ -133,6 +166,7 @@ export default defineComponent({
 
 .feature-label {
   font-size: 14px;
+  font-weight: bold;
   margin-right: var(--spacing-2);
 }
 
@@ -145,39 +179,80 @@ export default defineComponent({
 }
 
 .card-content {
-  margin-top: var(--spacing-4);
   padding: 0;
   overflow: visible;
 }
 
-.title {
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration-line: underline;
-  cursor: pointer;
-}
-
-.target-container {
-  display: flex;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: var(--spacing-10);
-  margin-top: var(--spacing-5);
-}
-
-.target {
-  font-size: 12px;
-  width: 100%;
-  margin: auto;
-}
-
-.target-container > .label {
-  width: var(--spacing-16);
-  text-align: center;
-  margin-top: var(--spacing-3);
-}
-
 .feature-labels {
   margin-top: var(--spacing-4);
+}
+
+.flex-box {
+  display: flex;
+  margin-top: var(--spacing-4);
+}
+
+.flex-child-first {
+  margin: 0 var(--spacing-8) 0 0;
+}
+
+.flex-child-second {
+  display: flex;
+}
+
+.margin-right-4 {
+  margin-right: var(--spacing-4);
+}
+
+.accent-part {
+  color: #be1b59;
+  font-size: var(--spacing-6);
+  font-weight: bold;
+}
+
+.tag-wrapper {
+  margin: var(--spacing-6) 0 var(--spacing-4) 0;
+}
+
+.tag-card {
+  background-color: #eee;
+  font-size: 14px;
+  border-radius: var(--spacing-1);
+  padding: var(--spacing-2) var(--spacing-3);
+  margin-right: var(--spacing-4);
+}
+
+.detail-width {
+  width: 70%;
+}
+
+p {
+  color: black;
+  height: calc(1.5em * 2);
+  line-height: 1.5em;
+  overflow: hidden;
+  position: relative;
+  word-wrap: break-word;
+}
+
+p span {
+  margin-right: 1em;
+}
+
+p::before {
+  background: linear-gradient(to right, #fff0 0%, #fff 30%);
+  bottom: 0%;
+  content: '…';
+  padding-left: 1em;
+  position: absolute;
+  right: 0%;
+}
+
+p::after {
+  background: #fff;
+  content: '';
+  height: 100%;
+  position: absolute;
+  width: 100%;
 }
 </style>
