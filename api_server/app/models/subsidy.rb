@@ -47,6 +47,7 @@ class Subsidy < ApplicationRecord
   has_many :users, through: :user_favorite_subsidies
   validates :title, presence: { message: 'は必須項目です' }
   validates :url, presence: { message: 'は必須項目です' }
+  validates :url, uniqueness: { message: 'はすでに登録済みです' }
   validates :detail, presence: { message: 'は必須項目です' }
   validates :target_detail, presence: { message: 'は必須項目です' }
   validates :publishing_code, presence: { message: 'は必須項目です' }
