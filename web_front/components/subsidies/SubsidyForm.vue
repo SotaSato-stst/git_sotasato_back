@@ -25,10 +25,9 @@
     </el-form-item>
     <el-form-item label="キャッチコピー" prop="catchCopy">
       <el-input
-        v-model="catchCopy"
+        v-model="state.catchCopy"
         class="input-text"
         :disabled="loading"
-        @change="catchCopyChanged()"
       />
     </el-form-item>
     <div class="inline">
@@ -454,16 +453,6 @@ export default defineComponent({
     const clearBusinessCategories = () => {
       state.businessCategories = []
     }
-
-    const catchCopy = ref<string | null>(null)
-    const catchCopyChanged = () => {
-      if (priceMaxMan.value) {
-        state.catchCopy = '【' + catchCopy + '】'
-      } else {
-        state.catchCopy = null
-      }
-    }
-
     const priceMaxMan = ref<number | null>(null)
     const priceMaxChanged = () => {
       if (priceMaxMan.value) {
@@ -632,8 +621,6 @@ export default defineComponent({
       businessCategories,
       selectAllBusinessCategories,
       clearBusinessCategories,
-      catchCopy,
-      catchCopyChanged,
       priceMaxMan,
       priceMaxChanged,
       capitalMinMan,

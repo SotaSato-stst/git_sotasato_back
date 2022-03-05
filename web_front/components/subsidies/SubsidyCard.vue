@@ -11,7 +11,7 @@
             v-if="subsidy.startFrom || subsidy.endTo"
             class="vertical-align"
           >
-            <span class="common-font"> 募集期間: </span>
+            <span> 募集期間: </span>
             <span>
               {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
             </span>
@@ -202,16 +202,13 @@ export default defineComponent({
   font-weight: bold;
 }
 
-.tag-wrapper {
-  margin: var(--spacing-6) 0 var(--spacing-4) 0;
-}
-
 .tag-card {
   background-color: #eee;
   font-size: 14px;
   border-radius: var(--spacing-1);
   padding: var(--spacing-2) var(--spacing-3);
-  margin-right: var(--spacing-4);
+  margin: var(--spacing-4) var(--spacing-4) 0 0;
+  display: inline-block;
 }
 
 .detail-width {
