@@ -1,5 +1,5 @@
 <template>
-  <el-container class="center-container">
+  <el-container>
     <el-aside class="left-side-menu" width="var(--header-width)">
       <search-menu />
     </el-aside>
@@ -21,16 +21,12 @@
         />
       </div>
     </el-main>
-    <el-aside width="316px">
-      <side-right-menu />
-    </el-aside>
   </el-container>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent} from '@nuxtjs/composition-api'
 import SearchMenu from '@/components/subsidies/SearchMenu.vue'
-import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
@@ -40,7 +36,6 @@ export default defineComponent({
   name: 'IndexPage',
   components: {
     SearchMenu,
-    SideRightMenu,
     SubsidyCard,
     Pagination,
     CardLoading,

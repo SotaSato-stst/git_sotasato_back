@@ -40,16 +40,12 @@
         />
       </div>
     </el-main>
-    <el-aside width="316px">
-      <side-right-menu />
-    </el-aside>
   </el-container>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
 import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
-import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
 import IconCrown from '@/components/icons/IconCrown.vue'
@@ -59,7 +55,6 @@ export default defineComponent({
   name: 'RankingPage',
   components: {
     ViewedSubsidies,
-    SideRightMenu,
     SubsidyCard,
     CardLoading,
     IconCrown,

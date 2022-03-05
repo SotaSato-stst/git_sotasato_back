@@ -21,9 +21,6 @@
         />
       </div>
     </el-main>
-    <el-aside width="316px">
-      <side-right-menu />
-    </el-aside>
   </el-container>
 </template>
 
@@ -35,7 +32,6 @@ import {
   useRoute,
 } from '@nuxtjs/composition-api'
 import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
-import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
@@ -45,7 +41,6 @@ export default defineComponent({
   name: 'FavoritePage',
   components: {
     ViewedSubsidies,
-    SideRightMenu,
     SubsidyCard,
     Pagination,
     CardLoading,

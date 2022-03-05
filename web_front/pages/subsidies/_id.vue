@@ -76,9 +76,6 @@
         </div>
       </el-card>
     </el-main>
-    <el-aside width="316px">
-      <side-right-menu />
-    </el-aside>
   </el-container>
 </template>
 
@@ -100,7 +97,6 @@ import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
 import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
-import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
 import {routingService} from '~/services/routingService'
 
@@ -109,7 +105,6 @@ export default defineComponent({
   components: {
     SupplierInformation,
     FavoriteButton,
-    SideRightMenu,
     ViewedSubsidies,
   },
 
