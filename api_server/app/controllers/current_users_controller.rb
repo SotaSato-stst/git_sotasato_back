@@ -5,6 +5,7 @@ class CurrentUsersController < ApplicationController
 
   def update
     if @current_user.update(update_params)
+      @company = current_user.company
       render :show
     else
       render json: { message: '更新に失敗しました', errors: @current_user.errors.full_messages }, status: 400
