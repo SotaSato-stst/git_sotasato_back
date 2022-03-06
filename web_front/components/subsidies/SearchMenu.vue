@@ -17,6 +17,7 @@
           v-model="state.prefectureId"
           placeholder="都道府県"
           clearable
+          class="input-select"
           @change="selectPrefectureId"
         >
           <el-option
@@ -35,6 +36,7 @@
           multiple
           clearable
           placeholder="市長区村"
+          class="input-select"
           no-data-text="都道府県を選択してください"
         >
           <el-option
@@ -52,6 +54,7 @@
           v-model="state.organizationType"
           placeholder="法人格"
           clearable
+          class="input-select"
         >
           <el-option
             v-for="organizationType in organizationTypes"
@@ -68,7 +71,7 @@
           multiple
           placeholder="業種"
           :disabled="loading"
-          class="category-select"
+          class="category-select input-select"
         >
           <el-option
             v-for="businessCategory in businessCategoryKeys"
@@ -145,6 +148,7 @@ import {
   useRouter,
   reactive,
   ref,
+  PropType,
 } from '@nuxtjs/composition-api'
 import {optionsModule, subsidiesModule, accountModule} from '@/store'
 import {routingService} from '@/services/routingService'
@@ -153,7 +157,14 @@ import {removeEmpty} from '@/utils/objectUtil'
 
 export default defineComponent({
   name: 'SearchMenu',
-  setup(_props) {
+  props: {
+    onSearch: {
+      type: Function as PropType<() => void>,
+      required: false,
+      default: () => {},
+    },
+  },
+  setup(props) {
     const route = useRoute()
     const query = route.value.query
     const router = useRouter()
@@ -264,6 +275,7 @@ export default defineComponent({
       load(loading, () => {
         router.push({path: routingService.Top(), query: urlQueryFromParams()})
         subsidiesModule.getSubsidies()
+        props.onSearch()
       })
     }
 
@@ -384,6 +396,10 @@ export default defineComponent({
 
 .input-left {
   width: 80%;
+}
+
+.input-select {
+  width: 100%;
 }
 
 .unit-font {

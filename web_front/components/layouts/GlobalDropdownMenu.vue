@@ -1,10 +1,18 @@
 <template>
-  <el-dropdown class="dropdown-container" @command="handleSelect">
-    <span class="dropdown-link">
-      <el-button icon="el-icon-setting">
-        設定<i class="el-icon-arrow-down el-icon--right"></i>
-      </el-button>
-    </span>
+  <el-dropdown @command="handleSelect">
+    <div>
+      <span v-if="!$device.isMobile" class="dropdown-link">
+        <el-button icon="el-icon-setting">
+          設定<i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+      </span>
+      <el-button
+        v-if="$device.isMobile"
+        icon="el-icon-more"
+        type="text"
+        class="mobile-dropdown-button"
+      />
+    </div>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item command="account">アカウント情報</el-dropdown-item>
       <el-dropdown-item v-if="isAdmin || isEditor" command="top" divided
@@ -76,12 +84,13 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.dropdown-container {
-  margin: auto var(--spacing-3);
-}
-
 .dropdown-link {
   cursor: pointer;
   font-size: 24px;
+}
+
+.mobile-dropdown-button {
+  font-size: 18px;
+  color: var(--primary-font-color);
 }
 </style>

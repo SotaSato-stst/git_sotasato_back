@@ -1,51 +1,45 @@
 <template>
-  <el-container>
-    <el-aside class="side-menu" width="var(--header-width)">
-      <account-menu />
-    </el-aside>
-    <el-container class="center-container">
-      <el-main>
-        <el-card>
-          <div slot="header" class="form-header">
-            <p>アカウント設定</p>
-            <el-button
-              type="primary"
-              class="submit-button"
-              :disabled="loading"
-              @click="submit"
-            >
-              保存する
-            </el-button>
-          </div>
-          <el-form
-            ref="form"
-            class="form"
-            :model="state"
-            label-width="120px"
-            :rules="rules"
-            :loading="loading"
-          >
-            <el-form-item label="氏名" prop="displayName">
-              <el-input
-                v-model="state.displayName"
-                class="input-text"
-                placeholder="田中太郎"
-                :disabled="loading"
-              />
-            </el-form-item>
-            <el-form-item label="メールアドレス" prop="email">
-              <el-input
-                v-model="state.email"
-                class="input-text"
-                placeholder="hojokin@example.com"
-                :disabled="loading"
-              />
-            </el-form-item>
-          </el-form>
-        </el-card>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div class="container">
+    <el-card>
+      <div slot="header" class="form-header">
+        <p>アカウント設定</p>
+        <el-button
+          type="primary"
+          class="submit-button"
+          :disabled="loading"
+          @click="submit"
+        >
+          保存する
+        </el-button>
+      </div>
+      <el-form
+        ref="form"
+        class="form"
+        :model="state"
+        label-width="120px"
+        label-position="top"
+        :rules="rules"
+        :loading="loading"
+      >
+        <el-form-item label="氏名" prop="displayName">
+          <el-input
+            v-model="state.displayName"
+            :class="$device.isMobile ? 'mobile-input-text' : 'input-text'"
+            placeholder="田中太郎"
+            :disabled="loading"
+          />
+        </el-form-item>
+        <el-form-item label="メールアドレス" prop="email">
+          <el-input
+            v-model="state.email"
+            :class="$device.isMobile ? 'mobile-input-text' : 'input-text'"
+            placeholder="hojokin@example.com"
+            :disabled="loading"
+          />
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -66,15 +60,12 @@ import {
   showApiErrorMessage,
 } from '@/services/notify'
 import {UpdateCurrentUserParams} from '@/types/User'
-import AccountMenu from '@/components/layouts/AccountMenu.vue'
 import {getUser} from '@/services/authService'
 import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'AccountPage',
-  components: {
-    AccountMenu,
-  },
+  layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'account'),
   setup(_props) {
     const form = ref<Form | null>(null)
     const {loading, load} = accountModule.loader
@@ -176,8 +167,8 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.side-menu {
-  height: 100vh;
+.container {
+  padding: var(--spacing-5);
 }
 
 .form-header {
@@ -186,15 +177,11 @@ export default defineComponent({
 }
 
 .input-text {
-  width: 400px;
-}
-
-.input-number {
   width: 240px;
 }
 
-.category-select {
-  width: 240px;
+.mobile-input-text {
+  width: 100%;
 }
 
 .submit-button {

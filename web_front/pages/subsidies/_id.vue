@@ -1,82 +1,77 @@
 <template>
-  <el-container class="container">
-    <el-aside class="left-side-menu" width="var(--header-width)">
-      <viewed-subsidies />
-    </el-aside>
-    <el-main>
-      <el-card v-if="subsidy">
-        <el-container>
-          <supplier-information :subsidy="subsidy" />
-          <el-container class="card-container">
-            <el-header height="32px" class="card-header">
-              <div>
-                <el-tag type="info" effect="plain" class="subsidy-type">
-                  {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
-                </el-tag>
-                <span v-if="subsidy.priceMax" class="header-info">
-                  <span class="label">
-                    上限金額:
-                    {{ convertToShortJPY(subsidy.priceMax) }}円
-                  </span>
+  <div class="container">
+    <el-card v-if="subsidy">
+      <el-container>
+        <supplier-information :subsidy="subsidy" />
+        <el-container class="card-container">
+          <el-header height="32px" class="card-header">
+            <div>
+              <el-tag type="info" effect="plain" class="subsidy-type">
+                {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
+              </el-tag>
+              <span v-if="subsidy.priceMax" class="header-info">
+                <span class="label">
+                  上限金額:
+                  {{ convertToShortJPY(subsidy.priceMax) }}円
                 </span>
-                <span
-                  v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
-                  class="header-info"
-                >
-                  <span class="label">
-                    支援割合:
-                    {{ subsidy.supportRatioMin }}
-                    ~
-                    {{ subsidy.supportRatioMax }}
-                  </span>
+              </span>
+              <span
+                v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
+                class="header-info"
+              >
+                <span class="label">
+                  支援割合:
+                  {{ subsidy.supportRatioMin }}
+                  ~
+                  {{ subsidy.supportRatioMax }}
                 </span>
-                <span v-if="subsidy.level" class="header-info">
-                  <span class="label">
-                    申請難易度:{{ starView(subsidy.level) }}
-                  </span>
+              </span>
+              <span v-if="subsidy.level" class="header-info">
+                <span class="label">
+                  申請難易度:{{ starView(subsidy.level) }}
                 </span>
-              </div>
-              <div>
-                <el-button
-                  v-if="isAdmin"
-                  size="mini"
-                  @click="showAdmin(subsidy.id)"
-                >
-                  管理画面で編集する
-                </el-button>
-                <favorite-button :subsidy="subsidy" />
-              </div>
-            </el-header>
-            <el-main class="card-content">
-              <div class="title">{{ subsidy.title }}</div>
-              <div class="header-info">
-                <span class="label">募集期間: </span>
-                {{ subsidy.startFrom && convertToJpDate(subsidy.startFrom) }}
-                ~
-                {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
-              </div>
-              <div class="header-info">
-                <span class="label">URL: </span>
-                <a :href="subsidy.url" target="_blank">{{ subsidy.url }}</a>
-              </div>
-            </el-main>
-          </el-container>
+              </span>
+            </div>
+            <div>
+              <el-button
+                v-if="isAdmin"
+                size="mini"
+                @click="showAdmin(subsidy.id)"
+              >
+                管理画面で編集する
+              </el-button>
+              <favorite-button :subsidy="subsidy" />
+            </div>
+          </el-header>
+          <el-main class="card-content">
+            <div class="title">{{ subsidy.title }}</div>
+            <div class="header-info">
+              <span class="label">募集期間: </span>
+              {{ subsidy.startFrom && convertToJpDate(subsidy.startFrom) }}
+              ~
+              {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
+            </div>
+            <div class="header-info">
+              <span class="label">URL: </span>
+              <a :href="subsidy.url" target="_blank">{{ subsidy.url }}</a>
+            </div>
+          </el-main>
         </el-container>
-        <div class="divider" />
-        <div class="detail">
-          <span class="label">対象</span>
-          <div class="content" v-html="parseMarkdown(subsidy.targetDetail)" />
-        </div>
-        <div class="detail">
-          <span class="label">支援内容</span>
-          <div
-            class="subsidy-detail-markdown-content"
-            v-html="parseMarkdown(subsidy.detail)"
-          />
-        </div>
-      </el-card>
-    </el-main>
-  </el-container>
+      </el-container>
+      <div class="divider" />
+      <div class="detail">
+        <span class="label">対象</span>
+        <div class="content" v-html="parseMarkdown(subsidy.targetDetail)" />
+      </div>
+      <div class="detail">
+        <span class="label">支援内容</span>
+        <div
+          class="subsidy-detail-markdown-content"
+          v-html="parseMarkdown(subsidy.detail)"
+        />
+      </div>
+    </el-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -97,7 +92,6 @@ import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
 import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
-import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
 import {routingService} from '~/services/routingService'
 
 export default defineComponent({
@@ -105,9 +99,8 @@ export default defineComponent({
   components: {
     SupplierInformation,
     FavoriteButton,
-    ViewedSubsidies,
   },
-
+  layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'recent'),
   setup(_props) {
     const route = useRoute()
     const router = useRouter()
@@ -162,6 +155,10 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+.container {
+  padding: var(--spacing-5);
+}
+
 .clearfix::before,
 .clearfix::after {
   display: table;

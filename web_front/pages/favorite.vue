@@ -1,27 +1,20 @@
 <template>
-  <el-container class="center-container">
-    <el-aside class="left-side-menu" width="var(--header-width)">
-      <viewed-subsidies />
-    </el-aside>
-    <el-main>
-      <div class="container">
-        <div class="title">保存済みの補助金情報</div>
-        <card-loading :loading="loading" />
-        <div v-for="subsidy in userFavoriteSubsidies" :key="subsidy.id">
-          <subsidy-card v-if="!loading" :subsidy="subsidy" />
-        </div>
-        <el-empty
-          v-if="!loading && userFavoriteSubsidies.length == 0"
-          description="データがありません"
-        />
-        <pagination
-          v-if="userFavoriteSubsidies.length > 0 && !loading"
-          :pagination="pagination"
-          :request-page="getPage"
-        />
-      </div>
-    </el-main>
-  </el-container>
+  <div class="container">
+    <div class="title">保存済みの補助金情報</div>
+    <card-loading :loading="loading" />
+    <div v-for="subsidy in userFavoriteSubsidies" :key="subsidy.id">
+      <subsidy-card v-if="!loading" :subsidy="subsidy" />
+    </div>
+    <el-empty
+      v-if="!loading && userFavoriteSubsidies.length == 0"
+      description="データがありません"
+    />
+    <pagination
+      v-if="userFavoriteSubsidies.length > 0 && !loading"
+      :pagination="pagination"
+      :request-page="getPage"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -31,7 +24,6 @@ import {
   onMounted,
   useRoute,
 } from '@nuxtjs/composition-api'
-import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
@@ -40,11 +32,11 @@ import {favoriteSubsidiesModule} from '@/store'
 export default defineComponent({
   name: 'FavoritePage',
   components: {
-    ViewedSubsidies,
     SubsidyCard,
     Pagination,
     CardLoading,
   },
+  layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'recent'),
   setup(_props) {
     const route = useRoute()
     const {loading, load} = favoriteSubsidiesModule.loader
@@ -81,6 +73,10 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+.container {
+  padding: var(--spacing-5);
+}
+
 .container > * {
   margin-bottom: var(--spacing-4);
 }

@@ -19,7 +19,7 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"]
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "@nuxtjs/device"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"],
   "include": ["**/*.ts", "**/*.vue"]

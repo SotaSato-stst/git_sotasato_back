@@ -1,6 +1,10 @@
 <template>
   <el-container>
-    <el-aside class="left-side-menu" width="var(--header-width)">
+    <el-aside
+      v-if="!$device.isMobile"
+      class="left-side-menu"
+      width="var(--header-width)"
+    >
       <search-menu />
     </el-aside>
     <el-main>
@@ -40,6 +44,7 @@ export default defineComponent({
     Pagination,
     CardLoading,
   },
+  layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'default'),
   setup(_props) {
     const {loading} = subsidiesModule.loader
     const subsidies = computed(() => subsidiesModule.subsidies)

@@ -1,51 +1,41 @@
 <template>
-  <el-container class="center-container">
-    <el-aside class="left-side-menu" width="var(--header-width)">
-      <viewed-subsidies />
-    </el-aside>
-    <el-main>
-      <div class="container">
-        <div class="title">おすすめの補助金・助成金ランキング</div>
-        <card-loading :loading="loading" />
-        <div
-          v-for="(subsidy, index) in rankings"
-          :key="subsidy.id"
-          class="subsidy-card"
-        >
-          <el-tag
-            v-if="!loading"
-            effect="plain"
-            class="ranking-tag"
-            :style="`border-color: ${
-              rankingColors[index] || 'var(--text-color)'
-            }`"
-          >
-            <div>
-              <icon-crown
-                v-if="index < rankingColors.length"
-                :size="24"
-                :color="rankingColors[index]"
-                class="crown"
-              />
-            </div>
-            <div class="ranking-title">
-              第{{ index + 1 }}位 「{{ subsidy.title }}」
-            </div>
-          </el-tag>
-          <subsidy-card v-if="!loading" :subsidy="subsidy" />
+  <div class="container">
+    <div class="title">おすすめの補助金・助成金ランキング</div>
+    <card-loading :loading="loading" />
+    <div
+      v-for="(subsidy, index) in rankings"
+      :key="subsidy.id"
+      class="subsidy-card"
+    >
+      <el-tag
+        v-if="!loading"
+        effect="plain"
+        class="ranking-tag"
+        :style="`border-color: ${rankingColors[index] || 'var(--text-color)'}`"
+      >
+        <div>
+          <icon-crown
+            v-if="index < rankingColors.length"
+            :size="24"
+            :color="rankingColors[index]"
+            class="crown"
+          />
         </div>
-        <el-empty
-          v-if="!loading && rankings.length == 0"
-          description="データがありません"
-        />
-      </div>
-    </el-main>
-  </el-container>
+        <div class="ranking-title">
+          第{{ index + 1 }}位 「{{ subsidy.title }}」
+        </div>
+      </el-tag>
+      <subsidy-card v-if="!loading" :subsidy="subsidy" />
+    </div>
+    <el-empty
+      v-if="!loading && rankings.length == 0"
+      description="データがありません"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent, onMounted} from '@nuxtjs/composition-api'
-import ViewedSubsidies from '@/components/subsidies/ViewedSubsidies.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
 import IconCrown from '@/components/icons/IconCrown.vue'
@@ -54,11 +44,11 @@ import {rankingSubsidiesModule} from '@/store'
 export default defineComponent({
   name: 'RankingPage',
   components: {
-    ViewedSubsidies,
     SubsidyCard,
     CardLoading,
     IconCrown,
   },
+  layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'recent'),
   setup(_props) {
     const {loading, load} = rankingSubsidiesModule.loader
     const rankings = computed(() => rankingSubsidiesModule.rankingSubsidies)
@@ -88,6 +78,10 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
+.container {
+  padding: var(--spacing-5);
+}
+
 .container > * {
   margin-bottom: var(--spacing-4);
 }

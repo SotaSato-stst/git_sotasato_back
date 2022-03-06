@@ -1,25 +1,40 @@
 <template>
-  <div class="header-container">
-    <div class="title-container" @click="goToTop()">補助金ドック</div>
-    <div class="menu-container">
-      <el-menu
-        :default-active="selectedPage"
-        class="header-menu"
-        mode="horizontal"
-        active-text-color="var(--primary-color)"
-        @select="handleSelect"
-      >
-        <el-menu-item index="new">
-          <i class="el-icon-s-order new"></i>新着
-        </el-menu-item>
-        <el-menu-item index="ranking">
-          <i class="el-icon-s-flag flag"></i>ランキング
-        </el-menu-item>
-        <el-menu-item index="favorite">
-          <i class="el-icon-star-on star"></i>保存済み
-        </el-menu-item>
-      </el-menu>
-      <global-dropdown-menu />
+  <div>
+    <!-- デスクトップレイアウト -->
+    <div v-if="!$device.isMobile" class="header-container">
+      <div class="title" @click="goToTop()">補助金ドック</div>
+      <div class="menu-container">
+        <global-nav-menu />
+        <global-dropdown-menu />
+      </div>
+    </div>
+    <!-- モバイルレイアウト -->
+    <div v-if="$device.isMobile">
+      <div class="mobile-header-container">
+        <div class="mobile-icon-container">
+          <el-button
+            icon="el-icon-search"
+            type="text"
+            class="mobile-search-button"
+            @click="drawer = true"
+          />
+          <el-drawer
+            title="検索フォーム"
+            :visible.sync="drawer"
+            size="100%"
+            direction="ltr"
+          >
+            <search-menu :on-search="onSearch" />
+          </el-drawer>
+          <!-- drawerは開くまで子要素をmoutしないため、リクエストが飛ばないので -->
+          <search-menu style="display: none" />
+        </div>
+        <div class="mobile-title" @click="goToTop()">補助金ドック</div>
+        <div class="mobile-icon-container">
+          <global-dropdown-menu />
+        </div>
+      </div>
+      <global-nav-menu />
     </div>
   </div>
 </template>
@@ -30,8 +45,11 @@ import {
   defineComponent,
   useRoute,
   useRouter,
+  ref,
 } from '@nuxtjs/composition-api'
 import GlobalDropdownMenu from '@/components/layouts/GlobalDropdownMenu.vue'
+import GlobalNavMenu from '@/components/layouts/GlobalNavMenu.vue'
+import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import {routingService} from '@/services/routingService'
 
 type menuType = 'new' | 'ranking' | 'favorite'
@@ -40,6 +58,8 @@ export default defineComponent({
   name: 'GlobalHeader',
   components: {
     GlobalDropdownMenu,
+    GlobalNavMenu,
+    SearchMenu,
   },
   setup(_props) {
     const route = useRoute()
@@ -68,8 +88,12 @@ export default defineComponent({
       }
     }
     const goToTop = () => router.push('/')
+    const drawer = ref(false)
+    const onSearch = () => {
+      drawer.value = false
+    }
 
-    return {selectedPage, handleSelect, goToTop}
+    return {selectedPage, handleSelect, goToTop, drawer, onSearch}
   },
 })
 </script>
@@ -79,7 +103,13 @@ export default defineComponent({
   display: flex;
 }
 
-.title-container {
+.mobile-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
   display: flex;
   align-items: center;
   width: var(--header-width);
@@ -91,42 +121,29 @@ export default defineComponent({
   cursor: pointer;
 }
 
+.mobile-title {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--primary-color);
+  font-size: 24px;
+}
+
 .menu-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: calc(100% - var(--header-width));
 }
 
-.header-menu {
-  border-bottom: solid 1px var(--border-grey-color);
-  box-sizing: border-box;
-  height: 60px;
+.menu-container > div {
+  margin: auto var(--spacing-3);
 }
 
-.header-menu > li {
-  font-size: 14px;
-  font-weight: bold;
-  width: fit-content;
-  color: var(--text-color);
+.mobile-icon-container {
+  margin: auto var(--spacing-3);
 }
 
-.header-menu > li > i {
-  font-size: 16px;
-  width: fit-content;
-}
-
-.star,
-.header-menu > li.is-active > i.star {
-  color: var(--hilight-yellow);
-}
-
-.flag,
-.header-menu > li.is-active > i.flag {
-  color: #f48c06;
-}
-
-.new,
-.header-menu > li.is-active > i.new {
-  color: #48cae4;
+.mobile-search-button {
+  font-size: 18px;
+  color: var(--primary-font-color);
 }
 </style>

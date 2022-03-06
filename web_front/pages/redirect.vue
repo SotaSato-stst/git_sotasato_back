@@ -13,6 +13,7 @@ import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'RedirectPage',
+  layout: 'plain-layout',
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
