@@ -48,6 +48,7 @@ class Subsidy < ApplicationRecord
   has_many :users, through: :user_favorite_subsidies
   validates :title, presence: { message: 'は必須項目です' }
   validates :url, presence: { message: 'は必須項目です' }
+  validates :url, uniqueness: { message: 'はすでに登録済みです' }
   validates :detail, presence: { message: 'は必須項目です' }
   validates :target_detail, presence: { message: 'は必須項目です' }
   validates :publishing_code, presence: { message: 'は必須項目です' }
@@ -200,6 +201,11 @@ class Subsidy < ApplicationRecord
     joins(:user_favorite_subsidies).where(
       user_favorite_subsidies: { user_id: user.id }
     )
+  }
+  scope :end_after, ->(date) {
+    return if date.blank?
+
+    where('end_to >= ?', date.to_date)
   }
 
   def organization_types

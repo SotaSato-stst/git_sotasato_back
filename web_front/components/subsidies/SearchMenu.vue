@@ -307,9 +307,9 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, async () => {
-        await optionsModule.getOrganizationTypes()
-        await optionsModule.getBusinessCategories()
-        await optionsModule.getPrefectures()
+        optionsModule.getOrganizationTypes()
+        optionsModule.getBusinessCategories()
+        optionsModule.getPrefectures()
         await accountModule.getCurrentUser()
         Object.assign(state, paramsFromCurrentCompany())
         Object.assign(state, paramsFromUrlQuery())
@@ -328,7 +328,7 @@ export default defineComponent({
         subsidiesModule.setSearchParams(state)
         const pageQuery = route.value.query.page?.toString() || null
         const page = pageQuery ? Number(pageQuery) : 1
-        subsidiesModule.getSubsidies(page)
+        await subsidiesModule.getSubsidies(page)
       })
     })
 

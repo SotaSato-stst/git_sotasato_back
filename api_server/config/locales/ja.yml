@@ -10,3 +10,4 @@ ja:
         end_to: 募集終了日
         supplier_type: 発行機関
         level: 申請難易度
+        url: URL

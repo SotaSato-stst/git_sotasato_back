@@ -8,7 +8,7 @@
     </div>
     <div class="filter">
       <el-radio-group
-        v-model="filter.publishingFilter"
+        v-model="filter.publishingCode"
         size="mini"
         @change="selectPublishingFilter"
       >
@@ -17,6 +17,18 @@
         <el-radio-button label="editing">編集中</el-radio-button>
         <el-radio-button label="archived">アーカイブ</el-radio-button>
       </el-radio-group>
+      <div>
+        <el-date-picker
+          v-model="endAfter"
+          type="date"
+          size="mini"
+          class="search-input"
+          placeholder="締切日"
+          @change="selectEndAfter"
+        />
+        <span class="input-caption">以降に締切</span>
+      </div>
+      <el-button class="search-button" @click="search">検索</el-button>
       <div class="total-count">{{ pagination.itemsTotal }}件</div>
     </div>
     <card-loading :loading="loading" />
@@ -32,6 +44,11 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="subsidyCategory" label="種類" width="70">
+        <template slot-scope="scope">
+          <span>{{ subsidyCategoryLabel(scope.row.subsidyCategory) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
           <a class="detail-link" @click="handleEdit(scope.row)">{{
@@ -39,7 +56,19 @@
           }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="URL" width="160">
+      <el-table-column label="発行機関" width="120">
+        <template slot-scope="scope">
+          <div v-if="scope.row.ministry">{{ scope.row.ministry.name }}</div>
+          <div v-if="scope.row.prefecture">{{ scope.row.prefecture.name }}</div>
+          <div v-if="scope.row.city">{{ scope.row.city.name }}</div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="startFrom" label="申請期限" width="100">
+        <template slot-scope="scope">
+          {{ scope.row.endTo }}
+        </template>
+      </el-table-column>
+      <el-table-column label="URL" width="180">
         <template slot-scope="scope">
           <a
             class="detail-link"
@@ -49,27 +78,6 @@
           >
             {{ scope.row.url }}
           </a>
-        </template>
-      </el-table-column>
-      <el-table-column label="発行機関" width="110">
-        <template slot-scope="scope">
-          <span v-if="scope.row.ministry">{{ scope.row.ministry.name }}</span>
-          <span v-if="scope.row.prefecture">{{
-            scope.row.prefecture.name
-          }}</span>
-          <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="businessCategories" label="業種" width="210">
-        <template slot-scope="scope">
-          <span>{{
-            scope.row.businessCategories.map(c => c.name).join(',')
-          }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="priceMax" label="最大支援金額" width="120">
-        <template slot-scope="scope">
-          {{ convertToShortJPY(scope.row.priceMax) }}
         </template>
       </el-table-column>
       <el-table-column label="操作" width="90" align="center">
@@ -94,6 +102,7 @@ import {
   useRoute,
   useRouter,
   reactive,
+  ref,
 } from '@nuxtjs/composition-api'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
@@ -105,7 +114,12 @@ import {
   FilterPublishingType,
 } from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
-import {publishingCodeLabel, publishingCodeType} from '@/utils/enumKeyToName'
+import {convertToJpDate} from '@/utils/dateFormatter'
+import {
+  publishingCodeLabel,
+  publishingCodeType,
+  subsidyCategoryLabel,
+} from '@/utils/enumKeyToName'
 import {removeEmpty} from '@/utils/objectUtil'
 
 export default defineComponent({
@@ -123,16 +137,26 @@ export default defineComponent({
     const pagination = computed(() => adminSubsidiesModule.pagination)
     const filter = reactive<AdminSubsidyIndexParams>({
       page: 1,
-      publishingFilter: 'all',
+      publishingCode: 'all',
+      endAfter: null,
     })
+    const endAfter = ref<Date | null>(null)
 
     const getPage = (page: number) => {
       adminSubsidiesModule.setSubsidies([])
       handleSegue({page})
     }
 
-    const selectPublishingFilter = (publishingFilter: FilterPublishingType) => {
-      handleSegue({publishingFilter, page: 1})
+    const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
+      handleSegue({publishingCode, page: 1})
+    }
+
+    const selectEndAfter = (date: Date | null) => {
+      filter.endAfter = date?.toLocaleDateString() || null
+    }
+
+    const search = () => {
+      handleSegue({endAfter: filter.endAfter, page: 1})
     }
 
     const handleSegue = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
@@ -152,10 +176,13 @@ export default defineComponent({
       load(loading, () => {
         const pageQuery = route.value.query.page?.toString() || null
         const page = pageQuery ? Number(pageQuery) : 1
-        const publishingFilter =
-          (route.value.query.publishingFilter?.toString() as FilterPublishingType) ||
+        const publishingCode =
+          (route.value.query.publishingCode?.toString() as FilterPublishingType) ||
           'all'
-        handleSegue({page, publishingFilter})
+        const endAfterStr = route.value.query.endAfter?.toString()
+        const endAfterDate = endAfterStr ? new Date(endAfterStr) : null
+        endAfter.value = endAfterDate
+        handleSegue({page, publishingCode, endAfter: endAfterStr})
       })
     })
 
@@ -164,13 +191,18 @@ export default defineComponent({
       subsidies,
       pagination,
       filter,
+      endAfter,
+      search,
       getPage,
       handleEdit,
       newSubsidyPage,
       convertToShortJPY,
+      convertToJpDate,
       publishingCodeLabel,
       publishingCodeType,
+      subsidyCategoryLabel,
       selectPublishingFilter,
+      selectEndAfter,
     }
   },
   head(): object {
@@ -209,5 +241,25 @@ export default defineComponent({
 
 .filter > * {
   margin-right: var(--spacing-4);
+}
+
+.search-input {
+  width: 130px;
+}
+
+.search-button {
+  height: 28px;
+  padding: var(--spacing-1) var(--spacing-4);
+}
+
+.input-caption {
+  font-size: 12px;
+  color: var(--primary-font-color);
+}
+</style>
+
+<style>
+.el-table table {
+  width: 100%;
 }
 </style>

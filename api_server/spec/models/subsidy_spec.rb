@@ -265,16 +265,149 @@ RSpec.describe Subsidy, type: :model do
 
   describe 'search_with_employee' do
     subject { Subsidy.search_with_employee(total_employee) }
-    context '一致するデータが存在するとき' do
-      let(:total_employee) { 10 }
-      let!(:target_record) { create(:subsidy, total_employee_max: 20, total_employee_min: 5) }
-      let!(:not_target_record) { create(:subsidy, total_employee_max: 200, total_employee_min: 50) }
 
-      it '資本金が範囲内のsubsidyが抽出される' do
+    context 'total_employee_minとtotal_employee_maxが両方とも指定されている場合' do
+      let(:total_employee) { 140 }
+      let!(:target_record) { create(:subsidy, total_employee_max: 200, total_employee_min: 50) }
+      let!(:not_target_record) { create(:subsidy, total_employee_max: 2000, total_employee_min: 500) }
+
+      it '従業員数が範囲内のsubsidyが抽出される' do
         expect(subject).to include(target_record)
       end
       it '範囲外のsubjectは抽出されない' do
         expect(subject).not_to include(not_target_record)
+      end
+    end
+
+    context 'total_employee_maxのみ指定されている場合' do
+      let!(:target_record) { create(:subsidy, total_employee_max: 200, total_employee_min: nil) }
+
+      context '範囲内である場合' do
+        let(:total_employee) { 140 }
+
+        it '従業員数が範囲内のsubsidyが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:total_employee) { 500 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'total_employee_minのみ指定されている場合' do
+      let!(:target_record) { create(:subsidy, total_employee_max: nil, total_employee_min: 200) }
+
+      context '範囲内である場合' do
+        let(:total_employee) { 300 }
+
+        it '従業員数が範囲内のsubsidyが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:total_employee) { 100 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'いずれの指定もない場合' do
+      let!(:target_record) { create(:subsidy, total_employee_max: nil, total_employee_min: nil) }
+      let(:total_employee) { 300 }
+
+      it '抽出される' do
+        expect(subject).to include(target_record)
+      end
+    end
+  end
+
+  describe 'search_with_annual_sales' do
+    subject { Subsidy.search_with_annual_sales(annual_sales) }
+
+    context 'annual_sales_minとannual_sales_maxが両方とも指定されている場合' do
+      let(:annual_sales) { 140 }
+      let!(:target_record) { create(:subsidy, annual_sales_max: 200, annual_sales_min: 50) }
+      let!(:not_target_record) { create(:subsidy, annual_sales_max: 2000, annual_sales_min: 500) }
+
+      it '従業員数が範囲内のsubsidyが抽出される' do
+        expect(subject).to include(target_record)
+      end
+      it '範囲外のsubjectは抽出されない' do
+        expect(subject).not_to include(not_target_record)
+      end
+    end
+
+    context 'annual_sales_maxのみ指定されている場合' do
+      let!(:target_record) { create(:subsidy, annual_sales_max: 200, annual_sales_min: nil) }
+
+      context '範囲内である場合' do
+        let(:annual_sales) { 140 }
+
+        it '従業員数が範囲内のsubsidyが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:annual_sales) { 500 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'annual_sales_minのみ指定されている場合' do
+      let!(:target_record) { create(:subsidy, annual_sales_max: nil, annual_sales_min: 200) }
+
+      context '範囲内である場合' do
+        let(:annual_sales) { 300 }
+
+        it '従業員数が範囲内のsubsidyが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:annual_sales) { 100 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'いずれの指定もない場合' do
+      let!(:target_record) { create(:subsidy, annual_sales_max: nil, annual_sales_min: nil) }
+      let(:annual_sales) { 300 }
+
+      it '抽出される' do
+        expect(subject).to include(target_record)
+      end
+    end
+  end
+
+  describe 'in_years_of_establishment' do
+    subject { Subsidy.in_years_of_establishment(fouding_date) }
+
+    context '設立年数条件を満たしている場合' do
+      let(:fouding_date) { '2018-02-27' }
+      let!(:target_record) { create(:subsidy, start_from: '2022-02-27', end_to: '2022-02-28', years_of_establishment: 2) }
+      let!(:not_target_record) { create(:subsidy, start_from: '2022-02-27', end_to: '2022-02-29', years_of_establishment: 6) }
+
+      it '設立年数の条件を満たすsubsidyが抽出される' do
+        expect(subject).to include(target_record)
+      end
+      it '条件外のsubsidyは抽出されない' do
+        expect(subject).not_to include(not_target_record)
+      end
+    end
+
+    context '設立年数の指定がない場合' do
+      let(:fouding_date) { '2018-02-27' }
+      let!(:target_record) { create(:subsidy, start_from: '2022-02-27', end_to: '2022-02-28', years_of_establishment: nil) }
+      it 'founding_dateの値に関わらずsubsidyが抽出される' do
+        expect(subject).to include(target_record)
       end
     end
   end

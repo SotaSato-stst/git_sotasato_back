@@ -108,5 +108,6 @@ export type FilterPublishingType = 'published' | 'editing' | 'archived' | 'all'
 
 export type AdminSubsidyIndexParams = {
   page?: number
-  publishingFilter: FilterPublishingType
+  publishingCode: FilterPublishingType
+  endAfter: string | null
 }

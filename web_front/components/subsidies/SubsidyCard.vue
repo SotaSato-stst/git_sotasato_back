@@ -9,7 +9,7 @@
           </el-tag>
           <span
             v-if="subsidy.startFrom || subsidy.endTo"
-            class="vertical-align"
+            class="vertical-align feature-label"
           >
             <span> 募集期間: </span>
             <span>
@@ -19,39 +19,44 @@
           <favorite-button :subsidy="subsidy" />
         </el-header>
         <el-main class="card-content">
-          <div v-if="subsidy.catchCopy" class="catch-copy-font common-font">
+          <div v-if="subsidy.catchCopy" class="catch-copy-font">
             {{ subsidy.catchCopy }}
           </div>
-          <div class="title-font">
-            <a class="title common-font" @click="clickSubsidy(subsidy.id)">
+          <div class="title-wrapper">
+            <a class="title" @click="clickSubsidy(subsidy.id)">
               {{ subsidy.title }}
             </a>
           </div>
-          <div class="flex-box">
-            <div class="flex-child-first">
-              <div v-if="subsidy.priceMax">
-                <span class="feature-label common-font"> 上限金額: </span>
-                <span class="accent-part common-font">
-                  {{ convertToShortJPY(subsidy.priceMax) }}円</span
-                >
-              </div>
+          <div
+            v-if="
+              subsidy.priceMax ||
+              subsidy.supportRatioMax ||
+              subsidy.supportRatioMin
+            "
+            class="flex-box"
+          >
+            <div v-if="subsidy.priceMax" class="flex-child-first">
+              <span class="feature-label"> 上限金額: </span>
+              <span class="accent-part common-font">
+                {{ convertToShortJPY(subsidy.priceMax) }}円</span
+              >
             </div>
             <div class="flex-child-second">
               <div v-if="subsidy.supportRatioMax">
-                <span class="feature-label common-font"> 最大支援割合: </span>
+                <span class="feature-label"> 最大支援割合: </span>
                 <span class="accent-part common-font margin-right-4">
                   {{ subsidy.supportRatioMax }}
                 </span>
               </div>
               <div v-if="subsidy.supportRatioMin">
-                <span class="feature-label common-font"> 最小支援割合: </span>
+                <span class="feature-label"> 最小支援割合: </span>
                 <span class="accent-part common-font">
                   {{ subsidy.supportRatioMin }}
                 </span>
               </div>
             </div>
           </div>
-          <div class="tag-wrapper">
+          <div v-if="subsidy.keywords" class="tag-wrapper">
             <span
               v-for="keyword in subsidy.keywords"
               :key="keyword"
@@ -60,13 +65,11 @@
               {{ keyword }}
             </span>
           </div>
-          <div class="detail-width">
-            <p v-if="subsidy.keywords.length == 0" class="detail-wrapper">
-              <span class="detail-wrapper-span">
-                {{ subsidy.detail }}
-              </span>
-            </p>
-          </div>
+          <p v-if="subsidy.keywords.length == 0">
+            <span>
+              {{ subsidy.detail }}
+            </span>
+          </p>
         </el-main>
       </el-container>
     </el-container>
@@ -111,8 +114,6 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&family=Poppins:wght@700&display=swap');
-
 .card {
   overflow: auto;
 }
@@ -123,18 +124,21 @@ export default defineComponent({
 
 .catch-copy-font {
   font-weight: bold;
-  font-size: var(--spacing-4);
+  font-size: 16px;
   margin: var(--spacing-4) 0;
 }
 
-.title-font {
+.title-wrapper {
   margin: var(--spacing-4) 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .title {
-  font-size: var(--spacing-6);
+  font-size: 24px;
   font-weight: bold;
-  color: #005dba;
+  color: var(--color-title);
   cursor: pointer;
 }
 
@@ -171,7 +175,7 @@ export default defineComponent({
 }
 
 .subsidy-type {
-  color: black;
+  color: var(--black);
 }
 
 .card-content {
@@ -197,31 +201,26 @@ export default defineComponent({
 }
 
 .accent-part {
-  color: #be1b59;
-  font-size: var(--spacing-6);
+  color: var(--color-accent);
+  font-size: 24px;
   font-weight: bold;
 }
 
+.tag-wrapper {
+  margin-top: var(--spacing-4);
+}
+
 .tag-card {
-  background-color: #eee;
+  background-color: var(--color-tag-color);
   font-size: 14px;
   border-radius: var(--spacing-1);
   padding: var(--spacing-2) var(--spacing-3);
-  margin: var(--spacing-4) var(--spacing-4) 0 0;
+  margin: 0 var(--spacing-4) var(--spacing-4) 0;
   display: inline-block;
 }
 
-.detail-width {
-  width: 70%;
-}
-
-.detail-wrapper {
-  border-top: solid 1px #cfcfcf;
-  padding-top: var(--spacing-4);
-}
-
 p {
-  color: black;
+  color: var(--black);
   height: calc(1.5em * 2);
   line-height: 1.5em;
   overflow: hidden;
@@ -234,7 +233,7 @@ p span {
 }
 
 p::before {
-  background: linear-gradient(to right, #fff0 0%, #fff 30%);
+  background: linear-gradient(to right, var(--white) 30%);
   bottom: 0%;
   content: '…';
   padding-left: 1em;
@@ -243,7 +242,7 @@ p::before {
 }
 
 p::after {
-  background: #fff;
+  background: var(--white);
   content: '';
   height: 100%;
   position: absolute;
