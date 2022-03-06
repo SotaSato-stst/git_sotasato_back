@@ -82,7 +82,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
     },
     {
@@ -173,7 +173,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【海上輸送部門における省エネルギーを推進し輸送全体の最適化を図る公募！】',
+      catch_copy: '海上輸送部門における省エネルギーを推進し輸送全体の最適化を図る公募！',
       keywords: ['海上輸送', 'エネルギー', 'AI'],
     },
     {
@@ -206,7 +206,7 @@ if Rails.env.development?
       annual_sales_max: nil, 
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【コロナの影響を受けた全ての中小法人・個人事業者が給付対象です！】',
+      catch_copy: 'コロナの影響を受けた全ての中小法人・個人事業者が給付対象です！',
       keywords: ['中小企業', 'コロナ関連'],
     },
     {
@@ -277,7 +277,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
     },
     {
@@ -316,7 +316,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
     },
     {
@@ -355,7 +355,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
     },
     {
@@ -394,7 +394,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
     },
     {
@@ -433,7 +433,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入', '金属バット', 'ICT導入', 'ドローン機器等'],
     },
     {
@@ -511,7 +511,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: [],
     },
     {
@@ -589,7 +589,7 @@ if Rails.env.development?
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
-      catch_copy: '【設備投資を応援！】',
+      catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
     },
   ]

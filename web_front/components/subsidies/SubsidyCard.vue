@@ -20,7 +20,7 @@
         </el-header>
         <el-main class="card-content">
           <div v-if="subsidy.catchCopy" class="catch-copy-font">
-            {{ subsidy.catchCopy }}
+            【{{ subsidy.catchCopy }}】
           </div>
           <div class="title-wrapper">
             <a class="title" @click="clickSubsidy(subsidy.id)">
@@ -35,13 +35,13 @@
             "
             class="flex-box"
           >
-            <div v-if="subsidy.priceMax" class="flex-child-first">
+            <div v-if="subsidy.priceMax">
               <span class="feature-label"> 上限金額: </span>
               <span class="accent-part common-font">
                 {{ convertToShortJPY(subsidy.priceMax) }}円</span
               >
             </div>
-            <div class="flex-child-second">
+            <div class="inner-flex-box">
               <div v-if="subsidy.supportRatioMax">
                 <span class="feature-label"> 最大支援割合: </span>
                 <span class="accent-part common-font margin-right-4">
@@ -65,7 +65,7 @@
               {{ keyword }}
             </span>
           </div>
-          <p v-if="subsidy.keywords.length == 0">
+          <p v-if="subsidy.keywords.length == 0" class="detail-wrapper">
             <span>
               {{ subsidy.detail }}
             </span>
@@ -129,7 +129,7 @@ export default defineComponent({
 }
 
 .title-wrapper {
-  margin: var(--spacing-4) 0;
+  margin-top: var(--spacing-4);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -188,11 +188,11 @@ export default defineComponent({
   margin-top: var(--spacing-4);
 }
 
-.flex-child-first {
-  margin: 0 var(--spacing-8) 0 0;
+.flex-box > div {
+  margin-right: var(--spacing-8);
 }
 
-.flex-child-second {
+.inner-flex-box {
   display: flex;
 }
 
@@ -206,20 +206,16 @@ export default defineComponent({
   font-weight: bold;
 }
 
-.tag-wrapper {
-  margin-top: var(--spacing-4);
-}
-
 .tag-card {
   background-color: var(--color-tag-color);
   font-size: 14px;
   border-radius: var(--spacing-1);
   padding: var(--spacing-2) var(--spacing-3);
-  margin: 0 var(--spacing-4) var(--spacing-4) 0;
+  margin: var(--spacing-4) var(--spacing-4) 0 0;
   display: inline-block;
 }
 
-p {
+.detail-wrapper {
   color: var(--black);
   height: calc(1.5em * 2);
   line-height: 1.5em;
@@ -228,11 +224,11 @@ p {
   word-wrap: break-word;
 }
 
-p span {
+.detail-wrapper > span {
   margin-right: 1em;
 }
 
-p::before {
+.detail-wrapper ::before {
   background: linear-gradient(to right, var(--white) 30%);
   bottom: 0%;
   content: '…';
@@ -241,7 +237,7 @@ p::before {
   right: 0%;
 }
 
-p::after {
+.detail-wrapper ::after {
   background: var(--white);
   content: '';
   height: 100%;
