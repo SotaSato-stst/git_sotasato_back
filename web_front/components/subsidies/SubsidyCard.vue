@@ -216,7 +216,7 @@ export default defineComponent({
 }
 
 .detail-wrapper {
-  color: var(--black);
+  color: var(--color-detail);
   height: calc(1.5em * 2);
   line-height: 1.5em;
   overflow: hidden;
