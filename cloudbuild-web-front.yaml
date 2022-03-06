@@ -1,8 +1,7 @@
 steps:
-- name: 'curlimages/curl'
-  args: ['-X','POST',
-         '--data-urlencode', '"payload={\"text\": \"*[hojokin_dock/web_front]*\nBuild Started :gear: $BUILD_ID\"}"',
-         '${_SLACK_WEBHOOK_URL}']
+- name: 'bash'
+  entrypoint: bash
+  args: ['-c', 'curl -X POST --data-urlencode "payload={\"text\": \"*[hojokin_dock/web_front]*\nBuild Started :gear: $BUILD_ID\"}" ${_SLACK_WEBHOOK_URL}']
 - name: node:14.17.0
   entrypoint: yarn
   dir: 'web_front'
@@ -25,8 +24,7 @@ steps:
 - name: gcr.io/${PROJECT_ID}/firebase
   dir: 'web_front'
   args: ['deploy', '--project=${PROJECT_ID}', '--only=hosting']
-- name: 'curlimages/curl'
-  args: ['-X','POST',
-         '--data-urlencode', '"payload={\"text\": \"*[hojokin_dock/web_front]*\nBuild Completed $BUILD_ID\"}"',
-         '${_SLACK_WEBHOOK_URL}']
+- name: 'bash'
+  entrypoint: bash
+  args: ['-c', 'curl -X POST --data-urlencode "payload={\"text\": \"*[hojokin_dock/web_front]*\nBuild Finished :gear: $BUILD_ID\"}" ${_SLACK_WEBHOOK_URL}']
 timeout: '1800s'
