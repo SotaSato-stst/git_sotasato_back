@@ -1,8 +1,7 @@
 steps:
-- name: 'curlimages/curl'
-  args: ['-X','POST',
-         '--data-urlencode', '"payload={\"text\": \"*[hojokin_dock/scraping]*\nBuild Started :gear: $BUILD_ID\"}"',
-         '${_SLACK_WEBHOOK_URL}']
+- name: 'gcr.io/$PROJECT_ID/slackbot'
+  args: [ '--build', '$BUILD_ID',
+          '--webhook', '$_SLACK_WEBHOOK_URL' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   args: ['-c', 'gcloud config set app/cloud_build_timeout 1200
@@ -19,8 +18,4 @@ steps:
          && echo "SLACK_TOKEN=$_SLACK_TOKEN" >> .env
          && echo "RUNNING_ENV=production" >> .env
          && gcloud functions deploy scraping-subsidy-curation --entry-point cloud_function_for_curation --trigger-topic scraping-subsidy-curation --runtime python38 --region asia-northeast1']
-- name: 'curlimages/curl'
-  args: ['-X','POST',
-         '--data-urlencode', '"payload={\"text\": \"*[hojokin_dock/scraping]*\nBuild Completed $BUILD_ID\"}"',
-         '${_SLACK_WEBHOOK_URL}']
 timeout: '1800s'
