@@ -58,7 +58,7 @@
           </div>
           <div v-if="subsidy.keywords" class="tag-wrapper">
             <span
-              v-for="keyword in subsidy.keywords"
+              v-for="keyword in subsidy.keywords.slice(0, 5)"
               :key="keyword"
               class="tag-card"
             >
@@ -96,6 +96,7 @@ export default defineComponent({
       required: true,
     },
   },
+
   setup(_props) {
     const router = useRouter()
     const clickSubsidy = (subsidyId: number) => {
