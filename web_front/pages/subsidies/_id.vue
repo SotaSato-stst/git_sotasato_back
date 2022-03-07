@@ -34,9 +34,10 @@
             </div>
             <div class="subsidy-info">
               <span class="label">募集期間: </span>
-              {{ subsidy.startFrom && convertToJpDate(subsidy.startFrom) }}
-              ~
-              {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
+              <span v-if="subsidy.startFrom || subsidy.endTo">
+                {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
+              </span>
+              <span v-else>未定</span>
             </div>
             <div v-if="subsidy.level" class="subsidy-info">
               <span class="label">申請難易度: </span>
@@ -88,7 +89,7 @@ import {
 import {getAnalytics, logEvent} from 'firebase/analytics'
 import {marked} from 'marked'
 import {subsidiesModule, accountModule} from '@/store'
-import {convertToJpDate} from '@/utils/dateFormatter'
+import {convertDateRange} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
@@ -136,7 +137,7 @@ export default defineComponent({
 
     return {
       convertToShortJPY,
-      convertToJpDate,
+      convertDateRange,
       starView,
       subsidyCategoryLabel,
       subsidy,
