@@ -37,20 +37,20 @@
           >
             <div v-if="subsidy.priceMax">
               <span class="feature-label"> 上限金額: </span>
-              <span class="accent-part common-font">
+              <span class="accent-part">
                 {{ convertToShortJPY(subsidy.priceMax) }}円</span
               >
             </div>
             <div class="inner-flex-box">
               <div v-if="subsidy.supportRatioMax">
                 <span class="feature-label"> 最大支援割合: </span>
-                <span class="accent-part common-font margin-right-4">
+                <span class="accent-part margin-right-4">
                   {{ subsidy.supportRatioMax }}
                 </span>
               </div>
               <div v-if="subsidy.supportRatioMin">
                 <span class="feature-label"> 最小支援割合: </span>
-                <span class="accent-part common-font">
+                <span class="accent-part">
                   {{ subsidy.supportRatioMin }}
                 </span>
               </div>
