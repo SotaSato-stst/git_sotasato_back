@@ -1,6 +1,7 @@
 steps:
 - name: 'gcr.io/$PROJECT_ID/slackbot'
   args: [ '--build', '$BUILD_ID',
+          '--project', 'web_front',
           '--webhook', '$_SLACK_WEBHOOK_URL' ]
 - name: node:14.17.0
   entrypoint: yarn
