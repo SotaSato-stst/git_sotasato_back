@@ -6,57 +6,59 @@
       </el-aside>
       <el-container>
         <el-main class="card-container">
-          <div v-if="subsidy.catchCopy" class="catch-copy-font">
-            【{{ subsidy.catchCopy }}】
-          </div>
-          <div :class="$device.isMobile ? '' : 'title-container'">
-            <a class="title" @click="clickSubsidy(subsidy.id)">
-              {{ subsidy.title }}
-            </a>
-          </div>
-          <div
-            v-if="
-              subsidy.priceMax ||
-              subsidy.supportRatioMax ||
-              subsidy.supportRatioMin
-            "
-            class="price-container"
-          >
-            <div v-if="subsidy.priceMax">
-              <span class="feature-label"> 上限金額: </span>
-              <span class="accent-text">
-                {{ convertToShortJPY(subsidy.priceMax) }}円</span
-              >
+          <div>
+            <div v-if="subsidy.catchCopy" class="catch-copy-font">
+              【{{ subsidy.catchCopy }}】
             </div>
-            <div class="inner-price-container">
-              <div v-if="subsidy.supportRatioMax">
-                <span class="feature-label"> 最大支援割合: </span>
-                <span class="accent-text">
-                  {{ subsidy.supportRatioMax }}
-                </span>
-              </div>
-              <div v-if="subsidy.supportRatioMin">
-                <span class="feature-label"> 最小支援割合: </span>
-                <span class="accent-text">
-                  {{ subsidy.supportRatioMin }}
-                </span>
-              </div>
+            <div :class="$device.isMobile ? '' : 'title-container'">
+              <a class="title" @click="clickSubsidy(subsidy.id)">
+                {{ subsidy.title }}
+              </a>
             </div>
-          </div>
-          <div v-if="subsidy.keywords.length > 0" class="tag-container">
-            <el-tag
-              v-for="keyword in keywords"
-              :key="keyword"
-              type="info"
-              class="keyword-tag"
+            <div
+              v-if="
+                subsidy.priceMax ||
+                subsidy.supportRatioMax ||
+                subsidy.supportRatioMin
+              "
+              class="price-container"
             >
-              {{ keyword }}
-            </el-tag>
-          </div>
-          <div v-if="subsidy.keywords.length == 0" class="detail-container">
-            <span class="normal-text">
-              {{ subsidy.detail }}
-            </span>
+              <div v-if="subsidy.priceMax">
+                <span class="feature-label"> 上限金額: </span>
+                <span class="accent-text">
+                  {{ convertToShortJPY(subsidy.priceMax) }}円</span
+                >
+              </div>
+              <div class="inner-price-container">
+                <div v-if="subsidy.supportRatioMax">
+                  <span class="feature-label"> 最大支援割合: </span>
+                  <span class="accent-text">
+                    {{ subsidy.supportRatioMax }}
+                  </span>
+                </div>
+                <div v-if="subsidy.supportRatioMin">
+                  <span class="feature-label"> 最小支援割合: </span>
+                  <span class="accent-text">
+                    {{ subsidy.supportRatioMin }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div v-if="subsidy.keywords.length > 0" class="tag-container">
+              <el-tag
+                v-for="keyword in keywords"
+                :key="keyword"
+                type="info"
+                class="keyword-tag"
+              >
+                {{ keyword }}
+              </el-tag>
+            </div>
+            <div v-if="subsidy.keywords.length == 0" class="detail-container">
+              <span class="normal-text">
+                {{ subsidy.detail }}
+              </span>
+            </div>
           </div>
           <div class="footer-container">
             <div>
@@ -126,6 +128,10 @@ export default defineComponent({
 .card-container {
   margin-left: var(--spacing-4);
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .catch-copy-font {
@@ -224,6 +230,6 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: var(--spacing-3);
+  margin-top: var(--spacing-2);
 }
 </style>
