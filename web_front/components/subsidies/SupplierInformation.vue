@@ -5,12 +5,16 @@
       :src="logoUrl(subsidy.supplierType)"
       class="logo"
     ></el-avatar>
-    <div class="supplier label">発行機関</div>
-    <div v-if="subsidy.supplierType == 'city'" class="supplier">
+    <div class="text-content label">発行機関</div>
+    <div v-if="subsidy.supplierType == 'city'" class="text-content">
       {{ subsidy.prefecture && subsidy.prefecture.name }}
     </div>
-    <div class="supplier">
+    <div class="text-content">
       {{ supplierName(subsidy.supplierType) }}
+    </div>
+    <div class="text-content label">種別</div>
+    <div class="text-content">
+      {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
     </div>
   </div>
 </template>
@@ -18,6 +22,7 @@
 <script lang="ts">
 import {defineComponent, PropType} from '@nuxtjs/composition-api'
 import {Subsidy, SupplierType} from '@/types/Subsidy'
+import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 
 export default defineComponent({
   name: 'SupplierInformation',
@@ -51,6 +56,7 @@ export default defineComponent({
     return {
       supplierName,
       logoUrl,
+      subsidyCategoryLabel,
     }
   },
 })
@@ -66,7 +72,7 @@ export default defineComponent({
   border: solid 1px var(--border-grey-color);
 }
 
-.supplier {
+.text-content {
   font-size: 12px;
   margin-top: var(--spacing-2);
 }

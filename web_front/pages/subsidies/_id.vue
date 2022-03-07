@@ -3,22 +3,22 @@
     <el-card v-if="subsidy">
       <el-container>
         <el-container class="card-container">
-          <el-header height="32px" class="mobile-header">
+          <el-header height="32px" class="subsidy-header">
             <el-tag type="info" effect="plain" class="subsidy-type">
               {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
             </el-tag>
-            <div class="supplier-container">
-              <span>発行: </span>
+            <favorite-button :subsidy="subsidy" />
+          </el-header>
+          <el-main class="card-content">
+            <div class="title">{{ subsidy.title }}</div>
+            <div class="subsidy-info">
+              <span class="label">発行: </span>
               <span v-if="subsidy.ministry">{{ subsidy.ministry.name }}</span>
               <span v-if="subsidy.prefecture">
                 {{ subsidy.prefecture.name }}
               </span>
               <span v-if="subsidy.city">{{ subsidy.city.name }}</span>
             </div>
-            <favorite-button :subsidy="subsidy" />
-          </el-header>
-          <el-main class="card-content">
-            <div class="title">{{ subsidy.title }}</div>
             <div v-if="subsidy.priceMax" class="subsidy-info">
               <span class="label">上限金額: </span>
               {{ convertToShortJPY(subsidy.priceMax) }}円
@@ -159,30 +159,15 @@ export default defineComponent({
   padding: var(--spacing-5);
 }
 
-.card-aside {
-  height: 100%;
-  text-align: center;
-}
-
-.logo {
-  background-color: var(--white);
-  border: solid 1px var(--border-grey-color);
-}
-
 .label {
   font-weight: bold;
 }
 
-.mobile-header {
+.subsidy-header {
   padding: 0;
   display: flex;
   justify-content: space-between;
   align-content: center;
-}
-
-.supplier-container {
-  display: flex;
-  align-items: center;
 }
 
 .subsidy-info {
