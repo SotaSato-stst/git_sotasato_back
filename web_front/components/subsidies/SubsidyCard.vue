@@ -127,10 +127,6 @@ export default defineComponent({
   overflow: auto;
 }
 
-.common-font {
-  font-family: Poppins, sans-serif;
-}
-
 .catch-copy-font {
   font-weight: bold;
   font-size: 16px;
@@ -213,6 +209,7 @@ export default defineComponent({
   color: var(--color-accent);
   font-size: 24px;
   font-weight: bold;
+  font-family: Poppins, sans-serif;
 }
 
 .tag-card {
