@@ -4,6 +4,9 @@
       <global-header />
     </el-header>
     <el-container class="center-container">
+      <el-aside class="left-side-menu" width="var(--header-width)">
+        <search-menu />
+      </el-aside>
       <el-main class="main-container">
         <nuxt />
       </el-main>
@@ -17,12 +20,14 @@
 <script lang="ts">
 import {defineComponent} from '@nuxtjs/composition-api'
 import GlobalHeader from '@/components/layouts/GlobalHeader.vue'
+import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 
 export default defineComponent({
   name: 'DefaultLayout',
   components: {
     GlobalHeader,
+    SearchMenu,
     SideRightMenu,
   },
 })
@@ -36,6 +41,11 @@ export default defineComponent({
 .header-container {
   padding: 0;
   border-bottom: solid 1px var(--border-grey-color);
+}
+
+.left-side-menu {
+  background-color: white;
+  height: 100%;
 }
 
 .center-container {

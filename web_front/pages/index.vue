@@ -1,36 +1,24 @@
 <template>
-  <el-container>
-    <el-aside
-      v-if="!$device.isMobile"
-      class="left-side-menu"
-      width="var(--header-width)"
-    >
-      <search-menu />
-    </el-aside>
-    <el-main>
-      <div class="container">
-        <div class="title">新着の情報一覧 ({{ pagination.itemsTotal }}件)</div>
-        <card-loading :loading="loading" />
-        <div v-for="subsidy in subsidies" :key="subsidy.id">
-          <subsidy-card v-if="!loading" :subsidy="subsidy" />
-        </div>
-        <el-empty
-          v-if="!loading && subsidies.length == 0"
-          description="条件に当てはまるデータがありません"
-        />
-        <pagination
-          v-if="subsidies.length > 0 && !loading"
-          :pagination="pagination"
-          :request-page="getPage"
-        />
-      </div>
-    </el-main>
-  </el-container>
+  <div class="container">
+    <div class="title">新着の情報一覧 ({{ pagination.itemsTotal }}件)</div>
+    <card-loading :loading="loading" />
+    <div v-for="subsidy in subsidies" :key="subsidy.id">
+      <subsidy-card v-if="!loading" :subsidy="subsidy" />
+    </div>
+    <el-empty
+      v-if="!loading && subsidies.length == 0"
+      description="条件に当てはまるデータがありません"
+    />
+    <pagination
+      v-if="subsidies.length > 0 && !loading"
+      :pagination="pagination"
+      :request-page="getPage"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent} from '@nuxtjs/composition-api'
-import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
@@ -39,12 +27,11 @@ import {subsidiesModule} from '@/store'
 export default defineComponent({
   name: 'IndexPage',
   components: {
-    SearchMenu,
     SubsidyCard,
     Pagination,
     CardLoading,
   },
-  layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'default'),
+  layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'search'),
   setup(_props) {
     const {loading} = subsidiesModule.loader
     const subsidies = computed(() => subsidiesModule.subsidies)
@@ -71,13 +58,12 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.container > * {
-  margin-bottom: var(--spacing-4);
+.container {
+  padding: var(--spacing-5);
 }
 
-.left-side-menu {
-  background-color: white;
-  height: 100%;
+.container > * {
+  margin-bottom: var(--spacing-4);
 }
 
 .title {
