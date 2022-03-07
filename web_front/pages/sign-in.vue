@@ -38,7 +38,7 @@ import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'SignInPage',
-  layout: 'plain-layout',
+  layout: 'plain',
   setup(_props) {
     const router = useRouter()
     const route = useRoute()

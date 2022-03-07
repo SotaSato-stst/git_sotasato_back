@@ -11,7 +11,7 @@ import {defineComponent, useRouter} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ErrorLayout',
-  layout: 'plain-layout',
+  layout: 'plain',
   props: {
     error: {
       type: Object,
