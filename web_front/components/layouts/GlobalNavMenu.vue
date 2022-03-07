@@ -71,8 +71,6 @@ export default defineComponent({
 }
 
 .mobile-header-menu {
-  border-bottom: solid 1px var(--border-grey-color);
-  box-sizing: border-box;
   display: flex;
   justify-content: space-evenly;
   height: 40px;

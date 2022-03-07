@@ -1,11 +1,13 @@
 <template>
   <el-dropdown @command="handleSelect">
     <div>
+      <!-- デスクトップの場合は文字ボタン -->
       <span v-if="!$device.isMobile" class="dropdown-link">
         <el-button icon="el-icon-setting">
           設定<i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
       </span>
+      <!-- モバイルの場合はアイコンボタン -->
       <el-button
         v-if="$device.isMobile"
         icon="el-icon-more"
