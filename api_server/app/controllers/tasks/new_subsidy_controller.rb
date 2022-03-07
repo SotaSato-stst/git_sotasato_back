@@ -4,7 +4,7 @@ module Tasks
       next_id = SubsidyDraft.last&.id.to_i + 1
       NewSubsidyService.new(Date.today).execute!
       slack = SlackService.new
-      SubsidyDraft.where(id: next_id..).each do |subsidy_draft|
+      SubsidyDraft.where(id: next_id..).limit(20).each do |subsidy_draft|
         slack.post_new_subsidy_draft(subsidy_draft)
       end
       slack.post_new_subsidies_count unless SubsidyDraft.not_archived.count.zero?
