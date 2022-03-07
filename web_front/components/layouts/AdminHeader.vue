@@ -72,6 +72,10 @@ export default defineComponent({
   width: calc(100% - var(--header-width));
 }
 
+.menu-container > div {
+  margin: auto var(--spacing-3);
+}
+
 .header-menu {
   border-bottom: solid 1px var(--border-grey-color);
   box-sizing: border-box;
