@@ -56,14 +56,15 @@
               </div>
             </div>
           </div>
-          <div v-if="subsidy.keywords" class="tag-wrapper">
-            <span
-              v-for="keyword in subsidy.keywords.slice(0, 5)"
+          <div v-if="subsidy.keywords.length > 0" class="tag-wrapper">
+            <el-tag
+              v-for="keyword in keywords"
               :key="keyword"
+              type="info"
               class="tag-card"
             >
               {{ keyword }}
-            </span>
+            </el-tag>
           </div>
           <p v-if="subsidy.keywords.length == 0" class="detail-wrapper">
             <span>
@@ -76,7 +77,12 @@
   </el-card>
 </template>
 <script lang="ts">
-import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  PropType,
+  useRouter,
+  computed,
+} from '@nuxtjs/composition-api'
 import {Subsidy} from '@/types/Subsidy'
 import {convertDateRange} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
@@ -97,11 +103,12 @@ export default defineComponent({
     },
   },
 
-  setup(_props) {
+  setup(props) {
     const router = useRouter()
     const clickSubsidy = (subsidyId: number) => {
       router.push('/subsidies/' + subsidyId)
     }
+    const keywords = computed(() => props.subsidy.keywords.slice(0, 5))
 
     return {
       clickSubsidy,
@@ -109,6 +116,7 @@ export default defineComponent({
       convertDateRange,
       starView,
       subsidyCategoryLabel,
+      keywords,
     }
   },
 })
@@ -208,12 +216,8 @@ export default defineComponent({
 }
 
 .tag-card {
-  background-color: var(--color-tag-color);
   font-size: 14px;
-  border-radius: var(--spacing-1);
-  padding: var(--spacing-2) var(--spacing-3);
   margin: var(--spacing-4) var(--spacing-4) 0 0;
-  display: inline-block;
 }
 
 .detail-wrapper {

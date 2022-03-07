@@ -450,6 +450,7 @@ export default defineComponent({
         b => b.key,
       )
     }
+
     const clearBusinessCategories = () => {
       state.businessCategories = []
     }
