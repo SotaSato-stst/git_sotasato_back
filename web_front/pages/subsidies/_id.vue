@@ -1,57 +1,48 @@
 <template>
-  <div class="container">
+  <div class="subsidy-detail-container">
     <el-card v-if="subsidy">
       <el-container>
-        <supplier-information :subsidy="subsidy" />
         <el-container class="card-container">
-          <el-header height="32px" class="card-header">
-            <div>
-              <el-tag type="info" effect="plain" class="subsidy-type">
-                {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
-              </el-tag>
-              <span v-if="subsidy.priceMax" class="header-info">
-                <span class="label">
-                  上限金額:
-                  {{ convertToShortJPY(subsidy.priceMax) }}円
-                </span>
+          <el-header height="32px" class="mobile-header">
+            <el-tag type="info" effect="plain" class="subsidy-type">
+              {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
+            </el-tag>
+            <div class="supplier-container">
+              <span>発行: </span>
+              <span v-if="subsidy.ministry">{{ subsidy.ministry.name }}</span>
+              <span v-if="subsidy.prefecture">
+                {{ subsidy.prefecture.name }}
               </span>
-              <span
-                v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
-                class="header-info"
-              >
-                <span class="label">
-                  支援割合:
-                  {{ subsidy.supportRatioMin }}
-                  ~
-                  {{ subsidy.supportRatioMax }}
-                </span>
-              </span>
-              <span v-if="subsidy.level" class="header-info">
-                <span class="label">
-                  申請難易度:{{ starView(subsidy.level) }}
-                </span>
-              </span>
+              <span v-if="subsidy.city">{{ subsidy.city.name }}</span>
             </div>
-            <div>
-              <el-button
-                v-if="isAdmin"
-                size="mini"
-                @click="showAdmin(subsidy.id)"
-              >
-                管理画面で編集する
-              </el-button>
-              <favorite-button :subsidy="subsidy" />
-            </div>
+            <favorite-button :subsidy="subsidy" />
           </el-header>
           <el-main class="card-content">
             <div class="title">{{ subsidy.title }}</div>
-            <div class="header-info">
+            <div v-if="subsidy.priceMax" class="subsidy-info">
+              <span class="label">上限金額: </span>
+              {{ convertToShortJPY(subsidy.priceMax) }}円
+            </div>
+            <div
+              v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
+              class="subsidy-info"
+            >
+              <span class="label">支援割合: </span>
+              {{ subsidy.supportRatioMin }}
+              ~
+              {{ subsidy.supportRatioMax }}
+            </div>
+            <div class="subsidy-info">
               <span class="label">募集期間: </span>
               {{ subsidy.startFrom && convertToJpDate(subsidy.startFrom) }}
               ~
               {{ subsidy.endTo && convertToJpDate(subsidy.endTo) }}
             </div>
-            <div class="header-info">
+            <div v-if="subsidy.level" class="subsidy-info">
+              <span class="label">申請難易度: </span>
+              {{ starView(subsidy.level) }}
+            </div>
+            <div class="subsidy-info">
               <span class="label">URL: </span>
               <a :href="subsidy.url" target="_blank">{{ subsidy.url }}</a>
             </div>
@@ -61,16 +52,27 @@
       <div class="divider" />
       <div class="detail">
         <span class="label">対象</span>
-        <div class="content" v-html="parseMarkdown(subsidy.targetDetail)" />
+        <div
+          class="content subsidy-detail-markdown-content"
+          v-html="parseMarkdown(subsidy.targetDetail)"
+        />
       </div>
       <div class="detail">
         <span class="label">支援内容</span>
         <div
-          class="subsidy-detail-markdown-content"
+          class="content subsidy-detail-markdown-content"
           v-html="parseMarkdown(subsidy.detail)"
         />
       </div>
     </el-card>
+    <el-button
+      v-if="isAdmin"
+      size="mini"
+      class="edit-admin"
+      @click="showAdmin(subsidy.id)"
+    >
+      管理画面で編集する
+    </el-button>
   </div>
 </template>
 
@@ -91,13 +93,11 @@ import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
 import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
-import SupplierInformation from '@/components/subsidies/SupplierInformation.vue'
 import {routingService} from '~/services/routingService'
 
 export default defineComponent({
   name: 'SubsidyDetailPage',
   components: {
-    SupplierInformation,
     FavoriteButton,
   },
   layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'recent'),
@@ -155,18 +155,8 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.container {
+.subsidy-detail-container {
   padding: var(--spacing-5);
-}
-
-.clearfix::before,
-.clearfix::after {
-  display: table;
-  content: '';
-}
-
-.clearfix::after {
-  clear: both;
 }
 
 .card-aside {
@@ -179,28 +169,25 @@ export default defineComponent({
   border: solid 1px var(--border-grey-color);
 }
 
-.supplier {
-  font-size: 12px;
-  margin-top: var(--spacing-2);
-}
-
 .label {
   font-weight: bold;
 }
 
-.card-header {
+.mobile-header {
   padding: 0;
   display: flex;
   justify-content: space-between;
+  align-content: center;
 }
 
-.header-info {
+.supplier-container {
+  display: flex;
+  align-items: center;
+}
+
+.subsidy-info {
   font-size: 14px;
   margin-right: var(--spacing-1);
-}
-
-.card-container {
-  margin-left: var(--spacing-4);
 }
 
 .subsidy-type {
@@ -210,6 +197,7 @@ export default defineComponent({
 .card-content {
   margin-top: var(--spacing-4);
   padding: 0;
+  overflow: hidden;
 }
 
 .card-content > * {
@@ -217,18 +205,8 @@ export default defineComponent({
 }
 
 .title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
-}
-
-.favorite {
-  float: right;
-}
-
-.block {
-  display: block;
-  margin-top: var(--spacing-4);
-  margin-bottom: var(--spacing-4);
 }
 
 .divider {
@@ -243,18 +221,19 @@ export default defineComponent({
 }
 
 .detail .label {
-  font-size: 16px;
+  font-size: 17px;
   width: 100%;
 }
 
-.detail .content {
-  font-size: 14px;
-  white-space: pre-line;
+.edit-admin {
+  margin-top: var(--spacing-2);
 }
 </style>
 
 <style lang="scss">
 .subsidy-detail-markdown-content {
+  margin-top: var(--spacing-3);
+  font-size: 16px;
   white-space: pre-line;
 
   h1,

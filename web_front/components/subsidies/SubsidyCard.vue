@@ -1,28 +1,15 @@
 <template>
-  <el-card class="card clearfix">
+  <el-card>
     <el-container>
-      <supplier-information :subsidy="subsidy" />
-      <el-container class="card-container">
-        <el-header height="32px" class="card-header">
-          <el-tag type="info" effect="plain" class="subsidy-type">
-            {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
-          </el-tag>
-          <span
-            v-if="subsidy.startFrom || subsidy.endTo"
-            class="vertical-align feature-label"
-          >
-            <span> 募集期間: </span>
-            <span>
-              {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
-            </span>
-          </span>
-          <favorite-button :subsidy="subsidy" />
-        </el-header>
-        <el-main class="card-content">
+      <el-aside v-if="!$device.isMobile" width="60px">
+        <supplier-information :subsidy="subsidy" />
+      </el-aside>
+      <el-container>
+        <el-main class="card-container">
           <div v-if="subsidy.catchCopy" class="catch-copy-font">
             【{{ subsidy.catchCopy }}】
           </div>
-          <div class="title-wrapper">
+          <div :class="$device.isMobile ? '' : 'title-container'">
             <a class="title" @click="clickSubsidy(subsidy.id)">
               {{ subsidy.title }}
             </a>
@@ -33,44 +20,57 @@
               subsidy.supportRatioMax ||
               subsidy.supportRatioMin
             "
-            class="flex-box"
+            class="price-container"
           >
             <div v-if="subsidy.priceMax">
               <span class="feature-label"> 上限金額: </span>
-              <span class="accent-part">
+              <span class="accent-text">
                 {{ convertToShortJPY(subsidy.priceMax) }}円</span
               >
             </div>
-            <div class="inner-flex-box">
+            <div class="inner-price-container">
               <div v-if="subsidy.supportRatioMax">
                 <span class="feature-label"> 最大支援割合: </span>
-                <span class="accent-part margin-right-4">
+                <span class="accent-text">
                   {{ subsidy.supportRatioMax }}
                 </span>
               </div>
               <div v-if="subsidy.supportRatioMin">
                 <span class="feature-label"> 最小支援割合: </span>
-                <span class="accent-part">
+                <span class="accent-text">
                   {{ subsidy.supportRatioMin }}
                 </span>
               </div>
             </div>
           </div>
-          <div v-if="subsidy.keywords.length > 0" class="tag-wrapper">
+          <div v-if="subsidy.keywords.length > 0" class="tag-container">
             <el-tag
               v-for="keyword in keywords"
               :key="keyword"
               type="info"
-              class="tag-card"
+              class="keyword-tag"
             >
               {{ keyword }}
             </el-tag>
           </div>
-          <p v-if="subsidy.keywords.length == 0" class="detail-wrapper">
-            <span>
+          <div v-if="subsidy.keywords.length == 0" class="detail-container">
+            <span class="normal-text">
               {{ subsidy.detail }}
             </span>
-          </p>
+          </div>
+          <div class="footer-container">
+            <div>
+              <span class="feature-label">募集期間: </span>
+              <span
+                v-if="subsidy.startFrom || subsidy.endTo"
+                class="normal-text"
+              >
+                {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
+              </span>
+              <span v-else class="normal-text">未定</span>
+            </div>
+            <favorite-button :subsidy="subsidy" />
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -123,50 +123,28 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.card {
-  overflow: auto;
+.card-container {
+  margin-left: var(--spacing-4);
+  padding: 0;
 }
 
 .catch-copy-font {
   font-weight: bold;
-  font-size: 16px;
-  margin: var(--spacing-4) 0;
+  font-size: 17px;
+  margin-bottom: var(--spacing-2);
 }
 
-.title-wrapper {
-  margin-top: var(--spacing-4);
+.title-container {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: var(--color-title);
   cursor: pointer;
-}
-
-.clearfix::before,
-.clearfix::after {
-  display: table;
-  content: '';
-}
-
-.clearfix::after {
-  clear: both;
-}
-
-.vertical-align {
-  vertical-align: middle;
-}
-
-.card-header {
-  padding: 0;
-}
-
-.card-header > * {
-  margin-left: var(--spacing-1);
 }
 
 .feature-label {
@@ -175,62 +153,55 @@ export default defineComponent({
   margin-right: var(--spacing-2);
 }
 
-.card-container {
-  margin-left: var(--spacing-4);
-}
-
-.subsidy-type {
-  color: var(--black);
-}
-
-.card-content {
-  padding: 0;
-  overflow: visible;
-}
-
-.flex-box {
+.price-container {
   display: flex;
   margin-top: var(--spacing-4);
 }
 
-.flex-box > div {
+.price-container > div {
   margin-right: var(--spacing-8);
 }
 
-.inner-flex-box {
+.inner-price-container {
   display: flex;
 }
 
-.margin-right-4 {
-  margin-right: var(--spacing-4);
+.inner-price-container > div {
+  margin-right: var(--spacing-3);
 }
 
-.accent-part {
+.accent-text {
   color: var(--color-accent);
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   font-family: Poppins, sans-serif;
 }
 
-.tag-card {
+.normal-text {
   font-size: 14px;
-  margin: var(--spacing-4) var(--spacing-4) 0 0;
 }
 
-.detail-wrapper {
-  color: var(--color-detail);
+.keyword-tag {
+  font-size: 12px;
+  color: var(--text-color);
+  margin: var(--spacing-4) var(--spacing-3) 0 0;
+}
+
+.detail-container {
+  color: var(--text-color);
   height: calc(1.5em * 2);
   line-height: 1.5em;
   overflow: hidden;
   position: relative;
   word-wrap: break-word;
+  margin: var(--spacing-2) 0;
 }
 
-.detail-wrapper > span {
+.detail-container > span {
   margin-right: 1em;
 }
 
-.detail-wrapper ::before {
+.detail-container ::before {
   background: linear-gradient(to right, var(--white) 30%);
   bottom: 0%;
   content: '…';
@@ -239,11 +210,20 @@ export default defineComponent({
   right: 0%;
 }
 
-.detail-wrapper ::after {
+.detail-container ::after {
   background: var(--white);
   content: '';
   height: 100%;
   position: absolute;
   width: 100%;
+}
+
+.footer-container {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--spacing-3);
 }
 </style>

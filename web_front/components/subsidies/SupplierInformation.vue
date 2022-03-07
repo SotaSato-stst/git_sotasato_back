@@ -1,5 +1,5 @@
 <template>
-  <el-aside width="60px" class="card-aside">
+  <div class="supplier-container">
     <el-avatar
       :size="54"
       :src="logoUrl(subsidy.supplierType)"
@@ -12,7 +12,7 @@
     <div class="supplier">
       {{ supplierName(subsidy.supplierType) }}
     </div>
-  </el-aside>
+  </div>
 </template>
 
 <script lang="ts">
@@ -57,7 +57,7 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.card-aside {
+.supplier-container {
   text-align: center;
 }
 
