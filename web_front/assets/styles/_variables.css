@@ -1,5 +1,6 @@
 :root {
   --white: #fff;
+  --black: #000;
   --main-background-color: #f3f4f7;
   --border-grey-color: #eeeeee;
   --primary-color: #2a6f97;
@@ -9,9 +10,12 @@
   --header-width: 240px;
   --banner-width: 300px;
   --base-space-px: 4px;
-  --color-gold: #FFCA09;
-  --color-silver: #B6B5B8;
+  --color-gold: #ffca09;
+  --color-silver: #b6b5b8;
   --color-bronze: #8c7853;
+  --color-title: #005dba;
+  --color-accent: #be1b59;
+  --color-detail: #474747;
   --spacing-1: calc(var(--base-space-px) * 1);
   --spacing-2: calc(var(--base-space-px) * 2);
   --spacing-3: calc(var(--base-space-px) * 3);

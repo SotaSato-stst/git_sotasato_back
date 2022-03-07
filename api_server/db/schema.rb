@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_134610) do
+ActiveRecord::Schema.define(version: 2022_03_03_050928) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_134610) do
     t.integer "years_of_establishment"
     t.bigint "annual_sales_max"
     t.bigint "annual_sales_min"
+    t.string "catch_copy"
     t.index ["price_max"], name: "index_subsidies_on_price_max"
     t.index ["ranking_score"], name: "index_subsidies_on_ranking_score"
     t.index ["url"], name: "index_subsidies_on_url", unique: true, length: 256

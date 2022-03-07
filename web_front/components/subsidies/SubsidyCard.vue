@@ -7,56 +7,82 @@
           <el-tag type="info" effect="plain" class="subsidy-type">
             {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
           </el-tag>
-          <span v-if="subsidy.priceMax" class="feature-label">
-            <span class="label">
-              上限金額:
-              {{ convertToShortJPY(subsidy.priceMax) }}円
-            </span>
-          </span>
-          <span v-if="subsidy.startFrom || subsidy.endTo" class="feature-label">
-            募集期間:
-            <span class="label">
+          <span
+            v-if="subsidy.startFrom || subsidy.endTo"
+            class="vertical-align feature-label"
+          >
+            <span> 募集期間: </span>
+            <span>
               {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
             </span>
           </span>
           <favorite-button :subsidy="subsidy" />
         </el-header>
         <el-main class="card-content">
-          <a class="title" @click="clickSubsidy(subsidy.id)">
-            {{ subsidy.title }}
-          </a>
-          <div class="target-container">
-            <span class="label target">対象</span>
-            <span class="target">
-              {{ subsidy.targetDetail }}
-            </span>
+          <div v-if="subsidy.catchCopy" class="catch-copy-font">
+            【{{ subsidy.catchCopy }}】
           </div>
-          <div class="feature-labels">
-            <span v-if="subsidy.level" class="feature-label">
-              <span class="label">
-                申請難易度:{{ starView(subsidy.level) }}
-              </span>
-            </span>
-            <span v-if="subsidy.supportRatioMax" class="feature-label">
-              <span class="label">
-                最大支援割合:
-                {{ subsidy.supportRatioMax }}
-              </span>
-            </span>
-            <span v-if="subsidy.supportRatioMin" class="feature-label">
-              <span class="label">
-                最小支援割合:
-                {{ subsidy.supportRatioMin }}
-              </span>
-            </span>
+          <div class="title-wrapper">
+            <a class="title" @click="clickSubsidy(subsidy.id)">
+              {{ subsidy.title }}
+            </a>
           </div>
+          <div
+            v-if="
+              subsidy.priceMax ||
+              subsidy.supportRatioMax ||
+              subsidy.supportRatioMin
+            "
+            class="flex-box"
+          >
+            <div v-if="subsidy.priceMax">
+              <span class="feature-label"> 上限金額: </span>
+              <span class="accent-part">
+                {{ convertToShortJPY(subsidy.priceMax) }}円</span
+              >
+            </div>
+            <div class="inner-flex-box">
+              <div v-if="subsidy.supportRatioMax">
+                <span class="feature-label"> 最大支援割合: </span>
+                <span class="accent-part margin-right-4">
+                  {{ subsidy.supportRatioMax }}
+                </span>
+              </div>
+              <div v-if="subsidy.supportRatioMin">
+                <span class="feature-label"> 最小支援割合: </span>
+                <span class="accent-part">
+                  {{ subsidy.supportRatioMin }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div v-if="subsidy.keywords.length > 0" class="tag-wrapper">
+            <el-tag
+              v-for="keyword in keywords"
+              :key="keyword"
+              type="info"
+              class="tag-card"
+            >
+              {{ keyword }}
+            </el-tag>
+          </div>
+          <p v-if="subsidy.keywords.length == 0" class="detail-wrapper">
+            <span>
+              {{ subsidy.detail }}
+            </span>
+          </p>
         </el-main>
       </el-container>
     </el-container>
   </el-card>
 </template>
 <script lang="ts">
-import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  PropType,
+  useRouter,
+  computed,
+} from '@nuxtjs/composition-api'
 import {Subsidy} from '@/types/Subsidy'
 import {convertDateRange} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
@@ -76,11 +102,13 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(_props) {
+
+  setup(props) {
     const router = useRouter()
     const clickSubsidy = (subsidyId: number) => {
       router.push('/subsidies/' + subsidyId)
     }
+    const keywords = computed(() => props.subsidy.keywords.slice(0, 5))
 
     return {
       clickSubsidy,
@@ -88,13 +116,35 @@ export default defineComponent({
       convertDateRange,
       starView,
       subsidyCategoryLabel,
+      keywords,
     }
   },
 })
 </script>
+
 <style lang="postcss" scoped>
 .card {
   overflow: auto;
+}
+
+.catch-copy-font {
+  font-weight: bold;
+  font-size: 16px;
+  margin: var(--spacing-4) 0;
+}
+
+.title-wrapper {
+  margin-top: var(--spacing-4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-title);
+  cursor: pointer;
 }
 
 .clearfix::before,
@@ -107,8 +157,8 @@ export default defineComponent({
   clear: both;
 }
 
-.label {
-  font-weight: bold;
+.vertical-align {
+  vertical-align: middle;
 }
 
 .card-header {
@@ -121,6 +171,7 @@ export default defineComponent({
 
 .feature-label {
   font-size: 14px;
+  font-weight: bold;
   margin-right: var(--spacing-2);
 }
 
@@ -129,43 +180,70 @@ export default defineComponent({
 }
 
 .subsidy-type {
-  color: black;
+  color: var(--black);
 }
 
 .card-content {
-  margin-top: var(--spacing-4);
   padding: 0;
   overflow: visible;
 }
 
-.title {
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration-line: underline;
-  cursor: pointer;
-}
-
-.target-container {
+.flex-box {
   display: flex;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: var(--spacing-10);
-  margin-top: var(--spacing-5);
-}
-
-.target {
-  font-size: 12px;
-  width: 100%;
-  margin: auto;
-}
-
-.target-container > .label {
-  width: var(--spacing-16);
-  text-align: center;
-  margin-top: var(--spacing-3);
-}
-
-.feature-labels {
   margin-top: var(--spacing-4);
+}
+
+.flex-box > div {
+  margin-right: var(--spacing-8);
+}
+
+.inner-flex-box {
+  display: flex;
+}
+
+.margin-right-4 {
+  margin-right: var(--spacing-4);
+}
+
+.accent-part {
+  color: var(--color-accent);
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Poppins, sans-serif;
+}
+
+.tag-card {
+  font-size: 14px;
+  margin: var(--spacing-4) var(--spacing-4) 0 0;
+}
+
+.detail-wrapper {
+  color: var(--color-detail);
+  height: calc(1.5em * 2);
+  line-height: 1.5em;
+  overflow: hidden;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.detail-wrapper > span {
+  margin-right: 1em;
+}
+
+.detail-wrapper ::before {
+  background: linear-gradient(to right, var(--white) 30%);
+  bottom: 0%;
+  content: '…';
+  padding-left: 1em;
+  position: absolute;
+  right: 0%;
+}
+
+.detail-wrapper ::after {
+  background: var(--white);
+  content: '';
+  height: 100%;
+  position: absolute;
+  width: 100%;
 }
 </style>

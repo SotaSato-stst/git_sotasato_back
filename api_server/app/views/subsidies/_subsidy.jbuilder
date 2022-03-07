@@ -21,6 +21,7 @@ json.call(
   :years_of_establishment,
   :annual_sales_max,
   :annual_sales_min,
+  :catch_copy,
 )
 
 json.ministry do
@@ -37,5 +38,8 @@ json.organization_types subsidy.organization_types.map do |organization_type|
 end
 json.business_categories subsidy.business_categories.map do |business_category|
   json.merge! business_category
+end
+json.keywords subsidy.keywords.map do |keyword|
+  json.merge! keyword
 end
 json.favorite @current_user_favorite_ids.to_a.include?(subsidy.id)

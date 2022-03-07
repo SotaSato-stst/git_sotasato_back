@@ -23,6 +23,13 @@
     <el-form-item label="タイトル" prop="title">
       <el-input v-model="state.title" class="input-text" :disabled="loading" />
     </el-form-item>
+    <el-form-item label="キャッチコピー" prop="catchCopy">
+      <el-input
+        v-model="state.catchCopy"
+        class="input-text"
+        :disabled="loading"
+      />
+    </el-form-item>
     <div class="inline">
       <el-form-item label="発行機関" prop="supplierType">
         <el-select
@@ -443,10 +450,10 @@ export default defineComponent({
         b => b.key,
       )
     }
+
     const clearBusinessCategories = () => {
       state.businessCategories = []
     }
-
     const priceMaxMan = ref<number | null>(null)
     const priceMaxChanged = () => {
       if (priceMaxMan.value) {

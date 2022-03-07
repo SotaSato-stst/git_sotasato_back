@@ -7,6 +7,7 @@
 #  annual_sales_min       :bigint
 #  capital_max            :bigint
 #  capital_min            :bigint
+#  catch_copy             :string(255)
 #  detail                 :text(65535)      not null
 #  end_to                 :date
 #  level                  :integer
@@ -71,7 +72,14 @@ class Subsidy < ApplicationRecord
     end
   }
   scope :index_loading, -> {
-    includes(:ministry, :prefecture, :city, :subsidy_organization_types, :subsidy_business_categories)
+    includes(
+      :ministry,
+      :prefecture,
+      :city,
+      :subsidy_organization_types,
+      :subsidy_business_categories,
+      { subsidy_keywords: :keyword }
+    )
   }
   scope :scope_by_user, ->(user) {
     company = user.company
