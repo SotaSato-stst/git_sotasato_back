@@ -650,6 +650,7 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .inline {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .select-input {
