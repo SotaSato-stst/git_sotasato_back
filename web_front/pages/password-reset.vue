@@ -21,7 +21,6 @@ import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'PasswordResetPage',
-  layout: 'plain',
   setup(_props) {
     const router = useRouter()
     const state = reactive({email: ''})
