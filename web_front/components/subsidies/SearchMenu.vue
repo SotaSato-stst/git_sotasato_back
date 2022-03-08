@@ -280,41 +280,39 @@ export default defineComponent({
     }
 
     const urlQueryFromParams = () => {
-      const params = removeEmpty(subsidiesModule.searchParams)
-      if (params.inApplicationPeriod === true) {
-        params.inApplicationPeriod = undefined
+      const query = removeEmpty(subsidiesModule.searchParams)
+      if (query.inApplicationPeriod === true) {
+        query.inApplicationPeriod = undefined
       }
       const company = accountModule.currentCompany
       if (!company) {
-        return params
+        return query
       }
-      if (params.organizationType === company.organizationType) {
-        params.organizationType = undefined
+      if (query.organizationType === company.organizationType) {
+        query.organizationType = undefined
       }
-      if (params.prefectureId === company.prefectureId.toString()) {
-        params.prefectureId = undefined
+      if (query.prefectureId === company.prefectureId.toString()) {
+        query.prefectureId = undefined
       }
-      if (params.cityIds === company.cityId.toString()) {
-        params.cityIds = []
+      if (query.cityIds === company.cityId.toString()) {
+        query.cityIds = []
       }
-      if (
-        params.businessCategoryKeys === company.businessCategories.join('|')
-      ) {
-        params.businessCategoryKeys = []
+      if (query.businessCategoryKeys === company.businessCategories.join('|')) {
+        query.businessCategoryKeys = []
       }
-      if (params.capital === company.capital) {
-        params.capital = undefined
+      if (query.capital === company.capital) {
+        query.capital = undefined
       }
-      if (params.totalEmployee === company.totalEmployee) {
-        params.totalEmployee = undefined
+      if (query.totalEmployee === company.totalEmployee) {
+        query.totalEmployee = undefined
       }
-      if (params.foundingDate === company.foundingDate) {
-        params.foundingDate = undefined
+      if (query.foundingDate === company.foundingDate) {
+        query.foundingDate = undefined
       }
-      if (params.annualSales === company.annualSales) {
-        params.annualSales = undefined
+      if (query.annualSales === company.annualSales) {
+        query.annualSales = undefined
       }
-      return params
+      return query
     }
 
     onMounted(() => {
