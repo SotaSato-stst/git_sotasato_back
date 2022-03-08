@@ -32,16 +32,18 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <div v-if="subsidy.priceMax" class="subsidy-info">
+            <div class="subsidy-info">
               <span class="label">上限金額: </span>
-              {{ convertToShortJPY(subsidy.priceMax) }}円
+              {{
+                subsidy.priceMax ? convertToShortJPY(subsidy.priceMax) : '-'
+              }}円
             </div>
           </el-col>
-          <el-col :span="12">
-            <div
-              v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
-              class="subsidy-info"
-            >
+          <el-col
+            v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
+            :span="12"
+          >
+            <div class="subsidy-info">
               <span class="label">支援割合: </span>
               {{ subsidy.supportRatioMin }}
               ~
@@ -59,8 +61,8 @@
               <span v-else>未定</span>
             </div>
           </el-col>
-          <el-col :span="12">
-            <div v-if="subsidy.level" class="subsidy-info">
+          <el-col v-if="subsidy.level" :span="12">
+            <div class="subsidy-info">
               <span class="label">申請難易度: </span>
               {{ starView(subsidy.level) }}
             </div>
@@ -255,9 +257,8 @@ export default defineComponent({
   .el-col-12 {
     width: 100%;
   }
-  .el-col-12:nth-child(1) {
-    width: 100%;
-    margin-bottom: var(--spacing-3);
+  .el-col-12:nth-child(2) {
+    margin-top: var(--spacing-3);
   }
 }
 
