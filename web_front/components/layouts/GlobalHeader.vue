@@ -112,7 +112,7 @@ export default defineComponent({
 .title {
   display: flex;
   align-items: center;
-  width: var(--header-width);
+  width: var(--left-side-width);
   padding-left: var(--spacing-4);
   box-sizing: border-box;
   font-size: 27px;
@@ -131,7 +131,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - var(--header-width));
+  width: calc(100% - var(--left-side-width));
 }
 
 .menu-container > div {

@@ -4,13 +4,13 @@
       <global-header />
     </el-header>
     <el-container class="center-container">
-      <el-aside class="left-side-menu" width="var(--header-width)">
+      <el-aside class="left-side-menu" width="var(--left-side-width)">
         <search-menu />
       </el-aside>
       <el-main class="main-container">
         <nuxt />
       </el-main>
-      <el-aside width="316px">
+      <el-aside width="var(--right-side-width)">
         <side-right-menu />
       </el-aside>
     </el-container>
@@ -24,7 +24,7 @@ import SearchMenu from '@/components/subsidies/SearchMenu.vue'
 import SideRightMenu from '@/components/layouts/SideRightMenu.vue'
 
 export default defineComponent({
-  name: 'DefaultLayout',
+  name: 'SearchLayout',
   components: {
     GlobalHeader,
     SearchMenu,

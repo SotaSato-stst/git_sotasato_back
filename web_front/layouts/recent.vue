@@ -4,13 +4,13 @@
       <global-header />
     </el-header>
     <el-container class="center-container">
-      <el-aside class="left-side-menu" width="var(--header-width)">
+      <el-aside class="left-side-menu" width="var(--left-side-width)">
         <viewed-subsidies />
       </el-aside>
       <el-main class="main-container">
         <nuxt />
       </el-main>
-      <el-aside width="316px">
+      <el-aside width="var(--right-side-width)">
         <side-right-menu />
       </el-aside>
     </el-container>

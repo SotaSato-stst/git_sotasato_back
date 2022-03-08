@@ -4,7 +4,7 @@
       <admin-header />
     </el-header>
     <el-container>
-      <el-aside class="left-side-menu" width="var(--header-width)">
+      <el-aside class="left-side-menu" width="var(--left-side-width)">
         <admin-side-menu v-if="isAdmin" />
         <editor-side-menu v-if="isEditor" />
       </el-aside>
