@@ -205,7 +205,7 @@ class Subsidy < ApplicationRecord
   scope :end_after, ->(date) {
     return if date.blank?
 
-    where('end_to >= ?', date.to_date)
+    where('end_to >= ?', date.to_date).or(where(end_to: nil))
   }
   scope :favorite_by, ->(user) {
     joins(:user_favorite_subsidies).where(
