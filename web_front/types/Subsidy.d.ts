@@ -110,4 +110,5 @@ export type AdminSubsidyIndexParams = {
   page?: number
   publishingCode: FilterPublishingType
   endAfter: string | null
+  keyword: string | null
 }

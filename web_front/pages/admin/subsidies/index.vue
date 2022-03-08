@@ -17,6 +17,12 @@
         <el-radio-button label="editing">編集中</el-radio-button>
         <el-radio-button label="archived">アーカイブ</el-radio-button>
       </el-radio-group>
+      <el-input
+        v-model="filter.keyword"
+        placeholder="タイトル"
+        size="mini"
+        class="search-input"
+      />
       <div>
         <el-date-picker
           v-model="endAfter"
@@ -139,6 +145,7 @@ export default defineComponent({
       page: 1,
       publishingCode: 'all',
       endAfter: null,
+      keyword: null,
     })
     const endAfter = ref<Date | null>(null)
 
@@ -156,7 +163,7 @@ export default defineComponent({
     }
 
     const search = () => {
-      handleSegue({endAfter: filter.endAfter, page: 1})
+      handleSegue({endAfter: filter.endAfter, keyword: filter.keyword, page: 1})
     }
 
     const handleSegue = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
@@ -182,7 +189,8 @@ export default defineComponent({
         const endAfterStr = route.value.query.endAfter?.toString()
         const endAfterDate = endAfterStr ? new Date(endAfterStr) : null
         endAfter.value = endAfterDate
-        handleSegue({page, publishingCode, endAfter: endAfterStr})
+        const keyword = route.value.query.keyword?.toString() || ''
+        handleSegue({page, publishingCode, endAfter: endAfterStr, keyword})
       })
     })
 

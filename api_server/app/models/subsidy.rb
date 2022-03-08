@@ -61,16 +61,6 @@ class Subsidy < ApplicationRecord
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
   scope :published, -> { where(publishing_code: 'published') }
-  scope :publishing_filter, ->(code) {
-    case code
-    when 'published'
-      where(publishing_code: 'published')
-    when 'editing'
-      where(publishing_code: 'editing')
-    when 'archived'
-      where(publishing_code: 'archived')
-    end
-  }
   scope :index_loading, -> {
     includes(
       :ministry,
@@ -197,15 +187,30 @@ class Subsidy < ApplicationRecord
       )
     )
   }
-  scope :favorite_by, ->(user) {
-    joins(:user_favorite_subsidies).where(
-      user_favorite_subsidies: { user_id: user.id }
-    )
+  scope :admin_filter, ->(search_params) {
+    publishing_filter(search_params[:publishing_code])
+      .end_after(search_params[:end_after])
+      .search_by_keyword(search_params[:keyword])
+  }
+  scope :publishing_filter, ->(code) {
+    case code
+    when 'published'
+      where(publishing_code: 'published')
+    when 'editing'
+      where(publishing_code: 'editing')
+    when 'archived'
+      where(publishing_code: 'archived')
+    end
   }
   scope :end_after, ->(date) {
     return if date.blank?
 
     where('end_to >= ?', date.to_date)
+  }
+  scope :favorite_by, ->(user) {
+    joins(:user_favorite_subsidies).where(
+      user_favorite_subsidies: { user_id: user.id }
+    )
   }
 
   def organization_types
