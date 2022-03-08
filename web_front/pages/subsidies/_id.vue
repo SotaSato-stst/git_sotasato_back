@@ -53,6 +53,7 @@
       <div class="divider" />
       <div class="detail">
         <span class="label">対象</span>
+        <!-- eslint-disable vue/no-v-html -->
         <div
           class="content subsidy-detail-markdown-content"
           v-html="parseMarkdown(subsidy.targetDetail)"
