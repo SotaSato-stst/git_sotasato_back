@@ -13,12 +13,11 @@
         class="ranking-tag"
         :style="`border-color: ${rankingColors[index] || 'var(--text-color)'}`"
       >
-        <div>
+        <div class="crown">
           <icon-crown
             v-if="index < rankingColors.length"
             :size="24"
             :color="rankingColors[index]"
-            class="crown"
           />
         </div>
         <div class="ranking-title">
