@@ -1,7 +1,7 @@
 <template>
   <el-menu
     :default-active="selectedPage"
-    :class="$device.isMobile ? 'mobile-header-menu header-menu' : 'header-menu'"
+    :class="$device.isMobile ? 'header-menu mobile' : 'header-menu'"
     mode="horizontal"
     active-text-color="var(--primary-color)"
     @select="handleSelect"
@@ -70,7 +70,7 @@ export default defineComponent({
   height: 60px;
 }
 
-.mobile-header-menu {
+.header-menu.mobile {
   display: flex;
   justify-content: space-evenly;
   height: 40px;
@@ -83,7 +83,7 @@ export default defineComponent({
   color: var(--text-color);
 }
 
-.mobile-header-menu > li {
+.header-menu.mobile > li {
   line-height: 40px;
   height: 40px;
 }
