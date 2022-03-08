@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-container>
-      <el-aside v-if="!$device.isMobile" width="60px">
+      <el-aside v-if="!$device.isMobile" width="60px" class="supplier">
         <supplier-information :subsidy="subsidy" />
       </el-aside>
       <el-container>
@@ -62,7 +62,7 @@
           </div>
           <div class="footer-container">
             <div>
-              <span class="feature-label">募集期間: </span>
+              <span class="normal-text">募集期間:</span>
               <span
                 v-if="subsidy.startFrom || subsidy.endTo"
                 class="normal-text"
@@ -126,12 +126,15 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .card-container {
-  margin-left: var(--spacing-4);
   padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+}
+
+.supplier {
+  margin-right: var(--spacing-4);
 }
 
 .catch-copy-font {

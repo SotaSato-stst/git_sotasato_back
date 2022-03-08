@@ -174,6 +174,7 @@ export default defineComponent({
 .subsidy-info {
   font-size: 14px;
   margin-right: var(--spacing-1);
+  word-break: break-word;
 }
 
 .subsidy-type {

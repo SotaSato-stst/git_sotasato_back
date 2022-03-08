@@ -51,10 +51,6 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.favorite {
-  float: right;
-}
-
 .favorite.is-plain:hover,
 .favorite.is-plain:focus {
   color: #e6a23c;
