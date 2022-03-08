@@ -7,7 +7,7 @@
     :plain="!favorite"
     @click="clickButton(subsidy)"
   >
-    保存
+    <span v-if="!$device.isMobile">{{ favorite ? '保存済' : '保存' }}</span>
   </el-button>
 </template>
 

@@ -1,16 +1,17 @@
 <template>
-  <div class="subsidy-detail-container">
-    <el-card v-if="subsidy">
-      <el-container>
-        <el-container class="card-container">
-          <el-header height="32px" class="subsidy-header">
-            <el-tag type="info" effect="plain" class="subsidy-type">
-              {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
-            </el-tag>
-            <favorite-button :subsidy="subsidy" />
-          </el-header>
-          <el-main class="card-content">
-            <div class="title">{{ subsidy.title }}</div>
+  <div v-if="subsidy" class="subsidy-detail-container">
+    <div class="detail-header">
+      <div class="header-title">詳細</div>
+      <div class="button-group">
+        <inquiry-button :subsidy="subsidy" />
+        <favorite-button :subsidy="subsidy" />
+      </div>
+    </div>
+    <el-card>
+      <div class="card-content">
+        <div class="title">{{ subsidy.title }}</div>
+        <el-row>
+          <el-col :span="12">
             <div class="subsidy-info">
               <span class="label">発行: </span>
               <span v-if="subsidy.ministry">{{ subsidy.ministry.name }}</span>
@@ -19,10 +20,24 @@
               </span>
               <span v-if="subsidy.city">{{ subsidy.city.name }}</span>
             </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="subsidy-info">
+              <span class="label">種別: </span>
+              <span v-if="subsidy.subsidyCategory">
+                {{ subsidyCategoryLabel(subsidy.subsidyCategory) }}
+              </span>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <div v-if="subsidy.priceMax" class="subsidy-info">
               <span class="label">上限金額: </span>
               {{ convertToShortJPY(subsidy.priceMax) }}円
             </div>
+          </el-col>
+          <el-col :span="12">
             <div
               v-if="subsidy.supportRatioMin || subsidy.supportRatioMax"
               class="subsidy-info"
@@ -32,6 +47,10 @@
               ~
               {{ subsidy.supportRatioMax }}
             </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <div class="subsidy-info">
               <span class="label">募集期間: </span>
               <span v-if="subsidy.startFrom || subsidy.endTo">
@@ -39,17 +58,19 @@
               </span>
               <span v-else>未定</span>
             </div>
+          </el-col>
+          <el-col :span="12">
             <div v-if="subsidy.level" class="subsidy-info">
               <span class="label">申請難易度: </span>
               {{ starView(subsidy.level) }}
             </div>
-            <div class="subsidy-info">
-              <span class="label">URL: </span>
-              <a :href="subsidy.url" target="_blank">{{ subsidy.url }}</a>
-            </div>
-          </el-main>
-        </el-container>
-      </el-container>
+          </el-col>
+        </el-row>
+        <div class="subsidy-info">
+          <span class="label">URL: </span>
+          <a :href="subsidy.url" target="_blank">{{ subsidy.url }}</a>
+        </div>
+      </div>
       <div class="divider" />
       <div class="detail">
         <span class="label">対象</span>
@@ -94,12 +115,14 @@ import {convertDateRange} from '@/utils/dateFormatter'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {starView} from '@/utils/starView'
 import {subsidyCategoryLabel} from '@/utils/enumKeyToName'
+import InquiryButton from '@/components/subsidies/InquiryButton.vue'
 import FavoriteButton from '@/components/subsidies/FavoriteButton.vue'
 import {routingService} from '~/services/routingService'
 
 export default defineComponent({
   name: 'SubsidyDetailPage',
   components: {
+    InquiryButton,
     FavoriteButton,
   },
   layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'recent'),
@@ -161,15 +184,25 @@ export default defineComponent({
   padding: var(--spacing-5);
 }
 
-.label {
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-3);
+}
+
+.header-title {
+  font-size: 21px;
   font-weight: bold;
 }
 
-.subsidy-header {
-  padding: 0;
+.button-group {
   display: flex;
-  justify-content: space-between;
-  align-content: center;
+  justify-content: flex-end;
+}
+
+.label {
+  font-weight: bold;
 }
 
 .subsidy-info {
@@ -183,7 +216,6 @@ export default defineComponent({
 }
 
 .card-content {
-  margin-top: var(--spacing-4);
   padding: 0;
   overflow: hidden;
 }
@@ -219,6 +251,16 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
+@media screen and (max-width: 1200px) {
+  .el-col-12 {
+    width: 100%;
+  }
+  .el-col-12:nth-child(1) {
+    width: 100%;
+    margin-bottom: var(--spacing-3);
+  }
+}
+
 .subsidy-detail-markdown-content {
   margin-top: var(--spacing-3);
   font-size: 16px;

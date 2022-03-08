@@ -1,15 +1,5 @@
 <template>
   <div class="container">
-    <div class="inquiry">
-      <el-button
-        class="inquiry-button"
-        type="success"
-        icon="el-icon-user"
-        @click="clickedAskButton()"
-      >
-        補助金の申請を相談する
-      </el-button>
-    </div>
     <div class="list">
       <banner
         href="https://hojokin.or.jp/"
@@ -54,16 +44,6 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .container {
   padding-right: var(--spacing-4);
-}
-
-.inquiry {
-  margin-top: var(--spacing-5);
-}
-
-.inquiry-button {
-  background-color: #358f80;
-  border-color: #358f80;
-  width: 100%;
 }
 
 .list > * {

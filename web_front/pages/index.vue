@@ -67,7 +67,7 @@ export default defineComponent({
 }
 
 .title {
-  font-size: 21px;
+  font-size: 22px;
   font-weight: bold;
 }
 </style>
