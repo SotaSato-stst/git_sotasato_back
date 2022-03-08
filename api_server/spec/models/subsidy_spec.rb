@@ -445,13 +445,13 @@ RSpec.describe Subsidy, type: :model do
     let(:prefecture) { create(:prefecture) }
     let(:city) { create(:city) }
     let(:city2) { create(:city) }
-    let(:business_category_keys) { %w[seizo] }
+    let(:business_categories) { %w[seizo] }
     let(:params) do
       {
         prefecture_id: prefecture.id,
-        city_ids: [city.id].join('|'),
+        city_id: city.id,
         in_application_period: false,
-        business_category_keys: business_category_keys.join('|')
+        business_categories: business_categories
       }
     end
 
@@ -460,7 +460,7 @@ RSpec.describe Subsidy, type: :model do
       create(:subsidy, prefecture: create(:prefecture))
       create(:subsidy, prefecture: prefecture, city: city)
       create(:subsidy, prefecture: prefecture, city: city2)
-      create(:subsidy, business_categories: business_category_keys)
+      create(:subsidy, business_categories: business_categories)
       create(:subsidy, business_categories: %w[gyogyo])
     end
 

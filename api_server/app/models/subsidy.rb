@@ -89,9 +89,9 @@ class Subsidy < ApplicationRecord
       .in_application_period(search_params[:in_application_period])
       .search_by_keyword(search_params[:keyword])
       .search_by_organization_type(search_params[:organization_type])
-      .search_with_business_category(search_params[:business_category_keys])
+      .search_with_business_category(search_params[:business_categories])
       .search_with_prefecture(search_params[:prefecture_id])
-      .search_with_city(search_params[:city_ids])
+      .search_with_city(search_params[:city_id])
       .search_with_employee(search_params[:total_employee])
       .search_with_capital(search_params[:capital])
       .search_with_annual_sales(search_params[:annual_sales])
@@ -118,23 +118,23 @@ class Subsidy < ApplicationRecord
     prefecture_nil = scope.where(subsidy_prefectures: { id: nil })
     scope.merge(SubsidyPrefecture.where(prefecture_id: prefecture_id)).or(prefecture_nil)
   }
-  scope :search_with_city, ->(city_ids) {
-    return if city_ids.blank?
+  scope :search_with_city, ->(city_id) {
+    return if city_id.blank?
 
     scope = left_joins(:subsidy_city)
     city_nil = scope.where(subsidy_cities: { id: nil })
-    scope.merge(SubsidyCity.where(city_id: city_ids.to_s.split('|'))).or(city_nil)
+    scope.merge(SubsidyCity.where(city_id: city_id)).or(city_nil)
   }
   scope :in_application_period, ->(checked) {
     return unless ActiveModel::Type::Boolean.new.cast(checked)
 
     merge(where(end_to: Date.today..).or(where(end_to: nil)))
   }
-  scope :search_with_business_category, ->(business_category_keys) { # "seizo|kensetsu" のような形で受け取る
+  scope :search_with_business_category, ->(business_category_keys) {
     return if business_category_keys.blank?
 
     scope = left_joins(:subsidy_business_categories)
-    categories = SubsidyBusinessCategory.where(business_category: business_category_keys.to_s.split('|'))
+    categories = SubsidyBusinessCategory.where(business_category: business_category_keys)
     scope.merge(categories).or(scope.where(subsidy_business_categories: { id: nil }))
   }
   scope :search_with_employee, ->(total_employee) {

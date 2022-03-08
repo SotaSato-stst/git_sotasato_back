@@ -49,10 +49,10 @@ export type SubsidiesResponse = {
 // APIで投げるフォーマット
 export type SubsidySearchQuery = {
   prefectureId: string | null
-  cityIds: string | null // 1|2|3のような形
+  cityId: string | null
   inApplicationPeriod: boolean
   organizationType: string | null
-  businessCategoryKeys: string | null
+  businessCategories: string[]
   totalEmployee: number | null
   capital: number | null
   keyword: string
@@ -62,10 +62,10 @@ export type SubsidySearchQuery = {
 // フォームで取り扱うフォーマット
 export type SubsidySearchForm = {
   prefectureId: number | null
-  cityIds: number[]
+  cityId: number | null
   inApplicationPeriod: boolean
   organizationType: string | null
-  businessCategoryKeys: string[]
+  businessCategories: string[]
   totalEmployee: number | null
   capital: number | null
   keyword: string

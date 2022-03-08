@@ -28,6 +28,7 @@ import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
 import SubsidyCard from '@/components/subsidies/SubsidyCard.vue'
 import {favoriteSubsidiesModule} from '@/store'
+import {convertQueryNumber} from '@/utils/urlQuery'
 
 export default defineComponent({
   name: 'FavoritePage',
@@ -51,8 +52,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        const pageQuery = route.value.query.page?.toString() || null
-        const page = pageQuery ? Number(pageQuery) : 1
+        const page = convertQueryNumber(route.value.query.page) || 1
         favoriteSubsidiesModule.getUserFavoriteSubsidies(page)
       })
     })

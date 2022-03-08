@@ -54,6 +54,7 @@ import {usersModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {User} from '@/types/User'
 import {accountRoleLabel} from '@/utils/enumKeyToName'
+import {convertQueryNumber} from '@/utils/urlQuery'
 
 export default defineComponent({
   name: 'UserIndex',
@@ -81,8 +82,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        const pageQuery = route.value.query.page?.toString() || null
-        const page = pageQuery ? Number(pageQuery) : 1
+        const page = convertQueryNumber(route.value.query.page) || 1
         usersModule.getUsers(page)
       })
     })

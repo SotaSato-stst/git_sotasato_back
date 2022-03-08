@@ -32,8 +32,7 @@
         <div class="search-label">市長区村</div>
         <el-select
           v-if="prefectures.length > 0"
-          v-model="state.cityIds"
-          multiple
+          v-model="state.cityId"
           clearable
           placeholder="市長区村"
           class="input-select"
@@ -67,14 +66,14 @@
       <div class="search-item">
         <div class="search-label">業種</div>
         <el-select
-          v-model="state.businessCategoryKeys"
+          v-model="state.businessCategories"
           multiple
           placeholder="業種"
           :disabled="loading"
           class="category-select input-select"
         >
           <el-option
-            v-for="businessCategory in businessCategoryKeys"
+            v-for="businessCategory in businessCategories"
             :key="businessCategory.key"
             :label="businessCategory.name"
             :value="businessCategory.key"
@@ -123,6 +122,7 @@
           class="input-date"
           type="date"
           placeholder="日付"
+          format="yyyy-MM-dd"
         >
         </el-date-picker>
       </div>
@@ -153,7 +153,13 @@ import {
 import {optionsModule, subsidiesModule, accountModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {SubsidySearchForm} from '@/types/Subsidy'
-import {removeEmpty} from '@/utils/objectUtil'
+import {removeEmpty, removeSameValue} from '@/utils/objectUtil'
+import {
+  convertQueryString,
+  convertQueryNumber,
+  convertQueryArray,
+  convertQueryDate,
+} from '@/utils/urlQuery'
 
 export default defineComponent({
   name: 'SearchMenu',
@@ -171,12 +177,10 @@ export default defineComponent({
     const {loading, load} = subsidiesModule.loader
     const prefectures = computed(() => optionsModule.prefectures)
     const organizationTypes = computed(() => optionsModule.organizationTypes)
-    const businessCategoryKeys = computed(
-      () => optionsModule.businessCategories,
-    )
+    const businessCategories = computed(() => optionsModule.businessCategories)
     const selectPrefectureId = (prefectureId: number | null) => {
       if (prefectureId) {
-        state.cityIds = []
+        state.cityId = null
         optionsModule.getCities(prefectureId)
       } else {
         state.prefectureId = null
@@ -186,10 +190,10 @@ export default defineComponent({
 
     const state: SubsidySearchForm = reactive({
       prefectureId: null,
-      cityIds: [],
+      cityId: null,
       inApplicationPeriod: true,
       organizationType: null,
-      businessCategoryKeys: [],
+      businessCategories: [],
       totalEmployee: null,
       capital: null,
       keyword: '',
@@ -213,6 +217,15 @@ export default defineComponent({
       }
     }
 
+    const search = () => {
+      subsidiesModule.setSearchParams(state)
+      load(loading, () => {
+        router.push({path: routingService.Top(), query: urlQueryFromParams()})
+        subsidiesModule.getSubsidies()
+        props.onSearch()
+      })
+    }
+
     const paramsFromCurrentCompany = (): Partial<SubsidySearchForm> => {
       const company = accountModule.currentCompany
       if (!company) {
@@ -221,8 +234,8 @@ export default defineComponent({
       return {
         prefectureId: company.prefectureId,
         organizationType: company.organizationType,
-        cityIds: [company.cityId],
-        businessCategoryKeys: company.businessCategories,
+        cityId: company.cityId,
+        businessCategories: company.businessCategories,
         capital: company.capital,
         totalEmployee: company.totalEmployee,
         foundingDate: company.foundingDate
@@ -233,35 +246,24 @@ export default defineComponent({
     }
 
     const paramsFromUrlQuery = (): Partial<SubsidySearchForm> => {
-      const organizationType = query.organizationType?.toString()
-      const prefectureIdQuery = Number(query.prefectureId)
-      const prefectureId =
-        isNaN(prefectureIdQuery) ||
-        prefectureIdQuery === 0 ||
-        prefectureIdQuery > 47
-          ? null
-          : prefectureIdQuery
-      const cityIds = query.cityIds?.toString().split('|').map(Number)
-      const businessCategoryKeys = query.businessCategoryKeys
-        ?.toString()
-        .split('|')
+      const organizationType = convertQueryString(query.organizationType)
+      const prefectureId = convertQueryNumber(query.prefectureId)
+      const cityId = convertQueryNumber(query.cityId)
+      const businessCategories =
+        convertQueryArray(query.businessCategories) || undefined
       const inApplicationPeriod = query.inApplicationPeriod !== 'false'
-      const keyword = query.keyword?.toString()
-      const capital = query.capital ? Number(query.capital) : null
-      const totalEmployee = query.totalEmployee
-        ? Number(query.totalEmployee)
-        : null
-      const foundingDate = query.foundingDate
-        ? new Date(query.foundingDate.toString())
-        : null
-      const annualSales = query.annualSales ? Number(query.annualSales) : null
+      const keyword = convertQueryString(query.keyword) || undefined
+      const capital = convertQueryNumber(query.capital)
+      const totalEmployee = convertQueryNumber(query.totalEmployee)
+      const foundingDate = convertQueryDate(query.foundingDate)
+      const annualSales = convertQueryNumber(query.annualSales)
 
       return removeEmpty({
         organizationType,
-        cityIds,
+        cityId,
         prefectureId,
         inApplicationPeriod,
-        businessCategoryKeys,
+        businessCategories,
         capital,
         totalEmployee,
         keyword,
@@ -270,49 +272,22 @@ export default defineComponent({
       })
     }
 
-    const search = () => {
-      subsidiesModule.setSearchParams(state)
-      load(loading, () => {
-        router.push({path: routingService.Top(), query: urlQueryFromParams()})
-        subsidiesModule.getSubsidies()
-        props.onSearch()
-      })
-    }
-
     const urlQueryFromParams = () => {
-      const query = removeEmpty(subsidiesModule.searchParams)
-      if (query.inApplicationPeriod === true) {
-        query.inApplicationPeriod = undefined
-      }
       const company = accountModule.currentCompany
       if (!company) {
-        return query
+        return {}
       }
-      if (query.organizationType === company.organizationType) {
-        query.organizationType = undefined
-      }
-      if (query.prefectureId === company.prefectureId.toString()) {
-        query.prefectureId = undefined
-      }
-      if (query.cityIds === company.cityId.toString()) {
-        query.cityIds = []
-      }
-      if (query.businessCategoryKeys === company.businessCategories.join('|')) {
-        query.businessCategoryKeys = []
-      }
-      if (query.capital === company.capital) {
-        query.capital = undefined
-      }
-      if (query.totalEmployee === company.totalEmployee) {
-        query.totalEmployee = undefined
-      }
-      if (query.foundingDate === company.foundingDate) {
-        query.foundingDate = undefined
-      }
-      if (query.annualSales === company.annualSales) {
-        query.annualSales = undefined
-      }
-      return query
+      const foundingDate = company.foundingDate
+        ? new Date(company.foundingDate).toLocaleDateString()
+        : subsidiesModule.searchParams.foundingDate
+      return removeSameValue(subsidiesModule.searchParams, {
+        ...company,
+        prefectureId: company.prefectureId.toString(),
+        cityId: company.cityId.toString(),
+        keyword: '',
+        inApplicationPeriod: true,
+        foundingDate,
+      })
     }
 
     onMounted(() => {
@@ -326,9 +301,6 @@ export default defineComponent({
         if (state.prefectureId) {
           optionsModule.getCities(state.prefectureId)
         }
-        if (state.prefectureId !== accountModule.currentCompany?.prefectureId) {
-          state.cityIds = []
-        }
         if (state.capital) {
           capitalMan.value = state.capital / 10000
         }
@@ -336,8 +308,7 @@ export default defineComponent({
           annualSalesMan.value = state.annualSales / 10000
         }
         subsidiesModule.setSearchParams(state)
-        const pageQuery = route.value.query.page?.toString() || null
-        const page = pageQuery ? Number(pageQuery) : 1
+        const page = convertQueryNumber(route.value.query.page) || 1
         await subsidiesModule.getSubsidies(page)
       })
     })
@@ -352,7 +323,7 @@ export default defineComponent({
       prefectures,
       selectPrefectureId,
       organizationTypes,
-      businessCategoryKeys,
+      businessCategories,
       cities,
       state,
       search,

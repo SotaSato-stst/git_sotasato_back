@@ -127,6 +127,7 @@ import {
   subsidyCategoryLabel,
 } from '@/utils/enumKeyToName'
 import {removeEmpty} from '@/utils/objectUtil'
+import {convertQueryNumber} from '@/utils/urlQuery'
 
 export default defineComponent({
   name: 'AdminSubsidyIndex',
@@ -181,8 +182,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        const pageQuery = route.value.query.page?.toString() || null
-        const page = pageQuery ? Number(pageQuery) : 1
+        const page = convertQueryNumber(route.value.query.page) || 1
         const publishingCode =
           (route.value.query.publishingCode?.toString() as FilterPublishingType) ||
           'all'

@@ -55,6 +55,7 @@ import {companiesModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {Company} from '@/types/Company'
 import {convertToShortJPY} from '@/utils/numberFormatter'
+import {convertQueryNumber} from '@/utils/urlQuery'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -82,8 +83,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        const pageQuery = route.value.query.page?.toString() || null
-        const page = pageQuery ? Number(pageQuery) : 1
+        const page = convertQueryNumber(route.value.query.page) || 1
         companiesModule.getCompanies(page)
       })
     })

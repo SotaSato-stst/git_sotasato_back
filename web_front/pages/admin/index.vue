@@ -152,6 +152,7 @@ import {
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {removeEmpty} from '@/utils/objectUtil'
+import {convertQueryNumber} from '@/utils/urlQuery'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 
 export default defineComponent({
@@ -281,8 +282,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
 
     onMounted(() => {
       load(loading, () => {
-        const pageQuery = route.value.query.page?.toString() || null
-        const page = pageQuery ? Number(pageQuery) : 1
+        const page = convertQueryNumber(route.value.query.page) || 1
         const assignFilter =
           (route.value.query.assignFilter?.toString() as FilterAssignType) ||
           'assignedMe'
