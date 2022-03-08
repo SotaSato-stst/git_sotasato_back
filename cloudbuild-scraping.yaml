@@ -2,6 +2,7 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/slackbot'
   args: [ '--build', '$BUILD_ID',
           '--project', 'scraping',
+          '--copy-timeout',
           '--webhook', '$_SLACK_WEBHOOK_URL' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
