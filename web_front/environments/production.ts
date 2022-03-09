@@ -9,4 +9,7 @@ module.exports = {
   messagingSenderId: process.env.PRODUCTION_MESSAGING_SNDER_ID,
   appId: process.env.PRODUCTION_APP_ID,
   measurementId: process.env.PRODUCTION_MEASUREMENT_ID,
+  hubspotRegin: process.env.PRODUCTION_HUBSPOT_REGION,
+  hubspotPortalId: process.env.PRODUCTION_HUBSPOT_PORTAL_ID,
+  hubspotInquiryFormId: process.env.PRODUCTION_HUBSPOT_INQUIRY_FORM_ID,
 }

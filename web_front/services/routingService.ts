@@ -7,6 +7,7 @@ export const routingService: {
   SignIn: () => '/sign-in',
   PasswordReset: () => '/password-reset',
   SubsidyDetail: (id: number) => `/subsidies/${id}`,
+  InquirySubsidy: (id: number) => `/inquiries/${id}`,
   Ranking: () => '/ranking',
   Favorite: () => '/favorite',
   Account: () => '/account',

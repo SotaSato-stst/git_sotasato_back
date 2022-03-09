@@ -11,9 +11,11 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from '@nuxtjs/composition-api'
+import {defineComponent, PropType, useRouter} from '@nuxtjs/composition-api'
 import {getAnalytics, logEvent} from 'firebase/analytics'
 import {Subsidy} from '@/types/Subsidy'
+import {routingService} from '@/services/routingService'
+import {accountModule} from '@/store'
 
 export default defineComponent({
   name: 'InquiryButton',
@@ -24,16 +26,22 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const subsidy = props.subsidy
+    const router = useRouter()
     const analytics = getAnalytics()
     const clickedAskButton = () => {
       logEvent(analytics, 'click_ask_button', {
         content_type: 'subsidy',
-        content_id: props.subsidy.id,
-        subsidy_title: props.subsidy.title,
+        content_id: subsidy.id,
+        subsidy_title: subsidy.title,
       })
-      window.open(
-        'https://costcut.co.jp/%e3%81%8a%e5%95%8f%e3%81%84%e5%90%88%e3%82%8f%e3%81%9b/',
-      )
+      const query = {
+        company: accountModule.currentCompany?.name,
+        email: accountModule.currentUser?.email,
+        subsidy_title: subsidy.title,
+        hojokin_dock_url: `https://app-hojokin-dock.com/subsidies/${subsidy.id}`,
+      }
+      router.push({path: routingService.InquirySubsidy(subsidy.id), query})
     }
 
     return {clickedAskButton}
