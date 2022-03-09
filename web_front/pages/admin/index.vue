@@ -154,6 +154,7 @@ import {convertToJpDate} from '@/utils/dateFormatter'
 import {removeEmpty} from '@/utils/objectUtil'
 import {convertQueryNumber} from '@/utils/urlQuery'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
+import CookieStore from '@/services/cookieStore'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -166,9 +167,11 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const {loading, load} = subsidyDraftsModule.loader
+    const defaultAssignFilter =
+      CookieStore.getAccountRole() === 'admin' ? 'all' : 'assignedMe'
     const filter = reactive<SubsidyDraftIndexParams>({
       page: 1,
-      assignFilter: 'assignedMe',
+      assignFilter: defaultAssignFilter,
       completeFilter: 'notCompleted',
       keyword: '',
     })
@@ -285,7 +288,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
         const page = convertQueryNumber(route.value.query.page) || 1
         const assignFilter =
           (route.value.query.assignFilter?.toString() as FilterAssignType) ||
-          'assignedMe'
+          defaultAssignFilter
         const completeFilter =
           (route.value.query.completeFilter?.toString() as FilterCompleteType) ||
           'notCompleted'
