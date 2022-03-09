@@ -39,7 +39,7 @@ export default defineComponent({
         company: accountModule.currentCompany?.name,
         email: accountModule.currentUser?.email,
         subsidy_title: subsidy.title,
-        hojokin_dock_url: `https://app-hojokin-dock.com/subsidies/${subsidy.id}`,
+        hojokin_dock_url: `https://app.hojokin-dock.com/subsidies/${subsidy.id}`,
       }
       router.push({path: routingService.InquirySubsidy(subsidy.id), query})
     }
