@@ -48,7 +48,7 @@ export default defineComponent({
 }
 
 .left-side-menu {
-  height: 100vh;
+  height: 100%;
 }
 
 .main-container {

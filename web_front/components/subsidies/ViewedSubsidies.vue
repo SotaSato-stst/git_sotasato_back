@@ -26,7 +26,7 @@ export default defineComponent({
   padding: var(--spacing-4);
   background-color: white;
   overflow: scroll;
-  height: 100vh;
+  height: 100%;
 }
 
 .container > * {
