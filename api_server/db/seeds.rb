@@ -47,6 +47,307 @@ if Rails.env.development?
 
   subsidy_hashes = [
     {
+      title: '中途採用等支援助成金',
+      url: 'https://porfghjtal.monfyujhgojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '土浦市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる.業種のみ該当',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 50000000,
+      capital_min: 5000000,
+      total_employee_max: 500,
+      total_employee_min: 400,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: 4000000,
+      annual_sales_min: 2000000,
+      years_of_establishment: 10,
+      catch_copy: '製造業の中小企業を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '特定求職者雇用開発助成金',
+      url: 'https://porftyufghjtal.monfyujhgojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: 'つくば市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる.市町村のみ該当',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 50000000,
+      capital_min: 5000000,
+      total_employee_max: 500,
+      total_employee_min: 400,
+      organization_types: ['kojin'],
+      business_categories: ['it'],
+      annual_sales_max: 4000000,
+      annual_sales_min: 2000000,
+      years_of_establishment: 10,
+      catch_copy: 'つくば市の中小企業を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: 'トライアル雇用助成金',
+      url: 'https://porfghjtal.mortynfyujhgojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '高萩市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる.資本金のみ該当',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 500000,
+      capital_min: 100000,
+      total_employee_max: 5000,
+      total_employee_min: 1000,
+      organization_types: ['kojin'],
+      business_categories: ['it'],
+      annual_sales_max: 4000000,
+      annual_sales_min: 2000000,
+      years_of_establishment: 10,
+      catch_copy: '資本金が20万円の中小企業を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '旭川市介護サービス等継続支援事業補助金',
+      url: 'https://porfghjtal.mortytyuicgsnfyujhgojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '下妻市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる.従業員数のみ該当',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 5000000,
+      capital_min: 1000000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kojin'],
+      business_categories: ['it'],
+      annual_sales_max: 4000000,
+      annual_sales_min: 2000000,
+      years_of_establishment: 10,
+      catch_copy: '従業員数が200人の中小企業を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '人材確保等支援助成金',
+      url: 'https://porfghjtal.mortkkixcvbytyuicgsnfyujhgojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '筑西市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる.年商のみ該当',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 5000000,
+      capital_min: 1000000,
+      total_employee_max: 5000,
+      total_employee_min: 1000,
+      organization_types: ['kojin'],
+      business_categories: ['it'],
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 10,
+      catch_copy: '年商100万円の中小企業を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '愛知県施設園芸用燃油価格高騰対策支援金',
+      url: 'https://porfghjtal.ukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '桜川市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる.設立年数のみ該当',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 5000000,
+      capital_min: 1000000,
+      total_employee_max: 5000,
+      total_employee_min: 1000,
+      organization_types: ['kojin'],
+      business_categories: ['it'],
+      annual_sales_max: 40000000000,
+      annual_sales_min: 5000000000,
+      years_of_establishment: 1,
+      catch_copy: '設立年数が2年以内の中小企業を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '石炭価格高騰対策支援金',
+      url: 'https://porgyufghjtal.ukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '笠間市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる.法人格のみ該当',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 5000000,
+      capital_min: 1000000,
+      total_employee_max: 5000,
+      total_employee_min: 1000,
+      organization_types: ['kojin'],
+      business_categories: ['it'],
+      annual_sales_max: 40000000000,
+      annual_sales_min: 5000000000,
+      years_of_establishment: 10,
+      catch_copy: '法人格が株式会社の中小企業を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
       title: 'ものづくり補助金',
       url: 'https://portal.monodukuri-hojo.jp/',
       start_from: '2022/1/12',
@@ -78,12 +379,19 @@ if Rails.env.development?
       capital_min: nil,
       total_employee_max: 20000,
       total_employee_min: nil,
+      organization_types: ['kojin'],
       business_categories: ['it'],
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
       catch_copy: '設備投資を応援！',
-      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
     },
     {
       title: '令和３年度茨城県宿泊事業者感染対策支援事業費補助金',
@@ -112,6 +420,7 @@ if Rails.env.development?
       capital_min:100000,
       total_employee_max: 200,
       total_employee_min: 50,
+      organization_types: ['kojin'],
       business_categories: ['syukuhaku'],
       annual_sales_max: nil, 
       annual_sales_min: nil,
@@ -167,6 +476,7 @@ if Rails.env.development?
       ranking_score: 80,
       capital_max: nil,
       capital_min: nil,
+      organization_types: ['kojin'],
       business_categories: ['unnyu', 'it'],
       total_employee_max: nil,
       total_employee_min: nil,
@@ -200,6 +510,7 @@ if Rails.env.development?
       ranking_score: 85,
       capital_max: nil,
       capital_min:nil,
+      organization_types: ['kojin'],
       business_categories: ['komu'],
       total_employee_max: nil,
       total_employee_min: nil,
@@ -232,6 +543,7 @@ if Rails.env.development?
       ranking_score: 20,
       capital_max: nil,
       capital_min:nil,
+      organization_types: ['kojin'],
       business_categories: ['kogyo'],
       total_employee_max: nil,
       total_employee_min: nil,
@@ -242,13 +554,13 @@ if Rails.env.development?
       keywords: [],
     },
     {
-      title: '全て揃ってる',
+      title: '事業再構築補助金',
       url: 'https://porfghjtal.monojdukuri-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
       ministry_name: '',
       prefecture_name: '茨城県',
-      city_name: 'つくば市',
+      city_name: '土浦市',
       publishing_code: 'published',
       price_max: 15000000,
       support_ratio_min: '1/4',
@@ -262,10 +574,7 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
+      target_detail: '全て揃ってる',
       subsidy_category: 'hojo',
       supplier_type: 'city',
       ranking_score: 50,
@@ -273,20 +582,769 @@ if Rails.env.development?
       capital_min: nil,
       total_employee_max: nil,
       total_employee_min: nil,
+      organization_types: ['kojin'],
       business_categories: ['seizo'],
       annual_sales_max: nil,
       annual_sales_min: nil,
       years_of_establishment: nil,
       catch_copy: '設備投資を応援！',
-      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
     },
     {
-      title: '補助割合がない',
+      title: '市民活動応援補助金',
       url: 'https://porjtal.monojdukuruhi-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
       ministry_name: '',
       prefecture_name: '茨城県',
+      city_name: '水戸市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '',
+      support_ratio_max: '',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '補助割合がない',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '事業復活支援金',
+      url: 'https://porjlltal.monojjdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '石岡市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '上限金額がない',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '政策分野エイジフレンドリー補助金',
+      url: 'https://porjtal.mhhonijiojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: 'かすみがうら市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '',
+      support_ratio_max: '',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '
+      上限金額と補助割合がない',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '防犯灯設置補助金',
+      url: 'https://portahl.mohhnojdukuri-hojo.jp/',
+      start_from: nil,
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: 'ひたちなか市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '募集期間がない',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入', '金属バット', 'ICT導入', 'ドローン機器等'],
+    },
+    {
+      title: '外国人技能実習生等の受け入れを行う事業者に支援事業補助金',
+      url: 'https://portahl.monojdukujijiiiiri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '太子町',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: 'キャッチコピーがない',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '三重県地域経済復活支援金',
+      url: 'https://portahl.monhhojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: '古賀市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '
+      キーワードがない',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [],
+    },
+    {
+      title: '御船町介護保険住宅改修支援事業費補助金',
+      url: 'https://pojijijijhirtahl.mosdfghjnhhojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: nil,
+      support_ratio_max: nil,
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '上限金額・支援割合・キーワード・キャッチコピーがない',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '',
+      keywords: [],
+    },
+    {
+      title: '令和4年度における家畜衛生対策事業（牛疾病検査円滑化推進対策事業及び家畜生産農場衛生対策事業（疾病清浄化支援対策、農場飼養衛生管理強化・疾病流行防止支援対策に限る。））の実施に係る公募について',
+      url: 'https://pojijijijhirtahl.monhhojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '松原市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: 'タイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長い',
+      subsidy_category: 'hojo',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '朝倉市緊急経済対策中小企業応援保証料補給金',
+      url: 'https://pordfghjfghjtal.monojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '大阪市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '中小企業応援保証料補給金',
+      url: 'https://pordfghjjtal.monojdukuruhi-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '泉佐野市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '',
+      support_ratio_max: '',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '補助割合がない',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '研究機関活用支援事業補助金',
+      url: 'https://pordfghjjlltal.monojjdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '上限金額がない',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '区内で障害者を雇用する人等への援助金',
+      url: 'https://pordfghjjtal.mhhonijiojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: '',
+      support_ratio_max: '',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '
+      上限金額と補助割合がない',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '文京区商店街チャレンジ戦略支援事業補助金',
+      url: 'https://pordfghjtahl.mohhnojdukuri-hojo.jp/',
+      start_from: nil,
+      end_to: nil,
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '募集期間がない',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入', '金属バット', 'ICT導入', 'ドローン機器等'],
+    },
+    {
+      title: '次世代育成支援行動計画策定奨励金',
+      url: 'https://pordfghjtahl.monojdukujijiiiiri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: 'キャッチコピーがない',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: 'いわて希望応援ファンド地域活性化支援事業',
+      url: 'https://pordfghjtahl.monhhojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '
+      キーワードがない',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [],
+    },
+    {
+      title: 'タクシー事業者支援金',
+      url: 'https://pojdfghjijijijhirtahl.mosdfghjnhhojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: nil,
+      support_ratio_min: nil,
+      support_ratio_max: nil,
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '上限金額・支援割合・キーワード・キャッチコピーがない',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '',
+      keywords: [],
+    },
+    {
+      title: '2022年3月4日まん延防止等重点措置協力支援金（感染防止対策協力支援金）の申請について（2月21日～3月6日要請分）',
+      url: 'https://pojdfghjijijijhirtahl.monhhojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '大阪府',
+      city_name: '河内長野市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: 'タイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長い',
+      subsidy_category: 'josei',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: nil,
+      capital_min: nil,
+      total_employee_max: nil,
+      total_employee_min: nil,
+      organization_types: ['kojin'],
+      business_categories: ['seizo'],
+      annual_sales_max: nil,
+      annual_sales_min: nil,
+      years_of_establishment: nil,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: 'ITソリューション補助金（成長事業型・課題解決型）',
+      url: 'https://porjhytrdxdfghjfghjtal.monojdukuri-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
+      city_name: 'つくば市',
+      publishing_code: 'published',
+      price_max: 15000000,
+      support_ratio_min: '1/4',
+      support_ratio_max: '1/2',
+      level: '1',
+      detail: 'ものづくり・商業・サービス生産性向上促進補助金は、中小企業・小規模事業者等が今後複数
+      年にわたり相次いで直面する制度変更（働き方改革や被用者保険の適用拡大、賃上げ、インボイ
+      ス導入等）等に対応するため、中小企業・小規模事業者等が取り組む革新的サービス開発・試作
+      品開発・生産プロセスの改善を行うための設備投資等を支援するものです。また、新型コロナウ
+      イルスの感染拡大の影響を受け、社会経済の変化に対応したビジネスモデルへの転換に向けた新
+      型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
+      に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
+      枠を新たに設け、優先的に支援します。',
+      target_detail: '全て揃ってる',
+      subsidy_category: 'kyufu',
+      supplier_type: 'city',
+      ranking_score: 50,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
+      business_categories: ['seizo'],
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
+      catch_copy: '設備投資を応援！',
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
+    },
+    {
+      title: '佐久穂町職員互助会の補助金',
+      url: 'https://porjhytrdxdfghjjtal.monojdukuruhi-hojo.jp/',
+      start_from: '2022/1/12',
+      end_to: '2023/1/15',
+      ministry_name: '',
+      prefecture_name: '茨城県',
       city_name: 'つくば市',
       publishing_code: 'published',
       price_max: 15000000,
@@ -301,27 +1359,31 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
-      supplier_type: 'city',
+      target_detail: '補助割合がない',
+      subsidy_category: 'kyufu',
+      supplier_type: 'prefecture',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '設備投資を応援！',
-      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
     },
     {
-      title: '上限金額がない',
-      url: 'https://porjlltal.monojjdukuri-hojo.jp/',
+      title: '生ごみ処理容器購入費の補助金',
+      url: 'https://porjhytrdxdfghjjlltal.monojjdukuri-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
       ministry_name: '',
@@ -340,32 +1402,34 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
+      target_detail: '上限金額がない',
+      subsidy_category: 'kyufu',
       supplier_type: 'city',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '設備投資を応援！',
-      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
+      keywords: [
+        '多種多様なシステム構築費',
+        '設備導入',
+        ''
+      ]
     },
     {
-      title: '上限金額と補助割合がない',
-      url: 'https://porjtal.mhhonijiojdukuri-hojo.jp/',
+      title: 'がんばる事業者活動促進補助金',
+      url: 'https://porjhytrdxdfghjjtal.mhhonijiojdukuri-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
-      ministry_name: '',
-      prefecture_name: '茨城県',
-      city_name: 'つくば市',
+      ministry_name: '中小企業庁',
+      prefecture_name: '',
+      city_name: '',
       publishing_code: 'published',
       price_max: nil,
       support_ratio_min: '',
@@ -379,27 +1443,34 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
-      supplier_type: 'city',
+      target_detail: '
+      上限金額と補助割合がない、キーワードが5個以上',
+      subsidy_category: 'kyufu',
+      supplier_type: 'ministry',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '設備投資を応援！',
-      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入',
+        'カイワレ製造機',
+        'コロナフェイスシールド'
+      ]
     },
     {
-      title: '募集期間がない',
-      url: 'https://portahl.mohhnojdukuri-hojo.jp/',
+      title: '白鷹町飲食業等事業継続給付金',
+      url: 'https://porjhytrdxdfghjtahl.mohhnojdukuri-hojo.jp/',
       start_from: nil,
       end_to: nil,
       ministry_name: '',
@@ -418,32 +1489,30 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
+      target_detail: '募集期間がない',
+      subsidy_category: 'kyufu',
       supplier_type: 'city',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '設備投資を応援！',
       keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入', '金属バット', 'ICT導入', 'ドローン機器等'],
     },
     {
-      title: 'キャッチコピーがない',
-      url: 'https://portahl.monojdukujijiiiiri-hojo.jp/',
+      title: 'IT導入補助金',
+      url: 'https://porjhytrdxdfghjtahl.monojdukujijiiiiri-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
-      ministry_name: '',
-      prefecture_name: '茨城県',
-      city_name: 'つくば市',
+      ministry_name: '資源エネルギー庁',
+      prefecture_name: '',
+      city_name: '',
       publishing_code: 'published',
       price_max: 15000000,
       support_ratio_min: '1/4',
@@ -457,27 +1526,31 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
-      supplier_type: 'city',
+      target_detail: 'キャッチコピーがない',
+      subsidy_category: 'kyufu',
+      supplier_type: 'ministry',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '',
-      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
     },
     {
-      title: 'キーワードがない',
-      url: 'https://portahl.monhhojdukuri-hojo.jp/',
+      title: '津野町飲食店応援金',
+      url: 'https://porjhytrdxdfghjtahl.monhhojdukuri-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
       ministry_name: '',
@@ -496,27 +1569,26 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
+      target_detail: '
+      キーワードがない',
+      subsidy_category: 'kyufu',
       supplier_type: 'city',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '設備投資を応援！',
       keywords: [],
     },
     {
-      title: '上限金額・支援割合・キーワード・キャッチコピーがない',
-      url: 'https://pojijijijhirtahl.mosdfghjnhhojdukuri-hojo.jp/',
+      title: 'なりわい再建支援補助金',
+      url: 'https://pojjhytrdxdfghjijijijhirtahl.mosdfghjnhhojdukuri-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
       ministry_name: '',
@@ -535,32 +1607,30 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
+      target_detail: '上限金額・支援割合・キーワード・キャッチコピーがない',
+      subsidy_category: 'kyufu',
       supplier_type: 'city',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '',
       keywords: [],
     },
     {
-      title: 'タイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長い',
-      url: 'https://pojijijijhirtahl.monhhojdukuri-hojo.jp/',
+      title: '平成30年度予算「ふるさと名物応援事業補助金(地域産業資源活用事業、小売業者等連携支援事業)」の公募を開始します',
+      url: 'https://pojjhytrdxdfghjijijijhirtahl.monhhojdukuri-hojo.jp/',
       start_from: '2022/1/12',
       end_to: '2023/1/15',
       ministry_name: '',
       prefecture_name: '茨城県',
-      city_name: 'つくば市',
+      city_name: '神栖市',
       publishing_code: 'published',
       price_max: 15000000,
       support_ratio_min: '1/4',
@@ -574,29 +1644,37 @@ if Rails.env.development?
       型コロナウイルスの影響を乗り越えるために前向きな投資を行う事業者に対して、通常枠とは別
       に、補助率を引き上げ、営業経費を補助対象とした「新特別枠」として低感染リスク型ビジネス
       枠を新たに設け、優先的に支援します。',
-      target_detail: '以下を満たす３～５年の事業計画の策定及び実行
-      ・付加価値額 ＋３％以上／年
-      ・給与支給総額＋１．５％以上／年
-      ・事業場内最低賃金≧地域別最低賃金＋３０円',
-      subsidy_category: 'hojo',
+      target_detail: 'タイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長いタイトルが長い',
+      subsidy_category: 'kyufu',
       supplier_type: 'city',
       ranking_score: 50,
-      capital_max: nil,
-      capital_min: nil,
-      total_employee_max: nil,
-      total_employee_min: nil,
+      capital_max: 300000,
+      capital_min: 100000,
+      total_employee_max: 500,
+      total_employee_min: 100,
+      organization_types: ['kabu'],
       business_categories: ['seizo'],
-      annual_sales_max: nil,
-      annual_sales_min: nil,
-      years_of_establishment: nil,
+      annual_sales_max: 4000000,
+      annual_sales_min: 500000,
+      years_of_establishment: 1,
       catch_copy: '設備投資を応援！',
-      keywords: ['多種多様なシステム構築費', '農業ハウス設備', '自動チェックイン機', 'レーザーカッター', '設備導入'],
+      keywords: [
+        '多種多様なシステム構築費',
+        '農業ハウス設備',
+        '自動チェックイン機',
+        'レーザーカッター',
+        '設備導入'
+      ]
     },
   ]
   subsidy_hashes.each do |hash|
     subsidy = Subsidy.find_or_initialize_by(url: hash[:url])
     subsidy.subsidy_business_categories = hash[:business_categories].map do |category|
       subsidy.subsidy_business_categories.build(business_category: category)
+    end
+
+    subsidy.subsidy_organization_types = hash[:organization_types].map do |organization_type|
+      subsidy.subsidy_organization_types.build(organization_type: organization_type)
     end
 
     subsidy.subsidy_keywords = hash[:keywords].to_a.map do |content|
@@ -637,7 +1715,10 @@ if Rails.env.development?
       adress: 'つくば市天久保3丁目12-34',
       capital: '200000',
       total_employee: '200',
-      business_categories: ['seizo']
+      business_categories: ['seizo'],
+      founding_date: '2020-4-24',
+      annual_sales: 1000000,
+      organization_type: 'kabu'
     },
     {
       name: '池垣物産',
@@ -646,7 +1727,10 @@ if Rails.env.development?
       adress: '河内長野市南希望が丘30-203',
       capital: '20010',
       total_employee: '3',
-      business_categories: ['gyogyo']
+      business_categories: ['gyogyo'],
+      founding_date:  '2020-4-24',
+      annual_sales: 1000000,
+      organization_type: 'kojin'
     },
     {
       name: 'IGnet',
@@ -655,7 +1739,10 @@ if Rails.env.development?
       adress: '千歳市30-2',
       capital: '5040404',
       total_employee: '30',
-      business_categories: ['seizo']
+      business_categories: ['seizo'],
+      founding_date:  '2020-4-24',
+      annual_sales: 1000000,
+      organization_type: 'iryo'
     }
   ]
   company_hashes.each do |hash|
@@ -669,6 +1756,9 @@ if Rails.env.development?
       city: cities[hash[:city_name]],
       adress: hash[:adress],
       total_employee: hash[:total_employee],
+      founding_date: hash[:founding_date],
+      annual_sales: hash[:annual_sales],
+      organization_type: hash[:organization_type],
     )
   end
 
