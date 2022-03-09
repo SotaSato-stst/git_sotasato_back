@@ -27,6 +27,9 @@ export default defineComponent({
         case 'subsidies':
           router.replace(routingService.SubsidyDetail(id))
           break
+        case 'inquiries':
+          router.replace(routingService.InquirySubsidy(id))
+          break
         case 'admin_subsidies':
           router.replace(routingService.AdminSubsidyDetail(id))
           break

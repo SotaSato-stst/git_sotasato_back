@@ -13,6 +13,11 @@
         "type": 301
       },
       {
+        "regex": "/inquiries/(\\d+)",
+        "destination": "/redirect?id=:1&resource=inquiries",
+        "type": 301
+      },
+      {
         "regex": "/admin/subsidies/(\\d+)",
         "destination": "/redirect?id=:1&resource=admin_subsidies",
         "type": 301
