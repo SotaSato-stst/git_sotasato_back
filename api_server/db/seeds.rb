@@ -1418,8 +1418,7 @@ if Rails.env.development?
       catch_copy: '設備投資を応援！',
       keywords: [
         '多種多様なシステム構築費',
-        '設備導入',
-        ''
+        '設備導入'
       ]
     },
     {
