@@ -21,7 +21,7 @@ import {
   useRoute,
 } from '@nuxtjs/composition-api'
 import {subsidiesModule} from '@/store'
-import {ShowHubspotInquiryForm} from '@/plugins/hubspot'
+import {ShowHubspotInquiryForm} from '@/services/hubspot'
 
 export default defineComponent({
   name: 'SubsidyInquiryPage',
