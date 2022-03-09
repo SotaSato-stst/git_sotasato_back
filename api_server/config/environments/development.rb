@@ -79,7 +79,7 @@ Rails.application.configure do
     'Access-Control-Allow-Origin' => '*'
   }
 
-  config.hosts << 'http://localhost:8080'
+  config.hosts += Settings.hosts
 
   config.google_cloud.use_logging = false
   config.google_cloud.use_debugger = false

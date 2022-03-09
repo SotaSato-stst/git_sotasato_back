@@ -121,6 +121,5 @@ Rails.application.configure do
   config.action_dispatch.default_headers = {
     'Access-Control-Allow-Origin' => 'https://app.hojokin-dock.com'
   }
-
-  config.hosts = ['api.hojokin-dock.com', 'app.hojokin-dock.com', 'macro-market-336309.an.r.appspot.com']
+  config.hosts = Settings.hosts
 end
