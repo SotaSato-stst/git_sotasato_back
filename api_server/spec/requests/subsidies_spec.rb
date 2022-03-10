@@ -4,6 +4,7 @@ RSpec.describe 'Subsidies API', type: :request do
   let(:user) { create(:user) }
   let(:ministry) { create(:ministry, name: '経済産業省') }
   let(:organization_type) { create(:subsidy_organization_type, organization_type: 'kojin') }
+  # let(:business_category) { create(:subsidy_business_category, business_category: 'seizo') }
   let!(:subsidy) do
     create(
       :subsidy,
@@ -30,6 +31,7 @@ RSpec.describe 'Subsidies API', type: :request do
       annual_sales_min: 500_000_000,
       catch_copy: '設備投資を応援！',
       organization_type: organization_type,
+      # business_category: business_category,
     )
   end
 
@@ -47,6 +49,7 @@ RSpec.describe 'Subsidies API', type: :request do
 
     it 'returns object' do
       subject
+      binding.pry
       expect(json['subsidies'][0]['title']).to eq 'ものづくり補助金'
       expect(json['subsidies'][0]['url']).to eq 'https://portal.monodukuri-hojo.jp/'
       expect(json['subsidies'][0]['ministry']['name']).to eq '経済産業省'
@@ -68,7 +71,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['subsidies'][0]['annual_sales_max']).to eq 1_000_000_000
       expect(json['subsidies'][0]['annual_sales_min']).to eq 500_000_000
       expect(json['subsidies'][0]['catch_copy']).to eq '設備投資を応援！'
-      expect(json['subsidies'][0]['organization_type']['organization_type']).to eq 'kojin'
+      expect(json['subsidies'][0]['organization_types']).to eq 'kojin'
+      # expect(json['subsidies'][0]['business_categories']).to eq 'seizo'
     end
   end
 
@@ -103,7 +107,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['annual_sales_max']).to eq 1_000_000_000
       expect(json['annual_sales_min']).to eq 500_000_000
       expect(json['catch_copy']).to eq '設備投資を応援！'
-      expect(json['organization_type']['organization_type']).to eq 'kojin'
+      expect(json['organization_types']).to eq 'kojin'
+      # expect(json['business_categories']).to eq 'seizo'
     end
   end
 end
