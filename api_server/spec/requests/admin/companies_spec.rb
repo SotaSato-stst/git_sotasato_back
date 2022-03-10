@@ -12,7 +12,10 @@ RSpec.describe 'Admin Companies', type: :request do
       city: city,
       adress: 'つくば市天久保3丁目12-34',
       capital: 200_000,
-      total_employee: 200
+      total_employee: 200,
+      founding_date: '2020-04-24',
+      annual_sales: 10_000_000,
+      organization_type: 'kabu'
     )
   end
 
@@ -36,6 +39,9 @@ RSpec.describe 'Admin Companies', type: :request do
       expect(json['companies'][0]['adress']).to eq 'つくば市天久保3丁目12-34'
       expect(json['companies'][0]['capital']).to eq 200_000
       expect(json['companies'][0]['total_employee']).to eq 200
+      expect(json['companies'][0]['founding_date']).to eq '2020-04-24'
+      expect(json['companies'][0]['annual_sales']).to eq 10_000_000
+      expect(json['companies'][0]['organization_type']).to eq 'kabu'
     end
   end
 
@@ -55,6 +61,9 @@ RSpec.describe 'Admin Companies', type: :request do
       expect(json['adress']).to eq 'つくば市天久保3丁目12-34'
       expect(json['capital']).to eq 200_000
       expect(json['total_employee']).to eq 200
+      expect(json['founding_date']).to eq '2020-04-24'
+      expect(json['annual_sales']).to eq 10_000_000
+      expect(json['organization_type']).to eq 'kabu'
     end
   end
 
@@ -69,7 +78,11 @@ RSpec.describe 'Admin Companies', type: :request do
         total_employee: 1000,
         prefecture_id: prefecture.id,
         city_id: city.id,
-        business_categories: ['it']
+        organization_types: ['kojin'],
+        business_categories: ['it'],
+        annual_sales: 10_000_000,
+        founding_date: '2020-04-24'
+
       }
     end
 
@@ -91,7 +104,10 @@ RSpec.describe 'Admin Companies', type: :request do
         total_employee: 1000,
         prefecture_id: prefecture.id,
         city_id: city.id,
-        business_categories: ['it']
+        business_categories: ['it'],
+        organization_types: ['kojin'],
+        annual_sales: 10_000_000,
+        founding_date: '2020-04-24'
       }
     end
 

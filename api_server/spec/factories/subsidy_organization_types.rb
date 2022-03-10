@@ -18,6 +18,7 @@
 #
 FactoryBot.define do
   factory :subsidy_organization_type do
-    
+    subsidy { association(:subsidy) }
+    organization_type { 'kabu' }
   end
 end
