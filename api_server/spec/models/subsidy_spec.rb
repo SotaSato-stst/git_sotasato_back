@@ -200,6 +200,20 @@ RSpec.describe Subsidy, type: :model do
       end
     end
   end
+  describe 'search_by_organization_type' do
+    subject { Subsidy.search_by_organization_type(organization_type) }
+    context '一致するデータが存在するとき' do
+      let(:organization_type) { 'kabu' }
+      let!(:target_record) { create(:subsidy_organization_type, organization_type: 'kabu') }
+      let!(:not_target_record) { create(:subsidy_organization_type, organization_type: 'kojin') }
+      it '法人格がkabuのsubsidyが抽出される' do
+        expect(subject).to include(target_record.subsidy)
+      end
+      it 'kabuではないsubjectは抽出されない' do
+        expect(subject).not_to include(not_target_record.subsidy)
+      end
+    end
+  end
 
   describe 'search_with_capital' do
     subject { Subsidy.search_with_capital(capital) }

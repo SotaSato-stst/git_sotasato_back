@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Subsidies API', type: :request do
   let(:user) { create(:user) }
   let(:ministry) { create(:ministry, name: '経済産業省') }
+  let(:organization_types) { ['kojin'] }
+  let(:business_categories) { ['seizo'] }
   let!(:subsidy) do
     create(
       :subsidy,
@@ -19,7 +21,17 @@ RSpec.describe 'Subsidies API', type: :request do
       detail: '詳細文章',
       target_detail: '対象の説明文',
       subsidy_category: 'hojo',
-      supplier_type: 'ministry'
+      supplier_type: 'ministry',
+      total_employee_max: 500,
+      total_employee_min: 200,
+      capital_max: 60_000_000,
+      capital_min: 20_000_000,
+      years_of_establishment: 10,
+      annual_sales_max: 1_000_000_000,
+      annual_sales_min: 500_000_000,
+      catch_copy: '設備投資を応援！',
+      organization_types: organization_types,
+      business_categories: business_categories
     )
   end
 
@@ -50,6 +62,16 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['subsidies'][0]['target_detail']).to eq '対象の説明文'
       expect(json['subsidies'][0]['subsidy_category']).to eq 'hojo'
       expect(json['subsidies'][0]['supplier_type']).to eq 'ministry'
+      expect(json['subsidies'][0]['total_employee_max']).to eq 500
+      expect(json['subsidies'][0]['total_employee_min']).to eq 200
+      expect(json['subsidies'][0]['capital_max']).to eq 60_000_000
+      expect(json['subsidies'][0]['capital_min']).to eq 20_000_000
+      expect(json['subsidies'][0]['years_of_establishment']).to eq 10
+      expect(json['subsidies'][0]['annual_sales_max']).to eq 1_000_000_000
+      expect(json['subsidies'][0]['annual_sales_min']).to eq 500_000_000
+      expect(json['subsidies'][0]['catch_copy']).to eq '設備投資を応援！'
+      expect(json['subsidies'][0]['organization_types']).to eq [{ 'key' => 'kojin', 'name' => '個人事業主' }]
+      expect(json['subsidies'][0]['business_categories']).to eq [{ 'key' => 'seizo', 'name' => '製造業' }]
     end
   end
 
@@ -76,6 +98,16 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['target_detail']).to eq '対象の説明文'
       expect(json['subsidy_category']).to eq 'hojo'
       expect(json['supplier_type']).to eq 'ministry'
+      expect(json['total_employee_max']).to eq 500
+      expect(json['total_employee_min']).to eq 200
+      expect(json['capital_max']).to eq 60_000_000
+      expect(json['capital_min']).to eq 20_000_000
+      expect(json['years_of_establishment']).to eq 10
+      expect(json['annual_sales_max']).to eq 1_000_000_000
+      expect(json['annual_sales_min']).to eq 500_000_000
+      expect(json['catch_copy']).to eq '設備投資を応援！'
+      expect(json['organization_types']).to eq [{ 'key' => 'kojin', 'name' => '個人事業主' }]
+      expect(json['business_categories']).to eq [{ 'key' => 'seizo', 'name' => '製造業' }]
     end
   end
 end

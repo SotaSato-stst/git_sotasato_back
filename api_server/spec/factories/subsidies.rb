@@ -51,12 +51,17 @@ FactoryBot.define do
     total_employee_min { nil }
     capital_max { nil }
     capital_min { nil }
+    years_of_establishment { 10 }
+    annual_sales_max { 1_000_000_000 }
+    annual_sales_min { 500_000_000 }
+    catch_copy { '設備投資を応援！' }
 
     transient do
       ministry { nil }
       prefecture { nil }
       city { nil }
       business_categories { nil }
+      organization_types { nil }
     end
 
     subsidy_ministry do |this|
@@ -71,6 +76,11 @@ FactoryBot.define do
     subsidy_business_categories do |this|
       business_categories.to_a.map do |category|
         association(:subsidy_business_category, subsidy: this.instance, business_category: category)
+      end
+    end
+    subsidy_organization_types do |this|
+      organization_types.to_a.map do |organization_type|
+        association(:subsidy_organization_type, subsidy: this.instance, organization_type: organization_type)
       end
     end
   end
