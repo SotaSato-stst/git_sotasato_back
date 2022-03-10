@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Subsidies API', type: :request do
   let(:user) { create(:user) }
   let(:ministry) { create(:ministry, name: '経済産業省') }
-  let(:organization_type) { create(:organization_type, organization_type: 'kojin') }
+  let(:organization_type) { create(:subsidy_organization_type, organization_type: 'kojin') }
   let!(:subsidy) do
     create(
       :subsidy,
