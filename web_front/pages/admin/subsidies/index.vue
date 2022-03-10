@@ -127,7 +127,11 @@ import {
   subsidyCategoryLabel,
 } from '@/utils/enumKeyToName'
 import {removeEmpty} from '@/utils/objectUtil'
-import {convertQueryNumber} from '@/utils/urlQuery'
+import {
+  convertQueryNumber,
+  convertQueryString,
+  convertQueryDate,
+} from '@/utils/urlQuery'
 
 export default defineComponent({
   name: 'AdminSubsidyIndex',
@@ -139,6 +143,7 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
+    const query = route.value.query
     const {loading, load} = adminSubsidiesModule.loader
     const subsidies = computed(() => adminSubsidiesModule.subsidies)
     const pagination = computed(() => adminSubsidiesModule.pagination)
@@ -182,15 +187,18 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        const page = convertQueryNumber(route.value.query.page) || 1
-        const publishingCode =
-          (route.value.query.publishingCode?.toString() as FilterPublishingType) ||
-          'all'
-        const endAfterStr = route.value.query.endAfter?.toString()
-        const endAfterDate = endAfterStr ? new Date(endAfterStr) : null
+        const page = convertQueryNumber(query.page) || 1
+        const publishingCode = (convertQueryString(query.publishingCode) ||
+          'all') as FilterPublishingType
+        const endAfterDate = convertQueryDate(query.endAfter) || null
         endAfter.value = endAfterDate
-        const keyword = route.value.query.keyword?.toString() || ''
-        handleSegue({page, publishingCode, endAfter: endAfterStr, keyword})
+        const keyword = query.keyword?.toString() || ''
+        handleSegue({
+          page,
+          publishingCode,
+          endAfter: endAfterDate?.toLocaleDateString(),
+          keyword,
+        })
       })
     })
 

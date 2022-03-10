@@ -152,7 +152,7 @@ import {
 import {routingService} from '@/services/routingService'
 import {convertToJpDate} from '@/utils/dateFormatter'
 import {removeEmpty} from '@/utils/objectUtil'
-import {convertQueryNumber} from '@/utils/urlQuery'
+import {convertQueryNumber, convertQueryString} from '@/utils/urlQuery'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
 import CookieStore from '@/services/cookieStore'
 
@@ -166,6 +166,7 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
+    const query = route.value.query
     const {loading, load} = subsidyDraftsModule.loader
     const defaultAssignFilter =
       CookieStore.getAccountRole() === 'admin' ? 'all' : 'assignedMe'
@@ -285,14 +286,14 @@ Slackに新着通知が来ているのに、この画面に表示されてない
 
     onMounted(() => {
       load(loading, () => {
-        const page = convertQueryNumber(route.value.query.page) || 1
+        const page = convertQueryNumber(query.page) || 1
         const assignFilter =
-          (route.value.query.assignFilter?.toString() as FilterAssignType) ||
+          (convertQueryString(query.assignFilter) as FilterAssignType) ||
           defaultAssignFilter
         const completeFilter =
-          (route.value.query.completeFilter?.toString() as FilterCompleteType) ||
+          (convertQueryString(query.completeFilter) as FilterCompleteType) ||
           'notCompleted'
-        const keyword = route.value.query.keyword?.toString() || ''
+        const keyword = convertQueryString(query.keyword) || ''
         handleSegue({page, assignFilter, completeFilter, keyword})
       })
     })
