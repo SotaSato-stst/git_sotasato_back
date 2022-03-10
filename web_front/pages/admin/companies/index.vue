@@ -9,7 +9,12 @@
     <card-loading :loading="loading" />
     <el-table v-if="!loading" :data="companies" stripe style="width: 100%">
       <el-table-column prop="name" label="会社名" />
-      <el-table-column prop="adress" label="住所" />
+      <el-table-column prop="adress" label="所在地" width="180">
+        <template slot-scope="scope">
+          <span>{{ scope.row.prefecture.name }}</span>
+          <span>{{ scope.row.city.name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="businessCategories" label="業種">
         <template slot-scope="scope">
           <span>{{
