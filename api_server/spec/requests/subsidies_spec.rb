@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Subsidies API', type: :request do
   let(:user) { create(:user) }
   let(:ministry) { create(:ministry, name: '経済産業省') }
-  let(:organization_type) { create(:subsidy_organization_type, organization_type: 'kojin') }
-  # let(:business_category) { create(:subsidy_business_category, business_category: 'seizo') }
+  let(:organization_types) { ['kojin'] }
+  let(:business_categories) { ['seizo'] }
   let!(:subsidy) do
     create(
       :subsidy,
@@ -30,8 +30,8 @@ RSpec.describe 'Subsidies API', type: :request do
       annual_sales_max: 1_000_000_000,
       annual_sales_min: 500_000_000,
       catch_copy: '設備投資を応援！',
-      organization_type: organization_type,
-      # business_category: business_category,
+      organization_types: organization_types,
+      business_categories: business_categories
     )
   end
 
@@ -70,8 +70,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['subsidies'][0]['annual_sales_max']).to eq 1_000_000_000
       expect(json['subsidies'][0]['annual_sales_min']).to eq 500_000_000
       expect(json['subsidies'][0]['catch_copy']).to eq '設備投資を応援！'
-      expect(json['subsidies'][0]['organization_types']).to eq 'kojin'
-      # expect(json['subsidies'][0]['business_categories']).to eq 'seizo'
+      expect(json['subsidies'][0]['organization_types']).to eq [{ 'key' => 'kojin', 'name' => '個人事業主' }]
+      expect(json['subsidies'][0]['business_categories']).to eq [{ 'key' => 'seizo', 'name' => '製造業' }]
     end
   end
 
@@ -106,8 +106,8 @@ RSpec.describe 'Subsidies API', type: :request do
       expect(json['annual_sales_max']).to eq 1_000_000_000
       expect(json['annual_sales_min']).to eq 500_000_000
       expect(json['catch_copy']).to eq '設備投資を応援！'
-      expect(json['organization_types']).to eq 'kojin'
-      # expect(json['business_categories']).to eq 'seizo'
+      expect(json['organization_types']).to eq [{ 'key' => 'kojin', 'name' => '個人事業主' }]
+      expect(json['business_categories']).to eq [{ 'key' => 'seizo', 'name' => '製造業' }]
     end
   end
 end

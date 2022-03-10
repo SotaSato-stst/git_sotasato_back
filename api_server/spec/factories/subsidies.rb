@@ -61,7 +61,7 @@ FactoryBot.define do
       prefecture { nil }
       city { nil }
       business_categories { nil }
-      organization_type { nil }
+      organization_types { nil }
     end
 
     subsidy_ministry do |this|
@@ -80,7 +80,7 @@ FactoryBot.define do
     end
     subsidy_organization_types do |this|
       organization_types.to_a.map do |organization_type|
-        association(:subsidy_organization_types, subsidy: this.instance, subsidy_organization_types: organization_type)
+        association(:subsidy_organization_type, subsidy: this.instance, organization_type: organization_type)
       end
     end
   end
