@@ -19,7 +19,7 @@
       </el-radio-group>
       <el-input
         v-model="filter.keyword"
-        placeholder="タイトル"
+        placeholder="タイトル・詳細"
         size="mini"
         class="search-input"
       />

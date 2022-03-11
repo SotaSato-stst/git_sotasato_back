@@ -102,7 +102,7 @@ class Subsidy < ApplicationRecord
 
     keywords = Keyword.where(content: keyword.split(/[[:space:]]/))
     subsidy_ids = SubsidyKeyword.where(keyword: keywords).pluck(:subsidy_id)
-    merge(where(id: subsidy_ids)).or(where('title like ?', "%#{keyword}%"))
+    merge(where(id: subsidy_ids)).or(where('title like ?', "%#{keyword}%")).or(where('detail like ?', "%#{keyword}%"))
   }
   scope :search_by_organization_type, ->(organization_type) {
     return if organization_type.blank?
