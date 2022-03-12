@@ -4,7 +4,8 @@ export const routingService: {
   [key: string]: (...args: any[]) => PageUrl
 } = {
   Top: () => '/',
-  SignIn: () => '/sign-in',
+  SignIn: (redirection?: string) =>
+    `/sign-in${redirection ? `?redirection=${redirection}` : ''}`,
   PasswordReset: () => '/password-reset',
   SubsidyDetail: (id: number) => `/subsidies/${id}`,
   InquirySubsidy: (id: number) => `/inquiries/${id}`,

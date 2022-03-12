@@ -41,6 +41,7 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
+    const query = route.value.query
     const state = reactive({
       email: '',
       password: '',
@@ -62,8 +63,7 @@ export default defineComponent({
     }
 
     const handleRedirect = () => {
-      const redirection = route.value.query.redirection
-      switch (redirection) {
+      switch (query.redirection) {
         case 'account':
           router.replace(routingService.Account())
           break

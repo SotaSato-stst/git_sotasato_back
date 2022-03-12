@@ -1,0 +1,31 @@
+<div><%= @user.company.name %></div>
+<div><%= @user.display_name %> 様</div>
+<p>補助金・助成金の情報が本日新たに追加されました。</p>
+<% @subsidies.each do |subsidy| %>
+  <div style="border-top: solid 2px #eeeeee; padding: 16px 0;">
+    <% if subsidy.catch_copy.present? %>
+      <div style="font-size: 18px; font-weight: bold;">
+        【<%= subsidy.catch_copy %>】
+      </div>
+    <% end %>
+    <div style="margin-top: 4px;">
+      <%= link_to(subsidy.title, "#{Settings.front_base_url}/subsidies/#{subsidy.id}", target: '_blank', style: 'color: #005dba;font-size: 18px; font-weight: bold;') %>
+    </div>
+    <% if subsidy.price_max.present? %>
+      <div style="margin-top: 4px;">
+        <span>最大補助金額: </span>
+        <span style="font-weight: bold;">
+          <%= number_to_currency(subsidy.price_max) %>
+        </span>
+      </div>
+    <% end %>
+    <% if subsidy.start_from.present? || subsidy.end_to.present? %>
+      <div style="margin-top: 4px;">
+        申請期限
+        <%= subsidy.start_from&.to_s(:jp) %>
+        ~
+        <%= subsidy.end_to&.to_s(:jp) %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

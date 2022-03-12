@@ -15,7 +15,12 @@ const middleware: Middleware = async ({route, redirect}) => {
   const user = await getUser()
   if (!user && !sessionFreePaths.includes(route.path)) {
     notifyInfo('ログアウトしました', 'ログインが必要です')
-    redirect(routingService.SignIn())
+
+    let redirection: string | null = null
+    if (route.path === '/account') {
+      redirection = 'account'
+    }
+    redirect(routingService.SignIn(redirection))
   }
 
   // 一般ユーザーが管理画面にアクセスできないようにする
