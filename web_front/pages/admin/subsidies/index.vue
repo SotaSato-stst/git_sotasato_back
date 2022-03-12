@@ -156,7 +156,11 @@ import {
   subsidyCategoryLabel,
 } from '@/utils/enumKeyToName'
 import {removeEmpty} from '@/utils/objectUtil'
-import {convertQueryNumber} from '@/utils/urlQuery'
+import {
+  convertQueryNumber,
+  convertQueryString,
+  convertQueryDate,
+} from '@/utils/urlQuery'
 
 export default defineComponent({
   name: 'AdminSubsidyIndex',
@@ -168,6 +172,7 @@ export default defineComponent({
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
+    const query = route.value.query
     const {loading, load} = adminSubsidiesModule.loader
     const subsidies = computed(() => adminSubsidiesModule.subsidies)
     const pagination = computed(() => adminSubsidiesModule.pagination)
@@ -257,24 +262,20 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
-        const page = convertQueryNumber(route.value.query.page) || 1
-        const publishingCode =
-          (route.value.query.publishingCode?.toString() as FilterPublishingType) ||
-          'all'
-        const subsidyCategory =
-          (route.value.query.subsidyCategory?.toString() as FilterSubsidyCategoryType) ||
-          'all'
-        const sortingCode =
-          (route.value.query.sortingCode?.toString() as SortSubsidyType) ||
-          'all'
-        const endAfterStr = route.value.query.endAfter?.toString()
-        const endAfterDate = endAfterStr ? new Date(endAfterStr) : null
+        const page = convertQueryNumber(query.page) || 1
+        const publishingCode = (convertQueryString(query.publishingCode) ||
+          'all') as FilterPublishingType
+        const subsidyCategory = (convertQueryString(query.subsidyCategory) ||
+          'all') as FilterSubsidyCategoryType
+        const sortingCode = (convertQueryString(query.sortingCode) ||
+          'all') as SortSubsidyType
+        const endAfterDate = convertQueryDate(query.endAfter) || null
         endAfter.value = endAfterDate
-        const keyword = route.value.query.keyword?.toString() || ''
+        const keyword = query.keyword?.toString() || ''
         handleSegue({
           page,
           publishingCode,
-          endAfter: endAfterStr,
+          endAfter: endAfterDate?.toLocaleDateString(),
           keyword,
           subsidyCategory,
           sortingCode,

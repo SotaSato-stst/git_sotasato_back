@@ -135,6 +135,7 @@ export default defineComponent({
 
 .supplier {
   margin-right: var(--spacing-4);
+  height: 168px;
 }
 
 .catch-copy-font {
