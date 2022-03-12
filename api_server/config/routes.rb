@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :business_categories, only: :index
   resources :organization_types, only: :index
   resource :current_user, only: %i[show update]
+  resource :user_email_unsubscribes, only: %i[index create destroy]
 
   namespace :admin do
     resources :companies, only: %i[index show create update]
