@@ -228,7 +228,7 @@ export default defineComponent({
 
     const subsidyCategoryOptions = [
       {
-        label: '全て',
+        label: '全ての種別',
         value: 'all',
       },
       {
