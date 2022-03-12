@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_12_165433) do
+ActiveRecord::Schema.define(version: 2022_03_12_171608) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -197,6 +197,14 @@ ActiveRecord::Schema.define(version: 2022_03_12_165433) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["sent_date"], name: "index_user_email_logs_on_sent_date"
     t.index ["user_id"], name: "index_user_email_logs_on_user_id"
+  end
+
+  create_table "user_email_unsubscribes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "email_category", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_email_unsubscribes_on_user_id"
   end
 
   create_table "user_favorite_subsidies", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
