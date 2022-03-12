@@ -31,6 +31,19 @@
         ></el-option>
       </el-select>
 
+      <el-select
+        v-model="filter.sortingCode"
+        size="mini"
+        @change="selectSortSubsidy"
+      >
+        <el-option
+          v-for="item in sortSubsidyOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+
       <el-input
         v-model="filter.keyword"
         placeholder="タイトル・詳細"
@@ -133,6 +146,7 @@ import {
   AdminSubsidyIndexParams,
   FilterPublishingType,
   FilterSubsidyCategoryType,
+  SortSubsidyType,
 } from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -163,6 +177,7 @@ export default defineComponent({
       endAfter: null,
       keyword: null,
       subsidyCategory: 'all',
+      sortingCode: 'all',
     })
     const endAfter = ref<Date | null>(null)
 
@@ -173,6 +188,10 @@ export default defineComponent({
 
     const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
       handleSegue({publishingCode, page: 1})
+    }
+
+    const selectSortSubsidy = (sortingCode: SortSubsidyType) => {
+      handleSegue({sortingCode, page: 1})
     }
 
     const selectSubsidyCategoryFilter = (
@@ -221,6 +240,21 @@ export default defineComponent({
       },
     ]
 
+    const sortSubsidyOptions = [
+      {
+        label: '並び替えなし',
+        value: 'all',
+      },
+      {
+        label: '金額順に並べる',
+        value: 'price',
+      },
+      {
+        label: '締切順に並べる',
+        value: 'end',
+      },
+    ]
+
     onMounted(() => {
       load(loading, () => {
         const page = convertQueryNumber(route.value.query.page) || 1
@@ -229,6 +263,9 @@ export default defineComponent({
           'all'
         const subsidyCategory =
           (route.value.query.subsidyCategory?.toString() as FilterSubsidyCategoryType) ||
+          'all'
+        const sortingCode =
+          (route.value.query.sortingCode?.toString() as SortSubsidyType) ||
           'all'
         const endAfterStr = route.value.query.endAfter?.toString()
         const endAfterDate = endAfterStr ? new Date(endAfterStr) : null
@@ -240,6 +277,7 @@ export default defineComponent({
           endAfter: endAfterStr,
           keyword,
           subsidyCategory,
+          sortingCode,
         })
       })
     })
@@ -263,6 +301,8 @@ export default defineComponent({
       selectEndAfter,
       selectSubsidyCategoryFilter,
       subsidyCategoryOptions,
+      selectSortSubsidy,
+      sortSubsidyOptions,
     }
   },
   head(): object {
