@@ -207,6 +207,12 @@ class Subsidy < ApplicationRecord
 
     where('end_to >= ?', date.to_date).or(where(end_to: nil))
   }
+  scope :new_arrived_for_email, -> {
+    date_after = Date.yesterday.beginning_of_day + 6.hours
+    where(publishing_code: 'published')
+      .in_application_period(true)
+      .where(updated_at: date_after..)
+  }
   scope :favorite_by, ->(user) {
     joins(:user_favorite_subsidies).where(
       user_favorite_subsidies: { user_id: user.id }

@@ -31,4 +31,5 @@ class User < ApplicationRecord
 
   scope :activated, -> { where(disabled: false) }
   scope :operators, -> { where(account_role: %w[editor admin]) }
+  scope :email_subscribers, -> { activated.where(account_role: %w[user admin]) }
 end
