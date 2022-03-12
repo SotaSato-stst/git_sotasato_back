@@ -2,6 +2,11 @@ import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {getAnalytics, setUserProperties} from 'firebase/analytics'
 import {$axios} from '@/store/api'
 import {UpdateCurrentUserParams, CurrentUser} from '@/types/User'
+import {
+  UserEmailSubscribesResponse,
+  EmailSubscribe,
+  EmailCategory,
+} from '@/types/Email'
 import {CurrentCompany} from '@/types/Company'
 import {useLoader} from '@/services/useLoader'
 import CookieStore from '@/services/cookieStore'
@@ -15,6 +20,7 @@ export default class AccountModule extends VuexModule {
   loader = useLoader()
   currentUser: CurrentUser | null = null
   currentCompany: CurrentCompany | null = null
+  emailSubscribes: EmailSubscribe[] = []
   analytics = getAnalytics()
 
   get isAdmin() {
@@ -42,6 +48,11 @@ export default class AccountModule extends VuexModule {
     }
   }
 
+  @Mutation
+  setEmailUnsubscribes(emailSubscribes: EmailSubscribe[]) {
+    this.emailSubscribes = emailSubscribes
+  }
+
   @Action({rawError: true})
   async getCurrentUser() {
     const user = await $axios.$get<CurrentUser>('/current_user')
@@ -54,5 +65,23 @@ export default class AccountModule extends VuexModule {
       ...params,
     })
     this.setCurrentUser(user)
+  }
+
+  @Action({rawError: true})
+  async getUnsubscribes() {
+    const res = await $axios.$get<UserEmailSubscribesResponse>(
+      '/user_email_unsubscribes',
+    )
+    this.setEmailUnsubscribes(res.subscribes)
+  }
+
+  @Action({rawError: true})
+  async unsubscribeEmail(emailCategory: EmailCategory) {
+    await $axios.$post('/user_email_unsubscribes', {emailCategory})
+  }
+
+  @Action({rawError: true})
+  async subscribeEmail(emailCategory: EmailCategory) {
+    await $axios.$delete(`/user_email_unsubscribes/${emailCategory}`)
   }
 }

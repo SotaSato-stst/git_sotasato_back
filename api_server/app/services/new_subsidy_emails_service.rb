@@ -1,5 +1,6 @@
 class NewSubsidyEmailsService
   EMAIL_CATEGORY = 'new_subsidies'.freeze
+  EMAIL_NAME = '新着情報メール'.freeze
 
   def execute!
     date = Date.today

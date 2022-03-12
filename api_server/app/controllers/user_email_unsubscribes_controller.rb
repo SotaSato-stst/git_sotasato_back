@@ -1,6 +1,14 @@
 class UserEmailUnsubscribesController < ApplicationController
   def index
-    @user_email_unsubscribes = user.user_email_unsubscribes
+    unsubscribes = current_user.user_email_unsubscribes.index_by(&:email_category)
+    subscribes = [
+      {
+        name: NewSubsidyEmailsService::EMAIL_NAME,
+        email_category: NewSubsidyEmailsService::EMAIL_CATEGORY,
+        subscribed: unsubscribes[NewSubsidyEmailsService::EMAIL_CATEGORY].blank?
+      }
+    ]
+    render json: { subscribes: subscribes }
   end
 
   def create

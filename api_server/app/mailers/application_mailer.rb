@@ -4,7 +4,7 @@ class ApplicationMailer < ActionMailer::Base
   layout 'mailer'
 
   def set_url
-    @unsubscribe_url = "#{Settings.front_base_url}/account"
+    @unsubscribe_url = "#{Settings.front_base_url}/email-setting"
     @top_url = Settings.front_base_url
   end
 end

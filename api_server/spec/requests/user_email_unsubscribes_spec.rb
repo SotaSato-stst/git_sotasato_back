@@ -7,7 +7,7 @@ RSpec.describe 'user_email_unsubscribes API', type: :request do
     sign_in_with(user)
   end
 
-  describe 'GET /user_email_unsubscribes' do
+  describe 'POST /user_email_unsubscribes' do
     subject { post '/user_email_unsubscribes', params: params }
 
     let(:params) { { email_category: 'new_subsidies' } }

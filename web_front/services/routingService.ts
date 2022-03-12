@@ -12,6 +12,7 @@ export const routingService: {
   Ranking: () => '/ranking',
   Favorite: () => '/favorite',
   Account: () => '/account',
+  EmailSetting: () => '/email-setting',
   NotFound: () => '/not_found',
   AdminTop: () => '/admin',
   AdminSubsidyDraftDetail: (id: number) => `/admin/subsidy_drafts/${id}`,
