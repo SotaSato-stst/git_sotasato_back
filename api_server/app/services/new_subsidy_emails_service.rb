@@ -4,7 +4,7 @@ class NewSubsidyEmailsService
 
   def execute!
     date = Date.today
-    users = User.email_subscribers
+    users = User.email_subscribers(EMAIL_CATEGORY)
     sent_user_ids = UserEmailLog.where(email_category: EMAIL_CATEGORY, sent_date: date).pluck(:user_id)
     ids = Subsidy.new_arrived_for_email.ids
     sent_count = 0
