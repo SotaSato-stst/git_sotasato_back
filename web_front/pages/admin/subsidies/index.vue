@@ -17,6 +17,20 @@
         <el-radio-button label="editing">編集中</el-radio-button>
         <el-radio-button label="archived">アーカイブ</el-radio-button>
       </el-radio-group>
+
+      <el-select
+        v-model="filter.subsidyCategory"
+        size="mini"
+        @change="selectSubsidyCategoryFilter"
+      >
+        <el-option
+          v-for="item in subsidyCategoryOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+
       <el-input
         v-model="filter.keyword"
         placeholder="タイトル・詳細"
@@ -118,6 +132,7 @@ import {
   Subsidy,
   AdminSubsidyIndexParams,
   FilterPublishingType,
+  FilterSubsidyCategoryType,
 } from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -147,6 +162,7 @@ export default defineComponent({
       publishingCode: 'all',
       endAfter: null,
       keyword: null,
+      subsidyCategory: 'all',
     })
     const endAfter = ref<Date | null>(null)
 
@@ -157,6 +173,12 @@ export default defineComponent({
 
     const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
       handleSegue({publishingCode, page: 1})
+    }
+
+    const selectSubsidyCategoryFilter = (
+      subsidyCategory: FilterSubsidyCategoryType,
+    ) => {
+      handleSegue({subsidyCategory, page: 1})
     }
 
     const selectEndAfter = (date: Date | null) => {
@@ -180,17 +202,45 @@ export default defineComponent({
       router.push(routingService.AdminNewSubsidy())
     }
 
+    const subsidyCategoryOptions = [
+      {
+        label: '全て',
+        value: 'all',
+      },
+      {
+        label: '補助金',
+        value: 'hojo',
+      },
+      {
+        label: '助成金',
+        value: 'josei',
+      },
+      {
+        label: '給付金',
+        value: 'kyufu',
+      },
+    ]
+
     onMounted(() => {
       load(loading, () => {
         const page = convertQueryNumber(route.value.query.page) || 1
         const publishingCode =
           (route.value.query.publishingCode?.toString() as FilterPublishingType) ||
           'all'
+        const subsidyCategory =
+          (route.value.query.subsidyCategory?.toString() as FilterSubsidyCategoryType) ||
+          'all'
         const endAfterStr = route.value.query.endAfter?.toString()
         const endAfterDate = endAfterStr ? new Date(endAfterStr) : null
         endAfter.value = endAfterDate
         const keyword = route.value.query.keyword?.toString() || ''
-        handleSegue({page, publishingCode, endAfter: endAfterStr, keyword})
+        handleSegue({
+          page,
+          publishingCode,
+          endAfter: endAfterStr,
+          keyword,
+          subsidyCategory,
+        })
       })
     })
 
@@ -211,6 +261,8 @@ export default defineComponent({
       subsidyCategoryLabel,
       selectPublishingFilter,
       selectEndAfter,
+      selectSubsidyCategoryFilter,
+      subsidyCategoryOptions,
     }
   },
   head(): object {
