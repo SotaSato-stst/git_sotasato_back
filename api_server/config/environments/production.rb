@@ -69,8 +69,8 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: ENV[:PRODUCTION_EMAIL_USER_NAME],
-    password: ENV[:PRODUCTION_EMAIL_PASSWORD],
+    user_name: ENV['PRODUCTION_EMAIL_USER_NAME'],
+    password: ENV['PRODUCTION_EMAIL_PASSWORD'],
     domain: 'smtp.gmail.com',
     port: 587,
     authentication: :plain,
