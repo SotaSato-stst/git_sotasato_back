@@ -32,6 +32,7 @@ export type UsersResponse = {
 export type UserParams = {
   lastName: string
   firstName: string
+  email: string
   accountRole: AccountRole
   companyId: number | null
   disabled: boolean

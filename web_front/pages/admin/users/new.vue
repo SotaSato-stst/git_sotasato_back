@@ -12,6 +12,7 @@
       <user-form
         v-if="!loading"
         :user-params="state"
+        :new-user="true"
         :submited="submited"
         @valid="valid"
         @invalid="invalid"
@@ -54,6 +55,7 @@ export default defineComponent({
     const state: UserParams = reactive({
       lastName: '',
       firstName: '',
+      email: '',
       accountRole: 'user',
       companyId: null,
       disabled: false,

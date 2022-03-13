@@ -18,6 +18,7 @@
       <user-form
         v-if="!loading && user"
         :user-params="state"
+        :new-user="false"
         :submited="submited"
         @valid="valid"
         @invalid="invalid"
@@ -64,6 +65,7 @@ export default defineComponent({
       lastName: '',
       firstName: '',
       accountRole: 'user',
+      email: '',
       companyId: null,
       disabled: false,
     })
@@ -132,6 +134,7 @@ export default defineComponent({
           Object.assign(state, {
             lastName: user.lastName,
             firstName: user.firstName,
+            email: user.email,
             accountRole: user.accountRole,
             disabled: user.disabled,
             companyId: user.company.id,

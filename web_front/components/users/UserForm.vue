@@ -46,8 +46,9 @@
         v-model="state.email"
         class="input-text"
         placeholder="hojokin@example.com"
-        :disabled="loading"
+        :disabled="loading || !newUser"
       />
+      <div v-if="!newUser">メールアドレスはユーザー自身で更新可能です</div>
     </el-form-item>
     <el-form-item label="アカウント" prop="accountRole">
       <el-select
@@ -93,6 +94,10 @@ export default defineComponent({
       required: true,
     },
     submited: {
+      type: Boolean as PropType<boolean>,
+      required: true,
+    },
+    newUser: {
       type: Boolean as PropType<boolean>,
       required: true,
     },
