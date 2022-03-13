@@ -129,8 +129,13 @@ export default defineComponent({
         await usersModule.getUser(pageId)
         const user = usersModule.user
         if (user) {
-          Object.assign(state, user)
-          Object.assign(state, {companyId: user.company.id})
+          Object.assign(state, {
+            lastName: user.lastName,
+            firstName: user.firstName,
+            accountRole: user.accountRole,
+            disabled: user.disabled,
+            companyId: user.company.id,
+          })
         }
       })
     })
