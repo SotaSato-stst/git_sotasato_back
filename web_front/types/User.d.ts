@@ -5,7 +5,6 @@ export type AccountRole = 'admin' | 'editor' | 'user'
 
 export type User = {
   id: number
-  firebaseUid: string
   displayName: string
   lastName: string
   firstName: string
