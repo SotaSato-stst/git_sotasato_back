@@ -9,6 +9,7 @@ const HubspotInquiryFormProps = {
   formId: envSet.hubspotInquiryFormId,
 }
 
+// https://knowledge.hubspot.com/jp/forms/how-can-i-share-a-hubspot-form-if-im-using-an-external-site
 export const ShowHubspotInquiryForm = (target: string) => {
   if (environment !== 'production') {
     return

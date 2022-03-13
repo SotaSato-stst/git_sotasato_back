@@ -35,9 +35,12 @@ export default defineComponent({
         content_id: subsidy.id,
         subsidy_title: subsidy.title,
       })
+      // https://knowledge.hubspot.com/jp/forms/can-i-auto-populate-form-fields-through-a-query-string
       const query = {
         company: accountModule.currentCompany?.name,
         email: accountModule.currentUser?.email,
+        lastname: accountModule.currentUser?.lastName,
+        firstname: accountModule.currentUser?.firstName,
         subsidy_title: subsidy.title,
         hojokin_dock_url: `https://app.hojokin-dock.com/subsidies/${subsidy.id}`,
       }
