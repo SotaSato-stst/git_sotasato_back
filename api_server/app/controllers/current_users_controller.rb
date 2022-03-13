@@ -15,7 +15,7 @@ class CurrentUsersController < ApplicationController
   private
 
   def update_params
-    params.permit(:display_name, :email)
+    params.permit(:last_name, :first_name, :email)
   end
 
   def controller_action_authrized?

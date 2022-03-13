@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Admin::Users', type: :request do
   let(:sign_in_user) { create(:user, :admin) }
-  let(:user) { create(:user, display_name: 'テスト太郎', email: 'taro@test.com', firebase_uid: 'test') }
+  let(:user) { create(:user, last_name: 'テスト', first_name: '太郎', email: 'taro@test.com', firebase_uid: 'test') }
 
   before do
     sign_in_with(sign_in_user)
@@ -17,7 +17,7 @@ RSpec.describe 'Admin::Users', type: :request do
     end
 
     it 'returns object' do
-      create(:user, display_name: 'テスト太郎', email: 'taro@test.com', firebase_uid: 'test')
+      create(:user, last_name: 'テスト', first_name: '太郎', email: 'taro@test.com', firebase_uid: 'test')
       subject
       expect(json['users'][0]['display_name']).to eq 'テスト太郎'
       expect(json['users'][0]['email']).to eq 'taro@test.com'
@@ -65,7 +65,8 @@ RSpec.describe 'Admin::Users', type: :request do
     let(:company) { create(:company) }
     let(:params) do
       {
-        display_name: 'じろう',
+        last_name: 'てすと',
+        first_name: 'じろう',
         email: 'jiro@test.com',
         account_role: 'editor',
         company_id: company.id
@@ -83,7 +84,7 @@ RSpec.describe 'Admin::Users', type: :request do
 
     it 'returns object' do
       subject
-      expect(json['display_name']).to eq 'じろう'
+      expect(json['display_name']).to eq 'てすとじろう'
       expect(json['email']).to eq 'jiro@test.com'
       expect(json['account_role']).to eq 'editor'
     end
@@ -103,7 +104,8 @@ RSpec.describe 'Admin::Users', type: :request do
 
     let(:params) do
       {
-        display_name: 'さぶろう',
+        last_name: 'たなか',
+        first_name: 'さぶろう',
         account_role: 'admin'
       }
     end
@@ -115,7 +117,7 @@ RSpec.describe 'Admin::Users', type: :request do
 
     it 'returns object' do
       subject
-      expect(json['display_name']).to eq 'さぶろう'
+      expect(json['display_name']).to eq 'たなかさぶろう'
       expect(json['account_role']).to eq 'admin'
     end
 

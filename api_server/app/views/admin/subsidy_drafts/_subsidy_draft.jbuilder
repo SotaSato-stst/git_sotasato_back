@@ -3,7 +3,17 @@ json.subsidy_id subsidy_draft.subsidy&.id
 
 json.assignee do
   if subsidy_draft.assignee.present?
-    json.call(subsidy_draft.assignee, :id, :display_name, :email, :firebase_uid, :account_role, :disabled)
+    json.call(
+      subsidy_draft.assignee,
+      :id,
+      :display_name,
+      :last_name,
+      :first_name,
+      :email,
+      :firebase_uid,
+      :account_role,
+      :disabled
+    )
   else
     json.null!
   end

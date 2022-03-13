@@ -15,64 +15,13 @@
       <el-alert v-if="state.disabled" type="error">
         このアカウントは停止中です
       </el-alert>
-      <el-form
-        ref="form"
-        class="form"
-        :model="state"
-        label-width="120px"
-        :rules="rules"
-      >
-        <el-form-item label="所属会社" prop="companyId">
-          <el-select
-            v-model="state.companyId"
-            placeholder="選択..."
-            class="category-select"
-            :disabled="loading"
-          >
-            <el-option
-              v-for="company in companies"
-              :key="company.id"
-              :label="company.name"
-              :value="company.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="氏名" prop="displayName">
-          <el-input
-            v-model="state.displayName"
-            class="input-text"
-            placeholder="田中太郎"
-            :disabled="loading"
-          />
-        </el-form-item>
-        <el-form-item label="メールアドレス">
-          <el-input
-            v-model="user.email"
-            class="input-text"
-            placeholder="hojokin@example.com"
-            disabled
-          />
-          <div>メールアドレスはユーザー自身で更新可能です</div>
-        </el-form-item>
-        <el-form-item label="アカウント" prop="accountRole">
-          <el-select
-            v-model="state.accountRole"
-            placeholder="選択..."
-            class="category-select"
-            :disabled="loading"
-          >
-            <el-option
-              v-for="accountRole in accountRoleOptions()"
-              :key="accountRole.key"
-              :label="accountRole.name"
-              :value="accountRole.key"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="利用停止" prop="disabled">
-          <el-checkbox v-model="state.disabled" />
-        </el-form-item>
-      </el-form>
+      <user-form
+        v-if="!loading && user"
+        :user-params="state"
+        :submited="submited"
+        @valid="valid"
+        @invalid="invalid"
+      />
     </el-card>
   </div>
 </template>
@@ -87,43 +36,56 @@ import {
   reactive,
   ref,
 } from '@nuxtjs/composition-api'
-import {Form, MessageBox} from 'element-ui'
+import {MessageBox} from 'element-ui'
 import {getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import {usersModule, companiesModule} from '@/store'
+import {UserParams} from '@/types/User'
 import {
   notifyError,
   notifySuccess,
   showApiErrorMessage,
 } from '@/services/notify'
-import {UpdateUserParams} from '@/types/User'
 import {accountRoleOptions} from '@/utils/enumKeyToName'
+import UserForm from '@/components/users/UserForm.vue'
 
 export default defineComponent({
   name: 'UserDetail',
+  components: {
+    UserForm,
+  },
   layout: 'admin',
   setup(_props) {
-    const form = ref<Form | null>(null)
     const route = useRoute()
     const {loading, load} = usersModule.loader
     const pageId = Number(route.value.params.id)
     const user = computed(() => usersModule.user)
     const companies = computed(() => companiesModule.companies)
-    const state: UpdateUserParams = reactive({
-      displayName: '',
+    const state: UserParams = reactive({
+      lastName: '',
+      firstName: '',
       accountRole: 'user',
       companyId: null,
       disabled: false,
     })
-    const rules = usersModule.rules
+    const submited = ref(false)
 
     const submit = () => {
+      submited.value = true
+    }
+
+    const valid = () => {
       load(loading, () => {
-        form.value
-          ?.validate()
-          .then(() => usersModule.putUser(state))
+        usersModule
+          .putUser(state)
           .then(handleSuccess)
           .catch(showApiErrorMessage)
       })
+      submited.value = false
+    }
+
+    const invalid = () => {
+      notifyError('更新に失敗しました', '入力内容を確認してください')
+      submited.value = false
     }
 
     const handleSuccess = () => {
@@ -167,14 +129,9 @@ export default defineComponent({
         await usersModule.getUser(pageId)
         const user = usersModule.user
         if (user) {
-          Object.assign(state, {
-            displayName: user.displayName,
-            accountRole: user.accountRole,
-            companyId: user.company.id,
-            disabled: user.disabled,
-          })
+          Object.assign(state, user)
+          Object.assign(state, {companyId: user.company.id})
         }
-        companiesModule.getCompanies()
       })
     })
 
@@ -183,14 +140,15 @@ export default defineComponent({
     })
 
     return {
-      form,
       loading,
       user,
       companies,
       state,
-      rules,
       accountRoleOptions,
       submit,
+      submited,
+      valid,
+      invalid,
       passwordReset,
     }
   },
@@ -206,18 +164,6 @@ export default defineComponent({
 .form-header {
   display: flex;
   justify-content: space-between;
-}
-
-.input-text {
-  width: 400px;
-}
-
-.input-number {
-  width: 240px;
-}
-
-.category-select {
-  width: 240px;
 }
 
 .button-group {

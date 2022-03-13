@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_13_130401) do
+ActiveRecord::Schema.define(version: 2022_03_13_180925) do
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -222,11 +222,12 @@ ActiveRecord::Schema.define(version: 2022_03_13_130401) do
     t.string "firebase_uid", null: false
     t.bigint "company_id", null: false
     t.string "email", default: "", null: false
-    t.string "display_name", default: "", null: false
     t.string "account_role", default: "user", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "disabled", default: false
+    t.string "last_name", default: "", null: false
+    t.string "first_name", default: "", null: false
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["firebase_uid"], name: "index_users_on_firebase_uid", unique: true
   end

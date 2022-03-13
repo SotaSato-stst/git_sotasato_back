@@ -155,7 +155,6 @@ import {notifyError} from '@/services/notify'
 
 export default defineComponent({
   name: 'CompanyForm',
-  layout: 'admin',
   props: {
     companyParams: {
       type: Object as PropType<CompanyParams>,

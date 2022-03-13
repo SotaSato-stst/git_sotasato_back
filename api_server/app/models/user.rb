@@ -5,9 +5,10 @@
 #  id           :bigint           not null, primary key
 #  account_role :string(255)      default("user"), not null
 #  disabled     :boolean          default(FALSE)
-#  display_name :string(255)      default(""), not null
 #  email        :string(255)      default(""), not null
 #  firebase_uid :string(255)      not null
+#  first_name   :string(255)      default(""), not null
+#  last_name    :string(255)      default(""), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  company_id   :bigint           not null
@@ -36,5 +37,9 @@ class User < ApplicationRecord
   scope :email_subscribers, ->(email_category) do
     unsubscribers = UserEmailUnsubscribe.where(email_category: email_category).pluck(:user_id)
     activated.where(account_role: %w[user admin]).where.not(id: unsubscribers)
+  end
+
+  def display_name
+    last_name + first_name
   end
 end

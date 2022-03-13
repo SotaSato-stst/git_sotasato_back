@@ -21,13 +21,29 @@
         :rules="rules"
         :loading="loading"
       >
-        <el-form-item label="氏名" prop="displayName">
-          <el-input
-            v-model="state.displayName"
-            :class="$device.isMobile ? 'mobile-input-text' : 'input-text'"
-            placeholder="田中太郎"
-            :disabled="loading"
-          />
+        <el-form-item label="氏名" required>
+          <div
+            :class="
+              $device.isMobile
+                ? 'mobile-input-text inline-inputs'
+                : 'input-text inline-inputs'
+            "
+          >
+            <el-form-item prop="lastName" class="name-input">
+              <el-input
+                v-model="state.lastName"
+                placeholder="田中"
+                :disabled="loading"
+              />
+            </el-form-item>
+            <el-form-item prop="firstName" class="name-input">
+              <el-input
+                v-model="state.firstName"
+                placeholder="太郎"
+                :disabled="loading"
+              />
+            </el-form-item>
+          </div>
         </el-form-item>
         <el-form-item label="メールアドレス" prop="email">
           <el-input
@@ -71,11 +87,19 @@ export default defineComponent({
     const {loading, load} = accountModule.loader
     const router = useRouter()
     const state: UpdateCurrentUserParams = reactive({
-      displayName: '',
+      lastName: '',
+      firstName: '',
       email: '',
     })
     const rules = {
-      displayName: [
+      lastName: [
+        {
+          required: true,
+          message: '氏名は必須です',
+          trigger: 'change',
+        },
+      ],
+      firstName: [
         {
           required: true,
           message: '氏名は必須です',
@@ -143,7 +167,8 @@ export default defineComponent({
         const user = accountModule.currentUser
         if (user) {
           Object.assign(state, {
-            displayName: user.displayName,
+            lastName: user.lastName,
+            firstName: user.firstName,
             email: user.email,
           })
         }
@@ -174,6 +199,15 @@ export default defineComponent({
 .form-header {
   display: flex;
   justify-content: space-between;
+}
+
+.inline-inputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name-input {
+  width: 48%;
 }
 
 .input-text {

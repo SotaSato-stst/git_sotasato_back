@@ -1,4 +1,4 @@
-json.call(@current_user, :display_name, :email, :account_role)
+json.call(@current_user, :display_name, :last_name, :first_name, :email, :account_role)
 
 json.company do
   json.call(

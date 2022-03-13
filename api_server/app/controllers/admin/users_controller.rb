@@ -39,11 +39,11 @@ module Admin
     private
 
     def signup_user_params
-      params.permit(:display_name, :email, :account_role)
+      params.permit(:last_name, :first_name, :email, :account_role)
     end
 
     def update_user_params
-      user_params = params.permit(:display_name, :account_role) # emailはユーザー自身で更新可能
+      user_params = params.permit(:last_name, :first_name, :account_role) # emailはユーザー自身で更新可能
       user_params[:disabled] = ActiveModel::Type::Boolean.new.cast(params[:disabled])
       user_params
     end

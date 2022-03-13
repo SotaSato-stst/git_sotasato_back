@@ -3,140 +3,111 @@
     <el-card>
       <div slot="header" class="form-header">
         <p>ユーザー新規作成</p>
-        <el-button
-          type="primary"
-          class="submit-button"
-          :disabled="loading"
-          @click="submit"
-        >
-          保存する
-        </el-button>
+        <div class="button-group">
+          <el-button type="primary" class="submit-button" @click="submit">
+            保存する
+          </el-button>
+        </div>
       </div>
-      <el-form
-        ref="form"
-        class="form"
-        :model="state"
-        label-width="120px"
-        :rules="rules"
-      >
-        <el-form-item label="所属会社" prop="companyId">
-          <el-select
-            v-model="state.companyId"
-            placeholder="選択..."
-            :disabled="loading"
-          >
-            <el-option
-              v-for="company in companies"
-              :key="company.id"
-              :label="company.name"
-              :value="company.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="氏名" prop="displayName">
-          <el-input
-            v-model="state.displayName"
-            class="input-text"
-            placeholder="田中太郎"
-            :disabled="loading"
-          />
-        </el-form-item>
-        <el-form-item label="メールアドレス" prop="email">
-          <el-input
-            v-model="state.email"
-            class="input-text"
-            placeholder="hojokin@example.com"
-            :disabled="loading"
-          />
-        </el-form-item>
-        <el-form-item label="アカウント" prop="accountRole">
-          <el-select
-            v-model="state.accountRole"
-            placeholder="選択..."
-            :disabled="loading"
-          >
-            <el-option
-              v-for="accountRole in accountRoleOptions()"
-              :key="accountRole.key"
-              :label="accountRole.name"
-              :value="accountRole.key"
-            />
-          </el-select>
-        </el-form-item>
-      </el-form>
+      <user-form
+        v-if="!loading"
+        :user-params="state"
+        :submited="submited"
+        @valid="valid"
+        @invalid="invalid"
+      />
     </el-card>
   </div>
 </template>
 
 <script lang="ts">
 import {
+  computed,
   defineComponent,
+  onUnmounted,
   useRouter,
   reactive,
-  computed,
-  onMounted,
   ref,
 } from '@nuxtjs/composition-api'
-import {Form} from 'element-ui'
-import {notifySuccess, showApiErrorMessage} from '@/services/notify'
-import {NewUserParams} from '@/types/User'
-import {accountRoleOptions} from '@/utils/enumKeyToName'
-import {routingService} from '@/services/routingService'
 import {usersModule, companiesModule} from '@/store'
+import {UserParams} from '@/types/User'
+import {
+  notifySuccess,
+  showApiErrorMessage,
+  notifyError,
+} from '@/services/notify'
+import {accountRoleOptions} from '@/utils/enumKeyToName'
+import UserForm from '@/components/users/UserForm.vue'
+import {routingService} from '@/services/routingService'
 
 export default defineComponent({
   name: 'NewUser',
+  components: {
+    UserForm,
+  },
   layout: 'admin',
   setup(_props) {
-    const form = ref<Form | null>(null)
     const {loading, load} = usersModule.loader
     const router = useRouter()
+    const user = computed(() => usersModule.user)
     const companies = computed(() => companiesModule.companies)
-    const state: NewUserParams = reactive({
-      displayName: '',
-      email: '',
+    const state: UserParams = reactive({
+      lastName: '',
+      firstName: '',
       accountRole: 'user',
       companyId: null,
+      disabled: false,
     })
-    const rules = usersModule.rules
+    const submited = ref(false)
 
     const submit = () => {
-      load(loading, async () => {
-        await form.value
-          ?.validate()
-          .then(() => usersModule.postUser(state))
+      submited.value = true
+    }
+
+    const valid = () => {
+      load(loading, () => {
+        usersModule
+          .postUser(state)
           .then(handleSuccess)
           .catch(showApiErrorMessage)
       })
+      submited.value = false
+    }
+
+    const invalid = () => {
+      notifyError('更新に失敗しました', '入力内容を確認してください')
+      submited.value = false
     }
 
     const handleSuccess = () => {
       notifySuccess(
         'ユーザーを作成しました',
-        `${state.displayName}さんのアカウント`,
+        `${state.lastName}${state.firstName}さんのアカウント`,
       )
       if (usersModule.user) {
         router.push(routingService.AdminUserDetail(usersModule.user.id))
       }
     }
 
-    onMounted(() => {
-      companiesModule.getCompanies()
+    onUnmounted(() => {
+      usersModule.setUser(null)
     })
 
     return {
-      form,
       loading,
+      user,
       companies,
       state,
       accountRoleOptions,
       submit,
-      rules,
+      submited,
+      valid,
+      invalid,
     }
   },
   head(): object {
     return {
-      title: 'ユーザー作成',
+      title: 'ユーザー新規作成',
     }
   },
 })
@@ -148,16 +119,10 @@ export default defineComponent({
   justify-content: space-between;
 }
 
-.input-text {
-  width: 400px;
-}
-
-.input-number {
-  width: 240px;
-}
-
-.category-select {
-  width: 400px;
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .submit-button {

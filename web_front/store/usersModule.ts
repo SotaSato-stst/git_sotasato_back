@@ -1,11 +1,6 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import {$axios} from '@/store/api'
-import {
-  User,
-  UsersResponse,
-  NewUserParams,
-  UpdateUserParams,
-} from '@/types/User'
+import {User, UsersResponse, UserParams} from '@/types/User'
 import {useLoader} from '@/services/useLoader'
 import {Pagination} from '@/types/Pagination'
 
@@ -23,38 +18,6 @@ export default class UsersModule extends VuexModule {
     totalPages: 0,
     itemsTotal: 0,
     itemsPerPage: 0,
-  }
-
-  rules = {
-    companyId: [
-      {
-        required: true,
-        message: '所属は必須です',
-        trigger: 'change',
-      },
-    ],
-    displayName: [
-      {
-        required: true,
-        message: '氏名は必須です',
-        trigger: 'change',
-      },
-    ],
-    email: [
-      {
-        type: 'email',
-        required: true,
-        message: 'メールアドレスを入力してください',
-        trigger: 'change',
-      },
-    ],
-    accountRole: [
-      {
-        required: true,
-        message: 'アカウント種類は必須です',
-        trigger: 'change',
-      },
-    ],
   }
 
   @Mutation
@@ -88,7 +51,7 @@ export default class UsersModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async postUser(params: NewUserParams) {
+  async postUser(params: UserParams) {
     const user = await $axios.$post<User>('/admin/users', {
       ...params,
     })
@@ -96,7 +59,7 @@ export default class UsersModule extends VuexModule {
   }
 
   @Action({rawError: true})
-  async putUser(params: UpdateUserParams) {
+  async putUser(params: UserParams) {
     if (!this.user) {
       return
     }

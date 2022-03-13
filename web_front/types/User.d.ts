@@ -7,6 +7,8 @@ export type User = {
   id: number
   firebaseUid: string
   displayName: string
+  lastName: string
+  firstName: string
   email: string
   accountRole: AccountRole
   disabled: boolean
@@ -15,6 +17,8 @@ export type User = {
 
 export type CurrentUser = {
   displayName: string
+  lastName: string
+  firstName: string
   email: string
   accountRole: AccountRole
   company: CurrentCompany
@@ -25,21 +29,16 @@ export type UsersResponse = {
   pagination: Pagination
 }
 
-export type NewUserParams = {
-  displayName: string
-  email: string
-  accountRole: AccountRole
-  companyId: number | null
-}
-
-export type UpdateUserParams = {
-  displayName: string
+export type UserParams = {
+  lastName: string
+  firstName: string
   accountRole: AccountRole
   companyId: number | null
   disabled: boolean
 }
 
 export type UpdateCurrentUserParams = {
-  displayName: string
+  lastName: string
+  firstName: string
   email: string
 }

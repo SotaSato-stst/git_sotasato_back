@@ -1769,7 +1769,8 @@ if Rails.env.development?
     user.update(
       company: Company.first,
       email: firebase_user_email,
-      display_name: '田中太郎',
+      last_name: '田中',
+      first_name: '太郎',
       account_role: 'admin'
     )
   end
