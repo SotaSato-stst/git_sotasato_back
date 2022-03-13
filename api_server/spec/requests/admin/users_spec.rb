@@ -21,7 +21,6 @@ RSpec.describe 'Admin::Users', type: :request do
       subject
       expect(json['users'][0]['display_name']).to eq 'テスト太郎'
       expect(json['users'][0]['email']).to eq 'taro@test.com'
-      expect(json['users'][0]['firebase_uid']).to eq 'test'
     end
 
     context 'sign_in_user is not admin' do
@@ -46,7 +45,6 @@ RSpec.describe 'Admin::Users', type: :request do
       subject
       expect(json['display_name']).to eq 'テスト太郎'
       expect(json['email']).to eq 'taro@test.com'
-      expect(json['firebase_uid']).to eq 'test'
     end
 
     context 'sign_in_user is not admin' do

@@ -802,7 +802,6 @@ components:
         - id
         - display_name
         - email
-        - firebase_uid
         - account_role
         - company
       properties:
@@ -818,10 +817,6 @@ components:
           type: string
           description: email
           example: taro.tanaka@example.com
-        firebase_uid:
-          type: string
-          description: firebaseのuid
-          example: xxxxxxxxxxxxxxxxxxxx
         account_role:
           "$ref": "#/components/schemas/account_role"
         company:
