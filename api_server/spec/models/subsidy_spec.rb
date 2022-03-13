@@ -30,9 +30,10 @@
 #
 # Indexes
 #
-#  index_subsidies_on_price_max      (price_max)
-#  index_subsidies_on_ranking_score  (ranking_score)
-#  index_subsidies_on_url            (url) UNIQUE
+#  index_subsidies_on_price_max        (price_max)
+#  index_subsidies_on_publishing_code  (publishing_code)
+#  index_subsidies_on_ranking_score    (ranking_score)
+#  index_subsidies_on_url              (url) UNIQUE
 #
 require 'rails_helper'
 
