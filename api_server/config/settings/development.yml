@@ -1,6 +1,7 @@
 firebase_project_id: <%= ENV["FIREBASE_PROJECT_ID"] %>
 firebaes_api_key: <%= ENV["FIREBASE_API_KEY"] %>
 scraping_bucket: <%= ENV["SCRAPING_BUCKET"] %>
+analytics_id:
 front_base_url: http://localhost:8080
 hosts:
   - localhost:8080

@@ -1,6 +1,7 @@
 firebase_project_id: <%= ENV["PRODUCTION_FIREBASE_PROJECT_ID"] %>
 firebaes_api_key: <%= ENV["PRODUCTION_FIREBASE_API_KEY"] %>
 scraping_bucket: <%= ENV["PRODUCTION_SCRAPING_BUCKET"] %>
+analytics_id: <%= ENV["PRODUCTION_ANALYTICS_ID"] %>
 front_base_url: https://app.hojokin-dock.com
 hosts:
   - api.hojokin-dock.com

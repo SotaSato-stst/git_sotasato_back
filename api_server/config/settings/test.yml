@@ -1,3 +1,6 @@
 firebase_project_id:
 firebaes_api_key:
 scraping_bucket:
+analytics_id:
+front_base_url:
+hosts:

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Email Template Base</title>
+  <title>補助金ドック</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style type="text/css">
   /**
@@ -124,5 +124,18 @@
       </td>
     </tr>
   </table>
+  <% # https://developers.google.com/analytics/devguides/collection/protocol/v1/email
+    tracking_params = {
+      tid: Settings.analytics_id,
+      t: 'event',
+      ec: 'email',
+      ea: 'open',
+      dp: '/email',
+      dt: @subject,
+      uid: @user&.id
+    }.to_param
+    @tracking_code = "https://www.google-analytics.com/collect?v=1&#{tracking_params}"
+  %>
+  <%= image_tag @tracking_code %>
 </body>
 </html>
