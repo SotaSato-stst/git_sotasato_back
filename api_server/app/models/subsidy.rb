@@ -204,12 +204,12 @@ class Subsidy < ApplicationRecord
       where(publishing_code: 'archived')
     end
   }
-  scope :sort_filter, ->(sorting_code) {
-    case sorting_code
+  scope :sort_filter, ->(code) {
+    case code
     when 'price'
-      Subsidy.order(price_max: :desc)
+      order(price_max: :desc)
     when 'end'
-      Subsidy.order(end_to: :desc)
+      order(end_to: :asc)
     end
   }
   scope :subsidy_category_filter, ->(code) {
