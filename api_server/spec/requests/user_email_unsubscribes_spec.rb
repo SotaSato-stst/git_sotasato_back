@@ -18,9 +18,7 @@ RSpec.describe 'user_email_unsubscribes API', type: :request do
   end
 
   describe 'DELETE /user_email_unsubscribes' do
-    subject { delete '/user_email_unsubscribes', params: params }
-
-    let(:params) { { email_category: 'new_subsidies' } }
+    subject { delete '/user_email_unsubscribes/new_subsidies' }
 
     context 'when record exists' do
       before { create(:user_email_unsubscribe, user_id: user.id, email_category: 'new_subsidies') }
