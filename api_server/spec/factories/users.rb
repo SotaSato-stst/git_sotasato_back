@@ -7,8 +7,8 @@
 #  disabled     :boolean          default(FALSE)
 #  email        :string(255)      default(""), not null
 #  firebase_uid :string(255)      not null
-#  first_name   :string(255)      default(""), not null
-#  last_name    :string(255)      default(""), not null
+#  first_name   :string(255)      not null
+#  last_name    :string(255)      not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  company_id   :bigint           not null
