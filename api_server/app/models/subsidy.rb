@@ -103,7 +103,7 @@ class Subsidy < ApplicationRecord
 
     keywords = Keyword.where(content: keyword.split(/[[:space:]]/))
     subsidy_ids = SubsidyKeyword.where(keyword: keywords).pluck(:subsidy_id)
-    merge(where(id: subsidy_ids)).or(where('title like ?', "%#{keyword}%"))
+    merge(where(id: subsidy_ids)).or(where('title like ?', "%#{keyword}%")).or(where('detail like ?', "%#{keyword}%"))
   }
   scope :search_by_organization_type, ->(organization_type) {
     return if organization_type.blank?
@@ -192,6 +192,7 @@ class Subsidy < ApplicationRecord
     publishing_filter(search_params[:publishing_code])
       .end_after(search_params[:end_after])
       .search_by_keyword(search_params[:keyword])
+      .subsidy_category_filter(search_params[:subsidy_category])
   }
   scope :publishing_filter, ->(code) {
     case code
@@ -201,6 +202,24 @@ class Subsidy < ApplicationRecord
       where(publishing_code: 'editing')
     when 'archived'
       where(publishing_code: 'archived')
+    end
+  }
+  scope :admin_sort, ->(code) {
+    case code
+    when 'price'
+      order(price_max: :desc)
+    when 'end'
+      order(end_to: :asc)
+    end
+  }
+  scope :subsidy_category_filter, ->(code) {
+    case code
+    when 'hojo'
+      where(subsidy_category: 'hojo')
+    when 'josei'
+      where(subsidy_category: 'josei')
+    when 'kyufu'
+      where(subsidy_category: 'kyufu')
     end
   }
   scope :end_after, ->(date) {

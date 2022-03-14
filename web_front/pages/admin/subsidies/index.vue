@@ -17,9 +17,36 @@
         <el-radio-button label="editing">編集中</el-radio-button>
         <el-radio-button label="archived">アーカイブ</el-radio-button>
       </el-radio-group>
+
+      <el-select
+        v-model="filter.subsidyCategory"
+        size="mini"
+        @change="selectSubsidyCategoryFilter"
+      >
+        <el-option
+          v-for="item in subsidyCategoryOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+
+      <el-select
+        v-model="filter.sortingCode"
+        size="mini"
+        @change="selectSortSubsidy"
+      >
+        <el-option
+          v-for="item in sortSubsidyOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+
       <el-input
         v-model="filter.keyword"
-        placeholder="タイトル"
+        placeholder="タイトル・詳細"
         size="mini"
         class="search-input"
       />
@@ -118,6 +145,8 @@ import {
   Subsidy,
   AdminSubsidyIndexParams,
   FilterPublishingType,
+  FilterSubsidyCategoryType,
+  SortSubsidyType,
 } from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -152,6 +181,8 @@ export default defineComponent({
       publishingCode: 'all',
       endAfter: null,
       keyword: null,
+      subsidyCategory: 'all',
+      sortingCode: 'all',
     })
     const endAfter = ref<Date | null>(null)
 
@@ -162,6 +193,16 @@ export default defineComponent({
 
     const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
       handleSegue({publishingCode, page: 1})
+    }
+
+    const selectSortSubsidy = (sortingCode: SortSubsidyType) => {
+      handleSegue({sortingCode, page: 1})
+    }
+
+    const selectSubsidyCategoryFilter = (
+      subsidyCategory: FilterSubsidyCategoryType,
+    ) => {
+      handleSegue({subsidyCategory, page: 1})
     }
 
     const selectEndAfter = (date: Date | null) => {
@@ -185,11 +226,49 @@ export default defineComponent({
       router.push(routingService.AdminNewSubsidy())
     }
 
+    const subsidyCategoryOptions = [
+      {
+        label: '全ての種別',
+        value: 'all',
+      },
+      {
+        label: '補助金',
+        value: 'hojo',
+      },
+      {
+        label: '助成金',
+        value: 'josei',
+      },
+      {
+        label: '給付金',
+        value: 'kyufu',
+      },
+    ]
+
+    const sortSubsidyOptions = [
+      {
+        label: '更新順',
+        value: 'all',
+      },
+      {
+        label: '金額順',
+        value: 'price',
+      },
+      {
+        label: '締切順',
+        value: 'end',
+      },
+    ]
+
     onMounted(() => {
       load(loading, () => {
         const page = convertQueryNumber(query.page) || 1
         const publishingCode = (convertQueryString(query.publishingCode) ||
           'all') as FilterPublishingType
+        const subsidyCategory = (convertQueryString(query.subsidyCategory) ||
+          'all') as FilterSubsidyCategoryType
+        const sortingCode = (convertQueryString(query.sortingCode) ||
+          'all') as SortSubsidyType
         const endAfterDate = convertQueryDate(query.endAfter) || null
         endAfter.value = endAfterDate
         const keyword = query.keyword?.toString() || ''
@@ -198,6 +277,8 @@ export default defineComponent({
           publishingCode,
           endAfter: endAfterDate?.toLocaleDateString(),
           keyword,
+          subsidyCategory,
+          sortingCode,
         })
       })
     })
@@ -219,6 +300,10 @@ export default defineComponent({
       subsidyCategoryLabel,
       selectPublishingFilter,
       selectEndAfter,
+      selectSubsidyCategoryFilter,
+      subsidyCategoryOptions,
+      selectSortSubsidy,
+      sortSubsidyOptions,
     }
   },
   head(): object {

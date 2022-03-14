@@ -106,9 +106,15 @@ export type UpdateSubsidyParams = {
 
 export type FilterPublishingType = 'published' | 'editing' | 'archived' | 'all'
 
+export type FilterSubsidyCategoryType = 'hojo' | 'josei' | 'kyufu' | 'all'
+
+export type SortSubsidyType = 'price' | 'end' | 'all'
+
 export type AdminSubsidyIndexParams = {
   page?: number
   publishingCode: FilterPublishingType
   endAfter: string | null
   keyword: string | null
+  subsidyCategory: FilterSubsidyCategoryType
+  sortingCode: SortSubsidyType
 }

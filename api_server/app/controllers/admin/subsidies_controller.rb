@@ -1,15 +1,9 @@
 module Admin
   class SubsidiesController < ApplicationController
     def index
-      scope = Subsidy.all.includes(
-        :ministry,
-        :prefecture,
-        :city,
-        :subsidy_business_categories,
-        { subsidy_keywords: :keyword }
-      ).order(updated_at: :desc)
-      filter_params = params.slice(:publishing_code, :end_after, :keyword)
-      scope = scope.admin_filter(filter_params)
+      scope = Subsidy.all.index_loading
+      filter_params = params.slice(:publishing_code, :end_after, :keyword, :subsidy_category)
+      scope = scope.admin_filter(filter_params).admin_sort(params[:sorting_code]).order(updated_at: :desc)
       @items_total = scope.count
       @subsidies = scope.page(params[:page]).per(20)
     end
