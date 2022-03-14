@@ -21,6 +21,7 @@
       <el-select
         v-model="filter.subsidyCategory"
         size="mini"
+        class="search-input"
         @change="selectSubsidyCategoryFilter"
       >
         <el-option
@@ -34,6 +35,7 @@
       <el-select
         v-model="filter.sortingCode"
         size="mini"
+        class="search-input"
         @change="selectSortSubsidy"
       >
         <el-option
@@ -338,6 +340,7 @@ export default defineComponent({
 .filter {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .filter > * {
