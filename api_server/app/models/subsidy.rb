@@ -192,7 +192,6 @@ class Subsidy < ApplicationRecord
       .end_after(search_params[:end_after])
       .search_by_keyword(search_params[:keyword])
       .subsidy_category_filter(search_params[:subsidy_category])
-      .sort_filter(search_params[:sorting_code])
   }
   scope :publishing_filter, ->(code) {
     case code
@@ -204,7 +203,7 @@ class Subsidy < ApplicationRecord
       where(publishing_code: 'archived')
     end
   }
-  scope :sort_filter, ->(code) {
+  scope :admin_sort, ->(code) {
     case code
     when 'price'
       order(price_max: :desc)

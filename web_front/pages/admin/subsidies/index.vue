@@ -247,15 +247,15 @@ export default defineComponent({
 
     const sortSubsidyOptions = [
       {
-        label: '並び替えなし',
+        label: '更新順',
         value: 'all',
       },
       {
-        label: '金額順に並べる',
+        label: '金額順',
         value: 'price',
       },
       {
-        label: '締切順に並べる',
+        label: '締切順',
         value: 'end',
       },
     ]
