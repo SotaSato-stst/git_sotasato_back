@@ -193,6 +193,7 @@ class Subsidy < ApplicationRecord
       .end_after(search_params[:end_after])
       .search_by_keyword(search_params[:keyword])
       .subsidy_category_filter(search_params[:subsidy_category])
+      .ministry_filter(search_params[:ministry_id])
   }
   scope :publishing_filter, ->(code) {
     case code
@@ -221,6 +222,13 @@ class Subsidy < ApplicationRecord
     when 'kyufu'
       where(subsidy_category: 'kyufu')
     end
+  }
+  scope :ministry_filter, ->(ministry_id) {
+    return if ministry_id.blank?
+
+    scope = joins(:subsidy_ministry)
+    ministry_nil = scope.where(subsidy_ministries: { id: nil })
+    scope.merge(SubsidyMinistry.where(ministry_id: ministry_id)).or(ministry_nil)
   }
   scope :end_after, ->(date) {
     return if date.blank?

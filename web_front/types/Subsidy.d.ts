@@ -117,4 +117,7 @@ export type AdminSubsidyIndexParams = {
   keyword: string | null
   subsidyCategory: FilterSubsidyCategoryType
   sortingCode: SortSubsidyType
+  ministryId: number | null
 }
+
+// prefectureId: number | nullなのでは！？！？！

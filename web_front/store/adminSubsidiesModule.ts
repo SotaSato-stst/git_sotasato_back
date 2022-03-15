@@ -50,6 +50,7 @@ export default class AdminSubsidiesModule extends VuexModule {
         keyword: params.keyword,
         subsidyCategory: params.subsidyCategory,
         sortingCode: params.sortingCode,
+        ministryId: params.ministryId,
       },
     })
     this.setSubsidies(res.subsidies)
