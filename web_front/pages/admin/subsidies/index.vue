@@ -33,6 +33,22 @@
       </el-select>
 
       <el-select
+        v-model="filter.ministryId"
+        placeholder="省庁"
+        size="mini"
+        class="search-input"
+        clearable
+        @change="selectMinistryIdFilter"
+      >
+        <el-option
+          v-for="ministry in ministries"
+          :key="ministry.id"
+          :label="ministry.name"
+          :value="ministry.id"
+        />
+      </el-select>
+
+      <el-select
         v-model="filter.sortingCode"
         size="mini"
         class="search-input"
@@ -45,7 +61,9 @@
           :value="item.value"
         ></el-option>
       </el-select>
+    </div>
 
+    <div class="filter">
       <el-input
         v-model="filter.keyword"
         placeholder="タイトル・詳細"
@@ -98,6 +116,11 @@
           <div v-if="scope.row.city">{{ scope.row.city.name }}</div>
         </template>
       </el-table-column>
+      <el-table-column label="上限金額" width="150">
+        <template slot-scope="scope">
+          {{ convertToShortJPY(scope.row.priceMax) }}円
+        </template>
+      </el-table-column>
       <el-table-column prop="startFrom" label="申請期限" width="100">
         <template slot-scope="scope">
           {{ scope.row.endTo }}
@@ -141,7 +164,7 @@ import {
 } from '@nuxtjs/composition-api'
 import CardLoading from '@/components/CardLoading.vue'
 import Pagination from '@/components/Pagination.vue'
-import {adminSubsidiesModule} from '@/store'
+import {optionsModule, adminSubsidiesModule} from '@/store'
 import {routingService} from '@/services/routingService'
 import {
   Subsidy,
@@ -185,6 +208,7 @@ export default defineComponent({
       keyword: null,
       subsidyCategory: 'all',
       sortingCode: 'all',
+      ministryId: null,
     })
     const endAfter = ref<Date | null>(null)
 
@@ -207,12 +231,22 @@ export default defineComponent({
       handleSegue({subsidyCategory, page: 1})
     }
 
+    const selectMinistryIdFilter = (ministryId: number) => {
+      handleSegue({ministryId, page: 1})
+    }
+
+    const ministries = computed(() => optionsModule.ministries)
+
     const selectEndAfter = (date: Date | null) => {
       filter.endAfter = date?.toLocaleDateString() || null
     }
 
     const search = () => {
-      handleSegue({endAfter: filter.endAfter, keyword: filter.keyword, page: 1})
+      handleSegue({
+        endAfter: filter.endAfter,
+        keyword: filter.keyword,
+        page: 1,
+      })
     }
 
     const handleSegue = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
@@ -264,6 +298,7 @@ export default defineComponent({
 
     onMounted(() => {
       load(loading, () => {
+        optionsModule.getMinistries()
         const page = convertQueryNumber(query.page) || 1
         const publishingCode = (convertQueryString(query.publishingCode) ||
           'all') as FilterPublishingType
@@ -306,6 +341,8 @@ export default defineComponent({
       subsidyCategoryOptions,
       selectSortSubsidy,
       sortSubsidyOptions,
+      ministries,
+      selectMinistryIdFilter,
     }
   },
   head(): object {
