@@ -297,8 +297,8 @@ export default defineComponent({
     ]
 
     onMounted(() => {
-      optionsModule.getMinistries()
       load(loading, () => {
+        optionsModule.getMinistries()
         const page = convertQueryNumber(query.page) || 1
         const publishingCode = (convertQueryString(query.publishingCode) ||
           'all') as FilterPublishingType

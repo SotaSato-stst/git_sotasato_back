@@ -119,5 +119,3 @@ export type AdminSubsidyIndexParams = {
   sortingCode: SortSubsidyType
   ministryId: number | null
 }
-
-// prefectureId: number | nullなのでは！？！？！
