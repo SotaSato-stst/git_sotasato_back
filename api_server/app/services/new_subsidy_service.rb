@@ -66,11 +66,7 @@ class NewSubsidyService
   private
 
   def storage
-    if Rails.env.production?
-      @storage ||= Google::Cloud::Storage.new
-    else
-      @storage ||= Google::Cloud::Storage.new(credentials: 'config/credentials/google.json')
-    end
+    @storage ||= Google::Cloud::Storage.new
   end
 
   def bucket
