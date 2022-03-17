@@ -83,10 +83,4 @@ class NewSubsidyService
     # スクレイピングのCloud Functionsでは並列処理でファイルが分割保存されているので、まとめてダウンロードする
     bucket.files(prefix: path)
   end
-
-  def csv_to_hashes(csv_table)
-    csv_table.map do |t|
-      CSV_COLUMNS.map { |key, value| { value => t[key.to_s] } }.inject(&:merge)
-    end
-  end
 end
