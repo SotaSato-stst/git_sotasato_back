@@ -71,7 +71,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     user_name: ENV['PRODUCTION_EMAIL_USER_NAME'],
     password: ENV['PRODUCTION_EMAIL_PASSWORD'],
-    domain: 'smtp.gmail.com',
+    domain: 'smtp-relay.gmail.com',
     port: 587,
     authentication: :plain,
     enable_starttls_auto: true,

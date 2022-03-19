@@ -1,6 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
   before_action :set_url
-  default from: 'yoshimi.kondo@k-to.llc', reply_to: 'yoshimi.kondo@k-to.llc'
+  default from: 'no-reply@hojokin-dock.com', reply_to: 'info@hojokin-dock.com'
   layout 'mailer'
 
   def set_url
