@@ -11,7 +11,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, useRouter, PropType} from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useRouter,
+  PropType,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import {Pagination} from 'types/Pagination'
 
 type RequestPage = (page: number) => void
@@ -30,9 +35,12 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
 
     const getPage = (page: number) => {
-      router.push({query: {page: page.toString()}})
+      const query = route.value.query
+      const pageQuery = {page: page.toString()}
+      router.push({query: Object.assign(query, pageQuery)})
       props.requestPage(page)
     }
 
