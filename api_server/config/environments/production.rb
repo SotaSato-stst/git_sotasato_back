@@ -73,10 +73,10 @@ Rails.application.configure do
     user_name: ENV['PRODUCTION_EMAIL_USER_NAME'],
     password: ENV['PRODUCTION_EMAIL_PASSWORD'],
     domain: 'hojokin-dock.com',
-    address: 'smtp-relay.gmail.com',
+    address: 'smtp.sendgrid.net',
     port: 587,
     authentication: :plain,
-    tls: true,
+    enable_starttls_auto: true,
     return_response: true
   }
   config.action_mailer.perform_deliveries = true
