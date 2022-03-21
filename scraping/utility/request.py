@@ -26,7 +26,7 @@ def request_response(url: str) -> Response:
     header = {'User-Agent': USER_AGENT}
 
     try:
-        response = requests.get(url,headers=header, timeout=(3.0, 7.5))
+        response = requests.get(url,headers=header, timeout=(3.0, 7.5), verify=False)
     except requests.RequestException as e:
         logger.error(f'Faild to get {url}')
         logger.error(e)

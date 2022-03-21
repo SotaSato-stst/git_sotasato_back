@@ -1,5 +1,5 @@
 selector_name,url
-.m-homeTab_bodyList,"https://www.town.naganohara.gunma.jp/www/news.html"
+#news,"https://www.town.naganohara.gunma.jp/www/news.html"
 #list-area,"https://www.vill.tsumagoi.gunma.jp/information/index.html"
 #main,"https://www.town.kusatsu.gunma.jp/www/news.html"
 .ifrm,"https://www.vill.takayama.gunma.jp/index.html"
