@@ -1,6 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
   before_action :set_url
-  default from: 'no-reply@hojokin-dock.com', reply_to: 'info@hojokin-dock.com'
+  default from: '補助金ドック <no-reply@hojokin-dock.com>', reply_to: 'info@hojokin-dock.com'
   layout 'mailer'
 
   def set_url
