@@ -31,7 +31,7 @@ def debug_for_selector():
         controller = SelectorController()
         controller.execute()
         logger.info('[DEBUG] Scraping Finished')
-    except BaseException as e:
+    except Exception as e:
         logger.exception(e)
         logger.error('[DEBUG] Scraping Failed')
 
@@ -42,7 +42,7 @@ def debug_for_curation():
         controller = CurationController()
         controller.execute()
         logger.info('[DEBUG] Scraping Finished')
-    except BaseException as e:
+    except Exception as e:
         logger.exception(e)
         logger.error('[DEBUG] Scraping Failed')
 
@@ -59,7 +59,7 @@ def cloud_function_for_selector(event, context):
             warnings = controller.execute()
             if len(warnings) > 0:
                 slack.notify_warning('\n'.join(warnings))
-        except BaseException as e:
+        except Exception as e:
             logger.exception(e)
             slack.notify_error(csv_filename, context.event_id, f'{e}')
         else:
@@ -80,7 +80,7 @@ def cloud_function_for_curation(event, context):
         warnings = controller.execute()
         if len(warnings) > 0:
             slack.notify_warning('\n'.join(warnings))
-    except BaseException as e:
+    except Exception as e:
         logger.exception(e)
         slack.notify_error(notification_description, context.event_id, f'{e}')
     else:
