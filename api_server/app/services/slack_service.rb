@@ -35,9 +35,9 @@ class SlackService
     edit_page = "#{Settings.front_base_url}/admin"
     messages = [
       "未対応: #{SubsidyDraft.not_archived.count}件",
-      "下書き: #{SubsidyDraft.editing.count}件",
-      "公開済: #{SubsidyDraft.published.count}件",
-      "募集中: #{SubsidyDraft.published.in_application_period(true).count}件",
+      "下書き: #{Subsidy.editing.count}件",
+      "公開済: #{Subsidy.published.count}件",
+      "募集中: #{Subsidy.published.in_application_period(true).count}件",
     ]
     blocks = [
       {
