@@ -20,6 +20,9 @@ steps:
          && echo "PRODUCTION_EMAIL_PASSWORD=$_PRODUCTION_EMAIL_PASSWORD" >> .env
          && echo "PRODUCTION_ANALYTICS_ID=$_PRODUCTION_ANALYTICS_ID" >> .env
          && gcloud app deploy --version $COMMIT_SHA']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'cd api_server && gcloud app deploy cron.yaml']
 - name: "gcr.io/google-appengine/exec-wrapper"
   args: ["-i", "asia.gcr.io/${PROJECT_ID}/appengine/default.$COMMIT_SHA",
          "-e", "_CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME}",
