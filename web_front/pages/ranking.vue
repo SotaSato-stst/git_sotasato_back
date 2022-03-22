@@ -111,7 +111,6 @@ export default defineComponent({
 
 .ranking-title {
   word-break: break-all;
-  max-width: calc(100% - 32px);
   overflow: hidden;
   text-overflow: ellipsis;
 }
