@@ -7,7 +7,6 @@ module Admin
       SubsidyDraft.where(id: next_id..).limit(20).each do |subsidy_draft|
         slack.post_new_subsidy_draft(subsidy_draft)
       end
-      slack.post_new_subsidies_count unless SubsidyDraft.not_archived.count.zero?
       render json: { success: true }, status: 200
     end
 

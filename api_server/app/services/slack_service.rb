@@ -31,7 +31,7 @@ class SlackService
     post('新着情報', attachments)
   end
 
-  def post_new_subsidies_count
+  def post_subsidy_stats
     edit_page = "#{Settings.front_base_url}/admin"
     messages = [
       "未対応: #{SubsidyDraft.not_archived.count}件",

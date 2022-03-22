@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   namespace :tasks do
     get :new_subsidy, to: 'new_subsidy#show'
     get :new_subsidy_emails, to: 'new_subsidy_emails#show'
+    get :report_subsidy_stats, to: 'report_subsidy_stats#show'
   end
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?

@@ -1,18 +1,34 @@
 cron:
 - description: '新着情報の更新'
   url: /tasks/new_subsidy
+  schedule: every day 06:25
+  timezone: Asia/Tokyo
+- description: '補助金データのレポート'
+  url: /tasks/report_subsidy_stats
   schedule: every day 06:30
   timezone: Asia/Tokyo
 - description: '新着情報の更新'
   url: /tasks/new_subsidy
+  schedule: every day 12:25
+  timezone: Asia/Tokyo
+- description: '補助金データのレポート'
+  url: /tasks/report_subsidy_stats
   schedule: every day 12:30
   timezone: Asia/Tokyo
 - description: '新着情報の更新'
   url: /tasks/new_subsidy
+  schedule: every day 17:25
+  timezone: Asia/Tokyo
+- description: '補助金データのレポート'
+  url: /tasks/report_subsidy_stats
   schedule: every day 17:30
   timezone: Asia/Tokyo
 - description: '新着情報の更新'
   url: /tasks/new_subsidy
+  schedule: every day 21:25
+  timezone: Asia/Tokyo
+- description: '補助金データのレポート'
+  url: /tasks/report_subsidy_stats
   schedule: every day 21:30
   timezone: Asia/Tokyo
 - description: '新着メール配信'
