@@ -58,8 +58,8 @@ class SlackService
         }
       }
     ]
-    attachments = [{ color: '#3a86ff', blocks: blocks }]
-    post('対応が必要です', attachments)
+    attachments = [{ color: '#48cae4', blocks: blocks }]
+    post('補助金情報のステータス', attachments)
   end
 
   private
