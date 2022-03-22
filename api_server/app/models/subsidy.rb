@@ -62,6 +62,7 @@ class Subsidy < ApplicationRecord
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
   scope :published, -> { where(publishing_code: 'published') }
+  scope :editing, -> { where(publishing_code: 'editing') }
   scope :index_loading, -> {
     includes(
       :ministry,
