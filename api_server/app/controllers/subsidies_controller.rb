@@ -11,6 +11,8 @@ class SubsidiesController < ApplicationController
   def show
     @subsidy = Subsidy.published.find(params[:id])
     @current_user_favorite_ids = current_user.user_favorite_subsidies.pluck(:subsidy_id)
+  rescue ActiveRecord::RecordNotFound
+    render json: { message: 'ページが見つかりません' }, status: 404
   end
 
   def preview
