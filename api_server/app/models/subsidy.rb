@@ -208,6 +208,8 @@ class Subsidy < ApplicationRecord
   }
   scope :admin_sort, ->(code) {
     case code
+    when 'ranking'
+      order(ranking_score: :desc)
     when 'price'
       order(price_max: :desc)
     when 'end'

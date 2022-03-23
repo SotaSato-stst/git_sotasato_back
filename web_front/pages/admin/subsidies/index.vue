@@ -12,10 +12,13 @@
         size="mini"
         @change="selectPublishingFilter"
       >
-        <el-radio-button label="all">すべて</el-radio-button>
-        <el-radio-button label="published">公開済</el-radio-button>
-        <el-radio-button label="editing">編集中</el-radio-button>
-        <el-radio-button label="archived">アーカイブ</el-radio-button>
+        <el-radio-button
+          v-for="option in publishingCodeOptions"
+          :key="option.label"
+          :label="option.label"
+        >
+          {{ option.text }}
+        </el-radio-button>
       </el-radio-group>
 
       <el-select
@@ -116,7 +119,7 @@
           <div v-if="scope.row.city">{{ scope.row.city.name }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="上限金額" width="150">
+      <el-table-column label="上限金額" width="120">
         <template slot-scope="scope">
           {{ convertToShortJPY(scope.row.priceMax) }}円
         </template>
@@ -126,6 +129,7 @@
           {{ scope.row.endTo }}
         </template>
       </el-table-column>
+      <el-table-column prop="rankingScore" label="点" width="50" />
       <el-table-column label="URL" width="180">
         <template slot-scope="scope">
           <a
@@ -172,6 +176,8 @@ import {
   FilterPublishingType,
   FilterSubsidyCategoryType,
   SortSubsidyType,
+  PublishingCodeOption,
+  SortSubsidyOption,
 } from '@/types/Subsidy'
 import {convertToShortJPY} from '@/utils/numberFormatter'
 import {convertToJpDate} from '@/utils/dateFormatter'
@@ -262,6 +268,12 @@ export default defineComponent({
       router.push(routingService.AdminNewSubsidy())
     }
 
+    const publishingCodeOptions: PublishingCodeOption[] = [
+      {label: 'all', text: 'すべて'},
+      {label: 'published', text: '公開済'},
+      {label: 'editing', text: '編集中'},
+      {label: 'archived', text: 'アーカイブ'},
+    ]
     const subsidyCategoryOptions = [
       {
         label: '全ての種別',
@@ -281,10 +293,14 @@ export default defineComponent({
       },
     ]
 
-    const sortSubsidyOptions = [
+    const sortSubsidyOptions: SortSubsidyOption[] = [
       {
         label: '更新順',
         value: 'all',
+      },
+      {
+        label: 'ランキング順',
+        value: 'ranking',
       },
       {
         label: '金額順',
@@ -338,6 +354,7 @@ export default defineComponent({
       selectPublishingFilter,
       selectEndAfter,
       selectSubsidyCategoryFilter,
+      publishingCodeOptions,
       subsidyCategoryOptions,
       selectSortSubsidy,
       sortSubsidyOptions,
