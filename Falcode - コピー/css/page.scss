@@ -1,0 +1,558 @@
+$font-b: 24px;
+$font-m: 20px;
+$font-s: 16px;
+$color-a: #EBD9C7;
+$color-b: #FFFBF7;
+$color-c: #1886A0;
+$color-d: #C75C29;
+$color-e: #3C240310;
+$color-f: #4C2311;
+$color-g: #482210;
+.start {
+    position: fixed;
+}
+@media screen and (min-width: 960px) {
+    body {
+        font-weight: bold;
+    }
+    .header {
+        align-items: center;
+        background-color: $color-a;
+        display: flex;
+        font-weight: bold;
+        height: 120px;
+        width: 100%;
+            &__logo {
+                img {
+                    margin-left: 60px;
+                    width: 200px;
+                }
+            }
+            &__nav{
+                margin-left: auto;
+                margin-right: 20px;
+                width: 70%;
+            }
+            ul {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+            &__list {
+                font-size: $font-s;
+            }
+    }
+    .member {
+        background-color: $color-a;
+        padding: 100px 0 150px 0;
+        text-align: center;
+        &__title {
+            font-size: $font-b;
+        }
+    }
+    .team {
+        &__border {
+            text-align: center;
+            height: 100px;
+            margin-top: -50px;
+            p {
+                width: 50%;
+            }
+            &--right {
+                font-size: 80px;
+                border-right: solid 2px #8F8D8D;
+                color: #3C240310;
+                line-height: 100px;
+            }
+        }
+    }
+    .introduce {
+        margin-top: 50px;
+        padding: 0 70px 100px 70px;
+
+        &__item {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 130px;
+            &--img-side {
+                position: relative;
+                width: 35%;
+                img {
+                    width: 100%;
+                }
+                .logo {
+                    aspect-ratio: 1;
+                    background-color: #097CB9;
+                    border: solid 1px #707070;
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 12px;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: 1px;
+                    left: 1px;
+                    text-align: center;
+                    width: 40%;
+                    p {
+                        line-height: 2em;
+                    }
+                    .fas {
+                        font-size: 1.5em;
+                    }
+                }
+                .designer {
+                    background-color: #C97B39;
+                }
+                .name-box {
+                    position: relative;
+                    .name {
+                        color: #097CB9;
+                        font-size: 60px;
+                        font-family: 'SignPainter';
+                        font-weight: normal;
+                        position: relative;
+                        left: 10px;
+                        top: -30px;
+                    }
+                    .designer-text {
+                        color: #C97B39;
+                    }
+                }
+            }
+            &--text {
+                width: 58%;
+                h1 {
+                    font-size: 40px;
+                }
+                p {
+                    color: #1F140F;
+                    font-size: $font-m;
+                    margin-top: 30px;
+                }
+            }
+
+        }
+    }
+    .footer {
+        background-color: black;
+        color: white;
+        padding: 30px 0 30px 0;
+        &__container {
+            display: flex;
+        }
+        &__account {
+            padding-left: 15%;
+            width: 50%;
+            &--title {
+                font-size: 30px;
+                letter-spacing: 0.1em;
+            }
+            &--name {
+                font-weight: 400;
+                font-size: 12px;
+                letter-spacing: 0.1em;
+                margin-top: 20px;
+            }
+            &--mail {
+                font-size: 12px;
+                font-weight: 50;
+                margin-top: 20px;
+                opacity: 0.9;
+            }
+            .socialEffect__box {
+                display: flex;
+                margin-top: 10px;
+                .fab {
+                    font-size: 1.5em;
+                    margin-right: 30px;
+                    opacity: 0.8;
+                    transition: 0.3s;
+                    &:hover {
+                        color: $color-c;
+                    }
+                }
+            }
+        }
+        &__nav {
+            font-weight: normal;
+            letter-spacing: 0.15em;
+            line-height: 2em;
+            width: 50%;
+            ul {
+                margin-left: 50px;
+                display: flex;
+                .right {
+                    margin-left: 50px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 959px) and (min-width: 480px) {
+    body {
+        font-weight: bold;
+    }
+    .header {
+        align-items: center;
+        background-color: $color-a;
+        display: flex;
+        font-weight: bold;
+        height: auto;
+        padding-top: 30px;
+        width: 100%;
+        img {
+            margin-left: 30px;
+            width: 200px;
+        }
+            &__nav{
+                margin-left: auto;
+                margin-right: 20px;
+                width: 70%;
+            }
+            ul {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+            &__list {
+                font-size: 14px;
+            }
+    }
+    .member {
+        background-color: $color-a;
+        padding: 100px 0 150px 0;
+        text-align: center;
+        &__title {
+            font-size: $font-b;
+
+        }
+    }
+    .team {
+        &__border {
+            text-align: center;
+            height: 100px;
+            margin-top: -50px;
+            p {
+                width: 50%;
+            }
+            &--right {
+                font-size: 56px;
+                border-right: solid 2px #8F8D8D;
+                color: #3C240310;
+                line-height: 100px;
+            }
+        }
+    }
+    .introduce {
+        margin-top: 20px;
+        padding: 0 40px 80px 40px;
+        &__item {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            &--img-side {
+                position: relative;
+                width: 35%;
+                img {
+                    width: 100%;
+                }
+                .logo {
+                    aspect-ratio: 1;
+                    background-color: #097CB9;
+                    border: solid 1px #707070;
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 8px;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: 1px;
+                    left: 1px;
+                    text-align: center;
+                    width: 40%;
+                    p {
+                        line-height: 2em;
+                    }
+                    .fas {
+                        font-size: 1.5em;
+                    }
+                }
+                .designer {
+                    background-color: #C97B39;
+                }
+                .name-box {
+                    position: relative;
+                    .name {
+                        color: #097CB9;
+                        font-size: 40px;
+                        font-family: 'SignPainter';
+                        font-weight: normal;
+                        position: relative;
+                        left: 10px;
+                        top: -30px;
+                    }
+                    .designer-text {
+                        color: #C97B39;
+                    }
+                }
+            }
+            &--text {
+                width: 58%;
+                h1 {
+                    font-size: 25px;
+                }
+                p {
+                    color: #1F140F;
+                    font-size: 14px;
+                    margin-top: 30px;
+                }
+            }
+
+        }
+    }
+    .footer {
+        background-color: black;
+        color: white;
+        padding: 30px 0 30px 0;
+        &__container {
+            display: flex;
+        }
+        &__account {
+            padding-left: 15%;
+            width: 50%;
+            &--title {
+                font-size: 30px;
+                letter-spacing: 0.1em;
+            }
+            &--name {
+                font-weight: 400;
+                font-size: 12px;
+                letter-spacing: 0.1em;
+                margin-top: 20px;
+            }
+            &--mail {
+                font-size: 12px;
+                font-weight: 50;
+                margin-top: 20px;
+                opacity: 0.9;
+            }
+            .socialEffect__box {
+                display: flex;
+                margin-top: 10px;
+                .fab {
+                    font-size: 1.5em;
+                    margin-right: 30px;
+                    opacity: 0.8;
+                    transition: 0.3s;
+                    &:hover {
+                        color: $color-c;
+                    }
+                }
+            }
+        }
+        &__nav {
+            font-weight: normal;
+            letter-spacing: 0.15em;
+            line-height: 2em;
+            width: 50%;
+            ul {
+                margin-left: 50px;
+                display: flex;
+                .right {
+                    margin-left: 50px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 479px) {
+    body {
+        font-weight: bold;
+    }
+    .header {
+        align-items: center;
+        background-color: $color-a;
+        display: flex;
+        font-weight: bold;
+        height: auto;
+        padding-top: 30px;
+        width: 100%;
+            &__logo {
+                text-align: center;
+                img{
+                width: 60%;
+                }
+            }
+            &__nav{
+                display: none;
+                margin-left: auto;
+                margin-right: 20px;
+                width: 70%;
+            }
+            ul {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+            &__list {
+                font-size: 14px;
+            }
+    }
+    .member {
+        background-color: $color-a;
+        padding: 50px 0 50px 0;
+        text-align: center;
+        &__title {
+            font-size: $font-b;
+
+        }
+    }
+    .team {
+        &__border {
+            text-align: center;
+            height: 40px;
+            margin-top: -20px;
+            p {
+                width: 50%;
+            }
+            &--right {
+                font-size: 24px;
+                border-right: solid 2px #8F8D8D;
+                color: #3C240310;
+                line-height: 40px;
+            }
+        }
+    }
+    .introduce {
+        padding: 0 20px 80px 20px;
+        &__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+            &--img-side {
+                position: relative;
+                width: 80%;
+                img {
+                    width: 100%;
+                }
+                .logo {
+                    aspect-ratio: 1;
+                    background-color: #097CB9;
+                    border: solid 1px #707070;
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 8px;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: 1px;
+                    left: 1px;
+                    text-align: center;
+                    width: 40%;
+                    p {
+                        line-height: 2em;
+                    }
+                    .fas {
+                        font-size: 1.5em;
+                    }
+                }
+                .designer {
+                    background-color: #C97B39;
+                }
+                .name-box {
+                    position: relative;
+                    .name {
+                        color: #097CB9;
+                        font-size: 40px;
+                        font-family: 'SignPainter';
+                        font-weight: normal;
+                        position: relative;
+                        left: 10px;
+                        top: -30px;
+                    }
+                    .designer-text {
+                        color: #C97B39;
+                    }
+                }
+            }
+            &--text {
+                width: 80%;
+                h1 {
+                    font-size: 25px;
+                }
+                p {
+                    color: #1F140F;
+                    font-size: 14px;
+                    margin-top: 30px;
+                }
+            }
+        }
+        .introduce__item-designer {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    }
+    .footer {
+        background-color: black;
+        color: white;
+        padding: 30px 0 30px 0;
+        &__container {
+            display: flex;
+        }
+        &__account {
+            padding-left: 15%;
+            width: 50%;
+            &--title {
+                font-size: 30px;
+                letter-spacing: 0.1em;
+            }
+            &--name {
+                font-weight: 400;
+                font-size: 12px;
+                letter-spacing: 0.1em;
+                margin-top: 20px;
+            }
+            &--mail {
+                font-size: 12px;
+                font-weight: 50;
+                margin-top: 20px;
+                opacity: 0.9;
+            }
+            .socialEffect__box {
+                display: flex;
+                margin-top: 10px;
+                .fab {
+                    font-size: 1.5em;
+                    margin-right: 30px;
+                    opacity: 0.8;
+                    transition: 0.3s;
+                    &:hover {
+                        color: $color-c;
+                    }
+                }
+            }
+        }
+        &__nav {
+            font-weight: normal;
+            letter-spacing: 0.15em;
+            display: none;
+            line-height: 2em;
+            width: 50%;
+            ul {
+                margin-left: 50px;
+                display: flex;
+                .right {
+                    margin-left: 50px;
+                }
+            }
+        }
+    }
+}
+
