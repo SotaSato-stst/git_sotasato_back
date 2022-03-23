@@ -49,7 +49,7 @@ module Admin
     end
 
     def set_association
-      @user.company ||= Company.where(id: params[:company_id]).first
+      @user.company = Company.where(id: params[:company_id]).first
     end
 
     # # https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
