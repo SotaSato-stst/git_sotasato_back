@@ -99,6 +99,11 @@ class Subsidy < ApplicationRecord
       .search_with_annual_sales(search_params[:annual_sales])
       .in_years_of_establishment(search_params[:founding_date])
   }
+  scope :in_application_period, ->(checked) {
+    return unless ActiveModel::Type::Boolean.new.cast(checked)
+
+    merge(where(end_to: Date.today..).or(where(end_to: nil)))
+  }
   scope :search_by_keyword, ->(keyword) {
     return if keyword.blank?
 
@@ -111,33 +116,28 @@ class Subsidy < ApplicationRecord
 
     scope = left_joins(:subsidy_organization_types)
     types = SubsidyOrganizationType.where(organization_type: organization_type)
-    scope.merge(types).or(scope.where(subsidy_organization_types: { id: nil }))
+    scope.merge(types).or(scope.where(subsidy_organization_types: { id: nil })).distinct
   }
   scope :search_with_prefecture, ->(prefecture_id) {
     return if prefecture_id.blank?
 
     scope = left_joins(:subsidy_prefecture)
     prefecture_nil = scope.where(subsidy_prefectures: { id: nil })
-    scope.merge(SubsidyPrefecture.where(prefecture_id: prefecture_id)).or(prefecture_nil)
+    scope.merge(SubsidyPrefecture.where(prefecture_id: prefecture_id)).or(prefecture_nil).distinct
   }
   scope :search_with_city, ->(city_id) {
     return if city_id.blank?
 
     scope = left_joins(:subsidy_city)
     city_nil = scope.where(subsidy_cities: { id: nil })
-    scope.merge(SubsidyCity.where(city_id: city_id)).or(city_nil)
-  }
-  scope :in_application_period, ->(checked) {
-    return unless ActiveModel::Type::Boolean.new.cast(checked)
-
-    merge(where(end_to: Date.today..).or(where(end_to: nil)))
+    scope.merge(SubsidyCity.where(city_id: city_id)).or(city_nil).distinct
   }
   scope :search_with_business_category, ->(business_category_keys) {
     return if business_category_keys.blank?
 
     scope = left_joins(:subsidy_business_categories)
     categories = SubsidyBusinessCategory.where(business_category: business_category_keys)
-    scope.merge(categories).or(scope.where(subsidy_business_categories: { id: nil }))
+    scope.merge(categories).or(scope.where(subsidy_business_categories: { id: nil })).distinct
   }
   scope :search_with_employee, ->(total_employee) {
     return if total_employee.blank?
