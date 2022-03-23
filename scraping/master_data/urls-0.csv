@@ -1,4 +1,5 @@
 selector_name,url
+#contentsMain,"https://www.mlit.go.jp/kankocho/kouhou/news_2022.html"
 #contentsMainInner,"https://www.mlit.go.jp/kankocho/page01_000604.html"
 .m-grid__col1,"https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/koyou/kyufukin/index_00007.html"
 #contentsColumnWrapL,"https://www.mlit.go.jp/jidosha/jidosha_tk1_000015.html"

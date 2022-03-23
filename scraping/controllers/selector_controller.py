@@ -12,7 +12,7 @@ logger = getLogger(__name__)
 # 主に地方自治体サイトのお知らせ欄をスクレイピングしている
 
 class SelectorController:
-    keywords = ['補助金', '助成金', '支援策', '給付金', '支援金', '祝金']
+    keywords = ['補助金', '助成金', '支援策', '給付金', '支援金', '祝金', '公募']
 
     def __init__(self, csv_filename: str='urls-0.csv'):
         self.csv_filename = csv_filename
