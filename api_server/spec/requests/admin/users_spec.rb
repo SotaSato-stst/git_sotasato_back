@@ -104,7 +104,8 @@ RSpec.describe 'Admin::Users', type: :request do
       {
         last_name: 'たなか',
         first_name: 'さぶろう',
-        account_role: 'admin'
+        account_role: 'admin',
+        company_id: user.company.id
       }
     end
 
