@@ -61,7 +61,7 @@ module Admin
         :years_of_establishment,
         :annual_sales_max,
         :annual_sales_min,
-        :catch_copy,
+        :catch_copy
       )
     end
 
@@ -75,7 +75,7 @@ module Admin
       @subsidy.subsidy_business_categories = params[:business_categories].to_a.map do |category|
         @subsidy.subsidy_business_categories.build(business_category: category)
       end
-      keywords = params.permit(:keywords)[:keywords].to_s.split(/[[:space:]]/).reject(&:blank?)
+      keywords = params.permit(:keywords)[:keywords].to_s.split(/[[:space:]]/).reject(&:blank?).uniq
       @subsidy.subsidy_keywords = keywords.to_a.map do |content|
         keyword = Keyword.create_or_find_by(content: content)
         @subsidy.subsidy_keywords.build(keyword: keyword)
