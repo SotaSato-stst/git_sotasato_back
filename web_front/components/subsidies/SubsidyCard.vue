@@ -172,6 +172,7 @@ export default defineComponent({
   margin-right: var(--spacing-8);
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .inner-price-container {
