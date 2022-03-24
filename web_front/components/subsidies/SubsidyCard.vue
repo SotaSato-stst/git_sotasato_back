@@ -26,8 +26,8 @@
               <div v-if="subsidy.priceMax">
                 <span class="feature-label"> 上限金額: </span>
                 <span class="accent-text">
-                  {{ convertToShortJPY(subsidy.priceMax) }}円</span
-                >
+                  {{ convertToShortJPY(subsidy.priceMax) }}円
+                </span>
               </div>
               <div class="inner-price-container">
                 <div v-if="subsidy.supportRatioMax">
@@ -170,6 +170,8 @@ export default defineComponent({
 
 .price-container > div {
   margin-right: var(--spacing-8);
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .inner-price-container {
@@ -185,6 +187,7 @@ export default defineComponent({
   font-size: 22px;
   font-weight: bold;
   font-family: Poppins, sans-serif;
+  width: max-content;
 }
 
 .normal-text {
