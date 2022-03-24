@@ -19,7 +19,6 @@ module Admin
       @user.save!
       render :show, status: 201
     rescue StandardError => e
-      service.delete!(firebase_uid) if firebase_uid.present? # rollback
       errors = [firebase_error_messages(e)]
       render json: { message: 'ユーザーの作成に失敗しました', errors: errors }, status: 400
     end
