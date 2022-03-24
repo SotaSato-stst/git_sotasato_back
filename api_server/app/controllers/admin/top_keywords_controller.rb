@@ -1,5 +1,5 @@
 module Admin
-  class TopKeywordsController < ApplicationController
+  class TopKeywordsController < BaseController
     def index
       top_keywords = SearchedKeyword.top_keywords(50)
       render json: { keywords: top_keywords }, status: 200

@@ -1,5 +1,5 @@
 module Admin
-  class SubsidiesController < ApplicationController
+  class SubsidiesController < BaseController
     def index
       scope = Subsidy.all.index_loading
       filter_params = params.slice(:publishing_code, :end_after, :keyword, :subsidy_category, :ministry_id)

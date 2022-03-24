@@ -1,5 +1,5 @@
 module Business
-  class UserFavoriteSubsidiesController < ApplicationController
+  class UserFavoriteSubsidiesController < BaseController
     def index
       scope = Subsidy.index_loading.published.favorite_by(current_user)
       @items_total = scope.count
@@ -29,12 +29,6 @@ module Business
       else
         render json: { message: '更新に失敗しました' }, status: 400
       end
-    end
-
-    private
-
-    def controller_action_authrized?
-      current_user.present?
     end
   end
 end

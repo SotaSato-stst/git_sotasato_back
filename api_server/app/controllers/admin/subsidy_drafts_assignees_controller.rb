@@ -1,5 +1,5 @@
 module Admin
-  class SubsidyDraftsAssigneesController < ApplicationController
+  class SubsidyDraftsAssigneesController < BaseController
     def index
       @subsidy_draft_total = SubsidyDraft.not_archived.count
       @assigned_total = SubsidyDraft.not_archived.assigned.count

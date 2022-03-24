@@ -1,5 +1,5 @@
 module Business
-  class UserEmailUnsubscribesController < ApplicationController
+  class UserEmailUnsubscribesController < BaseController
     def index
       unsubscribes = current_user.user_email_unsubscribes.index_by(&:email_category)
       subscribes = [
@@ -34,12 +34,6 @@ module Business
       else
         render json: { message: '更新に失敗しました', errors: @current_user.errors.full_messages }, status: 400
       end
-    end
-
-    private
-
-    def controller_action_authrized?
-      current_user.present?
     end
   end
 end

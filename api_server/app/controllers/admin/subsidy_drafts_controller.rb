@@ -1,5 +1,5 @@
 module Admin
-  class SubsidyDraftsController < ApplicationController
+  class SubsidyDraftsController < BaseController
     def index
       scope = SubsidyDraft.includes(:ministry, :prefecture, :city, :assignee, :subsidy).order(updated_at: :desc)
       scope =

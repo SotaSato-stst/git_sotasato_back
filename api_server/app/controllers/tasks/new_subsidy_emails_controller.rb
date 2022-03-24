@@ -1,5 +1,5 @@
 module Tasks
-  class NewSubsidyEmailsController < ApplicationController
+  class NewSubsidyEmailsController < BaseController
     def show
       NewSubsidyEmailsService.new.execute!
       render json: { success: true }, status: 200

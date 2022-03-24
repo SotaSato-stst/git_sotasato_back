@@ -1,5 +1,5 @@
 module Business
-  class SubsidiesController < ApplicationController
+  class SubsidiesController < BaseController
     after_action :save_search_keyword, only: :index
 
     def index
@@ -17,8 +17,12 @@ module Business
     end
 
     def preview
-      @subsidy = Subsidy.find(params[:id])
-      render :show
+      if current_user.user? # 管理者、データ編集者用
+        render json: { message: '権限がありません' }, status: 403
+      else
+        @subsidy = Subsidy.find(params[:id])
+        render :show
+      end
     end
 
     private
@@ -36,12 +40,6 @@ module Business
         :founding_date,
         :annual_sales
       )
-    end
-
-    def controller_action_authrized?
-      return false if params[:action] == 'preview' && current_user.user?
-
-      current_user.present?
     end
 
     def save_search_keyword

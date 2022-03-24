@@ -1,5 +1,5 @@
 module Admin
-  class CompaniesController < ApplicationController
+  class CompaniesController < BaseController
     def index
       scope = Company.all.includes(:prefecture, :city, :company_business_categories).order(updated_at: :desc)
       @items_total = scope.count

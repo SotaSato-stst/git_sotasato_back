@@ -1,5 +1,5 @@
 module Business
-  class CurrentUsersController < ApplicationController
+  class CurrentUsersController < BaseController
     def show
       @company = current_user.company
     end
@@ -17,10 +17,6 @@ module Business
 
     def update_params
       params.permit(:last_name, :first_name, :email)
-    end
-
-    def controller_action_authrized?
-      current_user.present?
     end
   end
 end

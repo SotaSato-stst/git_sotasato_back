@@ -1,5 +1,5 @@
 module Tasks
-  class NewSubsidyController < ApplicationController
+  class NewSubsidyController < BaseController
     def show
       next_id = SubsidyDraft.last&.id.to_i + 1
       NewSubsidyService.new(Date.today).execute!

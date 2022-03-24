@@ -1,5 +1,5 @@
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < BaseController
     def index
       scope = User.all.includes(:company).order(updated_at: :desc)
       @items_total = scope.count
