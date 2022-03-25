@@ -34,8 +34,9 @@ class SlackService
   def post_subsidy_stats
     edit_page = "#{Settings.front_base_url}/admin"
     messages = [
-      "未対応: #{SubsidyDraft.not_archived.count}件",
-      "下書き: #{Subsidy.editing.count}件",
+      "新着未対応: #{SubsidyDraft.not_archived.count}件",
+      "新着未振分: #{SubsidyDraft.not_archived.not_assigned.count}件",
+      "下書き保存: #{Subsidy.editing.count}件",
       "公開済: #{Subsidy.published.count}件",
       "募集中: #{Subsidy.published.in_application_period(true).count}件",
     ]
