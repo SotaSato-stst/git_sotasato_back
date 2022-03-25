@@ -10,7 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_13_210854) do
+ActiveRecord::Schema.define(version: 2022_03_25_090622) do
+
+  create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "last_name", null: false
+    t.string "first_name", null: false
+    t.date "birthday", null: false
+    t.string "gender", null: false
+    t.string "email", null: false
+    t.string "firebase_uid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_app_users_on_email", unique: true
+    t.index ["firebase_uid"], name: "index_app_users_on_firebase_uid", unique: true
+  end
+
+  create_table "benefits", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "url", null: false
+    t.bigint "prefecture_id"
+    t.bigint "city_id"
+    t.text "target_detail", null: false
+    t.text "price_detail", null: false
+    t.text "application_detail", null: false
+    t.date "end_date"
+    t.boolean "for_welfare", default: false, null: false
+    t.boolean "for_elderly_care", default: false, null: false
+    t.boolean "for_widow", default: false, null: false
+    t.boolean "for_disabled", default: false, null: false
+    t.integer "age_from"
+    t.integer "age_to"
+    t.integer "household_income_from"
+    t.integer "household_income_to"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_benefits_on_city_id"
+    t.index ["prefecture_id"], name: "index_benefits_on_prefecture_id"
+    t.index ["url"], name: "index_benefits_on_url", unique: true, length: 256
+  end
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -46,6 +83,31 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id", "business_category"], name: "index_unique_company_business_categories", unique: true
     t.index ["company_id"], name: "index_company_business_categories_on_company_id"
+  end
+
+  create_table "families", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "app_user_id", null: false
+    t.bigint "prefecture_id", null: false
+    t.bigint "city_id", null: false
+    t.integer "household_income"
+    t.boolean "on_welfare"
+    t.boolean "on_elderly_care"
+    t.boolean "has_widow"
+    t.boolean "has_disabled"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["app_user_id"], name: "index_families_on_app_user_id", unique: true
+    t.index ["city_id"], name: "index_families_on_city_id"
+    t.index ["prefecture_id"], name: "index_families_on_prefecture_id"
+  end
+
+  create_table "family_members", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "family_id", null: false
+    t.date "birthday", null: false
+    t.string "relationship", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["family_id"], name: "index_family_members_on_family_id"
   end
 
   create_table "keywords", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -232,10 +294,16 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
     t.index ["firebase_uid"], name: "index_users_on_firebase_uid", unique: true
   end
 
+  add_foreign_key "benefits", "cities"
+  add_foreign_key "benefits", "prefectures"
   add_foreign_key "cities", "prefectures"
   add_foreign_key "companies", "cities"
   add_foreign_key "companies", "prefectures"
   add_foreign_key "company_business_categories", "companies"
+  add_foreign_key "families", "app_users"
+  add_foreign_key "families", "cities"
+  add_foreign_key "families", "prefectures"
+  add_foreign_key "family_members", "families"
   add_foreign_key "searched_keywords", "users"
   add_foreign_key "subsidy_business_categories", "subsidies"
   add_foreign_key "subsidy_cities", "cities"
