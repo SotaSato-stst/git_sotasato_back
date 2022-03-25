@@ -6,7 +6,6 @@ module Admin
       authenticate_or_request_with_http_token do |token, _|
         uid = TokenVerifier.new(token).execute
         @current_user = User.activated.find_by!(firebase_uid: uid)
-        @token = token
       end
     rescue TokenVerifier::InvalidTokenError
       render json: { message: 'ログインが必要です' }, status: 401
