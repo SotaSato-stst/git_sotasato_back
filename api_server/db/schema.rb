@@ -290,7 +290,7 @@ ActiveRecord::Schema.define(version: 2022_03_27_091907) do
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "firebase_uid", null: false
-    t.bigint "company_id"
+    t.bigint "company_id", null: false
     t.string "email", default: "", null: false
     t.string "account_role", default: "user", null: false
     t.datetime "created_at", precision: 6, null: false

@@ -40,8 +40,8 @@ FactoryBot.define do
     publishing_code { 'published' }
     title { 'タイトル' }
     sequence(:url, 'https://example.com/1')
-    prefecture { create(:prefecture) }
-    city_id { create(:city) }
+    city { create(:city) }
+    prefecture { city.prefecture }
     price_detail { '支給内容' }
     target_detail { '対象内容' }
     application_detail { '申し込み方法' }

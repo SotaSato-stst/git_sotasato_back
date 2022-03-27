@@ -25,6 +25,7 @@
 class User < ApplicationRecord
   has_one :user_company
   # has_one :company, through: :user_company
+  belongs_to :company
   has_one :family
   has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidies, through: :user_favorite_subsidies
@@ -48,9 +49,5 @@ class User < ApplicationRecord
 
   def display_name
     last_name + first_name
-  end
-
-  def company
-    user_company&.company || Company.find(company_id)
   end
 end

@@ -30,7 +30,7 @@ FactoryBot.define do
     firebase_uid { 'firebase_uid' }
     account_role { 'user' }
     disabled { false }
-    company { create(:company) }
+    company { association(:company) }
 
     trait :editor do
       account_role { 'editor' }
@@ -40,8 +40,8 @@ FactoryBot.define do
       account_role { 'admin' }
     end
 
-    user_company do |this|
-      association(:user_company, user: this.instance, company: company) if company
-    end
+    # user_company do |this|
+    #   association(:user_company, user: this.instance, company: company) if company
+    # end
   end
 end

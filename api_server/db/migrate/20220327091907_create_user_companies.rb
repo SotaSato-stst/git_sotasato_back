@@ -5,8 +5,6 @@ class CreateUserCompanies < ActiveRecord::Migration[6.1]
       t.references :company, null: false, foreign_key: true
       t.timestamps
     end
-
-    change_column :users, :company_id, :bigint, null: true
   end
 end
 
