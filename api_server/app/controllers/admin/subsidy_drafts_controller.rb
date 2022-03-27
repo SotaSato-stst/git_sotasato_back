@@ -24,6 +24,20 @@ module Admin
       render json: { message: e.message }, status: 400
     end
 
+    def bulk_archive
+      SubsidyDraft.where(id: params[:ids]).update_all(archived: true, assignee_id: current_user.id)
+      render json: { success: true }, status: 200
+    rescue StandardError => e
+      render json: { message: e.message }, status: 400
+    end
+
+    def bulk_update_for_benefit
+      SubsidyDraft.where(id: params[:ids]).update_all(for_benefit: params[:for_benefit], assignee_id: current_user.id)
+      render json: { success: true }, status: 200
+    rescue StandardError => e
+      render json: { message: e.message }, status: 400
+    end
+
     private
 
     def controller_action_authrized?

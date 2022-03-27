@@ -17,6 +17,7 @@ export type SubsidyDraft = {
   createdAt: Date
   assignee: User | null
   subsidyId: number | null
+  forBenefit: boolean
 }
 
 export type SubsidyDraftsResponse = {
@@ -62,4 +63,9 @@ export type SubsidyDraftIndexParams = {
 export type UpdateSubsidyDraftParams = {
   id: number
   archive: boolean
+}
+
+export type BulkUpdateSubsidyDraftForBenefit = {
+  ids: number[]
+  forBenefit: boolean
 }

@@ -1,4 +1,4 @@
-json.call(subsidy_draft, :id, :title, :url, :supplier_type, :archived, :created_at)
+json.call(subsidy_draft, :id, :title, :url, :supplier_type, :for_benefit, :archived, :created_at)
 json.subsidy_id subsidy_draft.subsidy&.id
 
 json.assignee do

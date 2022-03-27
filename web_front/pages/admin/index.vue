@@ -12,9 +12,23 @@
           最新情報を取得
         </el-button>
         <el-button
+          size="mini"
+          :disabled="loading || selectedSubsidyDrafts.length === 0"
+          @click="changeAllForBenefit(false)"
+        >
+          まとめて法人向けに変更
+        </el-button>
+        <el-button
+          size="mini"
+          :disabled="loading || selectedSubsidyDrafts.length === 0"
+          @click="changeAllForBenefit(true)"
+        >
+          まとめて家庭向けに変更
+        </el-button>
+        <el-button
           type="danger"
           size="mini"
-          :disabled="selectedSubsidyDrafts.length === 0"
+          :disabled="loading || selectedSubsidyDrafts.length === 0"
           @click="archiveAll()"
         >
           まとめてアーカイブする
@@ -73,15 +87,9 @@
           }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="URL">
+      <el-table-column label="対象" width="80">
         <template slot-scope="scope">
-          <a
-            class="detail-link"
-            :href="scope.row.url"
-            target="_blank"
-            style="word-break: keep-all"
-            >{{ scope.row.url }}</a
-          >
+          {{ scope.row.forBenefit ? '家庭向け' : '法人向け' }}
         </template>
       </el-table-column>
       <el-table-column label="発行機関" width="110">
@@ -225,6 +233,17 @@ export default defineComponent({
       }
     }
 
+    const archive = (subsidyDraft: SubsidyDraft) => {
+      confirmArchive(`「${subsidyDraft.title}」`)
+        .then(() => {
+          subsidyDraftsModule
+            .updateSubsidyDraft({id: subsidyDraft.id, archive: true})
+            .then(() => handleSuccess(subsidyDraft.title))
+            .catch(showApiErrorMessage)
+        })
+        .catch(_ => {})
+    }
+
     const confirmArchive = (text: string) => {
       return MessageBox.confirm(text, 'この情報をアーカイブしますか？', {
         customClass: 'confirm-dialog',
@@ -237,34 +256,53 @@ export default defineComponent({
         .map(d => `「${d.title}」`)
         .join('<br/>')
       confirmArchive(titles)
-        .then(async () => {
-          await Promise.all(
-            subsidyDraftsModule.selectedSubsidyDrafts.map(d => {
-              return subsidyDraftsModule.updateSubsidyDraft({
-                id: d.id,
-                archive: true,
-              })
-            }),
-          )
-          handleSuccess(`${subsidyDraftsModule.selectedSubsidyDrafts.length}件`)
-        })
-        .catch(_ => {})
-    }
-
-    const archive = (subsidyDraft: SubsidyDraft) => {
-      confirmArchive(`「${subsidyDraft.title}」`)
-        .then(() => {
+        .then(() =>
           subsidyDraftsModule
-            .updateSubsidyDraft({id: subsidyDraft.id, archive: true})
-            .then(() => handleSuccess(subsidyDraft.title))
-            .catch(showApiErrorMessage)
-        })
+            .bulkArchive(
+              subsidyDraftsModule.selectedSubsidyDrafts.map(d => d.id),
+            )
+            .catch(showApiErrorMessage),
+        )
+        .then(() =>
+          handleSuccess(
+            `${subsidyDraftsModule.selectedSubsidyDrafts.length}件`,
+          ),
+        )
         .catch(_ => {})
     }
 
     const handleSuccess = (message: string) => {
-      notifySuccess('アーカイブしました', message)
+      notifySuccess('更新しました', message)
       handleSegue({})
+    }
+
+    const changeAllForBenefit = (forBenefit: boolean) => {
+      const titles = subsidyDraftsModule.selectedSubsidyDrafts
+        .map(d => `「${d.title}」`)
+        .join('<br/>')
+      const targetText = forBenefit ? '家庭' : '法人'
+      MessageBox.confirm(
+        titles,
+        `この情報をまとめて「${targetText}向け」に変更しますか？`,
+        {
+          customClass: 'confirm-dialog',
+          dangerouslyUseHTMLString: true,
+        },
+      )
+        .then(() =>
+          subsidyDraftsModule
+            .bulkUpdateForBenefit({
+              ids: subsidyDraftsModule.selectedSubsidyDrafts.map(d => d.id),
+              forBenefit,
+            })
+            .catch(showApiErrorMessage),
+        )
+        .then(() =>
+          handleSuccess(
+            `${subsidyDraftsModule.selectedSubsidyDrafts.length}件`,
+          ),
+        )
+        .catch(_ => {})
     }
 
     const requestNewSubsidy = () => {
@@ -314,6 +352,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       handleArchived,
       archive,
       archiveAll,
+      changeAllForBenefit,
       requestNewSubsidy,
       convertToJpDate,
     }

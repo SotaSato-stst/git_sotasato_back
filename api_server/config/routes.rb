@@ -27,7 +27,12 @@ Rails.application.routes.draw do
     resources :companies, only: %i[index show create update]
     resources :users, only: %i[index show create update]
     resources :subsidies, only: %i[index show create update]
-    resources :subsidy_drafts, only: %i[index show update]
+    resources :subsidy_drafts, only: %i[index show update] do
+      collection do
+        post :bulk_archive
+        post :bulk_update_for_benefit
+      end
+    end
     resources :subsidy_drafts_assignees, only: %i[index update destroy], param: :assignee_id
     resources :top_keywords, only: :index
     resources :searched_keywords, only: :index
