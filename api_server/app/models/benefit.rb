@@ -109,7 +109,7 @@ class Benefit < ApplicationRecord
     merge(
       where('? between age_from and age_to', age)
       .or(
-        where(age_from: ..age_from).where(age_to: nil)
+        where(age_from: ..age).where(age_to: nil)
       ).or(
         where(age_from: nil).where(age_to: age..)
       ).or(

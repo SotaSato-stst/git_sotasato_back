@@ -105,4 +105,66 @@ RSpec.describe Benefit, type: :model do
       end
     end
   end
+
+  describe 'search_with_age' do
+    subject { Benefit.search_with_age(age) }
+
+    context 'age_fromとage_toが両方とも指定されている場合' do
+      let(:age) { 14 }
+      let!(:target_record) { create(:benefit, age_to: 20, age_from: 5) }
+      let!(:not_target_record) { create(:benefit, age_to: 70, age_from: 50) }
+
+      it '範囲内のbenefitが抽出される' do
+        expect(subject).to include(target_record)
+      end
+      it '範囲外のsubjectは抽出されない' do
+        expect(subject).not_to include(not_target_record)
+      end
+    end
+
+    context 'age_toのみ指定されている場合' do
+      let!(:target_record) { create(:benefit, age_to: 20, age_from: nil) }
+
+      context '範囲内である場合' do
+        let(:age) { 10 }
+
+        it '範囲内のbenefitが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:age) { 50 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'age_fromのみ指定されている場合' do
+      let!(:target_record) { create(:benefit, age_to: nil, age_from: 20) }
+
+      context '範囲内である場合' do
+        let(:age) { 30 }
+
+        it '範囲内のbenefitが抽出される' do
+          expect(subject).to include(target_record)
+        end
+      end
+      context '範囲外である場合' do
+        let(:age) { 10 }
+
+        it '抽出されない' do
+          expect(subject).not_to include(target_record)
+        end
+      end
+    end
+    context 'いずれの指定もない場合' do
+      let!(:target_record) { create(:benefit, age_to: nil, age_from: nil) }
+      let(:age) { 100 }
+
+      it '抽出される' do
+        expect(subject).to include(target_record)
+      end
+    end
+  end
 end
