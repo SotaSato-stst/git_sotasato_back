@@ -39,7 +39,7 @@ FactoryBot.define do
   factory :benefit do
     publishing_code { 'published' }
     title { 'タイトル' }
-    url { 'https://example.com' }
+    sequence(:url, 'https://example.com/1')
     prefecture { create(:prefecture) }
     city_id { create(:city) }
     price_detail { '支給内容' }

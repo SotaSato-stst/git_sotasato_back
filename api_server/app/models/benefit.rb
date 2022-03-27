@@ -94,7 +94,7 @@ class Benefit < ApplicationRecord
     merge(
       where('? between household_income_from and household_income_to', household_income)
       .or(
-        where(household_income_from: ..household_income_from).where(household_income_to: nil)
+        where(household_income_from: ..household_income).where(household_income_to: nil)
       ).or(
         where(household_income_from: nil).where(household_income_to: household_income..)
       ).or(
