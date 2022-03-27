@@ -11,7 +11,7 @@
 #  last_name    :string(255)      not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  company_id   :bigint           not null
+#  company_id   :bigint
 #
 # Indexes
 #
@@ -30,7 +30,7 @@ FactoryBot.define do
     firebase_uid { 'firebase_uid' }
     account_role { 'user' }
     disabled { false }
-    company { association(:company) }
+    company { create(:company) }
 
     trait :editor do
       account_role { 'editor' }
@@ -38,6 +38,10 @@ FactoryBot.define do
 
     trait :admin do
       account_role { 'admin' }
+    end
+
+    user_company do |this|
+      association(:user_company, user: this.instance, company: company) if company
     end
   end
 end

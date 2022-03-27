@@ -14,6 +14,7 @@
 #  household_income_from :integer
 #  household_income_to   :integer
 #  price_detail          :text(65535)      not null
+#  publishing_code       :string(255)      not null
 #  target_detail         :text(65535)      not null
 #  title                 :string(255)      not null
 #  url                   :text(65535)      not null
@@ -24,9 +25,10 @@
 #
 # Indexes
 #
-#  index_benefits_on_city_id        (city_id)
-#  index_benefits_on_prefecture_id  (prefecture_id)
-#  index_benefits_on_url            (url) UNIQUE
+#  index_benefits_on_city_id          (city_id)
+#  index_benefits_on_prefecture_id    (prefecture_id)
+#  index_benefits_on_publishing_code  (publishing_code)
+#  index_benefits_on_url              (url) UNIQUE
 #
 # Foreign Keys
 #

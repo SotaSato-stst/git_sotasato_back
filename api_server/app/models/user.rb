@@ -11,7 +11,7 @@
 #  last_name    :string(255)      not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  company_id   :bigint           not null
+#  company_id   :bigint
 #
 # Indexes
 #
@@ -23,14 +23,21 @@
 #  fk_rails_...  (company_id => companies.id)
 #
 class User < ApplicationRecord
-  belongs_to :company
+  has_one :user_company
+  # has_one :company, through: :user_company
+  has_one :family
   has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidies, through: :user_favorite_subsidies
   has_many :subsidy_draft_assngins, foreign_key: :assignee_id, class_name: 'SubsidyDraft'
   has_many :user_email_logs, dependent: :destroy
   has_many :user_email_unsubscribes, dependent: :destroy
 
-  enum account_role: { user: 'user', editor: 'editor', admin: 'admin' } # editor: 補助金情報の入力者, admin: 社内の管理者
+  enum account_role: {
+    user: 'user', # 法人向けユーザー 通称: 補助金ドック(Web)
+    family_user: 'family_user', # 家庭向けユーザー 通称: 未定(アプリ)
+    editor: 'editor', # editor: 補助金情報の入力者
+    admin: 'admin' # admin: 社内の管理者
+  }
 
   scope :activated, -> { where(disabled: false) }
   scope :operators, -> { where(account_role: %w[editor admin]) }
@@ -41,5 +48,9 @@ class User < ApplicationRecord
 
   def display_name
     last_name + first_name
+  end
+
+  def company
+    user_company&.company || Company.find(company_id)
   end
 end

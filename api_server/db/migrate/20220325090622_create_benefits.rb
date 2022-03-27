@@ -1,6 +1,7 @@
 class CreateBenefits < ActiveRecord::Migration[6.1]
   def change
     create_table :benefits do |t|
+      t.string :publishing_code, null: false, index: true
       t.string :title, null: false
       t.text :url, null: false, index: {unique: true, length: 256}
       t.references :prefecture, foreign_key: true

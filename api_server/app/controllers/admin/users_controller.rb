@@ -1,7 +1,7 @@
 module Admin
   class UsersController < BaseController
     def index
-      scope = User.all.includes(:company).order(updated_at: :desc)
+      scope = User.all.includes(:user_company).order(updated_at: :desc)
       @items_total = scope.count
       @users = scope.page(params[:page]).per(50)
     end
@@ -48,7 +48,11 @@ module Admin
     end
 
     def set_association
-      @user.company = Company.where(id: params[:company_id]).first
+      company = Company.where(id: params[:company_id]).first
+      @user.company_id = company.id
+      user_company = UserCompany.find_or_initialize_by(user: @user)
+      user_company.company = company
+      @user.user_company = user_company
     end
 
     # # https://firebase.google.com/docs/reference/rest/auth#section-create-email-password

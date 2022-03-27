@@ -10,22 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_27_075027) do
-
-  create_table "app_users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "last_name", null: false
-    t.string "first_name", null: false
-    t.date "birthday", null: false
-    t.string "gender", null: false
-    t.string "email", null: false
-    t.string "firebase_uid", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_app_users_on_email", unique: true
-    t.index ["firebase_uid"], name: "index_app_users_on_firebase_uid", unique: true
-  end
+ActiveRecord::Schema.define(version: 2022_03_27_091907) do
 
   create_table "benefits", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "publishing_code", null: false
     t.string "title", null: false
     t.text "url", null: false
     t.bigint "prefecture_id"
@@ -46,6 +34,7 @@ ActiveRecord::Schema.define(version: 2022_03_27_075027) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["city_id"], name: "index_benefits_on_city_id"
     t.index ["prefecture_id"], name: "index_benefits_on_prefecture_id"
+    t.index ["publishing_code"], name: "index_benefits_on_publishing_code"
     t.index ["url"], name: "index_benefits_on_url", unique: true, length: 256
   end
 
@@ -86,7 +75,7 @@ ActiveRecord::Schema.define(version: 2022_03_27_075027) do
   end
 
   create_table "families", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "app_user_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "prefecture_id", null: false
     t.bigint "city_id", null: false
     t.integer "household_income"
@@ -96,9 +85,9 @@ ActiveRecord::Schema.define(version: 2022_03_27_075027) do
     t.boolean "has_disabled"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["app_user_id"], name: "index_families_on_app_user_id", unique: true
     t.index ["city_id"], name: "index_families_on_city_id"
     t.index ["prefecture_id"], name: "index_families_on_prefecture_id"
+    t.index ["user_id"], name: "index_families_on_user_id", unique: true
   end
 
   create_table "family_members", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -253,6 +242,15 @@ ActiveRecord::Schema.define(version: 2022_03_27_075027) do
     t.index ["subsidy_id"], name: "index_subsidy_prefectures_on_subsidy_id"
   end
 
+  create_table "user_companies", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "company_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_user_companies_on_company_id"
+    t.index ["user_id"], name: "index_user_companies_on_user_id", unique: true
+  end
+
   create_table "user_email_logs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "email_category", null: false
@@ -281,9 +279,18 @@ ActiveRecord::Schema.define(version: 2022_03_27_075027) do
     t.index ["user_id"], name: "index_user_favorite_subsidies_on_user_id"
   end
 
+  create_table "user_profiles", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "birthday", null: false
+    t.string "gender", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_profiles_on_user_id", unique: true
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "firebase_uid", null: false
-    t.bigint "company_id", null: false
+    t.bigint "company_id"
     t.string "email", default: "", null: false
     t.string "account_role", default: "user", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -301,9 +308,9 @@ ActiveRecord::Schema.define(version: 2022_03_27_075027) do
   add_foreign_key "companies", "cities"
   add_foreign_key "companies", "prefectures"
   add_foreign_key "company_business_categories", "companies"
-  add_foreign_key "families", "app_users"
   add_foreign_key "families", "cities"
   add_foreign_key "families", "prefectures"
+  add_foreign_key "families", "users"
   add_foreign_key "family_members", "families"
   add_foreign_key "searched_keywords", "users"
   add_foreign_key "subsidy_business_categories", "subsidies"
@@ -319,7 +326,10 @@ ActiveRecord::Schema.define(version: 2022_03_27_075027) do
   add_foreign_key "subsidy_organization_types", "subsidies"
   add_foreign_key "subsidy_prefectures", "prefectures"
   add_foreign_key "subsidy_prefectures", "subsidies"
+  add_foreign_key "user_companies", "companies"
+  add_foreign_key "user_companies", "users"
   add_foreign_key "user_favorite_subsidies", "subsidies"
   add_foreign_key "user_favorite_subsidies", "users"
+  add_foreign_key "user_profiles", "users"
   add_foreign_key "users", "companies"
 end

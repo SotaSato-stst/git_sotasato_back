@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :companies, only: %i[index show create update]
     resources :users, only: %i[index show create update]
     resources :subsidies, only: %i[index show create update]
+    resources :benefits, only: %i[index show create update]
     resources :subsidy_drafts, only: %i[index show update] do
       collection do
         post :bulk_archive

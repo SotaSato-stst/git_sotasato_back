@@ -18,12 +18,9 @@
 #  index_app_users_on_firebase_uid  (firebase_uid) UNIQUE
 #
 FactoryBot.define do
-  factory :app_user do
-    last_name { '田中' }
-    first_name { '太郎' }
+  factory :user_profile do
+    user { create(:user) }
     gender { 'male' }
     birthday { 40.years.ago }
-    sequence(:email, 'app_user_1@test.com')
-    sequence(:firebase_uid, 'app_user_1')
   end
 end
