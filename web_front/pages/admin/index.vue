@@ -80,16 +80,18 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column label="対象" width="80">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.forBenefit ? 'success' : ''">
+            {{ scope.row.forBenefit ? '家庭向け' : '法人向け' }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
           <a class="detail-link" @click="handleEdit(scope.row)">{{
             scope.row.title
           }}</a>
-        </template>
-      </el-table-column>
-      <el-table-column label="対象" width="80">
-        <template slot-scope="scope">
-          {{ scope.row.forBenefit ? '家庭向け' : '法人向け' }}
         </template>
       </el-table-column>
       <el-table-column label="発行機関" width="110">
@@ -99,6 +101,11 @@
             scope.row.prefecture.name
           }}</span>
           <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column v-if="isAdmin" label="担当者" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.assignee && scope.row.assignee.displayName }}
         </template>
       </el-table-column>
       <el-table-column label="操作" width="140">
@@ -117,11 +124,6 @@
               情報作成済み
             </div>
           </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="isAdmin" label="担当者" width="120">
-        <template slot-scope="scope">
-          {{ scope.row.assignee && scope.row.assignee.displayName }}
         </template>
       </el-table-column>
       <el-table-column label="更新日" width="120">
@@ -215,7 +217,11 @@ export default defineComponent({
     }
 
     const handleEdit = (subsidyDraft: SubsidyDraft) => {
-      router.push(routingService.AdminSubsidyDraftDetail(subsidyDraft.id))
+      if (subsidyDraft.forBenefit) {
+        router.push(routingService.AdminNewBenefit(subsidyDraft.id))
+      } else {
+        router.push(routingService.AdminSubsidyDraftDetail(subsidyDraft.id))
+      }
     }
 
     const handleSelectionChange = (selections: SubsidyDraft[]) => {

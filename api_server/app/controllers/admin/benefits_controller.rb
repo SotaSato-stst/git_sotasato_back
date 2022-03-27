@@ -14,7 +14,6 @@ module Admin
 
     def create
       @benefit = Benefit.new(benefit_params)
-      set_association
 
       if @benefit.save
         SubsidyDraft.find_by(url: params[:url])&.update(archived: true, assignee: current_user)
@@ -27,7 +26,6 @@ module Admin
     def update
       @benefit = Benefit.find(params[:id])
       @benefit.assign_attributes(benefit_params)
-      set_association
 
       if @benefit.save
         render :show, status: 201
@@ -40,6 +38,7 @@ module Admin
 
     def benefit_params
       params.permit(
+        :publishing_code,
         :title,
         :url,
         :prefecture_id,

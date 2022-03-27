@@ -5,20 +5,24 @@
       <span>未対応の新着</span>
     </el-menu-item>
     <el-menu-item index="assignees">
-      <i class="el-icon-user"></i>
-      <span>編集担当者管理</span>
+      <i class="el-icon-edit"></i>
+      <span>編集担当者</span>
     </el-menu-item>
     <el-menu-item index="subsidies">
       <i class="el-icon-s-order"></i>
-      <span>補助金情報管理</span>
+      <span>補助金情報</span>
+    </el-menu-item>
+    <el-menu-item index="benefits">
+      <i class="el-icon-house"></i>
+      <span>家庭向け給付金</span>
     </el-menu-item>
     <el-menu-item index="companies">
       <i class="el-icon-office-building"></i>
-      <span>会社管理</span>
+      <span>会社</span>
     </el-menu-item>
     <el-menu-item index="users">
       <i class="el-icon-user"></i>
-      <span>ユーザー管理</span>
+      <span>ユーザー</span>
     </el-menu-item>
     <el-menu-item index="searched_keywords">
       <i class="el-icon-search"></i>
@@ -40,6 +44,7 @@ type menuType =
   | 'new_urls'
   | 'assignees'
   | 'subsidies'
+  | 'benefits'
   | 'companies'
   | 'users'
   | 'searched_keywords'
@@ -53,6 +58,8 @@ export default defineComponent({
     const selectedPage = computed(() => {
       if (path.startsWith(routingService.AdminSubsidies())) {
         return 'subsidies'
+      } else if (path.startsWith(routingService.AdminBenefits())) {
+        return 'benefits'
       } else if (path.startsWith(routingService.AdminCompanies())) {
         return 'companies'
       } else if (path.startsWith(routingService.AdminUsers())) {
@@ -76,6 +83,9 @@ export default defineComponent({
         case 'subsidies':
           router.push(routingService.AdminSubsidies())
           break
+        case 'benefits':
+          router.push(routingService.AdminBenefits())
+          break
         case 'companies':
           router.push(routingService.AdminCompanies())
           break
@@ -96,5 +106,20 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .menu {
   border: none;
+}
+
+.el-icon-s-order,
+.is-active > i.el-icon-s-order {
+  color: #48cae4;
+}
+
+.el-icon-house,
+.is-active > i.el-icon-house {
+  color: #67c23a;
+}
+
+.el-icon-news,
+.is-active > i.el-icon-news {
+  color: red;
 }
 </style>
