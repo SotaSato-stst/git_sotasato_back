@@ -28,4 +28,10 @@ class FamilyMember < ApplicationRecord
     grand_child: 'grand_child',
     other: 'other'
   }
+
+  def age
+    return if birthday.nil?
+
+    ((Date.today.to_time.to_i - birthday.to_time.to_i) / 1.year.seconds).floor
+  end
 end
