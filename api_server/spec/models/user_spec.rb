@@ -11,7 +11,7 @@
 #  last_name    :string(255)      not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  company_id   :bigint
+#  company_id   :bigint           not null
 #
 # Indexes
 #
