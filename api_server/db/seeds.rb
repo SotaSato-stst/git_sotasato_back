@@ -1766,8 +1766,9 @@ if Rails.env.development?
   firebase_user_email = ENV['FIREBASE_USER_EMAIL_FOR_DEBUG']
   if firebase_uid.present?
     user = User.find_or_initialize_by(firebase_uid: firebase_uid)
+    user_company = UserCompany.find_or_initialize_by(user: user, company: Company.first)
     user.update(
-      company: Company.first,
+      user_company: user_company,
       email: firebase_user_email,
       last_name: '田中',
       first_name: '太郎',
