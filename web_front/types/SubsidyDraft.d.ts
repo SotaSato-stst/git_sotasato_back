@@ -15,8 +15,10 @@ export type SubsidyDraft = {
   supplierType: SupplierType
   archived: boolean
   createdAt: Date
+  updatedAt: Date
   assignee: User | null
   subsidyId: number | null
+  benefitId: number | null
   forBenefit: boolean
 }
 

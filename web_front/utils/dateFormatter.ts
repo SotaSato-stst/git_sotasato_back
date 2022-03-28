@@ -11,6 +11,18 @@ export const convertToJpDate = (date: Date, withYear: boolean = true) => {
   return dateformat.format(new Date(date))
 }
 
+export const convertToJpDateTime = (date: Date) => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'narrow',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  }
+  const dateformat = new Intl.DateTimeFormat('ja-JP', options)
+  return dateformat.format(new Date(date))
+}
+
 export const convertDateRange = (
   startFromStr?: string,
   endToStr?: string,

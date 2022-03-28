@@ -111,24 +111,34 @@
       <el-table-column label="操作" width="140">
         <template slot-scope="scope">
           <el-button
-            :type="scope.row.subsidyId ? 'success' : 'danger'"
+            v-if="!scope.row.archived"
+            type="danger"
             size="mini"
-            :disabled="scope.row.archived && !scope.row.subsidyId"
-            @click="handleArchived(scope.row, scope.row.subsidyId)"
+            @click="archive(scope.row)"
           >
-            <div v-if="!scope.row.archived">アーカイブ</div>
-            <div v-if="scope.row.archived && !scope.row.subsidyId">
-              アーカイブ済み
-            </div>
-            <div v-if="scope.row.archived && scope.row.subsidyId">
-              情報作成済み
-            </div>
+            アーカイブ
+          </el-button>
+          <el-button
+            v-if="scope.row.subsidyId"
+            type="success"
+            size="mini"
+            @click="segueSubsidy(scope.row.subsidyId)"
+          >
+            情報作成済み
+          </el-button>
+          <el-button
+            v-if="scope.row.benefitId"
+            type="success"
+            size="mini"
+            @click="segueBenefit(scope.row.benefitId)"
+          >
+            情報作成済み
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="更新日" width="120">
+      <el-table-column label="更新日" width="165">
         <template slot-scope="scope">
-          {{ convertToJpDate(scope.row.createdAt) }}
+          {{ convertToJpDateTime(scope.row.updatedAt) }}
         </template>
       </el-table-column>
     </el-table>
@@ -160,7 +170,7 @@ import {
   FilterCompleteType,
 } from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
-import {convertToJpDate} from '@/utils/dateFormatter'
+import {convertToJpDateTime} from '@/utils/dateFormatter'
 import {removeEmpty} from '@/utils/objectUtil'
 import {convertQueryNumber, convertQueryString} from '@/utils/urlQuery'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
@@ -228,15 +238,11 @@ export default defineComponent({
       subsidyDraftsModule.setSelectedSubsidyDrafts(selections)
     }
 
-    const handleArchived = (
-      subsidyDraft: SubsidyDraft,
-      subsidyId: number | null,
-    ) => {
-      if (subsidyId) {
-        router.push(routingService.AdminSubsidyDetail(subsidyId))
-      } else {
-        archive(subsidyDraft)
-      }
+    const segueSubsidy = (subsidyId: number) => {
+      router.push(routingService.AdminSubsidyDetail(subsidyId))
+    }
+    const segueBenefit = (benefitId: number) => {
+      router.push(routingService.AdminBenefitDetail(benefitId))
     }
 
     const archive = (subsidyDraft: SubsidyDraft) => {
@@ -355,12 +361,13 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       getPage,
       handleEdit,
       handleSelectionChange,
-      handleArchived,
+      segueSubsidy,
+      segueBenefit,
       archive,
       archiveAll,
       changeAllForBenefit,
       requestNewSubsidy,
-      convertToJpDate,
+      convertToJpDateTime,
     }
   },
   head(): object {
