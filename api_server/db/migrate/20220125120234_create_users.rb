@@ -4,7 +4,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :firebase_uid, null: false, index: {unique: true}
       t.references :company, null: false, foreign_key: true
       t.string :email, null: false, default: ''
-      t.string :display_name, null: false, default: ''
+      t.string :last_name, null: false, default: ''
+      t.string :first_name, null: false, default: ''
       t.string :account_role, null: false, default: 'user'
       t.timestamps
     end
