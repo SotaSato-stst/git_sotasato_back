@@ -9,7 +9,11 @@ const sessionFreePaths = [
   routingService.PasswordReset(),
 ]
 
-const editorPrefixes = ['/admin/subsidies', '/admin/subsidy_drafts']
+const editorPrefixes = [
+  '/admin/subsidies',
+  '/admin/subsidy_drafts',
+  '/admin/benefits',
+]
 
 const middleware: Middleware = async ({route, redirect}) => {
   const user = await getUser()
