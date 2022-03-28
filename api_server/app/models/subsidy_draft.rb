@@ -75,6 +75,6 @@ class SubsidyDraft < ApplicationRecord
   scope :search_title, ->(keyword) {
     return if keyword.blank?
 
-    where('title like ?', "%#{keyword}%")
+    merge(where('title like ?', "%#{keyword}%")).or(where('url like ?',  "#{keyword}%"))
   }
 end

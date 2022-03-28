@@ -2,76 +2,78 @@
   <div class="container">
     <div class="title-header">
       <div class="title">未対応の新着情報 一覧</div>
-      <div>
-        <el-button
-          v-if="isAdmin"
-          size="mini"
-          :disabled="loading"
-          @click="requestNewSubsidy()"
-        >
-          最新情報を取得
-        </el-button>
-        <el-button
-          size="mini"
-          :disabled="loading || selectedSubsidyDrafts.length === 0"
-          @click="changeAllForBenefit(false)"
-        >
-          まとめて法人向けに変更
-        </el-button>
-        <el-button
-          size="mini"
-          :disabled="loading || selectedSubsidyDrafts.length === 0"
-          @click="changeAllForBenefit(true)"
-        >
-          まとめて家庭向けに変更
-        </el-button>
-        <el-button
-          type="danger"
-          size="mini"
-          :disabled="loading || selectedSubsidyDrafts.length === 0"
-          @click="archiveAll()"
-        >
-          まとめてアーカイブする
-        </el-button>
-      </div>
     </div>
-    <div class="filter">
-      <el-radio-group
-        v-if="isAdmin"
-        v-model="filter.assignFilter"
-        size="mini"
-        @change="selectAssignFilter"
-      >
-        <el-radio-button label="assignedMe">自分が担当</el-radio-button>
-        <el-radio-button label="noAssign">担当者なし</el-radio-button>
-        <el-radio-button label="all">すべて</el-radio-button>
-      </el-radio-group>
+    <div class="table-action-group">
       <el-radio-group
         v-model="filter.completeFilter"
         size="mini"
         @change="selectCompleteFilter"
       >
+        <el-radio-button label="all">すべて</el-radio-button>
         <el-radio-button label="completed">完了</el-radio-button>
         <el-radio-button label="notCompleted">未完了</el-radio-button>
-        <el-radio-button label="all">すべて</el-radio-button>
       </el-radio-group>
-      <el-radio-group
+      <el-select
+        v-if="isAdmin"
+        v-model="filter.assignFilter"
+        size="mini"
+        class="search-filter"
+        @change="selectAssignFilter"
+      >
+        <el-option value="all" label="すべての担当者"></el-option>
+        <el-option value="assignedMe" label="自分が担当"></el-option>
+        <el-option value="noAssign" label="担当者なし"></el-option>
+      </el-select>
+      <el-select
         v-model="filter.benefitFilter"
         size="mini"
+        class="search-filter"
         @change="selectBenefitFilter"
       >
-        <el-radio-button label="all">すべて</el-radio-button>
-        <el-radio-button label="forBenefit">家庭向け</el-radio-button>
-        <el-radio-button label="notForBenefit">法人向け</el-radio-button>
-      </el-radio-group>
+        <el-option value="all" label="すべての対象"></el-option>
+        <el-option value="notForBenefit" label="法人向け"></el-option>
+        <el-option value="forBenefit" label="家庭向け"></el-option>
+      </el-select>
       <el-input
         v-model="filter.keyword"
-        placeholder="タイトル"
+        placeholder="タイトル・URL"
         size="mini"
         class="search-input"
       />
       <el-button class="search-button" @click="search">検索</el-button>
       <div class="total-count">{{ pagination.itemsTotal }}件</div>
+    </div>
+    <div class="table-action-group">
+      <el-button
+        v-if="isAdmin"
+        size="mini"
+        :disabled="loading"
+        @click="requestNewSubsidy()"
+      >
+        最新情報を取得
+      </el-button>
+      <el-button
+        size="mini"
+        :disabled="loading || selectedSubsidyDrafts.length === 0"
+        @click="changeAllForBenefit(false)"
+      >
+        まとめて法人向けに変更
+      </el-button>
+      <el-button
+        size="mini"
+        :disabled="loading || selectedSubsidyDrafts.length === 0"
+        @click="changeAllForBenefit(true)"
+      >
+        まとめて家庭向けに変更
+      </el-button>
+      <el-button
+        type="danger"
+        size="mini"
+        :disabled="loading || selectedSubsidyDrafts.length === 0"
+        @click="archiveAll()"
+      >
+        まとめてアーカイブする
+      </el-button>
     </div>
     <card-loading :loading="loading" />
     <el-table
@@ -424,13 +426,17 @@ Slackに新着通知が来ているのに、この画面に表示されてない
   align-items: baseline;
 }
 
-.filter {
+.table-action-group {
   display: flex;
   align-items: center;
 }
 
-.filter > * {
+.table-action-group > * {
   margin-right: var(--spacing-4);
+}
+
+.search-filter {
+  width: 140px;
 }
 
 .search-input {
