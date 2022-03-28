@@ -23,7 +23,7 @@ class NewSubsidyService
       hash[:supplier_type] = detect_supplier_type(hash)
       hash[:created_at] = @scraping_date.to_time
       hash[:updated_at] = Time.now
-      hash[:for_benefit] = /#{FOR_BENEFIT_KEYWORDS.join('|')}/ =~ hash[:title]
+      hash[:for_benefit] = (/#{FOR_BENEFIT_KEYWORDS.join('|')}/ =~ hash[:title]).present?
       hash.delete(:source_url_host)
       hash
     end
