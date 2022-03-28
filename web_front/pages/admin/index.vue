@@ -2,53 +2,78 @@
   <div class="container">
     <div class="title-header">
       <div class="title">未対応の新着情報 一覧</div>
-      <div>
-        <el-button
-          v-if="isAdmin"
-          size="mini"
-          :disabled="loading"
-          @click="requestNewSubsidy()"
-        >
-          最新情報を取得
-        </el-button>
-        <el-button
-          type="danger"
-          size="mini"
-          :disabled="selectedSubsidyDrafts.length === 0"
-          @click="archiveAll()"
-        >
-          まとめてアーカイブする
-        </el-button>
-      </div>
     </div>
-    <div class="filter">
-      <el-radio-group
-        v-if="isAdmin"
-        v-model="filter.assignFilter"
-        size="mini"
-        @change="selectAssignFilter"
-      >
-        <el-radio-button label="assignedMe">自分が担当</el-radio-button>
-        <el-radio-button label="noAssign">担当者なし</el-radio-button>
-        <el-radio-button label="all">すべて</el-radio-button>
-      </el-radio-group>
+    <div class="table-action-group">
       <el-radio-group
         v-model="filter.completeFilter"
         size="mini"
         @change="selectCompleteFilter"
       >
+        <el-radio-button label="all">すべて</el-radio-button>
         <el-radio-button label="completed">完了</el-radio-button>
         <el-radio-button label="notCompleted">未完了</el-radio-button>
-        <el-radio-button label="all">すべて</el-radio-button>
       </el-radio-group>
+      <el-select
+        v-if="isAdmin"
+        v-model="filter.assignFilter"
+        size="mini"
+        class="search-filter"
+        @change="selectAssignFilter"
+      >
+        <el-option value="all" label="すべての担当者"></el-option>
+        <el-option value="assignedMe" label="自分が担当"></el-option>
+        <el-option value="noAssign" label="担当者なし"></el-option>
+      </el-select>
+      <el-select
+        v-model="filter.benefitFilter"
+        size="mini"
+        class="search-filter"
+        @change="selectBenefitFilter"
+      >
+        <el-option value="all" label="すべての対象"></el-option>
+        <el-option value="notForBenefit" label="法人向け"></el-option>
+        <el-option value="forBenefit" label="家庭向け"></el-option>
+      </el-select>
       <el-input
         v-model="filter.keyword"
-        placeholder="タイトル"
+        placeholder="タイトル・URL"
         size="mini"
         class="search-input"
       />
       <el-button class="search-button" @click="search">検索</el-button>
       <div class="total-count">{{ pagination.itemsTotal }}件</div>
+    </div>
+    <div class="table-action-group">
+      <el-button
+        v-if="isAdmin"
+        size="mini"
+        :disabled="loading"
+        @click="requestNewSubsidy()"
+      >
+        最新情報を取得
+      </el-button>
+      <el-button
+        size="mini"
+        :disabled="loading || selectedSubsidyDrafts.length === 0"
+        @click="changeAllForBenefit(false)"
+      >
+        まとめて法人向けに変更
+      </el-button>
+      <el-button
+        size="mini"
+        :disabled="loading || selectedSubsidyDrafts.length === 0"
+        @click="changeAllForBenefit(true)"
+      >
+        まとめて家庭向けに変更
+      </el-button>
+      <el-button
+        type="danger"
+        size="mini"
+        :disabled="loading || selectedSubsidyDrafts.length === 0"
+        @click="archiveAll()"
+      >
+        まとめてアーカイブする
+      </el-button>
     </div>
     <card-loading :loading="loading" />
     <el-table
@@ -66,22 +91,18 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column label="対象" width="80">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.forBenefit ? 'success' : ''">
+            {{ scope.row.forBenefit ? '家庭向け' : '法人向け' }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="タイトル">
         <template slot-scope="scope">
           <a class="detail-link" @click="handleEdit(scope.row)">{{
             scope.row.title
           }}</a>
-        </template>
-      </el-table-column>
-      <el-table-column label="URL">
-        <template slot-scope="scope">
-          <a
-            class="detail-link"
-            :href="scope.row.url"
-            target="_blank"
-            style="word-break: keep-all"
-            >{{ scope.row.url }}</a
-          >
         </template>
       </el-table-column>
       <el-table-column label="発行機関" width="110">
@@ -93,32 +114,42 @@
           <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="140">
-        <template slot-scope="scope">
-          <el-button
-            :type="scope.row.subsidyId ? 'success' : 'danger'"
-            size="mini"
-            :disabled="scope.row.archived && !scope.row.subsidyId"
-            @click="handleArchived(scope.row, scope.row.subsidyId)"
-          >
-            <div v-if="!scope.row.archived">アーカイブ</div>
-            <div v-if="scope.row.archived && !scope.row.subsidyId">
-              アーカイブ済み
-            </div>
-            <div v-if="scope.row.archived && scope.row.subsidyId">
-              情報作成済み
-            </div>
-          </el-button>
-        </template>
-      </el-table-column>
       <el-table-column v-if="isAdmin" label="担当者" width="120">
         <template slot-scope="scope">
           {{ scope.row.assignee && scope.row.assignee.displayName }}
         </template>
       </el-table-column>
-      <el-table-column label="更新日" width="120">
+      <el-table-column label="操作" width="140">
         <template slot-scope="scope">
-          {{ convertToJpDate(scope.row.createdAt) }}
+          <el-button
+            v-if="!scope.row.archived"
+            type="danger"
+            size="mini"
+            @click="archive(scope.row)"
+          >
+            アーカイブ
+          </el-button>
+          <el-button
+            v-if="scope.row.subsidyId"
+            type="success"
+            size="mini"
+            @click="segueSubsidy(scope.row.subsidyId)"
+          >
+            情報作成済み
+          </el-button>
+          <el-button
+            v-if="scope.row.benefitId"
+            type="success"
+            size="mini"
+            @click="segueBenefit(scope.row.benefitId)"
+          >
+            情報作成済み
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="更新日" width="165">
+        <template slot-scope="scope">
+          {{ convertToJpDateTime(scope.row.updatedAt) }}
         </template>
       </el-table-column>
     </el-table>
@@ -148,9 +179,10 @@ import {
   SubsidyDraftIndexParams,
   FilterAssignType,
   FilterCompleteType,
+  FilterBenefitType,
 } from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
-import {convertToJpDate} from '@/utils/dateFormatter'
+import {convertToJpDateTime} from '@/utils/dateFormatter'
 import {removeEmpty} from '@/utils/objectUtil'
 import {convertQueryNumber, convertQueryString} from '@/utils/urlQuery'
 import {notifySuccess, showApiErrorMessage} from '@/services/notify'
@@ -174,6 +206,7 @@ export default defineComponent({
       page: 1,
       assignFilter: defaultAssignFilter,
       completeFilter: 'notCompleted',
+      benefitFilter: 'all',
       keyword: '',
     })
     const isAdmin = computed(() => accountModule.isAdmin)
@@ -196,6 +229,10 @@ export default defineComponent({
       handleSegue({completeFilter, page: 1})
     }
 
+    const selectBenefitFilter = (benefitFilter: FilterBenefitType) => {
+      handleSegue({benefitFilter, page: 1})
+    }
+
     const search = () => {
       handleSegue({keyword: filter.keyword, page: 1})
     }
@@ -207,22 +244,33 @@ export default defineComponent({
     }
 
     const handleEdit = (subsidyDraft: SubsidyDraft) => {
-      router.push(routingService.AdminSubsidyDraftDetail(subsidyDraft.id))
+      if (subsidyDraft.forBenefit) {
+        router.push(routingService.AdminNewBenefit(subsidyDraft.id))
+      } else {
+        router.push(routingService.AdminSubsidyDraftDetail(subsidyDraft.id))
+      }
     }
 
     const handleSelectionChange = (selections: SubsidyDraft[]) => {
       subsidyDraftsModule.setSelectedSubsidyDrafts(selections)
     }
 
-    const handleArchived = (
-      subsidyDraft: SubsidyDraft,
-      subsidyId: number | null,
-    ) => {
-      if (subsidyId) {
-        router.push(routingService.AdminSubsidyDetail(subsidyId))
-      } else {
-        archive(subsidyDraft)
-      }
+    const segueSubsidy = (subsidyId: number) => {
+      router.push(routingService.AdminSubsidyDetail(subsidyId))
+    }
+    const segueBenefit = (benefitId: number) => {
+      router.push(routingService.AdminBenefitDetail(benefitId))
+    }
+
+    const archive = (subsidyDraft: SubsidyDraft) => {
+      confirmArchive(`「${subsidyDraft.title}」`)
+        .then(() => {
+          subsidyDraftsModule
+            .updateSubsidyDraft({id: subsidyDraft.id, archive: true})
+            .then(() => handleSuccess(subsidyDraft.title))
+            .catch(showApiErrorMessage)
+        })
+        .catch(_ => {})
     }
 
     const confirmArchive = (text: string) => {
@@ -237,34 +285,53 @@ export default defineComponent({
         .map(d => `「${d.title}」`)
         .join('<br/>')
       confirmArchive(titles)
-        .then(async () => {
-          await Promise.all(
-            subsidyDraftsModule.selectedSubsidyDrafts.map(d => {
-              return subsidyDraftsModule.updateSubsidyDraft({
-                id: d.id,
-                archive: true,
-              })
-            }),
-          )
-          handleSuccess(`${subsidyDraftsModule.selectedSubsidyDrafts.length}件`)
-        })
-        .catch(_ => {})
-    }
-
-    const archive = (subsidyDraft: SubsidyDraft) => {
-      confirmArchive(`「${subsidyDraft.title}」`)
-        .then(() => {
+        .then(() =>
           subsidyDraftsModule
-            .updateSubsidyDraft({id: subsidyDraft.id, archive: true})
-            .then(() => handleSuccess(subsidyDraft.title))
-            .catch(showApiErrorMessage)
-        })
+            .bulkArchive(
+              subsidyDraftsModule.selectedSubsidyDrafts.map(d => d.id),
+            )
+            .catch(showApiErrorMessage),
+        )
+        .then(() =>
+          handleSuccess(
+            `${subsidyDraftsModule.selectedSubsidyDrafts.length}件`,
+          ),
+        )
         .catch(_ => {})
     }
 
     const handleSuccess = (message: string) => {
-      notifySuccess('アーカイブしました', message)
+      notifySuccess('更新しました', message)
       handleSegue({})
+    }
+
+    const changeAllForBenefit = (forBenefit: boolean) => {
+      const titles = subsidyDraftsModule.selectedSubsidyDrafts
+        .map(d => `「${d.title}」`)
+        .join('<br/>')
+      const targetText = forBenefit ? '家庭' : '法人'
+      MessageBox.confirm(
+        titles,
+        `この情報をまとめて「${targetText}向け」に変更しますか？`,
+        {
+          customClass: 'confirm-dialog',
+          dangerouslyUseHTMLString: true,
+        },
+      )
+        .then(() =>
+          subsidyDraftsModule
+            .bulkUpdateForBenefit({
+              ids: subsidyDraftsModule.selectedSubsidyDrafts.map(d => d.id),
+              forBenefit,
+            })
+            .catch(showApiErrorMessage),
+        )
+        .then(() =>
+          handleSuccess(
+            `${subsidyDraftsModule.selectedSubsidyDrafts.length}件`,
+          ),
+        )
+        .catch(_ => {})
     }
 
     const requestNewSubsidy = () => {
@@ -293,8 +360,17 @@ Slackに新着通知が来ているのに、この画面に表示されてない
         const completeFilter =
           (convertQueryString(query.completeFilter) as FilterCompleteType) ||
           'notCompleted'
+        const benefitFilter =
+          (convertQueryString(query.benefitFilter) as FilterBenefitType) ||
+          'all'
         const keyword = convertQueryString(query.keyword) || ''
-        handleSegue({page, assignFilter, completeFilter, keyword})
+        handleSegue({
+          page,
+          assignFilter,
+          completeFilter,
+          benefitFilter,
+          keyword,
+        })
       })
     })
 
@@ -303,6 +379,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       filter,
       selectAssignFilter,
       selectCompleteFilter,
+      selectBenefitFilter,
       search,
       isAdmin,
       subsidyDrafts,
@@ -311,11 +388,13 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       getPage,
       handleEdit,
       handleSelectionChange,
-      handleArchived,
+      segueSubsidy,
+      segueBenefit,
       archive,
       archiveAll,
+      changeAllForBenefit,
       requestNewSubsidy,
-      convertToJpDate,
+      convertToJpDateTime,
     }
   },
   head(): object {
@@ -347,13 +426,17 @@ Slackに新着通知が来ているのに、この画面に表示されてない
   align-items: baseline;
 }
 
-.filter {
+.table-action-group {
   display: flex;
   align-items: center;
 }
 
-.filter > * {
+.table-action-group > * {
   margin-right: var(--spacing-4);
+}
+
+.search-filter {
+  width: 140px;
 }
 
 .search-input {

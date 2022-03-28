@@ -15,8 +15,11 @@ export type SubsidyDraft = {
   supplierType: SupplierType
   archived: boolean
   createdAt: Date
+  updatedAt: Date
   assignee: User | null
   subsidyId: number | null
+  benefitId: number | null
+  forBenefit: boolean
 }
 
 export type SubsidyDraftsResponse = {
@@ -51,15 +54,22 @@ export type SubsidyDraftAssigneesResponse = {
 
 export type FilterAssignType = 'assignedMe' | 'noAssign' | 'all'
 export type FilterCompleteType = 'completed' | 'notCompleted' | 'all'
+export type FilterBenefitType = 'forBenefit' | 'notForBenefit' | 'all'
 
 export type SubsidyDraftIndexParams = {
   page?: number
   assignFilter: FilterAssignType
   completeFilter: FilterCompleteType
+  benefitFilter: FilterBenefitType
   keyword: string
 }
 
 export type UpdateSubsidyDraftParams = {
   id: number
   archive: boolean
+}
+
+export type BulkUpdateSubsidyDraftForBenefit = {
+  ids: number[]
+  forBenefit: boolean
 }

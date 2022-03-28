@@ -10,10 +10,10 @@
         @select="handleSelect"
       >
         <el-menu-item index="admin">
-          <i class="el-icon-setting"></i>管理画面トップ
+          <i class="el-icon-setting"></i>管理画面
         </el-menu-item>
         <el-menu-item index="user">
-          <i class="el-icon-s-order"></i>ユーザー画面トップ
+          <i class="el-icon-s-order"></i>ユーザー画面へ
         </el-menu-item>
       </el-menu>
       <global-dropdown-menu />

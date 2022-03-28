@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_13_210854) do
+ActiveRecord::Schema.define(version: 2022_03_27_091907) do
+
+  create_table "benefits", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "publishing_code", null: false
+    t.string "title", null: false
+    t.text "url", null: false
+    t.bigint "prefecture_id"
+    t.bigint "city_id"
+    t.text "target_detail", null: false
+    t.text "price_detail", null: false
+    t.text "application_detail", null: false
+    t.date "end_date"
+    t.boolean "for_welfare", default: false, null: false
+    t.boolean "for_elderly_care", default: false, null: false
+    t.boolean "for_widow", default: false, null: false
+    t.boolean "for_disabled", default: false, null: false
+    t.integer "age_from"
+    t.integer "age_to"
+    t.integer "household_income_from"
+    t.integer "household_income_to"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_benefits_on_city_id"
+    t.index ["prefecture_id"], name: "index_benefits_on_prefecture_id"
+    t.index ["publishing_code"], name: "index_benefits_on_publishing_code"
+    t.index ["url"], name: "index_benefits_on_url", unique: true, length: 256
+  end
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -46,6 +72,31 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id", "business_category"], name: "index_unique_company_business_categories", unique: true
     t.index ["company_id"], name: "index_company_business_categories_on_company_id"
+  end
+
+  create_table "families", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "prefecture_id", null: false
+    t.bigint "city_id", null: false
+    t.integer "household_income"
+    t.boolean "on_welfare"
+    t.boolean "on_elderly_care"
+    t.boolean "has_widow"
+    t.boolean "has_disabled"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_families_on_city_id"
+    t.index ["prefecture_id"], name: "index_families_on_prefecture_id"
+    t.index ["user_id"], name: "index_families_on_user_id", unique: true
+  end
+
+  create_table "family_members", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "family_id", null: false
+    t.date "birthday", null: false
+    t.string "relationship", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["family_id"], name: "index_family_members_on_family_id"
   end
 
   create_table "keywords", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -146,6 +197,7 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "assignee_id"
+    t.boolean "for_benefit", default: false, null: false
     t.index ["assignee_id"], name: "index_subsidy_drafts_on_assignee_id"
     t.index ["city_id"], name: "index_subsidy_drafts_on_city_id"
     t.index ["ministry_id"], name: "index_subsidy_drafts_on_ministry_id"
@@ -190,6 +242,15 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
     t.index ["subsidy_id"], name: "index_subsidy_prefectures_on_subsidy_id"
   end
 
+  create_table "user_companies", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "company_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_user_companies_on_company_id"
+    t.index ["user_id"], name: "index_user_companies_on_user_id", unique: true
+  end
+
   create_table "user_email_logs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "email_category", null: false
@@ -218,6 +279,15 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
     t.index ["user_id"], name: "index_user_favorite_subsidies_on_user_id"
   end
 
+  create_table "user_profiles", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "birthday", null: false
+    t.string "gender", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_profiles_on_user_id", unique: true
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "firebase_uid", null: false
     t.bigint "company_id", null: false
@@ -232,10 +302,16 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
     t.index ["firebase_uid"], name: "index_users_on_firebase_uid", unique: true
   end
 
+  add_foreign_key "benefits", "cities"
+  add_foreign_key "benefits", "prefectures"
   add_foreign_key "cities", "prefectures"
   add_foreign_key "companies", "cities"
   add_foreign_key "companies", "prefectures"
   add_foreign_key "company_business_categories", "companies"
+  add_foreign_key "families", "cities"
+  add_foreign_key "families", "prefectures"
+  add_foreign_key "families", "users"
+  add_foreign_key "family_members", "families"
   add_foreign_key "searched_keywords", "users"
   add_foreign_key "subsidy_business_categories", "subsidies"
   add_foreign_key "subsidy_cities", "cities"
@@ -250,7 +326,10 @@ ActiveRecord::Schema.define(version: 2022_03_13_210854) do
   add_foreign_key "subsidy_organization_types", "subsidies"
   add_foreign_key "subsidy_prefectures", "prefectures"
   add_foreign_key "subsidy_prefectures", "subsidies"
+  add_foreign_key "user_companies", "companies"
+  add_foreign_key "user_companies", "users"
   add_foreign_key "user_favorite_subsidies", "subsidies"
   add_foreign_key "user_favorite_subsidies", "users"
+  add_foreign_key "user_profiles", "users"
   add_foreign_key "users", "companies"
 end

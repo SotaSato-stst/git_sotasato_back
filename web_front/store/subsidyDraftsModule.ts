@@ -8,6 +8,7 @@ import {
   UpdateSubsidyDraftAssigneesResponse,
   SubsidyDraftIndexParams,
   UpdateSubsidyDraftParams,
+  BulkUpdateSubsidyDraftForBenefit,
   SubsidyDraftAssignStat,
 } from '@/types/SubsidyDraft'
 import {Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
@@ -78,6 +79,7 @@ export default class SubsidyDraftsModule extends VuexModule {
           page: params.page || 1,
           assignFilter: params.assignFilter,
           completeFilter: params.completeFilter,
+          benefitFilter: params.benefitFilter,
           keyword: params.keyword,
         },
       },
@@ -99,6 +101,16 @@ export default class SubsidyDraftsModule extends VuexModule {
     await $axios.$put(`/admin/subsidy_drafts/${params.id}`, {
       archived: params.archive,
     })
+  }
+
+  @Action({rawError: true})
+  async bulkArchive(ids: number[]) {
+    await $axios.$post('/admin/subsidy_drafts/bulk_archive', {ids})
+  }
+
+  @Action({rawError: true})
+  async bulkUpdateForBenefit(params: BulkUpdateSubsidyDraftForBenefit) {
+    await $axios.$post('/admin/subsidy_drafts/bulk_update_for_benefit', params)
   }
 
   @Action({rawError: true})

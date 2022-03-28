@@ -39,5 +39,9 @@ FactoryBot.define do
     trait :admin do
       account_role { 'admin' }
     end
+
+    # user_company do |this|
+    #   association(:user_company, user: this.instance, company: company) if company
+    # end
   end
 end

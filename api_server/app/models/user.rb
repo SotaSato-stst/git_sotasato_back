@@ -23,14 +23,22 @@
 #  fk_rails_...  (company_id => companies.id)
 #
 class User < ApplicationRecord
+  has_one :user_company
+  # has_one :company, through: :user_company
   belongs_to :company
+  has_one :family
   has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidies, through: :user_favorite_subsidies
   has_many :subsidy_draft_assngins, foreign_key: :assignee_id, class_name: 'SubsidyDraft'
   has_many :user_email_logs, dependent: :destroy
   has_many :user_email_unsubscribes, dependent: :destroy
 
-  enum account_role: { user: 'user', editor: 'editor', admin: 'admin' } # editor: 補助金情報の入力者, admin: 社内の管理者
+  enum account_role: {
+    user: 'user', # 法人向けユーザー 通称: 補助金ドック(Web)
+    family_user: 'family_user', # 家庭向けユーザー 通称: 未定(アプリ)
+    editor: 'editor', # editor: 補助金情報の入力者
+    admin: 'admin' # admin: 社内の管理者
+  }
 
   scope :activated, -> { where(disabled: false) }
   scope :operators, -> { where(account_role: %w[editor admin]) }

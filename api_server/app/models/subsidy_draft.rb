@@ -4,6 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  archived          :boolean          default(FALSE), not null
+#  for_benefit       :boolean          default(FALSE), not null
 #  source_url_domain :string(255)      not null
 #  supplier_type     :string(255)
 #  title             :string(255)      not null
@@ -35,9 +36,13 @@ class SubsidyDraft < ApplicationRecord
   belongs_to :city, optional: true
   belongs_to :assignee, class_name: 'User', optional: true
   has_one :subsidy, foreign_key: :url, primary_key: :url
+  has_one :benefit, foreign_key: :url, primary_key: :url
 
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
+  scope :index_loading, -> { includes(:ministry, :prefecture, :city, :assignee, :subsidy, :benefit) }
+  scope :for_benefit, -> { where(for_benefit: true) }
+  scope :not_for_benefit, -> { where(for_benefit: false) }
   scope :archived, -> { where(archived: true) }
   scope :not_archived, -> { where(archived: false) }
   scope :assigned, -> { where.not(assignee_id: nil) }
@@ -59,9 +64,17 @@ class SubsidyDraft < ApplicationRecord
       not_archived
     end
   }
+  scope :benefit_filter, ->(benefit) {
+    case benefit
+    when 'forBenefit'
+      for_benefit
+    when 'notForBenefit'
+      not_for_benefit
+    end
+  }
   scope :search_title, ->(keyword) {
     return if keyword.blank?
 
-    where('title like ?', "%#{keyword}%")
+    merge(where('title like ?', "%#{keyword}%")).or(where('url like ?',  "#{keyword}%"))
   }
 end

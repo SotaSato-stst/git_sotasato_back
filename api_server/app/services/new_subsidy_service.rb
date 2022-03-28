@@ -3,6 +3,7 @@ require 'csv'
 
 class NewSubsidyService
   BUCKET_NAME = Settings.scraping_bucket
+  FOR_BENEFIT_KEYWORDS = %w[住民税非課税 世帯 子育て 離婚 家庭].freeze
 
   def initialize(scraping_date)
     @scraping_date = scraping_date
@@ -22,6 +23,7 @@ class NewSubsidyService
       hash[:supplier_type] = detect_supplier_type(hash)
       hash[:created_at] = @scraping_date.to_time
       hash[:updated_at] = Time.now
+      hash[:for_benefit] = (/#{FOR_BENEFIT_KEYWORDS.join('|')}/ =~ hash[:title]).present?
       hash.delete(:source_url_host)
       hash
     end

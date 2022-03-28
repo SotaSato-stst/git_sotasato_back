@@ -30,7 +30,8 @@ class Company < ApplicationRecord
   belongs_to :prefecture
   belongs_to :city
   has_many :company_business_categories, dependent: :destroy
-  has_many :users, dependent: :destroy
+  # has_many :user_companies, dependent: :destroy
+  has_many :users, dependent: :destroy # , through: :user_companies
 
   enum organization_type: OrganizationType.enum_hash
   enum business_scale: { small_business: 'small_business', small_and_medium: 'small_and_medium', large: 'large' }

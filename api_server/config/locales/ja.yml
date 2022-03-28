@@ -11,6 +11,13 @@ ja:
         supplier_type: 発行機関
         level: 申請難易度
         url: URL
+      benefit:
+        title: タイトル
+        target_detail: 対象者の条件
+        price_detail: 支給内容
+        application_detail: 申込方法
+        end_date: 締切日
+        url: URL
   number:
     currency:
       format:

@@ -1,5 +1,6 @@
-json.call(subsidy_draft, :id, :title, :url, :supplier_type, :archived, :created_at)
+json.call(subsidy_draft, :id, :title, :url, :supplier_type, :for_benefit, :archived, :created_at, :updated_at)
 json.subsidy_id subsidy_draft.subsidy&.id
+json.benefit_id subsidy_draft.benefit&.id
 
 json.assignee do
   if subsidy_draft.assignee.present?
