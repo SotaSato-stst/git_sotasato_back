@@ -91,7 +91,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="対象" width="80">
+      <el-table-column label="仮判定" width="80">
         <template slot-scope="scope">
           <el-tag :type="scope.row.forBenefit ? 'success' : ''">
             {{ scope.row.forBenefit ? '家庭向け' : '法人向け' }}
