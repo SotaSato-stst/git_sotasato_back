@@ -147,7 +147,7 @@ class Benefit < ApplicationRecord
   scope :admin_sort, ->(code) {
     case code
     when 'end'
-      order(end_to: :asc)
+      order(end_date: :asc)
     end
   }
 end
