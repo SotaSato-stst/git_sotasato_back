@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_27_091907) do
+ActiveRecord::Schema.define(version: 2022_03_28_151054) do
 
   create_table "benefits", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "publishing_code", null: false
@@ -290,7 +290,6 @@ ActiveRecord::Schema.define(version: 2022_03_27_091907) do
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "firebase_uid", null: false
-    t.bigint "company_id", null: false
     t.string "email", default: "", null: false
     t.string "last_name", null: false
     t.string "first_name", null: false
@@ -298,7 +297,6 @@ ActiveRecord::Schema.define(version: 2022_03_27_091907) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "disabled", default: false
-    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["firebase_uid"], name: "index_users_on_firebase_uid", unique: true
   end
 
@@ -331,5 +329,4 @@ ActiveRecord::Schema.define(version: 2022_03_27_091907) do
   add_foreign_key "user_favorite_subsidies", "subsidies"
   add_foreign_key "user_favorite_subsidies", "users"
   add_foreign_key "user_profiles", "users"
-  add_foreign_key "users", "companies"
 end

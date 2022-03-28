@@ -11,21 +11,14 @@
 #  last_name    :string(255)      not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  company_id   :bigint           not null
 #
 # Indexes
 #
-#  index_users_on_company_id    (company_id)
 #  index_users_on_firebase_uid  (firebase_uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_...  (company_id => companies.id)
 #
 class User < ApplicationRecord
   has_one :user_company
-  # has_one :company, through: :user_company
-  belongs_to :company
+  has_one :company, through: :user_company
   has_one :family
   has_many :user_favorite_subsidies, dependent: :destroy
   has_many :subsidies, through: :user_favorite_subsidies
