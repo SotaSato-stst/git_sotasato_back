@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(version: 2022_03_27_091907) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "assignee_id"
-    t.boolean "for_benefit", default: false
+    t.boolean "for_benefit", default: false, null: false
     t.index ["assignee_id"], name: "index_subsidy_drafts_on_assignee_id"
     t.index ["city_id"], name: "index_subsidy_drafts_on_city_id"
     t.index ["ministry_id"], name: "index_subsidy_drafts_on_ministry_id"

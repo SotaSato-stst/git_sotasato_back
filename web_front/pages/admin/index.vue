@@ -55,6 +55,15 @@
         <el-radio-button label="notCompleted">未完了</el-radio-button>
         <el-radio-button label="all">すべて</el-radio-button>
       </el-radio-group>
+      <el-radio-group
+        v-model="filter.benefitFilter"
+        size="mini"
+        @change="selectBenefitFilter"
+      >
+        <el-radio-button label="all">すべて</el-radio-button>
+        <el-radio-button label="forBenefit">家庭向け</el-radio-button>
+        <el-radio-button label="notForBenefit">法人向け</el-radio-button>
+      </el-radio-group>
       <el-input
         v-model="filter.keyword"
         placeholder="タイトル"
@@ -168,6 +177,7 @@ import {
   SubsidyDraftIndexParams,
   FilterAssignType,
   FilterCompleteType,
+  FilterBenefitType,
 } from '@/types/SubsidyDraft'
 import {routingService} from '@/services/routingService'
 import {convertToJpDateTime} from '@/utils/dateFormatter'
@@ -194,6 +204,7 @@ export default defineComponent({
       page: 1,
       assignFilter: defaultAssignFilter,
       completeFilter: 'notCompleted',
+      benefitFilter: 'all',
       keyword: '',
     })
     const isAdmin = computed(() => accountModule.isAdmin)
@@ -214,6 +225,10 @@ export default defineComponent({
 
     const selectCompleteFilter = (completeFilter: FilterCompleteType) => {
       handleSegue({completeFilter, page: 1})
+    }
+
+    const selectBenefitFilter = (benefitFilter: FilterBenefitType) => {
+      handleSegue({benefitFilter, page: 1})
     }
 
     const search = () => {
@@ -343,8 +358,17 @@ Slackに新着通知が来ているのに、この画面に表示されてない
         const completeFilter =
           (convertQueryString(query.completeFilter) as FilterCompleteType) ||
           'notCompleted'
+        const benefitFilter =
+          (convertQueryString(query.benefitFilter) as FilterBenefitType) ||
+          'all'
         const keyword = convertQueryString(query.keyword) || ''
-        handleSegue({page, assignFilter, completeFilter, keyword})
+        handleSegue({
+          page,
+          assignFilter,
+          completeFilter,
+          benefitFilter,
+          keyword,
+        })
       })
     })
 
@@ -353,6 +377,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
       filter,
       selectAssignFilter,
       selectCompleteFilter,
+      selectBenefitFilter,
       search,
       isAdmin,
       subsidyDrafts,

@@ -4,7 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  archived          :boolean          default(FALSE), not null
-#  for_benefit       :boolean          default(FALSE)
+#  for_benefit       :boolean          default(FALSE), not null
 #  source_url_domain :string(255)      not null
 #  supplier_type     :string(255)
 #  title             :string(255)      not null
@@ -40,6 +40,9 @@ class SubsidyDraft < ApplicationRecord
 
   enum supplier_type: { ministry: 'ministry', city: 'city', prefecture: 'prefecture' }
 
+  scope :index_loading, -> { includes(:ministry, :prefecture, :city, :assignee, :subsidy, :benefit) }
+  scope :for_benefit, -> { where(for_benefit: true) }
+  scope :not_for_benefit, -> { where(for_benefit: false) }
   scope :archived, -> { where(archived: true) }
   scope :not_archived, -> { where(archived: false) }
   scope :assigned, -> { where.not(assignee_id: nil) }
@@ -59,6 +62,14 @@ class SubsidyDraft < ApplicationRecord
       archived
     when 'notCompleted'
       not_archived
+    end
+  }
+  scope :benefit_filter, ->(benefit) {
+    case benefit
+    when 'forBenefit'
+      for_benefit
+    when 'notForBenefit'
+      not_for_benefit
     end
   }
   scope :search_title, ->(keyword) {

@@ -79,6 +79,7 @@ export default class SubsidyDraftsModule extends VuexModule {
           page: params.page || 1,
           assignFilter: params.assignFilter,
           completeFilter: params.completeFilter,
+          benefitFilter: params.benefitFilter,
           keyword: params.keyword,
         },
       },

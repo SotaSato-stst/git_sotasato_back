@@ -4,7 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  archived          :boolean          default(FALSE), not null
-#  for_benefit       :boolean          default(FALSE)
+#  for_benefit       :boolean          default(FALSE), not null
 #  source_url_domain :string(255)      not null
 #  supplier_type     :string(255)
 #  title             :string(255)      not null
