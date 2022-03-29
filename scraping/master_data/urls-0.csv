@@ -5,7 +5,7 @@ selector_name,url
 .m-grid__col1,"https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/koyou/kyufukin/index_00007.html"
 #contentsColumnWrapL,"https://www.mlit.go.jp/jidosha/jidosha_tk1_000015.html"
 .content,"https://www.jfa.maff.go.jp/j/gyosei/supply/hozyo/index.html"
-#main,"https://www.enecho.meti.go.jp/appli/public_offer/"
+#main,"https://www.enecho.meti.go.jp/appli/public_offer/index.html"
 #tmp_contents,"https://www.jpo.go.jp/news/shinchaku/koshin/index.html"
 #main,"https://www.nsr.go.jp/nra/chotatsu/hojyokin/index.html"
 #update_m2,"https://www.mod.go.jp/j/update/index.html"
