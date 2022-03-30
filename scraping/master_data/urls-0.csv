@@ -12,7 +12,7 @@ selector_name,url
 .m-listNews,"https://www.mhlw.go.jp/stf/new-info/"
 .row,"https://www.mext.go.jp/sports/b_menu/news/index.htm"
 .news_list_tag,"https://www.bunka.go.jp/whats_new.html"
-#maincontent,"https://www.chusho.meti.go.jp/old_info.html"
+#news,"https://www.chusho.meti.go.jp"
 .infoList01,"https://www.mlit.go.jp/kankocho/index.html"
 .dateList,"https://www.mext.go.jp/b_menu/news/index.html"
 .inner,"https://www.pref.hokkaido.lg.jp/news/"
