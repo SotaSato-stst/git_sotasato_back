@@ -136,6 +136,9 @@ export default defineComponent({
         case 'published':
           notifySuccess('情報を公開しました', benefitParams.title)
           break
+        case 'archived':
+          notifySuccess('アーカイブしました', benefitParams.title)
+          break
       }
       adminBenefitsModule.getBenefit(pageId)
     }

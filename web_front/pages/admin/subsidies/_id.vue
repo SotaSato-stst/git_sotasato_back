@@ -165,6 +165,9 @@ export default defineComponent({
         case 'published':
           notifySuccess('情報を公開しました', subsidyParams.title)
           break
+        case 'archived':
+          notifySuccess('アーカイブしました', subsidyParams.title)
+          break
       }
       adminSubsidiesModule.getSubsidy(pageId)
     }

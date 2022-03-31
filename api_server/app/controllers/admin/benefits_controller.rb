@@ -2,6 +2,7 @@ module Admin
   class BenefitsController < BaseController
     def index
       scope = Benefit.all.index_loading
+      scope = scope.not_archived if params[:publishing_code] != 'archived'
       filter_params = params.slice(:publishing_code, :end_after, :keyword)
       scope = scope.admin_filter(filter_params).admin_sort(params[:sorting_code]).order(updated_at: :desc)
       @items_total = scope.count
