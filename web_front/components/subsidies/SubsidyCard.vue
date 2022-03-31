@@ -56,7 +56,7 @@
             </div>
             <div v-if="subsidy.keywords.length == 0" class="detail-container">
               <span class="normal-text">
-                {{ subsidy.detail }}
+                {{ subsidy.detail.replaceAll('#', '') }}
               </span>
             </div>
           </div>
@@ -203,7 +203,7 @@ export default defineComponent({
 
 .detail-container {
   color: var(--text-color);
-  height: calc(1.5em * 2);
+  height: calc(1.5em * 4);
   line-height: 1.5em;
   overflow: hidden;
   position: relative;
