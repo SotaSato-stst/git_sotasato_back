@@ -162,16 +162,27 @@
         </el-form-item>
       </div>
     </el-form-item>
-    <el-form-item label="詳細" prop="detail">
-      <el-input
-        v-model="state.detail"
-        type="textarea"
-        class="input-text"
-        :autosize="{minRows: 4}"
-        placeholder="URLに記載されている内容"
-        :disabled="loading"
-      />
-    </el-form-item>
+    <div class="detail-form-wrapper">
+      <el-form-item label="詳細" prop="detail">
+        <div class="sub-description">※マークダウン記法で入力可能</div>
+        <el-input
+          v-model="state.detail"
+          type="textarea"
+          class="input-text"
+          :autosize="{minRows: 4}"
+          placeholder="URLに記載されている内容"
+          :disabled="loading"
+        />
+      </el-form-item>
+      <div class="preview-detail">
+        <div class="preview-description">プレビュー（横へスクロール）</div>
+        <!-- eslint-disable vue/no-v-html -->
+        <div
+          class="subsidy-detail-markdown-content"
+          v-html="parseMarkdown(state.detail)"
+        />
+      </div>
+    </div>
     <el-form-item label="法人格" required>
       <div class="inline">
         <div class="two-column">
@@ -387,6 +398,7 @@ import {
   PropType,
 } from '@nuxtjs/composition-api'
 import {Form} from 'element-ui'
+import {marked} from 'marked'
 import {optionsModule, keywordsModule, adminSubsidiesModule} from '@/store'
 import {UpdateSubsidyParams} from '@/types/Subsidy'
 import IconExternal from '@/components/icons/IconExternal.vue'
@@ -510,6 +522,8 @@ export default defineComponent({
       state.keywords = state.keywords + ' ' + word
     }
 
+    const parseMarkdown = marked.parse
+
     const rules = {
       subsidyCategory: [
         {
@@ -596,6 +610,9 @@ export default defineComponent({
       startFrom.value = state.startFrom ? new Date(state.startFrom) : null
       endTo.value = state.endTo ? new Date(state.endTo) : null
       level.value = state.level
+      if (!state.detail) {
+        state.detail = '### 支援内容\n\n### 対象\n\n### 連絡先\n'
+      }
       if (state.organizationTypes.length === 0) {
         state.organizationTypes = ['kabu', 'godo', 'kojin']
         selectOrganizationTypes()
@@ -642,6 +659,7 @@ export default defineComponent({
       topKeywords,
       addKeyword,
       rules,
+      parseMarkdown,
     }
   },
 })
@@ -710,6 +728,29 @@ export default defineComponent({
   color: var(--text-color);
   font-size: 12px;
   height: fit-content;
+}
+
+.detail-form-wrapper {
+  display: flex;
+  overflow: scroll;
+}
+
+.preview-detail {
+  width: fit-content;
+  margin-left: var(--spacing-4);
+}
+
+.preview-description {
+  color: var(--text-color);
+  font-size: 13px;
+  margin-top: var(--spacing-3);
+  margin-bottom: var(--spacing-1);
+}
+
+.subsidy-detail-markdown-content {
+  width: 700px;
+  padding: var(--spacing-4);
+  border: solid 1px var(--border-grey-color);
 }
 </style>
 

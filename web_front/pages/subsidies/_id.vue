@@ -77,7 +77,7 @@
       <div class="detail">
         <!-- eslint-disable vue/no-v-html -->
         <div
-          class="content subsidy-detail-markdown-content"
+          class="subsidy-detail-markdown-content"
           v-html="parseMarkdown(subsidy.detail)"
         />
       </div>
@@ -251,48 +251,6 @@ export default defineComponent({
   }
   .el-col-12:nth-child(2) {
     margin-top: var(--spacing-3);
-  }
-}
-
-.subsidy-detail-markdown-content {
-  margin-top: var(--spacing-3);
-  font-size: 16px;
-  white-space: pre-line;
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-block-start: var(--spacing-3);
-  }
-
-  * {
-    margin-block-start: 0;
-    margin-block-end: 0;
-  }
-
-  em {
-    font-style: normal;
-  }
-
-  ul {
-    list-style-type: initial;
-    line-height: 1;
-    margin-inline-start: 24px;
-    margin-inline-end: 0;
-    padding-inline-start: 0;
-  }
-
-  table {
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    border: solid 1px #adb5bd;
-    padding: var(--spacing-2);
   }
 }
 </style>
