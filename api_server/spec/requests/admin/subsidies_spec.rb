@@ -22,7 +22,6 @@ RSpec.describe 'Admin Subsidies', type: :request do
       support_ratio_max: '40',
       level: 4,
       detail: '詳細文章',
-      target_detail: '対象の説明文',
       subsidy_category: 'hojo',
       supplier_type: 'ministry',
       ranking_score: 50,
@@ -53,7 +52,6 @@ RSpec.describe 'Admin Subsidies', type: :request do
       expect(json['subsidies'][0]['support_ratio_max']).to eq '40'
       expect(json['subsidies'][0]['level']).to eq 4
       expect(json['subsidies'][0]['detail']).to eq '詳細文章'
-      expect(json['subsidies'][0]['target_detail']).to eq '対象の説明文'
       expect(json['subsidies'][0]['subsidy_category']).to eq 'hojo'
       expect(json['subsidies'][0]['supplier_type']).to eq 'ministry'
       expect(json['subsidies'][0]['ranking_score']).to eq 50
@@ -84,7 +82,6 @@ RSpec.describe 'Admin Subsidies', type: :request do
       expect(json['support_ratio_max']).to eq '40'
       expect(json['level']).to eq 4
       expect(json['detail']).to eq '詳細文章'
-      expect(json['target_detail']).to eq '対象の説明文'
       expect(json['subsidy_category']).to eq 'hojo'
       expect(json['supplier_type']).to eq 'ministry'
       expect(json['ranking_score']).to eq 50

@@ -172,16 +172,6 @@
         :disabled="loading"
       />
     </el-form-item>
-    <el-form-item label="対象者の条件" prop="targetDetail">
-      <el-input
-        v-model="state.targetDetail"
-        type="textarea"
-        :autosize="{minRows: 4}"
-        class="input-text"
-        placeholder="受け取れることのできる条件"
-        :disabled="loading"
-      />
-    </el-form-item>
     <el-form-item label="法人格" required>
       <div class="inline">
         <div class="two-column">
@@ -546,13 +536,6 @@ export default defineComponent({
         {
           required: true,
           message: '発行機関は必須です',
-          trigger: 'change',
-        },
-      ],
-      targetDetail: [
-        {
-          required: true,
-          message: '対象条件は必須です',
           trigger: 'change',
         },
       ],

@@ -53,7 +53,6 @@ module Admin
         :support_ratio_max,
         :level,
         :detail,
-        :target_detail,
         :ranking_score,
         :total_employee_max,
         :total_employee_min,

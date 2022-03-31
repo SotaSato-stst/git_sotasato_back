@@ -106,7 +106,6 @@ export default defineComponent({
       supportRatioMax: '',
       level: null,
       detail: '',
-      targetDetail: '',
       ministryId: null,
       prefectureId: null,
       cityId: null,

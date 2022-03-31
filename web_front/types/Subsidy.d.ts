@@ -21,7 +21,6 @@ export type Subsidy = {
   supportRatioMax: string | null
   level: number | null
   detail: string
-  targetDetail: string
   subsidyCategory: SubsidyCategory
   supplierType: SupplierType
   ministry: Ministry | null
@@ -85,7 +84,6 @@ export type UpdateSubsidyParams = {
   supportRatioMax: string | null
   level: number | null
   detail: string
-  targetDetail: string | null
   ministryId: number | null
   prefectureId: number | null
   cityId: number | null

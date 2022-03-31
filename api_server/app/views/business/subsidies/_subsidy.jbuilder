@@ -10,7 +10,6 @@ json.call(
   :support_ratio_max,
   :level,
   :detail,
-  :target_detail,
   :subsidy_category,
   :supplier_type,
   :business_categories,

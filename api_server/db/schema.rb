@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_28_151054) do
+ActiveRecord::Schema.define(version: 2022_03_31_174833) do
 
   create_table "benefits", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "publishing_code", null: false
@@ -146,7 +146,6 @@ ActiveRecord::Schema.define(version: 2022_03_28_151054) do
     t.string "support_ratio_max"
     t.integer "level"
     t.text "detail", null: false
-    t.text "target_detail", null: false
     t.string "subsidy_category"
     t.string "supplier_type"
     t.integer "ranking_score"

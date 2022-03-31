@@ -493,7 +493,6 @@ components:
         - support_ratio_max
         - level
         - detail
-        - target_detail
         - supplier_type
         - ministry
         - prefecture

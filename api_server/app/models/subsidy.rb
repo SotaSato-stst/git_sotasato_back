@@ -19,7 +19,6 @@
 #  supplier_type          :string(255)
 #  support_ratio_max      :string(255)
 #  support_ratio_min      :string(255)
-#  target_detail          :text(65535)      not null
 #  title                  :string(255)      not null
 #  total_employee_max     :integer
 #  total_employee_min     :integer
@@ -51,7 +50,6 @@ class Subsidy < ApplicationRecord
   validates :url, presence: { message: 'は必須項目です' }
   validates :url, uniqueness: { message: 'はすでに登録済みです' }
   validates :detail, presence: { message: 'は必須項目です' }
-  validates :target_detail, presence: { message: 'は必須項目です' }
   validates :publishing_code, presence: { message: 'は必須項目です' }
   validate :supplier_type_must_have_association
   validate :start_from_cannot_be_greater_than_end_to

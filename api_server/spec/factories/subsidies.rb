@@ -19,7 +19,6 @@
 #  supplier_type          :string(255)
 #  support_ratio_max      :string(255)
 #  support_ratio_min      :string(255)
-#  target_detail          :text(65535)      not null
 #  title                  :string(255)      not null
 #  total_employee_max     :integer
 #  total_employee_min     :integer
@@ -44,7 +43,6 @@ FactoryBot.define do
     publishing_code { 'published' }
     level { '4' }
     detail { 'アイウエオ' }
-    target_detail { '対象の説明文' }
     price_max { 10_000_000 }
     subsidy_category { 'hojo' }
     ranking_score { 30 }

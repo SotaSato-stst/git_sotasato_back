@@ -5,7 +5,6 @@ ja:
         title: タイトル
         subsidy_category: 種類
         detail: 詳細
-        target_detail: 対象者の条件
         start_from: 募集開始日
         end_to: 募集終了日
         supplier_type: 発行機関

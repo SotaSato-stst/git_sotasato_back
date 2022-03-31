@@ -19,7 +19,6 @@
 #  supplier_type          :string(255)
 #  support_ratio_max      :string(255)
 #  support_ratio_min      :string(255)
-#  target_detail          :text(65535)      not null
 #  title                  :string(255)      not null
 #  total_employee_max     :integer
 #  total_employee_min     :integer
