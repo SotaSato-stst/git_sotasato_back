@@ -69,7 +69,7 @@
               >
                 {{ convertDateRange(subsidy.startFrom, subsidy.endTo) }}
               </span>
-              <span v-else class="normal-text">未定</span>
+              <span v-else class="normal-text">随時</span>
             </div>
             <favorite-button :subsidy="subsidy" />
           </div>
