@@ -14,8 +14,8 @@
         :user-params="state"
         :new-user="true"
         :submited="submited"
-        @valid="valid"
-        @invalid="invalid"
+        @validHandler="validHandler"
+        @invalidHandler="invalidHandler"
       />
     </el-card>
   </div>
@@ -66,7 +66,7 @@ export default defineComponent({
       submited.value = true
     }
 
-    const valid = () => {
+    const validHandler = () => {
       load(loading, () => {
         usersModule
           .postUser(state)
@@ -76,7 +76,7 @@ export default defineComponent({
       submited.value = false
     }
 
-    const invalid = () => {
+    const invalidHandler = () => {
       notifyError('更新に失敗しました', '入力内容を確認してください')
       submited.value = false
     }
@@ -103,8 +103,8 @@ export default defineComponent({
       accountRoleOptions,
       submit,
       submited,
-      valid,
-      invalid,
+      validHandler,
+      invalidHandler,
     }
   },
   head(): object {

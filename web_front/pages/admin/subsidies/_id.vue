@@ -50,9 +50,10 @@
         </div>
       </div>
       <subsidy-form
-        ref="form"
         :subsidy-params="subsidyParams"
-        :loading="loading"
+        :submited="submited"
+        @validHandler="validHandler"
+        @invalidHandler="invalidHandler"
       />
       <el-button
         type="danger"
@@ -85,7 +86,6 @@ import {
   showApiErrorMessage,
 } from '@/services/notify'
 import {PublishingCode, UpdateSubsidyParams} from '@/types/Subsidy'
-import {ValidationForm} from '@/types/Validate'
 import SubsidyForm from '@/components/subsidies/SubsidyForm.vue'
 import {routingService} from '@/services/routingService'
 import {publishingCodeLabel, publishingCodeType} from '@/utils/enumKeyToName'
@@ -97,11 +97,9 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
-    const form = ref<ValidationForm | null>(null)
     const route = useRoute()
     const router = useRouter()
-    const loader = adminSubsidiesModule.loader
-    const {loading, load} = loader
+    const {loading, load} = adminSubsidiesModule.loader
     const pageId = Number(route.value.params.id)
     const subsidy = computed(() => adminSubsidiesModule.subsidy)
     const subsidyParams: UpdateSubsidyParams = reactive({
@@ -134,21 +132,26 @@ export default defineComponent({
       annualSalesMin: null,
       catchCopy: '',
     })
+    const submited = ref(false)
 
     const submit = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
+      submited.value = true
+    }
+
+    const validHandler = () => {
       load(loading, () => {
-        form.value?.validate(valid => {
-          if (!valid) {
-            notifyError('更新に失敗しました', '入力項目を確認してください')
-            return
-          }
-          adminSubsidiesModule
-            .putSubsidy(subsidyParams)
-            .then(showMessage)
-            .catch(showApiErrorMessage)
-        })
+        adminSubsidiesModule
+          .putSubsidy(subsidyParams)
+          .then(showMessage)
+          .catch(showApiErrorMessage)
       })
+      submited.value = false
+    }
+
+    const invalidHandler = () => {
+      notifyError('更新に失敗しました', '入力内容を確認してください')
+      submited.value = false
     }
 
     const showMessage = (_: number) => {
@@ -203,12 +206,13 @@ export default defineComponent({
     })
 
     return {
-      form,
-      loader,
       loading,
       subsidy,
       subsidyParams,
       submit,
+      submited,
+      validHandler,
+      invalidHandler,
       show,
       preview,
       publishingCodeLabel,

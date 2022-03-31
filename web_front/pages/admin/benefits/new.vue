@@ -1,13 +1,16 @@
 <template>
   <div class="container">
     <el-card>
+      <el-alert v-if="benefitArchived" type="error">
+        アーカイブされています
+      </el-alert>
       <div slot="header" class="form-header">
         <p>新規給付金情報の追加</p>
         <div class="button-group">
           <el-button
             class="submit-button"
             size="small"
-            :disabled="loading"
+            :disabled="loading || benefitArchived"
             @click="submit('editing')"
           >
             非公開で保存
@@ -16,18 +19,28 @@
             type="success"
             class="submit-button"
             size="small"
-            :disabled="loading"
+            :disabled="loading || benefitArchived"
             @click="submit('published')"
           >
             保存して公開
+          </el-button>
+          <el-button
+            v-if="subsidyDraft && subsidyDraft.benefitId"
+            type="success"
+            class="submit-button"
+            size="small"
+            @click="segueBenefitDetail(subsidyDraft.benefitId)"
+          >
+            作成した情報を確認する
           </el-button>
         </div>
       </div>
       <benefit-form
         v-if="!loading"
-        ref="form"
         :benefit-params="benefitParams"
-        :loading="loading"
+        :submited="submited"
+        @validHandler="validHandler"
+        @invalidHandler="invalidHandler"
       />
     </el-card>
   </div>
@@ -40,6 +53,7 @@ import {
   useRouter,
   useRoute,
   reactive,
+  computed,
   ref,
   onMounted,
 } from '@nuxtjs/composition-api'
@@ -50,7 +64,6 @@ import {
   showApiErrorMessage,
 } from '@/services/notify'
 import {PublishingCode, UpdateBenefitParams} from '@/types/Benefit'
-import {ValidationForm} from '@/types/Validate'
 import BenefitForm from '@/components/benefits/BenefitForm.vue'
 import {routingService} from '@/services/routingService'
 import {publishingCodeLabel} from '@/utils/enumKeyToName'
@@ -63,11 +76,9 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
-    const form = ref<ValidationForm | null>(null)
     const router = useRouter()
     const route = useRoute()
-    const loader = adminBenefitsModule.loader
-    const {loading, load} = loader
+    const {loading, load} = adminBenefitsModule.loader
     const benefitParams: UpdateBenefitParams = reactive({
       title: '',
       url: '',
@@ -87,21 +98,26 @@ export default defineComponent({
       householdIncomeFrom: null,
       householdIncomeTo: null,
     })
+    const submited = ref(false)
 
     const submit = (publishingCode: PublishingCode) => {
       benefitParams.publishingCode = publishingCode
+      submited.value = true
+    }
+
+    const validHandler = () => {
       load(loading, () => {
-        form.value?.validate(valid => {
-          if (!valid) {
-            notifyError('更新に失敗しました', '入力項目を確認してください')
-            return
-          }
-          adminBenefitsModule
-            .postBenefit(removeEmpty(benefitParams))
-            .then(showMessage)
-            .catch(showApiErrorMessage)
-        })
+        adminBenefitsModule
+          .postBenefit(removeEmpty(benefitParams))
+          .then(showMessage)
+          .catch(showApiErrorMessage)
       })
+      submited.value = false
+    }
+
+    const invalidHandler = () => {
+      notifyError('更新に失敗しました', '入力内容を確認してください')
+      submited.value = false
     }
 
     const showMessage = (benefitId: number) => {
@@ -114,6 +130,14 @@ export default defineComponent({
           break
       }
       router.replace(routingService.AdminBenefitDetail(benefitId))
+    }
+
+    const subsidyDraft = computed(() => subsidyDraftsModule.subsidyDraft)
+    const benefitArchived = computed(
+      () => !!subsidyDraftsModule.subsidyDraft?.archived,
+    )
+    const segueBenefitDetail = (benefitId: number) => {
+      router.push(routingService.AdminBenefitDetail(benefitId))
     }
 
     onMounted(() => {
@@ -141,11 +165,15 @@ export default defineComponent({
     })
 
     return {
-      form,
-      loader,
       loading,
       benefitParams,
+      subsidyDraft,
+      benefitArchived,
+      segueBenefitDetail,
       submit,
+      submited,
+      validHandler,
+      invalidHandler,
       publishingCodeLabel,
     }
   },

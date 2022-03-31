@@ -146,6 +146,7 @@ import {
   onUnmounted,
   reactive,
   PropType,
+  watch,
   ref,
 } from '@nuxtjs/composition-api'
 import {Form} from 'element-ui'
@@ -233,14 +234,20 @@ export default defineComponent({
       ],
     }
 
+    watch(
+      () => props.companyParams.prefectureId,
+      (prefectureId, prev) => {
+        if (prefectureId && !prev) {
+          optionsModule.getCities(prefectureId)
+        }
+      },
+    )
+
     onMounted(() => {
-      load(loading, async () => {
+      load(loading, () => {
         optionsModule.getOrganizationTypes()
         optionsModule.getBusinessCategories()
-        await optionsModule.getPrefectures()
-        if (state.prefectureId) {
-          optionsModule.getCities(state.prefectureId)
-        }
+        optionsModule.getPrefectures()
       })
     })
 

@@ -43,6 +43,7 @@ class Benefit < ApplicationRecord
 
   validates :title, presence: { message: 'は必須項目です' }
   validates :url, presence: { message: 'は必須項目です' }
+  validates :url, uniqueness: { message: 'はすでに登録済みです' }
   validates :target_detail, presence: { message: 'は必須項目です' }
   validates :price_detail, presence: { message: 'は必須項目です' }
   validates :application_detail, presence: { message: 'は必須項目です' }

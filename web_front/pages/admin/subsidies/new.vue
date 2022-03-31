@@ -25,9 +25,10 @@
       </div>
       <subsidy-form
         v-if="!loading"
-        ref="form"
         :subsidy-params="subsidyParams"
-        :loading="loading"
+        :submited="submited"
+        @validHandler="validHandler"
+        @invalidHandler="invalidHandler"
       />
     </el-card>
   </div>
@@ -48,7 +49,6 @@ import {
   showApiErrorMessage,
 } from '@/services/notify'
 import {PublishingCode, UpdateSubsidyParams} from '@/types/Subsidy'
-import {ValidationForm} from '@/types/Validate'
 import SubsidyForm from '@/components/subsidies/SubsidyForm.vue'
 import {routingService} from '@/services/routingService'
 import {publishingCodeLabel} from '@/utils/enumKeyToName'
@@ -61,10 +61,8 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
-    const form = ref<ValidationForm | null>(null)
     const router = useRouter()
-    const loader = adminSubsidiesModule.loader
-    const {loading, load} = loader
+    const {loading, load} = adminSubsidiesModule.loader
     const subsidyParams: UpdateSubsidyParams = reactive({
       title: '',
       url: '',
@@ -95,21 +93,26 @@ export default defineComponent({
       annualSalesMin: null,
       catchCopy: '',
     })
+    const submited = ref(false)
 
     const submit = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
+      submited.value = true
+    }
+
+    const validHandler = () => {
       load(loading, () => {
-        form.value?.validate(valid => {
-          if (!valid) {
-            notifyError('更新に失敗しました', '入力項目を確認してください')
-            return
-          }
-          adminSubsidiesModule
-            .postSubsidy(removeEmpty(subsidyParams))
-            .then(showMessage)
-            .catch(showApiErrorMessage)
-        })
+        adminSubsidiesModule
+          .postSubsidy(removeEmpty(subsidyParams))
+          .then(showMessage)
+          .catch(showApiErrorMessage)
       })
+      submited.value = false
+    }
+
+    const invalidHandler = () => {
+      notifyError('更新に失敗しました', '入力内容を確認してください')
+      submited.value = false
     }
 
     const showMessage = (subsidyId: number) => {
@@ -129,11 +132,12 @@ export default defineComponent({
     })
 
     return {
-      form,
-      loader,
       loading,
       subsidyParams,
       submit,
+      submited,
+      validHandler,
+      invalidHandler,
       publishingCodeLabel,
     }
   },

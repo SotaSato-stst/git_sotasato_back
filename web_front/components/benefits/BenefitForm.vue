@@ -163,13 +163,13 @@ import {
   onMounted,
   onUnmounted,
   reactive,
+  watch,
   ref,
   PropType,
 } from '@nuxtjs/composition-api'
 import {Form} from 'element-ui'
-import {optionsModule} from '@/store'
+import {optionsModule, adminBenefitsModule} from '@/store'
 import {UpdateBenefitParams} from '@/types/Benefit'
-import {Validate} from '@/types/Validate'
 import IconExternal from '@/components/icons/IconExternal.vue'
 
 export default defineComponent({
@@ -183,13 +183,14 @@ export default defineComponent({
       type: Object as PropType<UpdateBenefitParams>,
       required: true,
     },
-    loading: {
+    submited: {
       type: Boolean as PropType<boolean>,
       required: true,
     },
   },
-  setup(props) {
+  setup(props, context) {
     const form = ref<Form | null>(null)
+    const {load, loading} = adminBenefitsModule.loader
     const state: UpdateBenefitParams = reactive(props.benefitParams)
     const ministries = computed(() => optionsModule.ministries)
     const prefectures = computed(() => optionsModule.prefectures)
@@ -223,10 +224,6 @@ export default defineComponent({
     const endDate = ref<Date | null>(null)
     const endDateChanged = () => {
       state.endDate = endDate.value?.toLocaleDateString() || null
-    }
-
-    const validate: Validate = (result: (valid: boolean) => void) => {
-      form.value?.validate(valid => result(valid))
     }
 
     const rules = {
@@ -267,11 +264,31 @@ export default defineComponent({
       ],
     }
 
-    onMounted(async () => {
-      await optionsModule.getPrefectures()
-      if (state.prefectureId) {
-        await optionsModule.getCities(state.prefectureId)
-      }
+    watch(
+      () => props.submited,
+      (submited, prev) => {
+        if (submited && !prev) {
+          load(loading, async () => {
+            await form.value
+              ?.validate()
+              .then(() => context.emit('validHandler'))
+              .catch(() => context.emit('invalidHandler'))
+          })
+        }
+      },
+    )
+
+    watch(
+      () => props.benefitParams.prefectureId,
+      (prefectureId, prev) => {
+        if (prefectureId && !prev) {
+          optionsModule.getCities(prefectureId)
+        }
+      },
+    )
+
+    onMounted(() => {
+      optionsModule.getPrefectures()
       householdIncomeFromMan.value = state.householdIncomeFrom
         ? state.householdIncomeFrom / 10000
         : null
@@ -287,6 +304,7 @@ export default defineComponent({
 
     return {
       form,
+      loading,
       state,
       ministries,
       prefectures,
@@ -298,7 +316,6 @@ export default defineComponent({
       householdIncomeToChanged,
       endDate,
       endDateChanged,
-      validate,
       rules,
     }
   },

@@ -153,8 +153,8 @@ export default defineComponent({
           load(loading, async () => {
             await form.value
               ?.validate()
-              .then(() => context.emit('valid'))
-              .catch(() => context.emit('invalid'))
+              .then(() => context.emit('validHandler'))
+              .catch(() => context.emit('invalidHandler'))
           })
         }
       },

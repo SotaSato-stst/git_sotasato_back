@@ -147,6 +147,7 @@ import {
   useRoute,
   useRouter,
   reactive,
+  watch,
   ref,
   PropType,
 } from '@nuxtjs/composition-api'
@@ -290,6 +291,15 @@ export default defineComponent({
       })
     }
 
+    watch(
+      () => state.prefectureId,
+      (prefectureId, prev) => {
+        if (prefectureId && !prev) {
+          optionsModule.getCities(prefectureId)
+        }
+      },
+    )
+
     onMounted(() => {
       load(loading, async () => {
         optionsModule.getOrganizationTypes()
@@ -298,9 +308,6 @@ export default defineComponent({
         await accountModule.getCurrentUser()
         Object.assign(state, paramsFromCurrentCompany())
         Object.assign(state, paramsFromUrlQuery())
-        if (state.prefectureId) {
-          optionsModule.getCities(state.prefectureId)
-        }
         if (state.capital) {
           capitalMan.value = state.capital / 10000
         }

@@ -32,9 +32,10 @@
         </div>
       </div>
       <benefit-form
-        ref="form"
         :benefit-params="benefitParams"
-        :loading="loading"
+        :submited="submited"
+        @validHandler="validHandler"
+        @invalidHandler="invalidHandler"
       />
       <el-button
         type="danger"
@@ -67,7 +68,6 @@ import {
   showApiErrorMessage,
 } from '@/services/notify'
 import {PublishingCode, UpdateBenefitParams} from '@/types/Benefit'
-import {ValidationForm} from '@/types/Validate'
 import BenefitForm from '@/components/benefits/BenefitForm.vue'
 import {routingService} from '@/services/routingService'
 import {publishingCodeLabel, publishingCodeType} from '@/utils/enumKeyToName'
@@ -79,11 +79,9 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
-    const form = ref<ValidationForm | null>(null)
     const route = useRoute()
     const router = useRouter()
-    const loader = adminBenefitsModule.loader
-    const {loading, load} = loader
+    const {loading, load} = adminBenefitsModule.loader
     const pageId = Number(route.value.params.id)
     const benefit = computed(() => adminBenefitsModule.benefit)
     const benefitParams: UpdateBenefitParams = reactive({
@@ -105,21 +103,26 @@ export default defineComponent({
       householdIncomeFrom: null,
       householdIncomeTo: null,
     })
+    const submited = ref(false)
 
     const submit = (publishingCode: PublishingCode) => {
       benefitParams.publishingCode = publishingCode
+      submited.value = true
+    }
+
+    const validHandler = () => {
       load(loading, () => {
-        form.value?.validate(valid => {
-          if (!valid) {
-            notifyError('更新に失敗しました', '入力項目を確認してください')
-            return
-          }
-          adminBenefitsModule
-            .putBenefit(benefitParams)
-            .then(showMessage)
-            .catch(showApiErrorMessage)
-        })
+        adminBenefitsModule
+          .putBenefit(benefitParams)
+          .then(showMessage)
+          .catch(showApiErrorMessage)
       })
+      submited.value = false
+    }
+
+    const invalidHandler = () => {
+      notifyError('更新に失敗しました', '入力内容を確認してください')
+      submited.value = false
     }
 
     const showMessage = (_: number) => {
@@ -170,12 +173,13 @@ export default defineComponent({
     })
 
     return {
-      form,
-      loader,
       loading,
       benefit,
       benefitParams,
       submit,
+      submited,
+      validHandler,
+      invalidHandler,
       show,
       preview,
       publishingCodeLabel,

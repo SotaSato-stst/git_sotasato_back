@@ -48,9 +48,10 @@
       </div>
       <subsidy-form
         v-if="!loading"
-        ref="form"
         :subsidy-params="subsidyParams"
-        :loading="loading"
+        :submited="submited"
+        @validHandler="validHandler"
+        @invalidHandler="invalidHandler"
       />
     </el-card>
   </div>
@@ -68,14 +69,13 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 import {MessageBox} from 'element-ui'
-import {subsidyDraftsModule} from '@/store'
+import {subsidyDraftsModule, adminSubsidiesModule} from '@/store'
 import {
   notifyError,
   notifySuccess,
   showApiErrorMessage,
 } from '@/services/notify'
 import {PublishingCode, UpdateSubsidyParams} from '@/types/Subsidy'
-import {ValidationForm} from '@/types/Validate'
 import SubsidyForm from '@/components/subsidies/SubsidyForm.vue'
 import {routingService} from '@/services/routingService'
 
@@ -86,11 +86,9 @@ export default defineComponent({
   },
   layout: 'admin',
   setup(_props) {
-    const form = ref<ValidationForm | null>(null)
     const route = useRoute()
     const router = useRouter()
-    const loader = subsidyDraftsModule.loader
-    const {loading, load} = loader
+    const {loading, load} = adminSubsidiesModule.loader
     const id = Number(route.value.params.id)
     const subsidyDraft = computed(() => subsidyDraftsModule.subsidyDraft)
     const subsidyCreated = computed(
@@ -126,21 +124,26 @@ export default defineComponent({
       annualSalesMin: null,
       catchCopy: '',
     })
+    const submited = ref(false)
 
     const submit = (publishingCode: PublishingCode) => {
       subsidyParams.publishingCode = publishingCode
+      submited.value = true
+    }
+
+    const validHandler = () => {
       load(loading, () => {
-        form.value?.validate(valid => {
-          if (!valid) {
-            notifyError('更新に失敗しました', '入力項目を確認してください')
-            return
-          }
-          subsidyDraftsModule
-            .postSubsidy(subsidyParams)
-            .then(showMessage)
-            .catch(showApiErrorMessage)
-        })
+        adminSubsidiesModule
+          .postSubsidy(subsidyParams)
+          .then(showMessage)
+          .catch(showApiErrorMessage)
       })
+      submited.value = false
+    }
+
+    const invalidHandler = () => {
+      notifyError('更新に失敗しました', '入力内容を確認してください')
+      submited.value = false
     }
 
     const showMessage = (subsidyId: number) => {
@@ -207,12 +210,13 @@ export default defineComponent({
     })
 
     return {
-      form,
-      loader,
       loading,
       subsidyDraft,
       subsidyParams,
       submit,
+      submited,
+      validHandler,
+      invalidHandler,
       toggleArchive,
       segueSubsidyDetail,
       subsidyCreated,

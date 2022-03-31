@@ -6,9 +6,7 @@ export class Loader {
   load = (loading: Ref<boolean>, waitingFor: () => void) => {
     loading.value = true
     waitingFor()
-    setTimeout(() => {
-      loading.value = false
-    }, 500) // チラチラするよりちょっと遅延した方がよい
+    loading.value = false
   }
 }
 

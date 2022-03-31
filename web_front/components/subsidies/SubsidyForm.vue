@@ -393,12 +393,12 @@ import {
   onUnmounted,
   reactive,
   ref,
+  watch,
   PropType,
 } from '@nuxtjs/composition-api'
 import {Form} from 'element-ui'
-import {optionsModule, keywordsModule} from '@/store'
+import {optionsModule, keywordsModule, adminSubsidiesModule} from '@/store'
 import {UpdateSubsidyParams} from '@/types/Subsidy'
-import {Validate} from '@/types/Validate'
 import IconExternal from '@/components/icons/IconExternal.vue'
 
 export default defineComponent({
@@ -412,13 +412,14 @@ export default defineComponent({
       type: Object as PropType<UpdateSubsidyParams>,
       required: true,
     },
-    loading: {
+    submited: {
       type: Boolean as PropType<boolean>,
       required: true,
     },
   },
-  setup(props) {
+  setup(props, context) {
     const form = ref<Form | null>(null)
+    const {load, loading} = adminSubsidiesModule.loader
     const state: UpdateSubsidyParams = reactive(props.subsidyParams)
     const ministries = computed(() => optionsModule.ministries)
     const prefectures = computed(() => optionsModule.prefectures)
@@ -519,10 +520,6 @@ export default defineComponent({
       state.keywords = state.keywords + ' ' + word
     }
 
-    const validate: Validate = (result: (valid: boolean) => void) => {
-      form.value?.validate(valid => result(valid))
-    }
-
     const rules = {
       subsidyCategory: [
         {
@@ -575,12 +572,32 @@ export default defineComponent({
       ],
     }
 
+    watch(
+      () => props.submited,
+      (submited, prev) => {
+        if (submited && !prev) {
+          load(loading, async () => {
+            await form.value
+              ?.validate()
+              .then(() => context.emit('validHandler'))
+              .catch(() => context.emit('invalidHandler'))
+          })
+        }
+      },
+    )
+
+    watch(
+      () => props.subsidyParams.prefectureId,
+      (prefectureId, prev) => {
+        if (prefectureId && !prev) {
+          optionsModule.getCities(prefectureId)
+        }
+      },
+    )
+
     onMounted(async () => {
       optionsModule.getMinistries()
       await optionsModule.getPrefectures()
-      if (state.prefectureId) {
-        await optionsModule.getCities(state.prefectureId)
-      }
       await optionsModule.getOrganizationTypes()
       optionsModule.getBusinessCategories()
       keywordsModule.getTopKeywords()
@@ -610,6 +627,7 @@ export default defineComponent({
 
     return {
       form,
+      loading,
       state,
       ministries,
       prefectures,
@@ -640,7 +658,6 @@ export default defineComponent({
       levelChanged,
       topKeywords,
       addKeyword,
-      validate,
       rules,
     }
   },

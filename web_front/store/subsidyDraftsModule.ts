@@ -11,7 +11,6 @@ import {
   BulkUpdateSubsidyDraftForBenefit,
   SubsidyDraftAssignStat,
 } from '@/types/SubsidyDraft'
-import {Subsidy, UpdateSubsidyParams} from '@/types/Subsidy'
 import {Pagination} from '@/types/Pagination'
 import {useLoader} from '@/services/useLoader'
 
@@ -111,12 +110,6 @@ export default class SubsidyDraftsModule extends VuexModule {
   @Action({rawError: true})
   async bulkUpdateForBenefit(params: BulkUpdateSubsidyDraftForBenefit) {
     await $axios.$post('/admin/subsidy_drafts/bulk_update_for_benefit', params)
-  }
-
-  @Action({rawError: true})
-  async postSubsidy(params: UpdateSubsidyParams): Promise<number> {
-    const res = await $axios.$post<Subsidy>('/admin/subsidies', params)
-    return res.id
   }
 
   @Action({rawError: true})
