@@ -23,6 +23,11 @@
         "type": 301
       },
       {
+        "regex": "/admin/benefits/(\\d+)",
+        "destination": "/redirect?id=:1&resource=admin_benefits",
+        "type": 301
+      },
+      {
         "regex": "/admin/subsidy_drafts/(\\d+)",
         "destination": "/redirect?id=:1&resource=admin_subsidy_drafts",
         "type": 301

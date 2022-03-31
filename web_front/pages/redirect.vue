@@ -33,6 +33,9 @@ export default defineComponent({
         case 'admin_subsidies':
           router.replace(routingService.AdminSubsidyDetail(id))
           break
+        case 'admin_benefits':
+          router.replace(routingService.AdminBenefitDetail(id))
+          break
         case 'admin_subsidy_drafts':
           router.replace(routingService.AdminSubsidyDraftDetail(id))
           break
