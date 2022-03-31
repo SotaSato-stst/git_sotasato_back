@@ -75,15 +75,7 @@
       </div>
       <div class="divider" />
       <div class="detail">
-        <span class="label">対象</span>
         <!-- eslint-disable vue/no-v-html -->
-        <div
-          class="content subsidy-detail-markdown-content"
-          v-html="parseMarkdown(subsidy.targetDetail)"
-        />
-      </div>
-      <div class="detail">
-        <span class="label">支援内容</span>
         <div
           class="content subsidy-detail-markdown-content"
           v-html="parseMarkdown(subsidy.detail)"
