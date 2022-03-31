@@ -705,7 +705,7 @@ export default defineComponent({
 }
 
 .two-column {
-  width: 80%;
+  width: 50%;
 }
 
 .external-link {
