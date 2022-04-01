@@ -5,7 +5,7 @@ module Business
     def index
       scope = Subsidy.index_loading.search_by_user(search_params)
       @items_total = scope.count
-      @subsidies = scope.page(params[:page]).per(20)
+      @subsidies = scope.order(updated_at: :desc).page(params[:page]).per(20)
       @current_user_favorite_ids = current_user.user_favorite_subsidies.pluck(:subsidy_id) & @subsidies.map(&:id)
     end
 

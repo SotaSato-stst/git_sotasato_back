@@ -9,7 +9,7 @@ module Admin
         .benefit_filter(params[:benefit_filter])
         .search_title(params[:keyword])
       @items_total = scope.count
-      @subsidy_drafts = scope.page(params[:page]).per(30)
+      @subsidy_drafts = scope.page(params[:page]).per(50)
     end
 
     def show
