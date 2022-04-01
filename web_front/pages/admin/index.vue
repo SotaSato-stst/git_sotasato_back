@@ -218,26 +218,26 @@ export default defineComponent({
 
     const getPage = (page: number) => {
       subsidyDraftsModule.setSubsidyDrafts([])
-      handleSegue({page})
+      requestData({page})
     }
 
     const selectAssignFilter = (assignFilter: FilterAssignType) => {
-      handleSegue({assignFilter, page: 1})
+      requestData({assignFilter, page: 1})
     }
 
     const selectCompleteFilter = (completeFilter: FilterCompleteType) => {
-      handleSegue({completeFilter, page: 1})
+      requestData({completeFilter, page: 1})
     }
 
     const selectBenefitFilter = (benefitFilter: FilterBenefitType) => {
-      handleSegue({benefitFilter, page: 1})
+      requestData({benefitFilter, page: 1})
     }
 
     const search = () => {
-      handleSegue({keyword: filter.keyword, page: 1})
+      requestData({keyword: filter.keyword, page: 1})
     }
 
-    const handleSegue = (segueFilter: Partial<SubsidyDraftIndexParams>) => {
+    const requestData = (segueFilter: Partial<SubsidyDraftIndexParams>) => {
       Object.assign(filter, segueFilter)
       router.push({query: {...removeEmpty(filter)}})
       subsidyDraftsModule.getSubsidyDrafts(filter)
@@ -302,7 +302,7 @@ export default defineComponent({
 
     const handleSuccess = (message: string) => {
       notifySuccess('更新しました', message)
-      handleSegue({})
+      requestData({})
     }
 
     const changeAllForBenefit = (forBenefit: boolean) => {
@@ -346,7 +346,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
         .then(async (date: any) => {
           await subsidyDraftsModule.getNewSubsidy(date.value)
           Object.assign(filter, {page: 1})
-          handleSegue({})
+          requestData({})
         })
         .catch(_ => {})
     }
@@ -364,7 +364,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
           (convertQueryString(query.benefitFilter) as FilterBenefitType) ||
           'all'
         const keyword = convertQueryString(query.keyword) || ''
-        handleSegue({
+        requestData({
           page,
           assignFilter,
           completeFilter,

@@ -220,25 +220,25 @@ export default defineComponent({
 
     const getPage = (page: number) => {
       adminSubsidiesModule.setSubsidies([])
-      handleSegue({page})
+      requestData({page})
     }
 
     const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
-      handleSegue({publishingCode, page: 1})
+      requestData({publishingCode, page: 1})
     }
 
     const selectSortSubsidy = (sortingCode: SortSubsidyType) => {
-      handleSegue({sortingCode, page: 1})
+      requestData({sortingCode, page: 1})
     }
 
     const selectSubsidyCategoryFilter = (
       subsidyCategory: FilterSubsidyCategoryType,
     ) => {
-      handleSegue({subsidyCategory, page: 1})
+      requestData({subsidyCategory, page: 1})
     }
 
     const selectMinistryIdFilter = (ministryId: number) => {
-      handleSegue({ministryId, page: 1})
+      requestData({ministryId, page: 1})
     }
 
     const ministries = computed(() => optionsModule.ministries)
@@ -248,14 +248,14 @@ export default defineComponent({
     }
 
     const search = () => {
-      handleSegue({
+      requestData({
         endAfter: filter.endAfter,
         keyword: filter.keyword,
         page: 1,
       })
     }
 
-    const handleSegue = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
+    const requestData = (segueFilter: Partial<AdminSubsidyIndexParams>) => {
       Object.assign(filter, segueFilter)
       router.push({query: {...removeEmpty(filter)}})
       adminSubsidiesModule.getSubsidies(filter)
@@ -325,7 +325,7 @@ export default defineComponent({
         const endAfterDate = convertQueryDate(query.endAfter) || null
         endAfter.value = endAfterDate
         const keyword = query.keyword?.toString() || ''
-        handleSegue({
+        requestData({
           page,
           publishingCode,
           endAfter: endAfterDate?.toLocaleDateString(),

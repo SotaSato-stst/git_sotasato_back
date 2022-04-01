@@ -173,15 +173,15 @@ export default defineComponent({
 
     const getPage = (page: number) => {
       adminBenefitsModule.setBenefits([])
-      handleSegue({page})
+      requestData({page})
     }
 
     const selectPublishingFilter = (publishingCode: FilterPublishingType) => {
-      handleSegue({publishingCode, page: 1})
+      requestData({publishingCode, page: 1})
     }
 
     const selectSortBenefit = (sortingCode: SortBenefitType) => {
-      handleSegue({sortingCode, page: 1})
+      requestData({sortingCode, page: 1})
     }
 
     const selectEndAfter = (date: Date | null) => {
@@ -189,14 +189,14 @@ export default defineComponent({
     }
 
     const search = () => {
-      handleSegue({
+      requestData({
         endAfter: filter.endAfter,
         keyword: filter.keyword,
         page: 1,
       })
     }
 
-    const handleSegue = (segueFilter: Partial<AdminBenefitIndexParams>) => {
+    const requestData = (segueFilter: Partial<AdminBenefitIndexParams>) => {
       Object.assign(filter, segueFilter)
       router.push({query: {...removeEmpty(filter)}})
       adminBenefitsModule.getBenefits(filter)
@@ -238,7 +238,7 @@ export default defineComponent({
         const endAfterDate = convertQueryDate(query.endAfter) || null
         endAfter.value = endAfterDate
         const keyword = query.keyword?.toString() || ''
-        handleSegue({
+        requestData({
           page,
           publishingCode,
           endAfter: endAfterDate?.toLocaleDateString(),
