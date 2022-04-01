@@ -164,7 +164,10 @@
     </el-form-item>
     <div class="detail-form-wrapper">
       <el-form-item label="詳細" prop="detail">
-        <div class="sub-description">※マークダウン記法で入力可能</div>
+        <div class="sub-description">
+          ※マークダウン記法で入力可能(
+          <a class="markdown-link" @click="clickMarkdownSample">サンプル</a>)
+        </div>
         <el-input
           v-model="state.detail"
           type="textarea"
@@ -383,6 +386,14 @@
         </div>
       </div>
     </el-form-item>
+    <el-drawer
+      title="マークダウンサンプル"
+      :visible.sync="showMarkdownSample"
+      direction="rtl"
+      :before-close="closeMarkdownSample"
+    >
+      <markdown-sample />
+    </el-drawer>
   </el-form>
 </template>
 
@@ -402,11 +413,13 @@ import {marked} from 'marked'
 import {optionsModule, keywordsModule, adminSubsidiesModule} from '@/store'
 import {UpdateSubsidyParams} from '@/types/Subsidy'
 import IconExternal from '@/components/icons/IconExternal.vue'
+import MarkdownSample from '@/components/MarkdownSample.vue'
 
 export default defineComponent({
   name: 'SubsidyForm',
   components: {
     IconExternal,
+    MarkdownSample,
   },
   layout: 'admin',
   props: {
@@ -523,6 +536,13 @@ export default defineComponent({
     }
 
     const parseMarkdown = marked.parse
+    const showMarkdownSample = ref(false)
+    const clickMarkdownSample = () => {
+      showMarkdownSample.value = true
+    }
+    const closeMarkdownSample = () => {
+      showMarkdownSample.value = false
+    }
 
     const rules = {
       subsidyCategory: [
@@ -660,6 +680,9 @@ export default defineComponent({
       addKeyword,
       rules,
       parseMarkdown,
+      showMarkdownSample,
+      clickMarkdownSample,
+      closeMarkdownSample,
     }
   },
 })
@@ -751,6 +774,11 @@ export default defineComponent({
   width: 700px;
   padding: var(--spacing-4);
   border: solid 1px var(--border-grey-color);
+}
+
+.markdown-link {
+  text-decoration-line: underline;
+  cursor: pointer;
 }
 </style>
 
