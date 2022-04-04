@@ -364,7 +364,7 @@ export default defineComponent({
 }
 
 .sub-description {
-  color: var(--text-color);
+  color: var(--text-font-color);
   font-size: 12px;
   height: fit-content;
 }
@@ -377,6 +377,6 @@ export default defineComponent({
 
 .el-icon-star-on {
   font-size: 24px;
-  color: var(--text-color);
+  color: var(--text-font-color);
 }
 </style>

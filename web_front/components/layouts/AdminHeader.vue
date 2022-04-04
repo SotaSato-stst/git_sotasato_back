@@ -53,6 +53,9 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .header-container {
   display: flex;
+  box-sizing: border-box;
+  border-bottom: solid 1px var(--border-grey-color);
+  height: 60px;
 }
 
 .title-container {
@@ -86,7 +89,7 @@ export default defineComponent({
   font-size: 14px;
   font-weight: bold;
   width: fit-content;
-  color: var(--text-color);
+  color: var(--text-font-color);
 }
 
 .header-menu > li > i {

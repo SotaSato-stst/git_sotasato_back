@@ -47,7 +47,6 @@ export default defineComponent({
 
 .header-container {
   padding: 0;
-  border-bottom: solid 1px var(--border-grey-color);
 }
 
 .center-container {

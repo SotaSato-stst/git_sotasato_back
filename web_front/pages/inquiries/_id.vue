@@ -62,7 +62,7 @@ export default defineComponent({
 
 .description {
   padding: var(--spacing-4);
-  color: var(--text-color);
+  color: var(--text-font-color);
   font-size: 14px;
 }
 

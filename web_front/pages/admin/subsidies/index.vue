@@ -412,7 +412,7 @@ export default defineComponent({
 
 .input-caption {
   font-size: 12px;
-  color: var(--primary-font-color);
+  color: var(--text-font-color);
 }
 </style>
 

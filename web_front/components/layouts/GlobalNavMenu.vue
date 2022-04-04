@@ -80,7 +80,7 @@ export default defineComponent({
   font-size: 14px;
   font-weight: bold;
   width: fit-content;
-  color: var(--text-color);
+  color: var(--text-font-color);
 }
 
 .header-menu.mobile > li {
@@ -100,11 +100,11 @@ export default defineComponent({
 
 .flag,
 .header-menu > li.is-active > i.flag {
-  color: #f48c06;
+  color: var(--hilight-orange);
 }
 
 .new,
 .header-menu > li.is-active > i.new {
-  color: #48cae4;
+  color: var(--primary-color);
 }
 </style>

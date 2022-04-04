@@ -347,7 +347,7 @@
     <el-form-item label="申請難易度" prop="level">
       <el-rate
         v-model="level"
-        :colors="['var(--text-color)']"
+        :colors="['var(--text-font-color)']"
         :texts="['低い', 'やや低め', '普通', 'やや高め', '高い']"
         show-text
         class="level"
@@ -748,7 +748,7 @@ export default defineComponent({
 }
 
 .sub-description {
-  color: var(--text-color);
+  color: var(--text-font-color);
   font-size: 12px;
   height: fit-content;
 }
@@ -764,7 +764,7 @@ export default defineComponent({
 }
 
 .preview-description {
-  color: var(--text-color);
+  color: var(--text-font-color);
   font-size: 13px;
   margin-top: var(--spacing-3);
   margin-bottom: var(--spacing-1);
@@ -789,6 +789,6 @@ export default defineComponent({
 
 .el-icon-star-on {
   font-size: 24px;
-  color: var(--text-color);
+  color: var(--text-font-color);
 }
 </style>

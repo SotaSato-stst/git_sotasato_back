@@ -101,6 +101,9 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .header-container {
   display: flex;
+  height: 60px;
+  box-sizing: border-box;
+  border-bottom: solid 1px var(--border-grey-color);
 }
 
 .mobile-header-container {
@@ -116,7 +119,6 @@ export default defineComponent({
   padding-left: var(--spacing-4);
   box-sizing: border-box;
   font-size: 27px;
-  font-family: 'Open Sans', sans-serif;
   color: var(--primary-color);
   cursor: pointer;
 }
@@ -144,6 +146,6 @@ export default defineComponent({
 
 .mobile-search-button {
   font-size: 18px;
-  color: var(--primary-font-color);
+  color: var(--text-font-color);
 }
 </style>

@@ -1,9 +1,13 @@
 * {
-  font-family: 'Open Sans', '游ゴシック体', sans-serif;
+  font-family: '游ゴシック体', YuGothic, '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック', 'Yu Gothic', 'Open Sans', sans-serif;
 }
 
 .el-table table {
   width: 100%;
+}
+
+.el-card {
+  color: inherit;
 }
 
 .subsidy-detail-markdown-content {

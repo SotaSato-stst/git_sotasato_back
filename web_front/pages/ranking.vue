@@ -11,7 +11,9 @@
         v-if="!loading"
         effect="plain"
         class="ranking-tag"
-        :style="`border-color: ${rankingColors[index] || 'var(--text-color)'}`"
+        :style="`border-color: ${
+          rankingColors[index] || 'var(--text-font-color)'
+        }`"
       >
         <div class="crown">
           <icon-crown
@@ -99,7 +101,7 @@ export default defineComponent({
 .ranking-tag {
   font-weight: bold;
   font-size: 16px;
-  color: var(--text-color);
+  color: var(--text-font-color);
   display: flex;
   align-items: center;
   width: fit-content;

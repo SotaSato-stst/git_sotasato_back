@@ -93,6 +93,6 @@ export default defineComponent({
 
 .mobile-dropdown-button {
   font-size: 18px;
-  color: var(--primary-font-color);
+  color: var(--text-font-color);
 }
 </style>

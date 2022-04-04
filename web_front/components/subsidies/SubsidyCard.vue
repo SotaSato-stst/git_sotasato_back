@@ -153,7 +153,7 @@ export default defineComponent({
 .title {
   font-size: var(--title-font-size);
   font-weight: bold;
-  color: var(--color-title);
+  color: var(--primary-color);
   cursor: pointer;
 }
 
@@ -184,7 +184,7 @@ export default defineComponent({
 }
 
 .accent-text {
-  color: var(--color-accent);
+  color: var(--accent-font-color);
   font-size: 22px;
   font-weight: bold;
   font-family: Poppins, sans-serif;
@@ -197,12 +197,12 @@ export default defineComponent({
 
 .keyword-tag {
   font-size: 12px;
-  color: var(--text-color);
+  color: var(--text-font-color);
   margin: var(--spacing-4) var(--spacing-3) 0 0;
 }
 
 .detail-container {
-  color: var(--text-color);
+  color: var(--text-font-color);
   height: calc(1.5em * 4);
   line-height: 1.5em;
   overflow: hidden;

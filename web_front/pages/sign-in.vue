@@ -119,7 +119,7 @@ export default defineComponent({
 
 .password-reset {
   margin-top: var(--spacing-6);
-  color: var(--text-color);
+  color: var(--text-font-color);
   font-size: 12px;
   cursor: pointer;
   text-decoration-line: underline;

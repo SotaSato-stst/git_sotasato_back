@@ -230,7 +230,7 @@ export default defineComponent({
 }
 
 .detail {
-  color: var(--primary-font-color);
+  color: var(--text-font-color);
   margin: var(--spacing-6) 0;
 }
 
