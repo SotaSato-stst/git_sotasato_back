@@ -631,7 +631,8 @@ export default defineComponent({
       endTo.value = state.endTo ? new Date(state.endTo) : null
       level.value = state.level
       if (!state.detail) {
-        state.detail = '### 支援内容\n\n### 対象\n\n### 連絡先\n'
+        state.detail =
+          '### 支援内容\n\n### 補助対象事業者\n\n### 補助対象経費\n\n### お問い合わせ先\n'
       }
       if (state.organizationTypes.length === 0) {
         state.organizationTypes = ['kabu', 'godo', 'kojin']
