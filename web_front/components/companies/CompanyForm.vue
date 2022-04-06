@@ -17,6 +17,7 @@
       :model="state"
       :rules="rules"
       label-width="120px"
+      :label-position="$device.isMobile ? 'top' : 'right'"
       :loading="loading"
     >
       <el-form-item label="会社名" prop="name">
@@ -293,5 +294,13 @@ export default defineComponent({
 
 .submit-button {
   height: fit-content;
+}
+
+@media screen and (max-width: 1200px) {
+  .input-text,
+  .input-number,
+  .category-select {
+    width: 100%;
+  }
 }
 </style>

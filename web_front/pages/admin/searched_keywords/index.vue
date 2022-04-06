@@ -21,7 +21,7 @@ export default defineComponent({
   components: {
     CardLoading,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const {loading, load} = keywordsModule.loader
     const keywords = computed(() => keywordsModule.searchedKeywords)

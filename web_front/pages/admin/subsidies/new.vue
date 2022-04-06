@@ -59,7 +59,7 @@ export default defineComponent({
   components: {
     SubsidyForm,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const router = useRouter()
     const {loading, load} = adminSubsidiesModule.loader
@@ -168,5 +168,13 @@ export default defineComponent({
 
 .submit-button {
   height: fit-content;
+}
+
+@media screen and (max-width: 1200px) {
+  .form-header,
+  .inline {
+    flex-direction: column;
+    overflow: scroll;
+  }
 }
 </style>

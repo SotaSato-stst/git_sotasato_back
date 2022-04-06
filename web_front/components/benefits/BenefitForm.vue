@@ -5,6 +5,7 @@
     :model="state"
     label-width="180px"
     :rules="rules"
+    :label-position="$device.isMobile ? 'top' : 'right'"
   >
     <el-form-item label="参照元URL" prop="url">
       <el-input v-model="state.url" class="input-text" :disabled="loading" />
@@ -177,7 +178,7 @@ export default defineComponent({
   components: {
     IconExternal,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   props: {
     benefitParams: {
       type: Object as PropType<UpdateBenefitParams>,
@@ -367,6 +368,15 @@ export default defineComponent({
   color: var(--text-font-color);
   font-size: 12px;
   height: fit-content;
+}
+
+@media screen and (max-width: 1200px) {
+  .select-input,
+  .input-text,
+  .input-range,
+  .input-number {
+    width: 100%;
+  }
 }
 </style>
 

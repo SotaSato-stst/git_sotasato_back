@@ -95,7 +95,7 @@ export default defineComponent({
   components: {
     SubsidyForm,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const route = useRoute()
     const router = useRouter()
@@ -253,5 +253,13 @@ export default defineComponent({
 
 .archive-button {
   margin-left: 180px;
+}
+
+@media screen and (max-width: 1200px) {
+  .form-header,
+  .inline {
+    flex-direction: column;
+    overflow: scroll;
+  }
 }
 </style>

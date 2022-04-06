@@ -21,7 +21,7 @@ export default defineComponent({
   components: {
     CompanyForm,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const router = useRouter()
     const {loading} = companiesModule.loader

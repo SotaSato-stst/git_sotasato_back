@@ -46,7 +46,7 @@ export default defineComponent({
   components: {
     UserForm,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const {loading, load} = usersModule.loader
     const router = useRouter()
@@ -129,5 +129,12 @@ export default defineComponent({
 
 .submit-button {
   height: fit-content;
+}
+
+@media screen and (max-width: 1200px) {
+  .form-header {
+    flex-direction: column;
+    overflow: scroll;
+  }
 }
 </style>

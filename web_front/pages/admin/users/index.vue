@@ -8,7 +8,7 @@
     </div>
     <card-loading :loading="loading" />
     <el-table v-if="!loading" :data="users" stripe style="width: 100%">
-      <el-table-column prop="displayName" label="氏名" />
+      <el-table-column prop="displayName" label="氏名" min-width="120" />
       <el-table-column prop="companyName" label="会社名">
         <template slot-scope="scope">
           {{ scope.row.company.name }}
@@ -62,7 +62,7 @@ export default defineComponent({
     CardLoading,
     Pagination,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const router = useRouter()
     const route = useRoute()

@@ -23,7 +23,7 @@
       <el-table-column prop="userName" label="氏名" />
       <el-table-column prop="assignCount" label="担当件数" />
       <el-table-column prop="completedCount" label="完了数" />
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <assign-form :assignee="scope.row" />
         </template>
@@ -44,7 +44,7 @@ export default defineComponent({
     AssignForm,
     CardLoading,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const {loading, load} = subsidyDraftsModule.loader
     const assignees = computed(() => subsidyDraftsModule.assignees)

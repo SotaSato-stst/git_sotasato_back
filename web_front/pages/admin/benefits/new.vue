@@ -74,7 +74,7 @@ export default defineComponent({
   components: {
     BenefitForm,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
@@ -205,5 +205,13 @@ export default defineComponent({
 
 .submit-button {
   height: fit-content;
+}
+
+@media screen and (max-width: 1200px) {
+  .form-header,
+  .inline {
+    flex-direction: column;
+    overflow: scroll;
+  }
 }
 </style>

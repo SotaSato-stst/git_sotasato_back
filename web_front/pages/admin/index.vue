@@ -98,7 +98,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="タイトル">
+      <el-table-column label="タイトル" min-width="240">
         <template slot-scope="scope">
           <a class="detail-link" @click="handleEdit(scope.row)">{{
             scope.row.title
@@ -194,7 +194,7 @@ export default defineComponent({
     Pagination,
     CardLoading,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
@@ -429,6 +429,7 @@ Slackに新着通知が来ているのに、この画面に表示されてない
 .table-action-group {
   display: flex;
   align-items: center;
+  overflow: scroll;
 }
 
 .table-action-group > * {
@@ -458,5 +459,17 @@ Slackに新着通知が来ているのに、この画面に表示されてない
 .el-message-box__container {
   overflow: scroll;
   max-height: 600px;
+}
+
+@media screen and (max-width: 1200px) {
+  .confirm-dialog {
+    width: 80%;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .el-message-box__container {
+    overflow: scroll;
+    max-height: 80%;
+  }
 }
 </style>

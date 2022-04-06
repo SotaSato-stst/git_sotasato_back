@@ -5,6 +5,7 @@
     :model="state"
     label-width="180px"
     :rules="rules"
+    :label-position="$device.isMobile ? 'top' : 'right'"
   >
     <el-form-item label="参照元URL" prop="url">
       <el-input v-model="state.url" class="input-text" :disabled="loading" />
@@ -421,7 +422,7 @@ export default defineComponent({
     IconExternal,
     MarkdownSample,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   props: {
     subsidyParams: {
       type: Object as PropType<UpdateSubsidyParams>,
@@ -780,6 +781,31 @@ export default defineComponent({
 .markdown-link {
   text-decoration-line: underline;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+  .select-input,
+  .input-text,
+  .input-range,
+  .input-number,
+  .organization-type-select,
+  .business-category-select {
+    width: 100%;
+  }
+
+  .detail-form-wrapper {
+    flex-direction: column;
+  }
+
+  .preview-detail {
+    margin: 0;
+    width: 100%;
+  }
+
+  .subsidy-detail-markdown-content {
+    width: 100%;
+    padding: 0;
+  }
 }
 </style>
 

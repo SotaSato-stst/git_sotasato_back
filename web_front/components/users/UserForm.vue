@@ -5,6 +5,7 @@
     :model="state"
     label-width="120px"
     :rules="rules"
+    :label-position="$device.isMobile ? 'top' : 'right'"
   >
     <el-form-item label="所属会社" prop="companyId">
       <el-select
@@ -202,5 +203,14 @@ export default defineComponent({
 
 .inline {
   display: flex;
+}
+
+@media screen and (max-width: 1200px) {
+  .input-name,
+  .input-text,
+  .input-number,
+  .category-select {
+    width: 100%;
+  }
 }
 </style>

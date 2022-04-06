@@ -69,7 +69,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="タイトル">
+      <el-table-column label="タイトル" min-width="200">
         <template slot-scope="scope">
           <a class="detail-link" @click="handleEdit(scope.row)">{{
             scope.row.title
@@ -154,7 +154,7 @@ export default defineComponent({
     Pagination,
     CardLoading,
   },
-  layout: 'admin',
+  layout: ctx => (ctx.$device.isMobile ? 'admin-mobile' : 'admin'),
   setup(_props) {
     const router = useRouter()
     const route = useRoute()
