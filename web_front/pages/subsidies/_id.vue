@@ -31,6 +31,16 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col v-if="subsidy.prepareTerm" :span="12">
+            <div class="subsidy-info">
+              <span class="label">準備期間: </span>
+              <span v-if="subsidy.prepareTerm">
+                {{ subsidy.prepareTerm }}ヶ月〜〜
+              </span>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <div class="subsidy-info">
               <span class="label">上限金額: </span>

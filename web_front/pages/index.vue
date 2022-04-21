@@ -36,7 +36,7 @@ export default defineComponent({
     const {loading} = subsidiesModule.loader
     const subsidies = computed(() => subsidiesModule.subsidies)
     const pagination = computed(() => subsidiesModule.pagination)
-
+    // なんで二回setSubsidiesする
     const getPage = (page: number) => {
       subsidiesModule.setSubsidies([])
       subsidiesModule.getSubsidies(page)

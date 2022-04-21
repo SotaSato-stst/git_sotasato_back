@@ -39,6 +39,7 @@ export type Subsidy = {
   annualSalesMax: number | null
   annualSalesMin: number | null
   catchCopy: string | null
+  prepareTerm: number | null
 }
 
 export type SubsidiesResponse = {
